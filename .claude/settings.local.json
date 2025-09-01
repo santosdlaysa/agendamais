@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(move package.json frontend/)",
+      "Bash(move package-lock.json frontend/)",
+      "Bash(move vite.config.js frontend/)",
+      "Bash(move:*)",
+      "Bash(move index.html frontend/)",
+      "Bash(move public frontend/)",
+      "Bash(npm install)",
+      "Bash(npm run dev:*)",
+      "Bash(npm test:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
