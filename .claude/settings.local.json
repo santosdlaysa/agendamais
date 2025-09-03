@@ -9,7 +9,9 @@
       "Bash(move public frontend/)",
       "Bash(npm install)",
       "Bash(npm run dev:*)",
-      "Bash(npm test:*)"
+      "Bash(npm test:*)",
+      "Read(C:\\Users\\ldsantos\\WebstormProjects\\agendamais-backend/**)",
+      "Read(C:\\Users\\ldsantos\\WebstormProjects\\agendamais-backend/**)"
     ],
     "deny": [],
     "ask": []
