@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { ArrowLeft, Save, X, Palette } from 'lucide-react'
-import axios from 'axios'
+import api from '../utils/api'
 import toast from 'react-hot-toast'
 
 const PRESET_COLORS = [
@@ -44,7 +44,7 @@ export default function ProfessionalForm() {
 
   const fetchServices = async () => {
     try {
-      const response = await axios.get('/services')
+      const response = await api.get('/services')
       setServices(response.data.services || [])
     } catch (error) {
       console.error('Erro ao carregar serviços:', error)
@@ -55,7 +55,7 @@ export default function ProfessionalForm() {
   const fetchProfessional = async () => {
     try {
       setLoading(true)
-      const response = await axios.get(`/professionals/${id}`)
+      const response = await api.get(`/professionals/${id}`)
       const professional = response.data.professional
       
       setFormData({
@@ -113,10 +113,10 @@ export default function ProfessionalForm() {
       }
 
       if (isEditMode) {
-        await axios.put(`/professionals/${id}`, submitData)
+        await api.put(`/professionals/${id}`, submitData)
         toast.success('Profissional atualizado com sucesso!')
       } else {
-        await axios.post('/professionals', submitData)
+        await api.post('/professionals', submitData)
         toast.success('Profissional criado com sucesso!')
       }
       

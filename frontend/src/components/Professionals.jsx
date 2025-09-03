@@ -13,7 +13,7 @@ import {
   Eye,
   EyeOff
 } from 'lucide-react'
-import axios from 'axios'
+import api from '../utils/api'
 import toast from 'react-hot-toast'
 
 export default function Professionals() {
@@ -29,7 +29,7 @@ export default function Professionals() {
 
   const fetchProfessionals = async () => {
     try {
-      const response = await axios.get('/professionals?include_services=true&include_stats=true')
+      const response = await api.get('/professionals?include_services=true&include_stats=true')
       setProfessionals(response.data.professionals || [])
     } catch (error) {
       console.error('Erro ao carregar profissionais:', error)
@@ -41,7 +41,7 @@ export default function Professionals() {
 
   const handleToggleStatus = async (professionalId, currentStatus) => {
     try {
-      await axios.post(`/professionals/${professionalId}/toggle-status`)
+      await api.post(`/professionals/${professionalId}/toggle-status`)
       toast.success(`Profissional ${currentStatus ? 'desativado' : 'ativado'} com sucesso!`)
       fetchProfessionals()
     } catch (error) {
@@ -56,7 +56,7 @@ export default function Professionals() {
     }
 
     try {
-      await axios.delete(`/professionals/${professionalId}`)
+      await api.delete(`/professionals/${professionalId}`)
       toast.success('Profissional excluído com sucesso!')
       fetchProfessionals()
     } catch (error) {

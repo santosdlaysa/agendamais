@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { ArrowLeft, Save, X, Calendar, Clock, User, UserCheck, Briefcase, AlertTriangle } from 'lucide-react'
-import axios from 'axios'
+import api from '../utils/api'
 import toast from 'react-hot-toast'
 
 export default function AppointmentForm() {
@@ -63,9 +63,9 @@ export default function AppointmentForm() {
     try {
       setLoading(true)
       const [clientsRes, professionalsRes, servicesRes] = await Promise.all([
-        axios.get('/clients/search?limit=100'),
-        axios.get('/professionals?active_only=true'),
-        axios.get('/services?active_only=true')
+        api.get('/clients/search?limit=100'),
+        api.get('/professionals?active_only=true'),
+        api.get('/services?active_only=true')
       ])
       
       setClients(clientsRes.data.clients || [])
@@ -81,7 +81,7 @@ export default function AppointmentForm() {
 
   const fetchAvailableServices = async (professionalId) => {
     try {
-      const response = await axios.get(`/professionals/${professionalId}/services`)
+      const response = await api.get(`/professionals/${professionalId}/services`)
       setAvailableServices(response.data.services || [])
     } catch (error) {
       console.error('Erro ao carregar serviços do profissional:', error)
@@ -92,7 +92,7 @@ export default function AppointmentForm() {
   const fetchAppointment = async () => {
     try {
       setLoading(true)
-      const response = await axios.get(`/appointments/${id}`)
+      const response = await api.get(`/appointments/${id}`)
       const appointment = response.data.appointment
       
       setFormData({
@@ -116,7 +116,7 @@ export default function AppointmentForm() {
 
   const checkAvailability = async () => {
     try {
-      const response = await axios.post('/appointments/check-availability', {
+      const response = await api.post('/appointments/check-availability', {
         professional_id: parseInt(formData.professional_id),
         service_id: parseInt(formData.service_id),
         appointment_date: formData.appointment_date,
@@ -196,10 +196,10 @@ export default function AppointmentForm() {
       }
 
       if (isEditMode) {
-        await axios.put(`/appointments/${id}`, submitData)
+        await api.put(`/appointments/${id}`, submitData)
         toast.success('Agendamento atualizado com sucesso!')
       } else {
-        await axios.post('/appointments', submitData)
+        await api.post('/appointments', submitData)
         toast.success('Agendamento criado com sucesso!')
       }
       
@@ -233,7 +233,7 @@ export default function AppointmentForm() {
     if (searchTerm.length < 2) return
     
     try {
-      const response = await axios.get(`/clients/search?q=${searchTerm}&limit=20`)
+      const response = await api.get(`/clients/search?q=${searchTerm}&limit=20`)
       setClients(response.data.clients || [])
     } catch (error) {
       console.error('Erro na busca de clientes:', error)

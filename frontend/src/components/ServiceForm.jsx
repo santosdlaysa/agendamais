@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { ArrowLeft, Save, X } from 'lucide-react'
-import axios from 'axios'
+import api from '../utils/api'
 import toast from 'react-hot-toast'
 
 export default function ServiceForm() {
@@ -30,7 +30,7 @@ export default function ServiceForm() {
 
   const fetchProfessionals = async () => {
     try {
-      const response = await axios.get('/professionals')
+      const response = await api.get('/professionals')
       setProfessionals(response.data.professionals || [])
     } catch (error) {
       console.error('Erro ao carregar profissionais:', error)
@@ -41,7 +41,7 @@ export default function ServiceForm() {
   const fetchService = async () => {
     try {
       setLoading(true)
-      const response = await axios.get(`/services/${id}`)
+      const response = await api.get(`/services/${id}`)
       const service = response.data.service
       
       setFormData({
@@ -97,10 +97,10 @@ export default function ServiceForm() {
       }
 
       if (isEditMode) {
-        await axios.put(`/services/${id}`, submitData)
+        await api.put(`/services/${id}`, submitData)
         toast.success('Serviço atualizado com sucesso!')
       } else {
-        await axios.post('/services', submitData)
+        await api.post('/services', submitData)
         toast.success('Serviço criado com sucesso!')
       }
       

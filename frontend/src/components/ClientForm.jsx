@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { ArrowLeft, Save, X, User } from 'lucide-react'
-import axios from 'axios'
+import api from '../utils/api'
 import toast from 'react-hot-toast'
 
 export default function ClientForm() {
@@ -27,7 +27,7 @@ export default function ClientForm() {
   const fetchClient = async () => {
     try {
       setLoading(true)
-      const response = await axios.get(`/clients/${id}`)
+      const response = await api.get(`/clients/${id}`)
       const client = response.data.client
       
       setFormData({
@@ -82,10 +82,10 @@ export default function ClientForm() {
       }
 
       if (isEditMode) {
-        await axios.put(`/clients/${id}`, submitData)
+        await api.put(`/clients/${id}`, submitData)
         toast.success('Cliente atualizado com sucesso!')
       } else {
-        await axios.post('/clients', submitData)
+        await api.post('/clients', submitData)
         toast.success('Cliente criado com sucesso!')
       }
       

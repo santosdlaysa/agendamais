@@ -16,7 +16,7 @@ import {
   XCircle,
   AlertCircle
 } from 'lucide-react'
-import axios from 'axios'
+import api from '../utils/api'
 import toast from 'react-hot-toast'
 
 const STATUS_CONFIG = {
@@ -65,7 +65,7 @@ export default function Appointments() {
 
   const fetchProfessionals = async () => {
     try {
-      const response = await axios.get('/professionals?active_only=true')
+      const response = await api.get('/professionals?active_only=true')
       setProfessionals(response.data.professionals || [])
     } catch (error) {
       console.error('Erro ao carregar profissionais:', error)
@@ -85,7 +85,7 @@ export default function Appointments() {
         }
       })
       
-      const response = await axios.get(`/appointments?${params}`)
+      const response = await api.get(`/appointments?${params}`)
       setAppointments(response.data.appointments || [])
       setPagination(response.data.pagination || {})
     } catch (error) {
@@ -98,7 +98,7 @@ export default function Appointments() {
 
   const handleUpdateStatus = async (appointmentId, newStatus) => {
     try {
-      await axios.put(`/appointments/${appointmentId}/status`, {
+      await api.put(`/appointments/${appointmentId}/status`, {
         status: newStatus
       })
       toast.success(`Status atualizado para ${STATUS_CONFIG[newStatus].label}`)
@@ -115,7 +115,7 @@ export default function Appointments() {
     }
 
     try {
-      await axios.delete(`/appointments/${appointmentId}`)
+      await api.delete(`/appointments/${appointmentId}`)
       toast.success('Agendamento excluído com sucesso!')
       fetchAppointments()
     } catch (error) {

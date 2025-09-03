@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Users, UserCheck, Briefcase, Calendar, DollarSign, TrendingUp } from 'lucide-react'
-import axios from 'axios'
+import api from '../utils/api'
 
 export default function Dashboard() {
   const navigate = useNavigate()

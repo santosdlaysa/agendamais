@@ -12,7 +12,7 @@ import {
   Eye,
   EyeOff
 } from 'lucide-react'
-import axios from 'axios'
+import api from '../utils/api'
 import toast from 'react-hot-toast'
 
 export default function Services() {
@@ -28,7 +28,7 @@ export default function Services() {
 
   const fetchServices = async () => {
     try {
-      const response = await axios.get('/services')
+      const response = await api.get('/services')
       setServices(response.data.services || [])
     } catch (error) {
       console.error('Erro ao carregar serviços:', error)
@@ -40,7 +40,7 @@ export default function Services() {
 
   const handleToggleStatus = async (serviceId, currentStatus) => {
     try {
-      await axios.post(`/services/${serviceId}/toggle-status`)
+      await api.post(`/services/${serviceId}/toggle-status`)
       toast.success(`Serviço ${currentStatus ? 'desativado' : 'ativado'} com sucesso!`)
       fetchServices()
     } catch (error) {
@@ -55,7 +55,7 @@ export default function Services() {
     }
 
     try {
-      await axios.delete(`/services/${serviceId}`)
+      await api.delete(`/services/${serviceId}`)
       toast.success('Serviço excluído com sucesso!')
       fetchServices()
     } catch (error) {

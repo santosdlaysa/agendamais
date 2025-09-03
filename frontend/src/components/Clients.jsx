@@ -12,7 +12,7 @@ import {
   FileText,
   User
 } from 'lucide-react'
-import axios from 'axios'
+import api from '../utils/api'
 import toast from 'react-hot-toast'
 
 export default function Clients() {
@@ -39,7 +39,7 @@ export default function Clients() {
         params.append('search', searchTerm)
       }
       
-      const response = await axios.get(`/clients?${params}`)
+      const response = await api.get(`/clients?${params}`)
       setClients(response.data.clients || [])
       setPagination(response.data.pagination || {})
     } catch (error) {
@@ -56,7 +56,7 @@ export default function Clients() {
     }
 
     try {
-      await axios.delete(`/clients/${clientId}`)
+      await api.delete(`/clients/${clientId}`)
       toast.success('Cliente excluído com sucesso!')
       fetchClients()
     } catch (error) {
