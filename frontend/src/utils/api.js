@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 // Configurar axios com base URL
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000'
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://172.20.10.11:5000'
 
 // Instância do axios configurada
 export const api = axios.create({

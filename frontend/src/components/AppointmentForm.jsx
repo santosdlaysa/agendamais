@@ -63,7 +63,7 @@ export default function AppointmentForm() {
     try {
       setLoading(true)
       const [clientsRes, professionalsRes, servicesRes] = await Promise.all([
-        api.get('/clients/search?limit=100'),
+        api.get('/clients?per_page=100'),
         api.get('/professionals?active_only=true'),
         api.get('/services?active_only=true')
       ])
@@ -233,7 +233,7 @@ export default function AppointmentForm() {
     if (searchTerm.length < 2) return
     
     try {
-      const response = await api.get(`/clients/search?q=${searchTerm}&limit=20`)
+      const response = await api.get(`/clients?search=${searchTerm}&per_page=20`)
       setClients(response.data.clients || [])
     } catch (error) {
       console.error('Erro na busca de clientes:', error)
@@ -288,7 +288,7 @@ export default function AppointmentForm() {
                   name="client_id"
                   value={formData.client_id}
                   onChange={handleInputChange}
-                  className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                  className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-black ${
                     errors.client_id ? 'border-red-500' : 'border-gray-300'
                   }`}
                 >
@@ -323,7 +323,7 @@ export default function AppointmentForm() {
                   name="professional_id"
                   value={formData.professional_id}
                   onChange={handleInputChange}
-                  className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                  className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-black ${
                     errors.professional_id ? 'border-red-500' : 'border-gray-300'
                   }`}
                 >
@@ -355,7 +355,7 @@ export default function AppointmentForm() {
                   value={formData.service_id}
                   onChange={handleInputChange}
                   disabled={!formData.professional_id}
-                  className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed ${
+                  className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-black disabled:bg-gray-100 disabled:cursor-not-allowed ${
                     errors.service_id ? 'border-red-500' : 'border-gray-300'
                   }`}
                 >
@@ -384,7 +384,7 @@ export default function AppointmentForm() {
                   onChange={handleInputChange}
                   min="0"
                   step="0.01"
-                  className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                  className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-black ${
                     errors.price ? 'border-red-500' : 'border-gray-300'
                   }`}
                   placeholder="0.00"
@@ -433,7 +433,7 @@ export default function AppointmentForm() {
                   value={formData.appointment_date}
                   onChange={handleInputChange}
                   min={new Date().toISOString().split('T')[0]}
-                  className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                  className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-black ${
                     errors.appointment_date ? 'border-red-500' : 'border-gray-300'
                   }`}
                 />
@@ -452,7 +452,7 @@ export default function AppointmentForm() {
                   name="start_time"
                   value={formData.start_time}
                   onChange={handleInputChange}
-                  className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                  className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-black ${
                     errors.start_time ? 'border-red-500' : 'border-gray-300'
                   }`}
                 />
@@ -506,7 +506,7 @@ export default function AppointmentForm() {
                   name="status"
                   value={formData.status}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-black"
                 >
                   <option value="scheduled">Agendado</option>
                   <option value="completed">Concluído</option>
@@ -524,7 +524,7 @@ export default function AppointmentForm() {
                   value={formData.notes}
                   onChange={handleInputChange}
                   rows={4}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-black"
                   placeholder="Observações especiais sobre o agendamento..."
                 />
               </div>

@@ -22,10 +22,30 @@ export default function Dashboard() {
 
   const fetchDashboardStats = async () => {
     try {
-      const response = await axios.get('/reports/dashboard')
-      setStats(response.data)
+      console.log('Fazendo requisição para dashboard stats...')
+      
+      const [clientsRes, professionalsRes, servicesRes, appointmentsRes] = await Promise.all([
+        api.get('/clients?per_page=1'),
+        api.get('/professionals?per_page=1'),
+        api.get('/services?per_page=1'),
+        api.get('/appointments?per_page=1')
+      ])
+      
+      const newStats = {
+        total_clients: clientsRes.data.pagination?.total || 0,
+        total_professionals: professionalsRes.data.pagination?.total || 0,
+        total_services: servicesRes.data.pagination?.total || 0,
+        total_appointments: appointmentsRes.data.pagination?.total || 0,
+        recent_appointments: 0,
+        total_revenue: 0,
+        appointments_by_status: {}
+      }
+      
+      console.log('Stats calculadas:', newStats)
+      setStats(newStats)
     } catch (error) {
       console.error('Erro ao carregar estatísticas:', error)
+      console.error('Detalhes do erro:', error.response?.data)
     } finally {
       setLoading(false)
     }
