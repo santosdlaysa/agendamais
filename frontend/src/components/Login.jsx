@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { Button } from './ui/button'
 import { Calendar, Eye, EyeOff, Loader2 } from 'lucide-react'
@@ -14,6 +15,7 @@ export default function Login() {
   })
 
   const { login, register } = useAuth()
+  const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -23,7 +25,8 @@ export default function Login() {
       if (isLogin) {
         const result = await login(formData.email, formData.password)
         if (result.success) {
-          // Redirecionamento será feito automaticamente pelo AuthProvider
+          // Redirecionamento manual para a dashboard
+          navigate('/')
         }
       } else {
         const result = await register(formData.name, formData.email, formData.password)

@@ -28,6 +28,27 @@ export function AuthProvider({ children }) {
 
   const login = async (email, password) => {
     try {
+      // Modo desenvolvimento - simulação de login sem backend
+      if (process.env.NODE_ENV === 'development') {
+        // Simulação de dados do usuário
+        const mockUser = {
+          id: 1,
+          name: 'Admin Demo',
+          email: email
+        }
+        
+        const mockToken = 'demo-token-' + Date.now()
+        
+        // Salvar token e dados do usuário
+        localStorage.setItem('token', mockToken)
+        localStorage.setItem('user', JSON.stringify(mockUser))
+        setUser(mockUser)
+        
+        toast.success('Login realizado com sucesso! (Modo desenvolvimento)')
+        return { success: true }
+      }
+
+      // Código original para produção
       const response = await api.post('/auth/login', {
         email,
         password
@@ -52,6 +73,13 @@ export function AuthProvider({ children }) {
 
   const register = async (name, email, password) => {
     try {
+      // Modo desenvolvimento - simulação de registro sem backend
+      if (process.env.NODE_ENV === 'development') {
+        toast.success('Usuário criado com sucesso! Faça login para continuar. (Modo desenvolvimento)')
+        return { success: true }
+      }
+
+      // Código original para produção
       const response = await api.post('/auth/register', {
         name,
         email,

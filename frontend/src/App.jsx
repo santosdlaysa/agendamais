@@ -23,12 +23,21 @@ function App() {
     )
   }
 
-  // Temporariamente removendo verificação de autenticação - acesso livre
+  // Verificação de autenticação - login obrigatório
+  if (!isAuthenticated) {
+    return (
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="*" element={<Navigate to="/login" replace />} />
+      </Routes>
+    )
+  }
+
   return (
     <Routes>
       <Route 
         path="/login" 
-        element={<Login />} 
+        element={<Navigate to="/" replace />} 
       />
       <Route 
         path="/*" 
