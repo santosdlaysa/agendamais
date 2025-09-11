@@ -33,4 +33,43 @@ api.interceptors.response.use(
   }
 )
 
+// Appointment completion functions
+export const appointmentService = {
+  // Complete appointment with automatic value calculation
+  completeAppointment: async (appointmentId, notes, customPrice = null, paymentMethod = null) => {
+    const body = { notes }
+    if (customPrice) {
+      body.custom_price = customPrice
+    }
+    if (paymentMethod) {
+      body.payment_method = paymentMethod
+    }
+    
+    const response = await api.put(`/appointments/${appointmentId}/complete`, body)
+    return response.data
+  },
+
+  // Get financial report
+  getFinancialReport: async (filters = {}) => {
+    const params = new URLSearchParams()
+    
+    if (filters.startDate) params.append('start_date', filters.startDate)
+    if (filters.endDate) params.append('end_date', filters.endDate)
+    if (filters.professionalId) params.append('professional_id', filters.professionalId)
+    if (filters.serviceId) params.append('service_id', filters.serviceId)
+    
+    const response = await api.get(`/appointments/financial-report?${params}`)
+    return response.data
+  },
+
+  // Update status with price (alternative method)
+  updateStatusWithPrice: async (appointmentId, status, notes = '', customPrice = null) => {
+    const body = { status, notes }
+    if (customPrice) body.price = customPrice
+    
+    const response = await api.put(`/appointments/${appointmentId}/status`, body)
+    return response.data
+  }
+}
+
 export default api

@@ -18,6 +18,7 @@ import {
 } from 'lucide-react'
 import api from '../utils/api'
 import toast from 'react-hot-toast'
+import CompleteAppointmentModal from './CompleteAppointmentModal'
 
 const STATUS_CONFIG = {
   scheduled: {
@@ -57,6 +58,8 @@ export default function Appointments() {
   const [professionals, setProfessionals] = useState([])
   const [currentPage, setCurrentPage] = useState(1)
   const [pagination, setPagination] = useState({})
+  const [showCompleteModal, setShowCompleteModal] = useState(false)
+  const [selectedAppointment, setSelectedAppointment] = useState(null)
 
   useEffect(() => {
     fetchProfessionals()
@@ -107,6 +110,13 @@ export default function Appointments() {
       console.error('Erro ao atualizar status:', error)
       toast.error('Erro ao atualizar status do agendamento')
     }
+  }
+
+  const handleCompleteSuccess = () => {
+    setShowCompleteModal(false)
+    setSelectedAppointment(null)
+    fetchAppointments()
+    toast.success('Agendamento concluído com sucesso!')
   }
 
   const handleDelete = async (appointmentId) => {
@@ -350,7 +360,10 @@ export default function Appointments() {
                       {appointment.status === 'scheduled' && (
                         <>
                           <button
-                            onClick={() => handleUpdateStatus(appointment.id, 'completed')}
+                            onClick={() => {
+                              setSelectedAppointment(appointment)
+                              setShowCompleteModal(true)
+                            }}
                             className="p-2 text-green-600 hover:bg-green-50 border border-green-200 rounded-lg"
                             title="Marcar como concluído"
                           >
@@ -453,6 +466,18 @@ export default function Appointments() {
             })}
           </div>
         </div>
+      )}
+
+      {/* Complete Appointment Modal */}
+      {showCompleteModal && selectedAppointment && (
+        <CompleteAppointmentModal
+          appointment={selectedAppointment}
+          onComplete={handleCompleteSuccess}
+          onClose={() => {
+            setShowCompleteModal(false)
+            setSelectedAppointment(null)
+          }}
+        />
       )}
     </div>
   )

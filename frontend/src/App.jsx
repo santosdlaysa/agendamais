@@ -11,6 +11,7 @@ import Clients from './components/Clients'
 import ClientForm from './components/ClientForm'
 import Appointments from './components/Appointments'
 import AppointmentForm from './components/AppointmentForm'
+import FinancialReport from './components/FinancialReport'
 
 function App() {
   const { isAuthenticated, loading } = useAuth()
@@ -62,6 +63,8 @@ function App() {
               <Route path="appointments" element={<Appointments />} />
               <Route path="appointments/new" element={<AppointmentForm />} />
               <Route path="appointments/:id/edit" element={<AppointmentForm />} />
+              
+              <Route path="reports" element={<FinancialReport />} />
               
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
