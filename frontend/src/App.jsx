@@ -12,9 +12,9 @@ import ClientForm from './components/ClientForm'
 import Appointments from './components/Appointments'
 import AppointmentForm from './components/AppointmentForm'
 import FinancialReport from './components/FinancialReport'
-import Reminders from './components/Reminders.jsx'
-import ReminderSettings from './components/ReminderSettings.jsx'
-import ApiDebug from './components/ApiDebug.jsx'
+import Reminders from './components/Reminders'
+import ReminderSettings from './components/ReminderSettings'
+import ApiDebug from './components/ApiDebug'
 
 function App() {
   const { isAuthenticated, loading } = useAuth()
