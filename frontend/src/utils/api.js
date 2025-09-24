@@ -72,4 +72,92 @@ export const appointmentService = {
   }
 }
 
+// Reminder functions
+export const reminderService = {
+  // Get reminder statistics
+  getStats: async (filters = {}) => {
+    const params = new URLSearchParams()
+    if (filters.startDate) params.append('start_date', filters.startDate)
+    if (filters.endDate) params.append('end_date', filters.endDate)
+    if (filters.professionalId) params.append('professional_id', filters.professionalId)
+
+    const response = await api.get(`/reminders/stats?${params}`)
+    return response.data
+  },
+
+  // Get reminders list
+  getReminders: async (filters = {}) => {
+    const params = new URLSearchParams()
+    Object.keys(filters).forEach(key => {
+      if (filters[key]) params.append(key, filters[key])
+    })
+
+    const response = await api.get(`/reminders?${params}`)
+    return response.data
+  },
+
+  // Get upcoming reminders
+  getUpcoming: async (hours = 24) => {
+    const response = await api.get(`/reminders/upcoming?hours=${hours}`)
+    return response.data
+  },
+
+  // Get reminder settings for professional
+  getSettings: async (professionalId) => {
+    const response = await api.get(`/reminders/settings?professional_id=${professionalId}`)
+    return response.data
+  },
+
+  // Update reminder settings
+  updateSettings: async (professionalId, settings) => {
+    const response = await api.put('/reminders/settings', {
+      professional_id: professionalId,
+      settings: settings
+    })
+    return response.data
+  },
+
+  // Get scheduler status
+  getSchedulerStatus: async () => {
+    const response = await api.get('/reminders/scheduler/status')
+    return response.data
+  },
+
+  // Start scheduler
+  startScheduler: async () => {
+    const response = await api.post('/reminders/scheduler/start')
+    return response.data
+  },
+
+  // Stop scheduler
+  stopScheduler: async () => {
+    const response = await api.post('/reminders/scheduler/stop')
+    return response.data
+  },
+
+  // Process pending reminders
+  processReminders: async () => {
+    const response = await api.post('/reminders/process')
+    return response.data
+  },
+
+  // Send specific reminder
+  sendReminder: async (reminderId) => {
+    const response = await api.post(`/reminders/${reminderId}/send`)
+    return response.data
+  },
+
+  // Test WhatsApp connection
+  testWhatsApp: async () => {
+    const response = await api.post('/reminders/test/whatsapp')
+    return response.data
+  },
+
+  // Test SMS connection
+  testSMS: async () => {
+    const response = await api.post('/reminders/test/sms')
+    return response.data
+  }
+}
+
 export default api

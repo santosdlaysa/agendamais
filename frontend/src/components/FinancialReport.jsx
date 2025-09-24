@@ -17,8 +17,8 @@ const FinancialReport = () => {
   const [report, setReport] = useState(null)
   const [loading, setLoading] = useState(true)
   const [filters, setFilters] = useState({
-    startDate: new Date().toISOString().split('T')[0].replace(/-\d{2}$/, '-01'), // First day of current month
-    endDate: new Date().toISOString().split('T')[0], // Today
+    startDate: '2020-01-01', // Data ampla para mostrar todos por padrão
+    endDate: '2030-12-31',   // Data ampla para mostrar todos por padrão
     professionalId: '',
     serviceId: ''
   })
@@ -52,8 +52,161 @@ const FinancialReport = () => {
   const loadReport = async () => {
     setLoading(true)
     try {
-      const data = await appointmentService.getFinancialReport(filters)
-      setReport(data)
+      // Primeiro tenta usar a API de relatório específica
+      try {
+        const data = await appointmentService.getFinancialReport(filters)
+        setReport(data)
+        return
+      } catch (apiError) {
+        console.log('API de relatório não disponível, calculando manualmente...')
+      }
+
+      // Fallback: calcular relatório manualmente dos agendamentos
+      // Se não há filtros específicos de prof/serviço, não aplicar para ver todos os dados
+      const params = new URLSearchParams({
+        per_page: '200' // Reduzir para evitar erro 500
+      })
+
+      // Só aplicar filtros de prof/serviço se estiverem definidos
+      if (filters.professionalId && filters.professionalId !== '') {
+        params.append('professional_id', filters.professionalId)
+      }
+      if (filters.serviceId && filters.serviceId !== '') {
+        params.append('service_id', filters.serviceId)
+      }
+
+      let appointments = []
+
+      try {
+        const appointmentsRes = await api.get(`/appointments?${params}`)
+        appointments = appointmentsRes.data.appointments || []
+        console.log('Agendamentos carregados para relatório:', appointments.length)
+      } catch (fetchError) {
+        console.log('Erro ao buscar agendamentos, tentando alternativa:', fetchError)
+
+        // Fallback com parâmetros básicos se der erro
+        try {
+          const basicRes = await api.get('/appointments?per_page=100&status=completed')
+          appointments = basicRes.data.appointments || []
+          console.log('Agendamentos básicos carregados:', appointments.length)
+        } catch (basicError) {
+          console.error('Não foi possível carregar agendamentos:', basicError)
+          appointments = []
+        }
+      }
+
+      console.log('Relatório: agendamentos carregados:', appointments.length)
+
+      // Contar todos os agendamentos por status primeiro
+      const statusCount = appointments.reduce((acc, apt) => {
+        acc[apt.status] = (acc[apt.status] || 0) + 1
+        return acc
+      }, {})
+      console.log('Relatório: agendamentos por status:', statusCount)
+
+      // Primeiro, mostrar todos os agendamentos concluídos (sem filtro de data)
+      const allCompletedAppointments = appointments.filter(apt => {
+        // Verificar status
+        if (apt.status !== 'completed') {
+          return false
+        }
+
+        // Verificar preço
+        const price = parseFloat(apt.price || 0)
+        if (!apt.price || price <= 0) {
+          return false
+        }
+
+        return true
+      })
+
+      // Depois aplicar filtro de data apenas se não for um período muito amplo
+      const isWideRange = filters.startDate <= '2020-01-01' || filters.endDate >= '2030-01-01'
+
+      let filteredAppointments
+
+      if (isWideRange) {
+        // Se é um período amplo, usar todos os concluídos
+        filteredAppointments = allCompletedAppointments
+      } else {
+        // Aplicar filtro de data normalmente
+        filteredAppointments = allCompletedAppointments.filter(apt => {
+          try {
+            const aptDate = new Date(apt.appointment_date)
+            const startDate = new Date(filters.startDate)
+            const endDate = new Date(filters.endDate + 'T23:59:59')
+
+            // Verificar se as datas são válidas
+            if (isNaN(aptDate.getTime()) || isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+              return true // Em caso de erro, incluir o agendamento
+            }
+
+            return aptDate >= startDate && aptDate <= endDate
+          } catch (dateError) {
+            return true // Em caso de erro, incluir o agendamento
+          }
+        })
+      }
+
+      console.log('Relatório: agendamentos filtrados:', filteredAppointments.length)
+
+      // Calcular resumo financeiro
+      const totalRevenue = filteredAppointments.reduce((sum, apt) => sum + parseFloat(apt.price || 0), 0)
+      const totalAppointments = filteredAppointments.length
+      const averageTicket = totalAppointments > 0 ? totalRevenue / totalAppointments : 0
+
+      // Breakdown por serviço
+      const serviceBreakdown = filteredAppointments.reduce((acc, apt) => {
+        const serviceName = apt.service?.name || 'Serviço não informado'
+        if (!acc[serviceName]) {
+          acc[serviceName] = { count: 0, total_revenue: 0 }
+        }
+        acc[serviceName].count++
+        acc[serviceName].total_revenue += parseFloat(apt.price || 0)
+        return acc
+      }, {})
+
+      // Breakdown por profissional
+      const professionalBreakdown = filteredAppointments.reduce((acc, apt) => {
+        const professionalName = apt.professional?.name || 'Profissional não informado'
+        if (!acc[professionalName]) {
+          acc[professionalName] = { count: 0, total_revenue: 0 }
+        }
+        acc[professionalName].count++
+        acc[professionalName].total_revenue += parseFloat(apt.price || 0)
+        return acc
+      }, {})
+
+      // Montar objeto do relatório
+      const reportData = {
+        financial_summary: {
+          total_revenue: totalRevenue.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
+          total_appointments: totalAppointments,
+          average_ticket: averageTicket.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+        },
+        service_breakdown: Object.fromEntries(
+          Object.entries(serviceBreakdown).map(([name, data]) => [
+            name,
+            {
+              ...data,
+              total_revenue_numeric: data.total_revenue,
+              total_revenue: data.total_revenue.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+            }
+          ])
+        ),
+        professional_breakdown: Object.fromEntries(
+          Object.entries(professionalBreakdown).map(([name, data]) => [
+            name,
+            {
+              ...data,
+              total_revenue_numeric: data.total_revenue,
+              total_revenue: data.total_revenue.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+            }
+          ])
+        )
+      }
+
+      setReport(reportData)
     } catch (error) {
       console.error('Erro ao carregar relatório:', error)
       toast.error('Erro ao carregar relatório financeiro')
@@ -71,8 +224,8 @@ const FinancialReport = () => {
 
   const clearFilters = () => {
     setFilters({
-      startDate: new Date().toISOString().split('T')[0].replace(/-\d{2}$/, '-01'),
-      endDate: new Date().toISOString().split('T')[0],
+      startDate: '2020-01-01', // Data ampla para mostrar todos
+      endDate: '2030-12-31',   // Data ampla para mostrar todos
       professionalId: '',
       serviceId: ''
     })
@@ -219,7 +372,20 @@ const FinancialReport = () => {
           </div>
         </div>
 
-        <div className="flex justify-end">
+        <div className="flex justify-between items-center">
+          <button
+            onClick={() => {
+              setFilters({
+                startDate: '2020-01-01', // Data muito antiga
+                endDate: '2030-12-31',   // Data muito futura
+                professionalId: '',
+                serviceId: ''
+              })
+            }}
+            className="text-sm text-green-600 hover:text-green-800"
+          >
+            Ver todos os agendamentos concluídos
+          </button>
           <button
             onClick={clearFilters}
             className="text-sm text-blue-600 hover:text-blue-800"
@@ -286,7 +452,7 @@ const FinancialReport = () => {
               
               <div className="space-y-4">
                 {Object.entries(report.service_breakdown)
-                  .sort(([,a], [,b]) => b.total_revenue - a.total_revenue)
+                  .sort(([,a], [,b]) => (b.total_revenue_numeric || 0) - (a.total_revenue_numeric || 0))
                   .map(([service, data]) => (
                   <div key={service} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
                     <div>
@@ -296,7 +462,7 @@ const FinancialReport = () => {
                     <div className="text-right">
                       <p className="font-semibold text-gray-900">R$ {data.total_revenue}</p>
                       <p className="text-sm text-gray-600">
-                        Média: R$ {(data.total_revenue / data.count).toFixed(2)}
+                        Média: R$ {((data.total_revenue_numeric || 0) / data.count).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                       </p>
                     </div>
                   </div>
@@ -315,7 +481,7 @@ const FinancialReport = () => {
               
               <div className="space-y-4">
                 {Object.entries(report.professional_breakdown)
-                  .sort(([,a], [,b]) => b.total_revenue - a.total_revenue)
+                  .sort(([,a], [,b]) => (b.total_revenue_numeric || 0) - (a.total_revenue_numeric || 0))
                   .map(([professional, data]) => (
                   <div key={professional} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
                     <div>
@@ -325,7 +491,7 @@ const FinancialReport = () => {
                     <div className="text-right">
                       <p className="font-semibold text-gray-900">R$ {data.total_revenue}</p>
                       <p className="text-sm text-gray-600">
-                        Média: R$ {(data.total_revenue / data.count).toFixed(2)}
+                        Média: R$ {((data.total_revenue_numeric || 0) / data.count).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                       </p>
                     </div>
                   </div>

@@ -12,6 +12,9 @@ import ClientForm from './components/ClientForm'
 import Appointments from './components/Appointments'
 import AppointmentForm from './components/AppointmentForm'
 import FinancialReport from './components/FinancialReport'
+import Reminders from './components/Reminders'
+import ReminderSettings from './components/ReminderSettings'
+import ApiDebug from './components/ApiDebug'
 
 function App() {
   const { isAuthenticated, loading } = useAuth()
@@ -65,7 +68,12 @@ function App() {
               <Route path="appointments/:id/edit" element={<AppointmentForm />} />
               
               <Route path="reports" element={<FinancialReport />} />
-              
+
+              <Route path="reminders" element={<Reminders />} />
+              <Route path="reminders/settings" element={<ReminderSettings />} />
+
+              <Route path="debug" element={<ApiDebug />} />
+
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </Layout>

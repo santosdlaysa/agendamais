@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Users, UserCheck, Briefcase, Calendar, DollarSign, TrendingUp } from 'lucide-react'
-import api from '../utils/api'
+import { Users, UserCheck, Briefcase, Calendar, DollarSign, TrendingUp, MessageSquare, Clock } from 'lucide-react'
+import api, { reminderService } from '../utils/api'
 
 export default function Dashboard() {
   const navigate = useNavigate()
@@ -14,6 +14,13 @@ export default function Dashboard() {
     total_revenue: 0,
     appointments_by_status: {}
   })
+  const [reminderStats, setReminderStats] = useState({
+    total_reminders: 0,
+    pending_reminders: 0,
+    sent_reminders: 0,
+    failed_reminders: 0
+  })
+  const [upcomingReminders, setUpcomingReminders] = useState([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -23,26 +30,127 @@ export default function Dashboard() {
   const fetchDashboardStats = async () => {
     try {
       console.log('Fazendo requisição para dashboard stats...')
-      
-      const [clientsRes, professionalsRes, servicesRes, appointmentsRes] = await Promise.all([
-        api.get('/clients?per_page=1'),
-        api.get('/professionals?per_page=1'),
-        api.get('/services?per_page=1'),
-        api.get('/appointments?per_page=1')
-      ])
-      
+      console.log('API Base URL:', api.defaults.baseURL)
+
+      // Fazer requisições básicas uma por vez para identificar qual está falhando
+      let clientsRes, professionalsRes, servicesRes, appointmentsRes
+
+      try {
+        console.log('Buscando clientes...')
+        clientsRes = await api.get('/clients?per_page=1')
+        console.log('Clientes OK:', clientsRes.data.pagination?.total)
+      } catch (clientsError) {
+        console.error('Erro ao buscar clientes:', clientsError.response?.status, clientsError.message)
+        clientsRes = { data: { pagination: { total: 0 } } }
+      }
+
+      try {
+        console.log('Buscando profissionais...')
+        professionalsRes = await api.get('/professionals?per_page=1')
+        console.log('Profissionais OK:', professionalsRes.data.pagination?.total)
+      } catch (professionalsError) {
+        console.error('Erro ao buscar profissionais:', professionalsError.response?.status, professionalsError.message)
+        professionalsRes = { data: { pagination: { total: 0 } } }
+      }
+
+      try {
+        console.log('Buscando serviços...')
+        servicesRes = await api.get('/services?per_page=1')
+        console.log('Serviços OK:', servicesRes.data.pagination?.total)
+      } catch (servicesError) {
+        console.error('Erro ao buscar serviços:', servicesError.response?.status, servicesError.message)
+        servicesRes = { data: { pagination: { total: 0 } } }
+      }
+
+      try {
+        console.log('Buscando agendamentos...')
+        appointmentsRes = await api.get('/appointments?per_page=1')
+        console.log('Agendamentos OK:', appointmentsRes.data.pagination?.total)
+      } catch (appointmentsError) {
+        console.error('Erro ao buscar agendamentos:', appointmentsError.response?.status, appointmentsError.message)
+        appointmentsRes = { data: { pagination: { total: 0 } } }
+      }
+
+      // Buscar agendamentos concluídos para calcular receita
+      let totalRevenue = 0
+      let appointmentsByStatus = {}
+      let recentAppointments = 0
+
+      try {
+        // Buscar todos os agendamentos para calcular estatísticas detalhadas
+        // Primeiro tenta com menos itens para evitar erro 500
+        let allAppointments = []
+
+        try {
+          const allAppointmentsRes = await api.get('/appointments?per_page=200')
+          allAppointments = allAppointmentsRes.data.appointments || []
+          console.log('Agendamentos carregados:', allAppointments.length)
+        } catch (appointmentError) {
+          console.log('Erro ao buscar agendamentos completos, tentando só concluídos:', appointmentError)
+
+          // Fallback: tentar buscar apenas os concluídos se der erro
+          try {
+            const completedRes = await api.get('/appointments?status=completed&per_page=100')
+            allAppointments = completedRes.data.appointments || []
+            console.log('Agendamentos concluídos carregados:', allAppointments.length)
+          } catch (completedError) {
+            console.log('Erro ao buscar agendamentos concluídos:', completedError)
+            // Se falhar, usar só o que já temos do primeiro request
+            allAppointments = []
+          }
+        }
+
+        if (allAppointments.length > 0) {
+          // Calcular receita total dos agendamentos concluídos
+          totalRevenue = allAppointments
+            .filter(apt => apt.status === 'completed' && apt.price)
+            .reduce((sum, apt) => sum + parseFloat(apt.price || 0), 0)
+
+          // Contar por status
+          appointmentsByStatus = allAppointments.reduce((acc, apt) => {
+            acc[apt.status] = (acc[apt.status] || 0) + 1
+            return acc
+          }, {})
+
+          // Agendamentos dos últimos 30 dias
+          const thirtyDaysAgo = new Date()
+          thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30)
+
+          recentAppointments = allAppointments.filter(apt => {
+            const aptDate = new Date(apt.appointment_date)
+            return aptDate >= thirtyDaysAgo
+          }).length
+
+          console.log('Receita calculada:', totalRevenue)
+          console.log('Agendamentos por status:', appointmentsByStatus)
+        }
+      } catch (revenueError) {
+        console.log('Erro ao calcular receita detalhada:', revenueError)
+      }
+
       const newStats = {
         total_clients: clientsRes.data.pagination?.total || 0,
         total_professionals: professionalsRes.data.pagination?.total || 0,
         total_services: servicesRes.data.pagination?.total || 0,
         total_appointments: appointmentsRes.data.pagination?.total || 0,
-        recent_appointments: 0,
-        total_revenue: 0,
-        appointments_by_status: {}
+        recent_appointments: recentAppointments,
+        total_revenue: totalRevenue,
+        appointments_by_status: appointmentsByStatus
       }
-      
+
       console.log('Stats calculadas:', newStats)
       setStats(newStats)
+
+      // Fetch reminder stats
+      try {
+        const reminderStatsRes = await reminderService.getStats()
+        setReminderStats(reminderStatsRes.stats || {})
+
+        const upcomingRes = await reminderService.getUpcoming(24)
+        setUpcomingReminders(upcomingRes.reminders || [])
+      } catch (reminderError) {
+        console.log('Erro ao carregar estatísticas de lembretes (API pode não estar disponível):', reminderError)
+      }
     } catch (error) {
       console.error('Erro ao carregar estatísticas:', error)
       console.error('Detalhes do erro:', error.response?.data)
@@ -92,7 +200,7 @@ export default function Dashboard() {
     },
     {
       title: 'Receita Total',
-      value: `R$ ${(stats.total_revenue || 0).toFixed(2)}`,
+      value: `R$ ${(stats.total_revenue || 0).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
       icon: DollarSign,
       color: 'bg-emerald-500'
     }
@@ -141,6 +249,60 @@ export default function Dashboard() {
               </div>
             ))}
           </div>
+        </div>
+      )}
+
+      {/* Reminder Stats */}
+      {reminderStats.total_reminders > 0 && (
+        <div className="bg-white rounded-lg shadow-sm border p-6">
+          <div className="flex justify-between items-center mb-4">
+            <h3 className="text-lg font-medium text-gray-900">Lembretes Automáticos</h3>
+            <button
+              onClick={() => navigate('/reminders')}
+              className="text-blue-600 hover:text-blue-800 text-sm font-medium"
+            >
+              Ver todos
+            </button>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
+            <div className="text-center p-3 bg-green-50 rounded-lg">
+              <p className="text-2xl font-bold text-green-600">{reminderStats.sent_reminders || 0}</p>
+              <p className="text-sm text-green-600">Enviados</p>
+            </div>
+            <div className="text-center p-3 bg-yellow-50 rounded-lg">
+              <p className="text-2xl font-bold text-yellow-600">{reminderStats.pending_reminders || 0}</p>
+              <p className="text-sm text-yellow-600">Pendentes</p>
+            </div>
+            <div className="text-center p-3 bg-red-50 rounded-lg">
+              <p className="text-2xl font-bold text-red-600">{reminderStats.failed_reminders || 0}</p>
+              <p className="text-sm text-red-600">Falharam</p>
+            </div>
+          </div>
+
+          {upcomingReminders.length > 0 && (
+            <div>
+              <h4 className="text-sm font-medium text-gray-700 mb-2">Próximos lembretes (24h)</h4>
+              <div className="space-y-2">
+                {upcomingReminders.slice(0, 3).map((reminder) => (
+                  <div key={reminder.id} className="flex items-center justify-between p-2 bg-gray-50 rounded">
+                    <div className="flex items-center space-x-2">
+                      <MessageSquare className="h-4 w-4 text-blue-600" />
+                      <span className="text-sm text-gray-900">
+                        {reminder.appointment?.client?.name}
+                      </span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <Clock className="h-3 w-3 text-gray-400" />
+                      <span className="text-xs text-gray-500">
+                        {new Date(reminder.reminder_time).toLocaleString('pt-BR')}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       )}
 
