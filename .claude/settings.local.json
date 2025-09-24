@@ -12,7 +12,8 @@
       "Bash(npm test:*)",
       "Read(C:\\Users\\ldsantos\\WebstormProjects\\agendamais-backend/**)",
       "Read(C:\\Users\\ldsantos\\WebstormProjects\\agendamais-backend/**)",
-      "WebFetch(domain:localhost)"
+      "WebFetch(domain:localhost)",
+      "Bash(npm run build:*)"
     ],
     "deny": [],
     "ask": []
