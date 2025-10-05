@@ -27,7 +27,8 @@ api.interceptors.response.use(
     if (error.response?.status === 401) {
       localStorage.removeItem('token')
       localStorage.removeItem('user')
-      window.location.href = '/login'
+      // Use hash para funcionar tanto no navegador quanto no Electron
+      window.location.hash = '#/login'
     }
     return Promise.reject(error)
   }
