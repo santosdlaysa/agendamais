@@ -1,4 +1,3 @@
-# 📱 Funcionalidade de Lembretes Automáticos - Frontend
 
 ## 🚀 Resumo
 

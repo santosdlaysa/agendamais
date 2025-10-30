@@ -19,7 +19,9 @@
       "Bash(npx electron-builder:*)",
       "Bash(tasklist)",
       "Bash(findstr:*)",
-      "Bash(dir:*)"
+      "Bash(dir:*)",
+      "Bash(test:*)",
+      "Bash(timeout:*)"
     ],
     "deny": [],
     "ask": []
