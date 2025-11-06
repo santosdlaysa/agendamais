@@ -1,10 +1,12 @@
 import { useAuth } from '../contexts/AuthContext'
+import { useSubscription } from '../contexts/SubscriptionContext'
 import { NavLink } from 'react-router-dom'
-import { Calendar, LogOut, Users, UserCheck, Briefcase, FileText, BarChart3, MessageSquare } from 'lucide-react'
+import { Calendar, LogOut, Users, UserCheck, Briefcase, FileText, BarChart3, MessageSquare, CreditCard } from 'lucide-react'
 import { Button } from './ui/button'
 
 export default function Layout({ children }) {
   const { user, logout } = useAuth()
+  const { subscription, hasActiveSubscription } = useSubscription()
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -135,6 +137,19 @@ export default function Layout({ children }) {
             >
               <MessageSquare className="h-4 w-4 mr-2" />
               Lembretes
+            </NavLink>
+            <NavLink
+              to={hasActiveSubscription() ? "/subscription/manage" : "/subscription/plans"}
+              className={({ isActive }) =>
+                `flex items-center px-3 py-2 rounded-md text-sm font-medium ${
+                  isActive
+                    ? 'text-gray-900 bg-gray-100'
+                    : 'text-gray-500 hover:text-gray-900'
+                }`
+              }
+            >
+              <CreditCard className="h-4 w-4 mr-2" />
+              {hasActiveSubscription() ? 'Assinatura' : 'Assinar'}
             </NavLink>
           </div>
         </div>

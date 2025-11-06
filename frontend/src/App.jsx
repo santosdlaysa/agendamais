@@ -15,6 +15,9 @@ import FinancialReport from './components/FinancialReport'
 import Reminders from './components/Reminders'
 import ReminderSettings from './components/ReminderSettings'
 import ApiDebug from './components/ApiDebug'
+import SubscriptionPlans from './components/SubscriptionPlans'
+import PaymentModal from './components/PaymentModal'
+import SubscriptionStatus from './components/SubscriptionStatus'
 
 function App() {
   const { isAuthenticated, loading } = useAuth()
@@ -71,6 +74,10 @@ function App() {
 
               <Route path="reminders" element={<Reminders />} />
               <Route path="reminders/settings" element={<ReminderSettings />} />
+
+              <Route path="subscription/plans" element={<SubscriptionPlans />} />
+              <Route path="subscription/payment" element={<PaymentModal />} />
+              <Route path="subscription/manage" element={<SubscriptionStatus />} />
 
               <Route path="debug" element={<ApiDebug />} />
 
