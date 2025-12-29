@@ -21,7 +21,8 @@
       "Bash(findstr:*)",
       "Bash(dir:*)",
       "Bash(test:*)",
-      "Bash(timeout:*)"
+      "Bash(timeout:*)",
+      "Bash(git add:*)"
     ],
     "deny": [],
     "ask": []
