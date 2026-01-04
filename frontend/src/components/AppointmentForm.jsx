@@ -72,7 +72,6 @@ export default function AppointmentForm() {
       setProfessionals(professionalsRes.data.professionals || [])
       setServices(servicesRes.data.services || [])
     } catch (error) {
-      console.error('Erro ao carregar dados:', error)
       toast.error('Erro ao carregar dados necessários')
     } finally {
       setLoading(false)
@@ -84,7 +83,6 @@ export default function AppointmentForm() {
       const response = await api.get(`/professionals/${professionalId}/services`)
       setAvailableServices(response.data.services || [])
     } catch (error) {
-      console.error('Erro ao carregar serviços do profissional:', error)
       setAvailableServices([])
     }
   }
@@ -106,7 +104,6 @@ export default function AppointmentForm() {
         price: appointment.price.toString()
       })
     } catch (error) {
-      console.error('Erro ao carregar agendamento:', error)
       toast.error('Erro ao carregar agendamento')
       navigate('/appointments')
     } finally {
@@ -126,7 +123,6 @@ export default function AppointmentForm() {
       
       setAvailability(response.data)
     } catch (error) {
-      console.error('Erro ao verificar disponibilidade:', error)
       setAvailability({ available: false, end_time: '' })
     }
   }
@@ -205,7 +201,6 @@ export default function AppointmentForm() {
       
       navigate('/appointments')
     } catch (error) {
-      console.error('Erro ao salvar agendamento:', error)
       const message = error.response?.data?.message || 'Erro ao salvar agendamento'
       toast.error(message)
     } finally {
@@ -236,7 +231,7 @@ export default function AppointmentForm() {
       const response = await api.get(`/clients?search=${searchTerm}&per_page=20`)
       setClients(response.data.clients || [])
     } catch (error) {
-      console.error('Erro na busca de clientes:', error)
+      // Error handled silently
     }
   }
 

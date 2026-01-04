@@ -5,8 +5,10 @@ import { CreditCard, Lock, Loader2, CheckCircle, XCircle } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
 import { useSubscription } from '../contexts/SubscriptionContext'
 
-// Inicializar Stripe
-const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY)
+// Inicializar Stripe uma única vez
+const stripePromise = import.meta.env.VITE_STRIPE_PUBLIC_KEY
+  ? loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY)
+  : null
 
 const PLAN_NAMES = {
   basic: { name: 'Básico', price: 29 },
@@ -36,8 +38,9 @@ export default function PaymentModal() {
       return
     }
 
-    // Carregar Stripe
-    loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY).then((stripeInstance) => {
+    // Usar a instância já carregada do Stripe
+    stripePromise?.then((stripeInstance) => {
+      if (!stripeInstance) return
       setStripe(stripeInstance)
 
       // Criar elementos do Stripe
@@ -116,7 +119,6 @@ export default function PaymentModal() {
         }, 2000)
       }
     } catch (err) {
-      console.error('Erro ao processar pagamento:', err)
       setError('Erro ao processar pagamento. Tente novamente.')
       setLoading(false)
     }

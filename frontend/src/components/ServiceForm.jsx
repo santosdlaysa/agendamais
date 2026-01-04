@@ -33,7 +33,6 @@ export default function ServiceForm() {
       const response = await api.get('/professionals')
       setProfessionals(response.data.professionals || [])
     } catch (error) {
-      console.error('Erro ao carregar profissionais:', error)
       toast.error('Erro ao carregar profissionais')
     }
   }
@@ -53,7 +52,6 @@ export default function ServiceForm() {
         professional_ids: service.professionals ? service.professionals.map(p => p.id) : []
       })
     } catch (error) {
-      console.error('Erro ao carregar serviço:', error)
       toast.error('Erro ao carregar serviço')
       navigate('/services')
     } finally {
@@ -106,7 +104,6 @@ export default function ServiceForm() {
       
       navigate('/services')
     } catch (error) {
-      console.error('Erro ao salvar serviço:', error)
       const message = error.response?.data?.message || 'Erro ao salvar serviço'
       toast.error(message)
     } finally {

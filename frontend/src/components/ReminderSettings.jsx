@@ -41,7 +41,7 @@ export default function ReminderSettings() {
         setSelectedProfessional(response.data.professionals[0].id.toString())
       }
     } catch (error) {
-      console.error('Erro ao carregar profissionais:', error)
+      // Error handled silently
     } finally {
       setLoading(false)
     }
@@ -52,7 +52,7 @@ export default function ReminderSettings() {
       const response = await api.get(`/reminders/settings?professional_id=${selectedProfessional}`)
       setSettings(response.data.settings || [])
     } catch (error) {
-      console.error('Erro ao carregar configurações:', error)
+      // Error handled silently
     }
   }
 
@@ -90,7 +90,6 @@ export default function ReminderSettings() {
       })
       alert('Configurações salvas com sucesso!')
     } catch (error) {
-      console.error('Erro ao salvar configurações:', error)
       alert('Erro ao salvar configurações')
     } finally {
       setSaving(false)

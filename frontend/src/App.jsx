@@ -14,10 +14,13 @@ import AppointmentForm from './components/AppointmentForm'
 import FinancialReport from './components/FinancialReport'
 import Reminders from './components/Reminders'
 import ReminderSettings from './components/ReminderSettings'
-import ApiDebug from './components/ApiDebug'
+// ApiDebug removido para produção
 import SubscriptionPlans from './components/SubscriptionPlans'
 import PaymentModal from './components/PaymentModal'
 import SubscriptionStatus from './components/SubscriptionStatus'
+import SubscriptionSuccess from './components/SubscriptionSuccess'
+import SubscriptionCanceled from './components/SubscriptionCanceled'
+import Settings from './components/Settings'
 
 function App() {
   const { isAuthenticated, loading } = useAuth()
@@ -78,8 +81,10 @@ function App() {
               <Route path="subscription/plans" element={<SubscriptionPlans />} />
               <Route path="subscription/payment" element={<PaymentModal />} />
               <Route path="subscription/manage" element={<SubscriptionStatus />} />
+              <Route path="subscription/success" element={<SubscriptionSuccess />} />
+              <Route path="subscription/canceled" element={<SubscriptionCanceled />} />
 
-              <Route path="debug" element={<ApiDebug />} />
+              <Route path="settings" element={<Settings />} />
 
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>

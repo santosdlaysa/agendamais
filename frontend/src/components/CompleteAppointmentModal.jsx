@@ -34,7 +34,6 @@ const CompleteAppointmentModal = ({ appointment, onComplete, onClose }) => {
       onComplete(result)
       onClose()
     } catch (error) {
-      console.error('Erro ao concluir agendamento:', error)
       toast.error(error.response?.data?.message || 'Erro ao concluir agendamento')
     } finally {
       setLoading(false)
@@ -55,7 +54,6 @@ const CompleteAppointmentModal = ({ appointment, onComplete, onClose }) => {
       onComplete(result)
       onClose()
     } catch (error) {
-      console.error('Erro ao concluir agendamento:', error)
       toast.error(error.response?.data?.message || 'Erro ao concluir agendamento')
     } finally {
       setLoading(false)

@@ -40,17 +40,11 @@ export default function Clients() {
       }
       
       const url = `/clients?${params}`
-      console.log('Fazendo requisição para:', url)
-      console.log('Base URL da API:', api.defaults.baseURL)
-      
       const response = await api.get(url)
-      console.log('Resposta da API:', response.data)
-      
+
       setClients(response.data.clients || [])
       setPagination(response.data.pagination || {})
     } catch (error) {
-      console.error('Erro ao carregar clientes:', error)
-      console.error('Detalhes do erro:', error.response?.data)
       toast.error('Erro ao carregar clientes')
     } finally {
       setLoading(false)
@@ -67,7 +61,6 @@ export default function Clients() {
       toast.success('Cliente excluído com sucesso!')
       fetchClients()
     } catch (error) {
-      console.error('Erro ao excluir cliente:', error)
       const message = error.response?.data?.message || 'Erro ao excluir cliente'
       toast.error(message)
     }

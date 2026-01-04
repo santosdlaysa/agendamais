@@ -71,7 +71,7 @@ export default function Appointments() {
       const response = await api.get('/professionals?active_only=true')
       setProfessionals(response.data.professionals || [])
     } catch (error) {
-      console.error('Erro ao carregar profissionais:', error)
+      // Error handled silently
     }
   }
 
@@ -92,7 +92,6 @@ export default function Appointments() {
       setAppointments(response.data.appointments || [])
       setPagination(response.data.pagination || {})
     } catch (error) {
-      console.error('Erro ao carregar agendamentos:', error)
       toast.error('Erro ao carregar agendamentos')
     } finally {
       setLoading(false)
@@ -107,7 +106,6 @@ export default function Appointments() {
       toast.success(`Status atualizado para ${STATUS_CONFIG[newStatus].label}`)
       fetchAppointments()
     } catch (error) {
-      console.error('Erro ao atualizar status:', error)
       toast.error('Erro ao atualizar status do agendamento')
     }
   }
@@ -129,7 +127,6 @@ export default function Appointments() {
       toast.success('Agendamento excluído com sucesso!')
       fetchAppointments()
     } catch (error) {
-      console.error('Erro ao excluir agendamento:', error)
       toast.error('Erro ao excluir agendamento')
     }
   }

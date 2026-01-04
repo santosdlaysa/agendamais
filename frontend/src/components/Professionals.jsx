@@ -32,7 +32,6 @@ export default function Professionals() {
       const response = await api.get('/professionals?include_services=true&include_stats=true')
       setProfessionals(response.data.professionals || [])
     } catch (error) {
-      console.error('Erro ao carregar profissionais:', error)
       toast.error('Erro ao carregar profissionais')
     } finally {
       setLoading(false)
@@ -45,7 +44,6 @@ export default function Professionals() {
       toast.success(`Profissional ${currentStatus ? 'desativado' : 'ativado'} com sucesso!`)
       fetchProfessionals()
     } catch (error) {
-      console.error('Erro ao alterar status do profissional:', error)
       toast.error('Erro ao alterar status do profissional')
     }
   }
@@ -60,7 +58,6 @@ export default function Professionals() {
       toast.success('Profissional excluído com sucesso!')
       fetchProfessionals()
     } catch (error) {
-      console.error('Erro ao excluir profissional:', error)
       const message = error.response?.data?.message || 'Erro ao excluir profissional'
       toast.error(message)
     }

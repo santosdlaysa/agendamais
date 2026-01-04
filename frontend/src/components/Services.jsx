@@ -31,7 +31,6 @@ export default function Services() {
       const response = await api.get('/services')
       setServices(response.data.services || [])
     } catch (error) {
-      console.error('Erro ao carregar serviços:', error)
       toast.error('Erro ao carregar serviços')
     } finally {
       setLoading(false)
@@ -44,7 +43,6 @@ export default function Services() {
       toast.success(`Serviço ${currentStatus ? 'desativado' : 'ativado'} com sucesso!`)
       fetchServices()
     } catch (error) {
-      console.error('Erro ao alterar status do serviço:', error)
       toast.error('Erro ao alterar status do serviço')
     }
   }
@@ -59,7 +57,6 @@ export default function Services() {
       toast.success('Serviço excluído com sucesso!')
       fetchServices()
     } catch (error) {
-      console.error('Erro ao excluir serviço:', error)
       const message = error.response?.data?.message || 'Erro ao excluir serviço'
       toast.error(message)
     }

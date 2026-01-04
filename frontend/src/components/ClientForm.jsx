@@ -37,7 +37,6 @@ export default function ClientForm() {
         notes: client.notes || ''
       })
     } catch (error) {
-      console.error('Erro ao carregar cliente:', error)
       toast.error('Erro ao carregar cliente')
       navigate('/clients')
     } finally {
@@ -46,47 +45,34 @@ export default function ClientForm() {
   }
 
   const validateForm = () => {
-    console.log('=== DEBUG: validateForm iniciado ===')
-    console.log('formData atual:', formData)
-    
     const newErrors = {}
 
     if (!formData.name.trim()) {
       newErrors.name = 'Nome é obrigatório'
-      console.log('Erro: Nome é obrigatório')
     }
 
     if (formData.email && !/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = 'Email deve ter um formato válido'
-      console.log('Erro: Email inválido:', formData.email)
     }
 
     if (formData.phone && !/^[\d\s\(\)\-\+]+$/.test(formData.phone)) {
       newErrors.phone = 'Telefone deve conter apenas números e símbolos válidos'
-      console.log('Erro: Telefone inválido:', formData.phone)
     }
 
-    console.log('Erros encontrados:', newErrors)
-    console.log('Validação passou:', Object.keys(newErrors).length === 0)
-    
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    console.log('=== DEBUG: ClientForm handleSubmit iniciado ===')
-    console.log('Dados do formulário:', formData)
-    console.log('Modo de edição:', isEditMode)
-    
+
     if (!validateForm()) {
-      console.log('Validação falhou!')
       return
     }
 
     try {
       setLoading(true)
-      
+
       const submitData = {
         ...formData,
         phone: formData.phone || null,
@@ -94,50 +80,31 @@ export default function ClientForm() {
         notes: formData.notes || null
       }
 
-      console.log('Dados que serão enviados:', submitData)
-
       if (isEditMode) {
-        console.log('Fazendo PUT para:', `/clients/${id}`)
-        const response = await api.put(`/clients/${id}`, submitData)
-        console.log('Resposta PUT:', response)
+        await api.put(`/clients/${id}`, submitData)
         toast.success('Cliente atualizado com sucesso!')
       } else {
-        console.log('Fazendo POST para: /clients')
-        const response = await api.post('/clients', submitData)
-        console.log('Resposta POST:', response)
+        await api.post('/clients', submitData)
         toast.success('Cliente criado com sucesso!')
       }
-      
-      console.log('Navegando para /clients')
+
       navigate('/clients')
     } catch (error) {
-      console.error('=== ERRO ao salvar cliente ===')
-      console.error('Erro completo:', error)
-      console.error('Response data:', error.response?.data)
-      console.error('Response status:', error.response?.status)
-      console.error('Response headers:', error.response?.headers)
       const message = error.response?.data?.message || 'Erro ao salvar cliente'
       toast.error(message)
     } finally {
       setLoading(false)
-      console.log('=== DEBUG: handleSubmit finalizado ===')
     }
   }
 
   const handleInputChange = (e) => {
     const { name, value } = e.target
-    console.log('=== DEBUG: handleInputChange ===')
-    console.log('Campo:', name, 'Valor:', value)
-    
-    setFormData(prev => {
-      const newData = {
-        ...prev,
-        [name]: value
-      }
-      console.log('formData atualizado:', newData)
-      return newData
-    })
-    
+
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }))
+
     // Limpar erro quando o usuário começar a digitar
     if (errors[name]) {
       setErrors(prev => ({

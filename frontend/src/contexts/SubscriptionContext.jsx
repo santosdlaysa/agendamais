@@ -19,13 +19,14 @@ export function SubscriptionProvider({ children }) {
       setLoading(true)
       const response = await api.get('/subscriptions/status')
 
+      console.log('Subscription Status Response:', response.data)
+
       if (response.data.has_subscription) {
         setSubscription(response.data.subscription)
       } else {
         setSubscription(null)
       }
     } catch (error) {
-      console.error('Erro ao buscar status da assinatura:', error)
       // Não mostrar erro se for 401 (não autenticado)
       if (error.response?.status !== 401) {
         toast.error('Erro ao carregar status da assinatura')
@@ -41,7 +42,6 @@ export function SubscriptionProvider({ children }) {
       setPlans(response.data.plans)
       return response.data.plans
     } catch (error) {
-      console.error('Erro ao buscar planos:', error)
       toast.error('Erro ao carregar planos')
       return []
     }
@@ -49,13 +49,18 @@ export function SubscriptionProvider({ children }) {
 
   const createSubscription = async (planId) => {
     try {
+      // Construir URLs de sucesso e cancelamento
+      const baseUrl = window.location.origin
+      const successUrl = `${baseUrl}/#/subscription/success`
+      const cancelUrl = `${baseUrl}/#/subscription/canceled`
+
       const response = await api.post('/subscriptions/subscribe', {
-        plan: planId
+        plan: planId,
+        success_url: successUrl,
+        cancel_url: cancelUrl
       })
 
-      // Atualizar estado local
-      await fetchSubscriptionStatus()
-
+      // Retornar checkout_url para redirecionamento externo
       return {
         success: true,
         data: response.data
@@ -108,6 +113,36 @@ export function SubscriptionProvider({ children }) {
     }
   }
 
+  // Abrir portal de billing do Stripe para gerenciar cartão
+  const openBillingPortal = async () => {
+    try {
+      const baseUrl = window.location.origin
+      const returnUrl = `${baseUrl}/#/subscription/manage`
+
+      const response = await api.post('/subscriptions/billing-portal', {
+        return_url: returnUrl
+      })
+
+      if (response.data.url) {
+        window.location.href = response.data.url
+        return { success: true }
+      }
+    } catch (error) {
+      console.error('Billing Portal Error:', error.response?.data || error.message)
+      const message = error.response?.data?.error || 'Erro ao abrir portal de pagamento'
+      toast.error(message)
+      return {
+        success: false,
+        error: message
+      }
+    }
+  }
+
+  // Verificar se tem cartão cadastrado
+  const hasPaymentMethod = () => {
+    return subscription?.has_payment_method === true
+  }
+
   // Verificar se tem assinatura ativa
   const hasActiveSubscription = () => {
     return subscription && ['active', 'trialing'].includes(subscription.status)
@@ -156,6 +191,7 @@ export function SubscriptionProvider({ children }) {
     canAccessFeature,
     isInTrial,
     hasPaymentPending,
+    hasPaymentMethod,
     isCanceledButActive,
     getTrialDaysRemaining,
     fetchSubscriptionStatus,
@@ -163,6 +199,7 @@ export function SubscriptionProvider({ children }) {
     createSubscription,
     cancelSubscription,
     reactivateSubscription,
+    openBillingPortal,
     refreshSubscription: fetchSubscriptionStatus
   }
 

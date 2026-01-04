@@ -1,7 +1,9 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Check, Loader2 } from 'lucide-react'
+import { Check, Loader2, ArrowLeft } from 'lucide-react'
 import { useSubscription } from '../contexts/SubscriptionContext'
+import toast from 'react-hot-toast'
+import api from '../utils/api'
 
 const PLANS = [
   {
@@ -46,39 +48,69 @@ const PLANS = [
 
 export default function SubscriptionPlans() {
   const navigate = useNavigate()
-  const { createSubscription, hasActiveSubscription } = useSubscription()
+  const { createSubscription, hasActiveSubscription, subscription, refreshSubscription } = useSubscription()
   const [loading, setLoading] = useState(null)
-  const [selectedPlan, setSelectedPlan] = useState(null)
 
-  useEffect(() => {
-    // Se já tem assinatura ativa, redirecionar para gerenciamento
-    if (hasActiveSubscription()) {
-      navigate('/subscription/manage')
-    }
-  }, [hasActiveSubscription, navigate])
+  const currentPlan = subscription?.plan
 
   const handleSelectPlan = async (planId) => {
-    setSelectedPlan(planId)
+    // Se é o plano atual, não faz nada
+    if (planId === currentPlan) {
+      return
+    }
+
     setLoading(planId)
 
     try {
-      const result = await createSubscription(planId)
-
-      if (result.success) {
-        // Redirecionar para página de pagamento
-        navigate('/subscription/payment', {
-          state: {
-            clientSecret: result.data.client_secret,
-            subscriptionId: result.data.subscription_id,
-            planId: planId
-          }
+      if (hasActiveSubscription()) {
+        // Alterar plano existente
+        const response = await api.post('/subscriptions/change-plan', {
+          plan: planId
         })
+
+        if (response.data.message) {
+          toast.success(response.data.message)
+          await refreshSubscription()
+          navigate('/subscription/manage')
+        }
+      } else {
+        // Criar nova assinatura
+        const result = await createSubscription(planId)
+
+        if (result.success && result.data.checkout_url) {
+          window.location.href = result.data.checkout_url
+        }
       }
     } catch (error) {
-      console.error('Erro ao criar assinatura:', error)
+      console.error('Change Plan Error:', error.response?.data || error.message)
+      const message = error.response?.data?.error || 'Erro ao processar solicitação'
+      toast.error(message)
     } finally {
       setLoading(null)
     }
+  }
+
+  const getButtonText = (planId) => {
+    if (loading === planId) {
+      return (
+        <>
+          <Loader2 className="w-5 h-5 animate-spin" />
+          Processando...
+        </>
+      )
+    }
+
+    if (planId === currentPlan) {
+      return 'Plano Atual'
+    }
+
+    if (hasActiveSubscription()) {
+      const currentIndex = PLANS.findIndex(p => p.id === currentPlan)
+      const newIndex = PLANS.findIndex(p => p.id === planId)
+      return newIndex > currentIndex ? 'Fazer Upgrade' : 'Fazer Downgrade'
+    }
+
+    return 'Começar Teste Gratuito'
   }
 
   return (
@@ -86,15 +118,29 @@ export default function SubscriptionPlans() {
       <div className="max-w-7xl mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-12">
+          {hasActiveSubscription() && (
+            <button
+              onClick={() => navigate('/subscription/manage')}
+              className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-4"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              Voltar para Minha Assinatura
+            </button>
+          )}
           <h1 className="text-4xl font-bold text-gray-900 mb-4">
-            Escolha seu Plano
+            {hasActiveSubscription() ? 'Alterar Plano' : 'Escolha seu Plano'}
           </h1>
           <p className="text-xl text-gray-600">
-            Teste gratuito de 7 dias em todos os planos
+            {hasActiveSubscription()
+              ? 'Selecione o plano que melhor atende suas necessidades'
+              : 'Teste gratuito de 7 dias em todos os planos'
+            }
           </p>
-          <p className="text-sm text-gray-500 mt-2">
-            Sem compromisso. Cancele a qualquer momento.
-          </p>
+          {!hasActiveSubscription() && (
+            <p className="text-sm text-gray-500 mt-2">
+              Sem compromisso. Cancele a qualquer momento.
+            </p>
+          )}
         </div>
 
         {/* Plans Grid */}
@@ -104,10 +150,19 @@ export default function SubscriptionPlans() {
               key={plan.id}
               className={`relative bg-white rounded-2xl shadow-lg p-8 transition-all hover:shadow-xl ${
                 plan.popular ? 'ring-2 ring-blue-500 transform scale-105' : ''
-              }`}
+              } ${plan.id === currentPlan ? 'ring-2 ring-green-500' : ''}`}
             >
+              {/* Current Plan Badge */}
+              {plan.id === currentPlan && (
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2">
+                  <span className="bg-gradient-to-r from-green-500 to-green-600 text-white px-4 py-1 rounded-full text-sm font-medium shadow-lg">
+                    Plano Atual
+                  </span>
+                </div>
+              )}
+
               {/* Popular Badge */}
-              {plan.popular && (
+              {plan.popular && plan.id !== currentPlan && (
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2">
                   <span className="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-4 py-1 rounded-full text-sm font-medium shadow-lg">
                     Mais Popular
@@ -148,25 +203,20 @@ export default function SubscriptionPlans() {
               {/* CTA Button */}
               <button
                 onClick={() => handleSelectPlan(plan.id)}
-                disabled={loading === plan.id}
+                disabled={loading === plan.id || plan.id === currentPlan}
                 className={`w-full py-3 px-6 rounded-lg font-semibold transition-all ${
-                  plan.popular
+                  plan.id === currentPlan
+                    ? 'bg-green-100 text-green-800 cursor-default'
+                    : plan.popular
                     ? 'bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white shadow-lg hover:shadow-xl'
                     : 'bg-gray-100 hover:bg-gray-200 text-gray-900'
                 } disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2`}
               >
-                {loading === plan.id ? (
-                  <>
-                    <Loader2 className="w-5 h-5 animate-spin" />
-                    Processando...
-                  </>
-                ) : (
-                  'Começar Teste Gratuito'
-                )}
+                {getButtonText(plan.id)}
               </button>
 
               <p className="text-center text-xs text-gray-500 mt-4">
-                Cancele a qualquer momento
+                {plan.id === currentPlan ? 'Você está neste plano' : 'Cancele a qualquer momento'}
               </p>
             </div>
           ))}

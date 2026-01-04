@@ -44,7 +44,6 @@ const FinancialReport = () => {
       setProfessionals(professionalsResponse.data.professionals || [])
       setServices(servicesResponse.data.services || [])
     } catch (error) {
-      console.error('Erro ao carregar dados básicos:', error)
       toast.error('Erro ao carregar dados básicos')
     }
   }
@@ -58,7 +57,7 @@ const FinancialReport = () => {
         setReport(data)
         return
       } catch (apiError) {
-        console.log('API de relatório não disponível, calculando manualmente...')
+        // API de relatório não disponível, calculando manualmente
       }
 
       // Fallback: calcular relatório manualmente dos agendamentos
@@ -80,29 +79,23 @@ const FinancialReport = () => {
       try {
         const appointmentsRes = await api.get(`/appointments?${params}`)
         appointments = appointmentsRes.data.appointments || []
-        console.log('Agendamentos carregados para relatório:', appointments.length)
       } catch (fetchError) {
-        console.log('Erro ao buscar agendamentos, tentando alternativa:', fetchError)
+        // Erro ao buscar agendamentos, tentando alternativa
 
         // Fallback com parâmetros básicos se der erro
         try {
           const basicRes = await api.get('/appointments?per_page=100&status=completed')
           appointments = basicRes.data.appointments || []
-          console.log('Agendamentos básicos carregados:', appointments.length)
         } catch (basicError) {
-          console.error('Não foi possível carregar agendamentos:', basicError)
           appointments = []
         }
       }
-
-      console.log('Relatório: agendamentos carregados:', appointments.length)
 
       // Contar todos os agendamentos por status primeiro
       const statusCount = appointments.reduce((acc, apt) => {
         acc[apt.status] = (acc[apt.status] || 0) + 1
         return acc
       }, {})
-      console.log('Relatório: agendamentos por status:', statusCount)
 
       // Primeiro, mostrar todos os agendamentos concluídos (sem filtro de data)
       const allCompletedAppointments = appointments.filter(apt => {
@@ -147,8 +140,6 @@ const FinancialReport = () => {
           }
         })
       }
-
-      console.log('Relatório: agendamentos filtrados:', filteredAppointments.length)
 
       // Calcular resumo financeiro
       const totalRevenue = filteredAppointments.reduce((sum, apt) => sum + parseFloat(apt.price || 0), 0)
@@ -208,7 +199,6 @@ const FinancialReport = () => {
 
       setReport(reportData)
     } catch (error) {
-      console.error('Erro ao carregar relatório:', error)
       toast.error('Erro ao carregar relatório financeiro')
     } finally {
       setLoading(false)

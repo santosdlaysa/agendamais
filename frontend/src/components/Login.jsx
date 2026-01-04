@@ -157,21 +157,6 @@ export default function Login() {
           </div>
         </form>
 
-        {/* Informações de demonstração */}
-        {isLogin && (
-          <div className="mt-6 p-4 bg-yellow-50 border border-yellow-200 rounded-md">
-            <h3 className="text-sm font-medium text-yellow-800 mb-2">
-              Demo - Dados para teste:
-            </h3>
-            <p className="text-xs text-yellow-700">
-              <strong>Email:</strong> admin@agendamento.com<br />
-              <strong>Senha:</strong> admin123
-            </p>
-            <p className="text-xs text-yellow-600 mt-2">
-              Ou crie uma nova conta para começar a usar o sistema.
-            </p>
-          </div>
-        )}
       </div>
     </div>
   )

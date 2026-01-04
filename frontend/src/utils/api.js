@@ -1,7 +1,11 @@
 import axios from 'axios'
 
 // Configurar axios com base URL
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://172.20.10.11:5000'
+const API_BASE_URL = import.meta.env.VITE_API_URL
+
+if (!API_BASE_URL) {
+  console.error('VITE_API_URL não está configurada. Verifique o arquivo .env')
+}
 
 // Instância do axios configurada
 export const api = axios.create({
@@ -20,15 +24,29 @@ api.interceptors.request.use((config) => {
   return config
 })
 
+// Flag para evitar múltiplos redirects
+let isRedirecting = false
+
 // Interceptor para tratar erros de autenticação
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401) {
-      localStorage.removeItem('token')
-      localStorage.removeItem('user')
-      // Use hash para funcionar tanto no navegador quanto no Electron
-      window.location.hash = '#/login'
+    if (error.response?.status === 401 && !isRedirecting) {
+      // Verificar se já está na página de login
+      const isLoginPage = window.location.hash.includes('/login')
+
+      if (!isLoginPage) {
+        isRedirecting = true
+        localStorage.removeItem('token')
+        localStorage.removeItem('user')
+        // Use hash para funcionar tanto no navegador quanto no Electron
+        window.location.hash = '#/login'
+
+        // Reset flag após redirect
+        setTimeout(() => {
+          isRedirecting = false
+        }, 1000)
+      }
     }
     return Promise.reject(error)
   }

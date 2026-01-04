@@ -29,45 +29,30 @@ export default function Dashboard() {
 
   const fetchDashboardStats = async () => {
     try {
-      console.log('Fazendo requisição para dashboard stats...')
-      console.log('API Base URL:', api.defaults.baseURL)
-
       // Fazer requisições básicas uma por vez para identificar qual está falhando
       let clientsRes, professionalsRes, servicesRes, appointmentsRes
 
       try {
-        console.log('Buscando clientes...')
         clientsRes = await api.get('/clients?per_page=1')
-        console.log('Clientes OK:', clientsRes.data.pagination?.total)
       } catch (clientsError) {
-        console.error('Erro ao buscar clientes:', clientsError.response?.status, clientsError.message)
         clientsRes = { data: { pagination: { total: 0 } } }
       }
 
       try {
-        console.log('Buscando profissionais...')
         professionalsRes = await api.get('/professionals?per_page=1')
-        console.log('Profissionais OK:', professionalsRes.data.pagination?.total)
       } catch (professionalsError) {
-        console.error('Erro ao buscar profissionais:', professionalsError.response?.status, professionalsError.message)
         professionalsRes = { data: { pagination: { total: 0 } } }
       }
 
       try {
-        console.log('Buscando serviços...')
         servicesRes = await api.get('/services?per_page=1')
-        console.log('Serviços OK:', servicesRes.data.pagination?.total)
       } catch (servicesError) {
-        console.error('Erro ao buscar serviços:', servicesError.response?.status, servicesError.message)
         servicesRes = { data: { pagination: { total: 0 } } }
       }
 
       try {
-        console.log('Buscando agendamentos...')
         appointmentsRes = await api.get('/appointments?per_page=1')
-        console.log('Agendamentos OK:', appointmentsRes.data.pagination?.total)
       } catch (appointmentsError) {
-        console.error('Erro ao buscar agendamentos:', appointmentsError.response?.status, appointmentsError.message)
         appointmentsRes = { data: { pagination: { total: 0 } } }
       }
 
@@ -78,24 +63,17 @@ export default function Dashboard() {
 
       try {
         // Buscar todos os agendamentos para calcular estatísticas detalhadas
-        // Primeiro tenta com menos itens para evitar erro 500
         let allAppointments = []
 
         try {
           const allAppointmentsRes = await api.get('/appointments?per_page=200')
           allAppointments = allAppointmentsRes.data.appointments || []
-          console.log('Agendamentos carregados:', allAppointments.length)
         } catch (appointmentError) {
-          console.log('Erro ao buscar agendamentos completos, tentando só concluídos:', appointmentError)
-
           // Fallback: tentar buscar apenas os concluídos se der erro
           try {
             const completedRes = await api.get('/appointments?status=completed&per_page=100')
             allAppointments = completedRes.data.appointments || []
-            console.log('Agendamentos concluídos carregados:', allAppointments.length)
           } catch (completedError) {
-            console.log('Erro ao buscar agendamentos concluídos:', completedError)
-            // Se falhar, usar só o que já temos do primeiro request
             allAppointments = []
           }
         }
@@ -120,12 +98,9 @@ export default function Dashboard() {
             const aptDate = new Date(apt.appointment_date)
             return aptDate >= thirtyDaysAgo
           }).length
-
-          console.log('Receita calculada:', totalRevenue)
-          console.log('Agendamentos por status:', appointmentsByStatus)
         }
       } catch (revenueError) {
-        console.log('Erro ao calcular receita detalhada:', revenueError)
+        // Silently handle error
       }
 
       const newStats = {
@@ -138,7 +113,6 @@ export default function Dashboard() {
         appointments_by_status: appointmentsByStatus
       }
 
-      console.log('Stats calculadas:', newStats)
       setStats(newStats)
 
       // Fetch reminder stats
@@ -149,11 +123,10 @@ export default function Dashboard() {
         const upcomingRes = await reminderService.getUpcoming(24)
         setUpcomingReminders(upcomingRes.reminders || [])
       } catch (reminderError) {
-        console.log('Erro ao carregar estatísticas de lembretes (API pode não estar disponível):', reminderError)
+        // Silently handle - API may not be available
       }
     } catch (error) {
-      console.error('Erro ao carregar estatísticas:', error)
-      console.error('Detalhes do erro:', error.response?.data)
+      // Silently handle error
     } finally {
       setLoading(false)
     }

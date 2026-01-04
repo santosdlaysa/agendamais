@@ -48,7 +48,7 @@ export default function Reminders() {
       setStats(statsRes.stats || {})
       setSchedulerStatus(schedulerRes.scheduler || { running: false })
     } catch (error) {
-      console.error('Erro ao carregar dados dos lembretes:', error)
+      // Error handled silently
     } finally {
       setLoading(false)
     }
@@ -80,7 +80,7 @@ export default function Reminders() {
       await api.post(`/reminders/scheduler/${action}`)
       setSchedulerStatus(prev => ({ ...prev, running: !prev.running }))
     } catch (error) {
-      console.error('Erro ao controlar agendador:', error)
+      // Error handled silently
     }
   }
 
@@ -89,7 +89,7 @@ export default function Reminders() {
       await api.post('/reminders/process')
       fetchData() // Recarregar dados após processar
     } catch (error) {
-      console.error('Erro ao processar lembretes:', error)
+      // Error handled silently
     }
   }
 
@@ -98,7 +98,7 @@ export default function Reminders() {
       await api.post(`/reminders/${reminderId}/send`)
       fetchData() // Recarregar dados após enviar
     } catch (error) {
-      console.error('Erro ao enviar lembrete:', error)
+      // Error handled silently
     }
   }
 
