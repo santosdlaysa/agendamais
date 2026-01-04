@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   CreditCard,
@@ -52,12 +52,21 @@ export default function SubscriptionStatus() {
     loading,
     cancelSubscription,
     reactivateSubscription,
+    openBillingPortal,
+    hasPaymentMethod,
     getTrialDaysRemaining,
-    isCanceledButActive
+    isCanceledButActive,
+    refreshSubscription
   } = useSubscription()
 
   const [cancelLoading, setCancelLoading] = useState(false)
+  const [billingLoading, setBillingLoading] = useState(false)
   const [showCancelModal, setShowCancelModal] = useState(false)
+
+  // Atualizar dados ao carregar a página (importante quando volta do Stripe)
+  useEffect(() => {
+    refreshSubscription()
+  }, [])
 
   if (loading) {
     return (
@@ -111,6 +120,12 @@ export default function SubscriptionStatus() {
     setCancelLoading(true)
     await reactivateSubscription()
     setCancelLoading(false)
+  }
+
+  const handleOpenBilling = async () => {
+    setBillingLoading(true)
+    await openBillingPortal()
+    setBillingLoading(false)
   }
 
   return (
@@ -189,6 +204,41 @@ export default function SubscriptionStatus() {
           </div>
         )}
 
+        {/* Payment Method Warning - Trial sem cartão */}
+        {subscription.status === 'trialing' && !hasPaymentMethod() && (
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+            <div className="flex items-start gap-3">
+              <CreditCard className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
+              <div className="flex-1">
+                <p className="text-sm font-medium text-blue-900 mb-1">
+                  Cadastre seu cartão
+                </p>
+                <p className="text-sm text-blue-800 mb-3">
+                  Você está no período de teste gratuito. Cadastre seu cartão para continuar
+                  usando o sistema após o término do trial.
+                </p>
+                <button
+                  onClick={handleOpenBilling}
+                  disabled={billingLoading}
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors disabled:opacity-50 flex items-center gap-2"
+                >
+                  {billingLoading ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      Abrindo...
+                    </>
+                  ) : (
+                    <>
+                      <CreditCard className="w-4 h-4" />
+                      Cadastrar Cartão
+                    </>
+                  )}
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Cancellation Warning */}
         {isCanceledButActive() && (
           <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
@@ -227,8 +277,19 @@ export default function SubscriptionStatus() {
                   Não conseguimos processar seu último pagamento. Por favor,
                   atualize seus dados de pagamento.
                 </p>
-                <button className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
-                  Atualizar Forma de Pagamento
+                <button
+                  onClick={handleOpenBilling}
+                  disabled={billingLoading}
+                  className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors disabled:opacity-50 flex items-center gap-2"
+                >
+                  {billingLoading ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      Abrindo...
+                    </>
+                  ) : (
+                    'Atualizar Forma de Pagamento'
+                  )}
                 </button>
               </div>
             </div>
@@ -237,12 +298,29 @@ export default function SubscriptionStatus() {
 
         {/* Actions */}
         {subscription.status !== 'canceled' && !isCanceledButActive() && (
-          <div className="flex gap-3 pt-4 border-t">
+          <div className="flex flex-wrap gap-3 pt-4 border-t">
             <button
               onClick={() => navigate('/subscription/plans')}
               className="flex-1 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg font-medium transition-colors"
             >
               Alterar Plano
+            </button>
+            <button
+              onClick={handleOpenBilling}
+              disabled={billingLoading}
+              className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-800 py-2 px-4 rounded-lg font-medium transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+            >
+              {billingLoading ? (
+                <>
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  Abrindo...
+                </>
+              ) : (
+                <>
+                  <CreditCard className="w-4 h-4" />
+                  Gerenciar Pagamento
+                </>
+              )}
             </button>
             <button
               onClick={() => setShowCancelModal(true)}

@@ -1,12 +1,36 @@
+import { useState, useRef, useEffect } from 'react'
 import { useAuth } from '../contexts/AuthContext'
 import { useSubscription } from '../contexts/SubscriptionContext'
-import { NavLink } from 'react-router-dom'
-import { Calendar, LogOut, Users, UserCheck, Briefcase, FileText, BarChart3, MessageSquare, CreditCard } from 'lucide-react'
-import { Button } from './ui/button'
+import { NavLink, useNavigate } from 'react-router-dom'
+import { Calendar, LogOut, Users, UserCheck, Briefcase, FileText, BarChart3, MessageSquare, CreditCard, ChevronDown, User, Settings } from 'lucide-react'
 
 export default function Layout({ children }) {
   const { user, logout } = useAuth()
-  const { subscription, hasActiveSubscription } = useSubscription()
+  const { hasActiveSubscription, isInTrial, getTrialDaysRemaining } = useSubscription()
+  const navigate = useNavigate()
+  const [menuOpen, setMenuOpen] = useState(false)
+  const menuRef = useRef(null)
+
+  // Fechar menu ao clicar fora
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setMenuOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
+
+  const handleMenuItemClick = (path) => {
+    setMenuOpen(false)
+    navigate(path)
+  }
+
+  const handleLogout = () => {
+    setMenuOpen(false)
+    logout()
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -25,19 +49,71 @@ export default function Layout({ children }) {
             </div>
 
             {/* User menu */}
-            <div className="flex items-center space-x-4">
-              <span className="text-sm text-gray-700">
-                Olá, <span className="font-medium">{user?.name}</span>
-              </span>
-              <Button
-                onClick={logout}
-                variant="outline"
-                size="sm"
-                className="flex items-center space-x-2"
+            <div className="relative" ref={menuRef}>
+              <button
+                onClick={() => setMenuOpen(!menuOpen)}
+                className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors"
               >
-                <LogOut className="h-4 w-4" />
-                <span>Sair</span>
-              </Button>
+                <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+                  <span className="text-white text-sm font-medium">
+                    {user?.name?.charAt(0).toUpperCase()}
+                  </span>
+                </div>
+                <div className="text-left hidden sm:block">
+                  <p className="text-sm font-medium text-gray-900">{user?.name}</p>
+                  {isInTrial() && (
+                    <p className="text-xs text-blue-600">
+                      Trial: {getTrialDaysRemaining()} dias
+                    </p>
+                  )}
+                </div>
+                <ChevronDown className={`w-4 h-4 text-gray-500 transition-transform ${menuOpen ? 'rotate-180' : ''}`} />
+              </button>
+
+              {/* Dropdown Menu */}
+              {menuOpen && (
+                <div className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg border py-1 z-50">
+                  {/* User Info */}
+                  <div className="px-4 py-3 border-b">
+                    <p className="text-sm font-medium text-gray-900">{user?.name}</p>
+                    <p className="text-xs text-gray-500">{user?.email}</p>
+                    {isInTrial() && (
+                      <span className="inline-block mt-1 px-2 py-0.5 bg-blue-100 text-blue-700 text-xs rounded-full">
+                        Trial: {getTrialDaysRemaining()} dias restantes
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Menu Items */}
+                  <div className="py-1">
+                    <button
+                      onClick={() => handleMenuItemClick('/subscription/manage')}
+                      className="w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    >
+                      <CreditCard className="w-4 h-4" />
+                      Minha Assinatura
+                    </button>
+                    <button
+                      onClick={() => handleMenuItemClick('/settings')}
+                      className="w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    >
+                      <Settings className="w-4 h-4" />
+                      Configurações
+                    </button>
+                  </div>
+
+                  {/* Logout */}
+                  <div className="border-t py-1">
+                    <button
+                      onClick={handleLogout}
+                      className="w-full flex items-center gap-3 px-4 py-2 text-sm text-red-600 hover:bg-red-50"
+                    >
+                      <LogOut className="w-4 h-4" />
+                      Sair
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
