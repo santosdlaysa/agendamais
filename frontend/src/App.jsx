@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from 'react-router-dom'
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { useAuth } from './contexts/AuthContext'
 import Login from './components/Login'
 import Dashboard from './components/Dashboard'
@@ -21,9 +21,37 @@ import SubscriptionStatus from './components/SubscriptionStatus'
 import SubscriptionSuccess from './components/SubscriptionSuccess'
 import SubscriptionCanceled from './components/SubscriptionCanceled'
 import Settings from './components/Settings'
+// Páginas públicas de agendamento online
+import BookingPage from './pages/public/BookingPage'
+import BookingConfirmation from './pages/public/BookingConfirmation'
+import BookingLookup from './pages/public/BookingLookup'
+import BookingCancel from './pages/public/BookingCancel'
 
 function App() {
   const { isAuthenticated, loading } = useAuth()
+  const location = useLocation()
+
+  // Verificar se é uma rota pública de agendamento
+  // Verifica tanto o pathname do router quanto a URL real (para redirect de /agendar para /#/agendar)
+  const isPublicBookingRoute = location.pathname.startsWith('/agendar')
+
+  // Se acessou /agendar sem hash, redireciona para /#/agendar
+  if (window.location.pathname.startsWith('/agendar') && !window.location.hash) {
+    window.location.replace('/#' + window.location.pathname + window.location.search)
+    return null
+  }
+
+  // Rotas públicas não precisam de loading de autenticação
+  if (isPublicBookingRoute) {
+    return (
+      <Routes>
+        <Route path="/agendar/:slug" element={<BookingPage />} />
+        <Route path="/agendar/:slug/confirmacao/:code" element={<BookingConfirmation />} />
+        <Route path="/agendar/:slug/consultar" element={<BookingLookup />} />
+        <Route path="/agendar/:slug/cancelar/:code" element={<BookingCancel />} />
+      </Routes>
+    )
+  }
 
   if (loading) {
     return (

@@ -4,7 +4,16 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sistema de Agendamento MVP</title>
+    <title>AgendaMais - Sistema de Agendamento</title>
+    <script>
+      // Redirecionar URLs públicas de agendamento para o formato hash
+      (function() {
+        var path = window.location.pathname;
+        if (path.startsWith('/agendar')) {
+          window.location.replace('/#' + path + window.location.search);
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

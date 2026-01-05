@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useAuth } from '../contexts/AuthContext'
-import { Settings as SettingsIcon, Users, Shield, Lock, Loader2, Check, X } from 'lucide-react'
+import { useSearchParams } from 'react-router-dom'
+import { Settings as SettingsIcon, Users, Shield, Lock, Loader2, Check, Building2, Link, Copy, ExternalLink } from 'lucide-react'
 import api from '../utils/api'
 import toast from 'react-hot-toast'
 
@@ -23,23 +24,122 @@ const ROLES = [
 
 export default function Settings() {
   const { user } = useAuth()
-  const [activeTab, setActiveTab] = useState('permissions')
+  const [searchParams, setSearchParams] = useSearchParams()
+  const tabFromUrl = searchParams.get('tab') || 'business'
+  const [activeTab, setActiveTab] = useState(tabFromUrl)
   const [users, setUsers] = useState([])
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [selectedUser, setSelectedUser] = useState(null)
   const [userPermissions, setUserPermissions] = useState({})
 
+  // Atualizar tab quando URL mudar
+  useEffect(() => {
+    const tab = searchParams.get('tab') || 'business'
+    setActiveTab(tab)
+  }, [searchParams])
+
+  // Atualizar URL quando tab mudar
+  const handleTabChange = (tab) => {
+    setActiveTab(tab)
+    setSearchParams({ tab })
+  }
+
+  // Estado da empresa
+  const [businessData, setBusinessData] = useState({
+    business_name: '',
+    slug: '',
+    business_phone: '',
+    business_address: '',
+    business_logo: '',
+    online_booking_enabled: true
+  })
+  const [savingBusiness, setSavingBusiness] = useState(false)
+
   // Verificar se é admin
   const isAdmin = user?.role === 'admin'
 
   useEffect(() => {
+    fetchBusinessData()
     if (isAdmin) {
       fetchUsers()
     } else {
       setLoading(false)
     }
   }, [isAdmin])
+
+  const fetchBusinessData = async () => {
+    try {
+      const response = await api.get('/auth/business')
+      const data = response.data.business || response.data
+      setBusinessData({
+        business_name: data.business_name || '',
+        slug: data.slug || '',
+        business_phone: data.business_phone || '',
+        business_address: data.business_address || '',
+        business_logo: data.business_logo || '',
+        online_booking_enabled: data.online_booking_enabled ?? true
+      })
+    } catch (error) {
+      console.error('Erro ao carregar dados da empresa:', error)
+      // Fallback para /auth/me se /auth/business não existir
+      try {
+        const response = await api.get('/auth/me')
+        const userData = response.data.user
+        setBusinessData({
+          business_name: userData.business_name || userData.name || '',
+          slug: userData.slug || '',
+          business_phone: userData.business_phone || '',
+          business_address: userData.business_address || '',
+          business_logo: userData.business_logo || '',
+          online_booking_enabled: userData.online_booking_enabled ?? true
+        })
+      } catch (err) {
+        console.error('Erro ao carregar dados:', err)
+      }
+    }
+  }
+
+  const handleSaveBusiness = async () => {
+    if (!businessData.slug) {
+      toast.error('O slug é obrigatório para o link de agendamento')
+      return
+    }
+
+    setSavingBusiness(true)
+    try {
+      const response = await api.put('/auth/business', businessData)
+      toast.success('Dados da empresa salvos com sucesso!')
+      // Atualizar com dados retornados
+      if (response.data.business) {
+        setBusinessData(response.data.business)
+      }
+    } catch (error) {
+      console.error('Erro ao salvar dados:', error)
+      toast.error(error.response?.data?.error || 'Erro ao salvar dados da empresa')
+    } finally {
+      setSavingBusiness(false)
+    }
+  }
+
+  const generateSlug = (name) => {
+    return name
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)/g, '')
+  }
+
+  const getBookingUrl = () => {
+    const baseUrl = window.location.origin
+    return `${baseUrl}/#/agendar/${businessData.slug}`
+  }
+
+  const copyBookingLink = () => {
+    navigator.clipboard.writeText(getBookingUrl())
+    toast.success('Link copiado!')
+  }
 
   const fetchUsers = async () => {
     try {
@@ -124,20 +224,12 @@ export default function Settings() {
     }
   }
 
-  // Se não for admin, mostrar mensagem de acesso negado
-  if (!isAdmin) {
-    return (
-      <div className="max-w-4xl mx-auto">
-        <div className="bg-red-50 border border-red-200 rounded-lg p-8 text-center">
-          <Lock className="w-16 h-16 text-red-400 mx-auto mb-4" />
-          <h2 className="text-xl font-bold text-red-900 mb-2">Acesso Restrito</h2>
-          <p className="text-red-700">
-            Apenas administradores podem acessar as configurações do sistema.
-          </p>
-        </div>
-      </div>
-    )
-  }
+  // Se não for admin e tentar acessar abas restritas, redirecionar para empresa
+  useEffect(() => {
+    if (!isAdmin && (activeTab === 'permissions' || activeTab === 'users')) {
+      handleTabChange('business')
+    }
+  }, [activeTab, isAdmin])
 
   if (loading) {
     return (
@@ -162,35 +254,223 @@ export default function Settings() {
       <div className="border-b mb-6">
         <nav className="flex gap-4">
           <button
-            onClick={() => setActiveTab('permissions')}
+            onClick={() => handleTabChange('business')}
             className={`pb-3 px-1 font-medium text-sm border-b-2 transition-colors ${
-              activeTab === 'permissions'
+              activeTab === 'business'
                 ? 'border-blue-600 text-blue-600'
                 : 'border-transparent text-gray-500 hover:text-gray-700'
             }`}
           >
             <div className="flex items-center gap-2">
-              <Shield className="w-4 h-4" />
-              Permissões
+              <Building2 className="w-4 h-4" />
+              Empresa
             </div>
           </button>
-          <button
-            onClick={() => setActiveTab('users')}
-            className={`pb-3 px-1 font-medium text-sm border-b-2 transition-colors ${
-              activeTab === 'users'
-                ? 'border-blue-600 text-blue-600'
-                : 'border-transparent text-gray-500 hover:text-gray-700'
-            }`}
-          >
-            <div className="flex items-center gap-2">
-              <Users className="w-4 h-4" />
-              Usuários
-            </div>
-          </button>
+          {isAdmin && (
+            <>
+              <button
+                onClick={() => handleTabChange('permissions')}
+                className={`pb-3 px-1 font-medium text-sm border-b-2 transition-colors ${
+                  activeTab === 'permissions'
+                    ? 'border-blue-600 text-blue-600'
+                    : 'border-transparent text-gray-500 hover:text-gray-700'
+                }`}
+              >
+                <div className="flex items-center gap-2">
+                  <Shield className="w-4 h-4" />
+                  Permissões
+                </div>
+              </button>
+              <button
+                onClick={() => handleTabChange('users')}
+                className={`pb-3 px-1 font-medium text-sm border-b-2 transition-colors ${
+                  activeTab === 'users'
+                    ? 'border-blue-600 text-blue-600'
+                    : 'border-transparent text-gray-500 hover:text-gray-700'
+                }`}
+              >
+                <div className="flex items-center gap-2">
+                  <Users className="w-4 h-4" />
+                  Usuários
+                </div>
+              </button>
+            </>
+          )}
         </nav>
       </div>
 
       {/* Content */}
+      {activeTab === 'business' && (
+        <div className="space-y-6">
+          {/* Link de Agendamento */}
+          {businessData.slug && (
+            <div className="bg-gradient-to-r from-blue-600 to-blue-700 rounded-xl p-6 text-white">
+              <div className="flex items-center gap-2 mb-2">
+                <Link className="w-5 h-5" />
+                <h3 className="font-semibold">Link de Agendamento Online</h3>
+              </div>
+              <p className="text-blue-100 text-sm mb-4">
+                Compartilhe este link com seus clientes para que eles agendem diretamente
+              </p>
+              <div className="flex items-center gap-2">
+                <input
+                  type="text"
+                  value={getBookingUrl()}
+                  readOnly
+                  className="flex-1 px-4 py-2 bg-white/20 border border-white/30 rounded-lg text-white placeholder-white/50"
+                />
+                <button
+                  onClick={copyBookingLink}
+                  className="px-4 py-2 bg-white text-blue-600 rounded-lg font-medium hover:bg-blue-50 transition-colors flex items-center gap-2"
+                >
+                  <Copy className="w-4 h-4" />
+                  Copiar
+                </button>
+                <a
+                  href={getBookingUrl()}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-4 py-2 bg-white/20 border border-white/30 rounded-lg hover:bg-white/30 transition-colors"
+                >
+                  <ExternalLink className="w-4 h-4" />
+                </a>
+              </div>
+            </div>
+          )}
+
+          {/* Dados da Empresa */}
+          <div className="bg-white rounded-xl shadow border p-6">
+            <h3 className="font-semibold text-gray-900 mb-6 flex items-center gap-2">
+              <Building2 className="w-5 h-5 text-blue-600" />
+              Dados da Empresa
+            </h3>
+
+            <div className="grid md:grid-cols-2 gap-6">
+              {/* Nome da Empresa */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Nome da Empresa *
+                </label>
+                <input
+                  type="text"
+                  value={businessData.business_name}
+                  onChange={(e) => {
+                    setBusinessData(prev => ({
+                      ...prev,
+                      business_name: e.target.value,
+                      slug: prev.slug || generateSlug(e.target.value)
+                    }))
+                  }}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  placeholder="Ex: Barbearia do João"
+                />
+              </div>
+
+              {/* Slug */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Slug (URL) *
+                </label>
+                <div className="flex">
+                  <span className="inline-flex items-center px-3 rounded-l-lg border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
+                    /agendar/
+                  </span>
+                  <input
+                    type="text"
+                    value={businessData.slug}
+                    onChange={(e) => setBusinessData(prev => ({ ...prev, slug: generateSlug(e.target.value) }))}
+                    className="flex-1 px-4 py-2 border border-gray-300 rounded-r-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="minha-empresa"
+                  />
+                </div>
+                <p className="text-xs text-gray-500 mt-1">
+                  Este será o link que seus clientes usarão para agendar
+                </p>
+              </div>
+
+              {/* Telefone */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Telefone / WhatsApp
+                </label>
+                <input
+                  type="tel"
+                  value={businessData.business_phone}
+                  onChange={(e) => setBusinessData(prev => ({ ...prev, business_phone: e.target.value }))}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  placeholder="(00) 00000-0000"
+                />
+              </div>
+
+              {/* Endereço */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Endereço
+                </label>
+                <input
+                  type="text"
+                  value={businessData.business_address}
+                  onChange={(e) => setBusinessData(prev => ({ ...prev, business_address: e.target.value }))}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  placeholder="Rua, número, bairro, cidade"
+                />
+              </div>
+
+              {/* Logo URL */}
+              <div className="md:col-span-2">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  URL do Logo
+                </label>
+                <input
+                  type="url"
+                  value={businessData.business_logo}
+                  onChange={(e) => setBusinessData(prev => ({ ...prev, business_logo: e.target.value }))}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  placeholder="https://exemplo.com/logo.png"
+                />
+              </div>
+
+              {/* Agendamento Online */}
+              <div className="md:col-span-2">
+                <label className="flex items-center gap-3 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={businessData.online_booking_enabled}
+                    onChange={(e) => setBusinessData(prev => ({ ...prev, online_booking_enabled: e.target.checked }))}
+                    className="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                  />
+                  <div>
+                    <span className="font-medium text-gray-900">Habilitar agendamento online</span>
+                    <p className="text-sm text-gray-500">Permite que clientes agendem pelo link público</p>
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            {/* Botão Salvar */}
+            <div className="mt-6 pt-6 border-t flex justify-end">
+              <button
+                onClick={handleSaveBusiness}
+                disabled={savingBusiness}
+                className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors disabled:opacity-50 flex items-center gap-2"
+              >
+                {savingBusiness ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    Salvando...
+                  </>
+                ) : (
+                  <>
+                    <Check className="w-4 h-4" />
+                    Salvar Dados
+                  </>
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {activeTab === 'permissions' && (
         <div className="grid md:grid-cols-3 gap-6">
           {/* Lista de Usuários */}

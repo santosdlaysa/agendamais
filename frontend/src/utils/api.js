@@ -32,10 +32,11 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401 && !isRedirecting) {
-      // Verificar se já está na página de login
+      // Verificar se já está na página de login ou em rota pública
       const isLoginPage = window.location.hash.includes('/login')
+      const isPublicRoute = window.location.hash.includes('/agendar')
 
-      if (!isLoginPage) {
+      if (!isLoginPage && !isPublicRoute) {
         isRedirecting = true
         localStorage.removeItem('token')
         localStorage.removeItem('user')

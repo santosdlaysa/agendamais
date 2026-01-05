@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react'
 import { useAuth } from '../contexts/AuthContext'
 import { useSubscription } from '../contexts/SubscriptionContext'
 import { NavLink, useNavigate } from 'react-router-dom'
-import { Calendar, LogOut, Users, UserCheck, Briefcase, FileText, BarChart3, MessageSquare, CreditCard, ChevronDown, User, Settings } from 'lucide-react'
+import { Calendar, LogOut, Users, UserCheck, Briefcase, FileText, BarChart3, MessageSquare, CreditCard, ChevronDown, User, Settings, Building2, Shield } from 'lucide-react'
 
 export default function Layout({ children }) {
   const { user, logout } = useAuth()
@@ -93,13 +93,36 @@ export default function Layout({ children }) {
                       <CreditCard className="w-4 h-4" />
                       Minha Assinatura
                     </button>
+                  </div>
+
+                  {/* Configurações da Empresa */}
+                  <div className="border-t py-1">
+                    <p className="px-4 py-1 text-xs font-medium text-gray-400 uppercase">Configurações</p>
                     <button
-                      onClick={() => handleMenuItemClick('/settings')}
+                      onClick={() => handleMenuItemClick('/settings?tab=business')}
                       className="w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     >
-                      <Settings className="w-4 h-4" />
-                      Configurações
+                      <Building2 className="w-4 h-4" />
+                      Empresa
                     </button>
+                    {user?.role === 'admin' && (
+                      <>
+                        <button
+                          onClick={() => handleMenuItemClick('/settings?tab=permissions')}
+                          className="w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                        >
+                          <Shield className="w-4 h-4" />
+                          Permissões
+                        </button>
+                        <button
+                          onClick={() => handleMenuItemClick('/settings?tab=users')}
+                          className="w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                        >
+                          <Users className="w-4 h-4" />
+                          Usuários
+                        </button>
+                      </>
+                    )}
                   </div>
 
                   {/* Logout */}
