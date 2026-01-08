@@ -51,7 +51,8 @@ export function SubscriptionProvider({ children }) {
     try {
       // Construir URLs de sucesso e cancelamento
       const baseUrl = window.location.origin
-      const successUrl = `${baseUrl}/#/subscription/success`
+      // Incluir {CHECKOUT_SESSION_ID} para o Stripe substituir pelo ID da sessão
+      const successUrl = `${baseUrl}/#/subscription/success?session_id={CHECKOUT_SESSION_ID}`
       const cancelUrl = `${baseUrl}/#/subscription/canceled`
 
       console.log('Creating subscription with URLs:', { baseUrl, successUrl, cancelUrl })
@@ -76,6 +77,26 @@ export function SubscriptionProvider({ children }) {
         success: false,
         error: message
       }
+    }
+  }
+
+  // Verificar checkout do Stripe e ativar assinatura
+  const verifyCheckout = async (sessionId) => {
+    try {
+      const response = await api.post('/subscriptions/verify-checkout', {
+        session_id: sessionId
+      })
+
+      if (response.data.success) {
+        // Atualizar estado local com a assinatura ativada
+        await fetchSubscriptionStatus()
+        return { success: true, subscription: response.data.subscription }
+      } else {
+        return { success: false, error: response.data.message }
+      }
+    } catch (error) {
+      const message = error.response?.data?.message || error.response?.data?.error || 'Erro ao verificar pagamento'
+      return { success: false, error: message }
     }
   }
 
@@ -201,6 +222,7 @@ export function SubscriptionProvider({ children }) {
     fetchSubscriptionStatus,
     fetchPlans,
     createSubscription,
+    verifyCheckout,
     cancelSubscription,
     reactivateSubscription,
     openBillingPortal,
