@@ -22,6 +22,7 @@ export default function ReminderSettings() {
   const [saving, setSaving] = useState(false)
   const [testing, setTesting] = useState({ whatsapp: false, sms: false })
   const [testResults, setTestResults] = useState({})
+  const [error, setError] = useState(null)
 
   useEffect(() => {
     fetchProfessionals()
@@ -35,13 +36,16 @@ export default function ReminderSettings() {
 
   const fetchProfessionals = async () => {
     try {
+      setError(null)
       const response = await api.get('/professionals')
-      setProfessionals(response.data.professionals || [])
-      if (response.data.professionals && response.data.professionals.length > 0) {
-        setSelectedProfessional(response.data.professionals[0].id.toString())
+      const profs = response.data.professionals || []
+      setProfessionals(profs)
+      if (profs.length > 0) {
+        setSelectedProfessional(profs[0].id?.toString() || '')
       }
-    } catch (error) {
-      // Error handled silently
+    } catch (err) {
+      console.error('Erro ao carregar profissionais:', err)
+      setError('Erro ao carregar profissionais. Verifique sua conexão e tente novamente.')
     } finally {
       setLoading(false)
     }
@@ -120,7 +124,7 @@ export default function ReminderSettings() {
     }
   }
 
-  const selectedProfessionalName = professionals.find(p => p.id.toString() === selectedProfessional)?.name || 'Selecione um profissional'
+  const selectedProfessionalName = professionals.find(p => p.id?.toString() === selectedProfessional)?.name || 'Selecione um profissional'
 
   const defaultMessage = `Olá {client_name}!
 
@@ -138,6 +142,56 @@ Aguardamos você!`
     return (
       <div className="flex items-center justify-center h-64">
         <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600"></div>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="space-y-6">
+        <div className="flex items-center space-x-4">
+          <Button
+            onClick={() => navigate('/reminders')}
+            variant="outline"
+            size="sm"
+            className="flex items-center space-x-2"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            <span>Voltar</span>
+          </Button>
+        </div>
+        <div className="bg-red-50 border border-red-200 rounded-lg p-6 text-center">
+          <XCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
+          <p className="text-red-700 mb-4">{error}</p>
+          <Button onClick={fetchProfessionals} variant="outline">
+            Tentar novamente
+          </Button>
+        </div>
+      </div>
+    )
+  }
+
+  if (professionals.length === 0) {
+    return (
+      <div className="space-y-6">
+        <div className="flex items-center space-x-4">
+          <Button
+            onClick={() => navigate('/reminders')}
+            variant="outline"
+            size="sm"
+            className="flex items-center space-x-2"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            <span>Voltar</span>
+          </Button>
+        </div>
+        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6 text-center">
+          <User className="h-12 w-12 text-yellow-500 mx-auto mb-4" />
+          <p className="text-yellow-700 mb-4">Nenhum profissional cadastrado. Cadastre um profissional primeiro.</p>
+          <Button onClick={() => navigate('/professionals/new')} variant="outline">
+            Cadastrar Profissional
+          </Button>
+        </div>
       </div>
     )
   }
@@ -176,9 +230,9 @@ Aguardamos você!`
               onChange={(e) => setSelectedProfessional(e.target.value)}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
-              {professionals.map(professional => (
-                <option key={professional.id} value={professional.id}>
-                  {professional.name}
+              {professionals.map((professional, index) => (
+                <option key={professional.id || index} value={professional.id || ''}>
+                  {professional.name || 'Sem nome'}
                 </option>
               ))}
             </select>
