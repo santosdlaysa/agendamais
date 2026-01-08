@@ -746,9 +746,9 @@ export default function LandingPage() {
             <div>
               <h4 className="font-semibold text-white mb-4">Legal</h4>
               <ul className="space-y-3 text-gray-400 text-sm">
-                <li><a href="#" className="hover:text-white transition-colors">Termos de Uso</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Política de Privacidade</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">LGPD</a></li>
+                <li><button onClick={() => navigate('/termos')} className="hover:text-white transition-colors">Termos de Uso</button></li>
+                <li><button onClick={() => navigate('/privacidade')} className="hover:text-white transition-colors">Politica de Privacidade</button></li>
+                <li><button onClick={() => navigate('/lgpd')} className="hover:text-white transition-colors">LGPD</button></li>
               </ul>
             </div>
           </div>

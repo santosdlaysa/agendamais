@@ -30,6 +30,9 @@ import BookingPage from './pages/public/BookingPage'
 import BookingConfirmation from './pages/public/BookingConfirmation'
 import BookingLookup from './pages/public/BookingLookup'
 import BookingCancel from './pages/public/BookingCancel'
+import TermsOfService from './pages/public/TermsOfService'
+import PrivacyPolicy from './pages/public/PrivacyPolicy'
+import LGPD from './pages/public/LGPD'
 
 function App() {
   const { isAuthenticated, loading } = useAuth()
@@ -84,6 +87,9 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/registro" element={<Login />} />
+        <Route path="/termos" element={<TermsOfService />} />
+        <Route path="/privacidade" element={<PrivacyPolicy />} />
+        <Route path="/lgpd" element={<LGPD />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     )
@@ -148,6 +154,10 @@ function App() {
               <Route path="subscription/canceled" element={<SubscriptionCanceled />} />
 
               <Route path="settings" element={<Settings />} />
+
+              <Route path="termos" element={<TermsOfService />} />
+              <Route path="privacidade" element={<PrivacyPolicy />} />
+              <Route path="lgpd" element={<LGPD />} />
 
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
