@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../../contexts/AuthContext'
 import {
   Calendar,
   Users,
@@ -186,6 +187,7 @@ function FAQItem({ question, answer, isOpen, onClick }) {
 
 export default function LandingPage() {
   const navigate = useNavigate()
+  const { isAuthenticated } = useAuth()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [openFAQ, setOpenFAQ] = useState(0)
   const [scrolled, setScrolled] = useState(false)
@@ -258,18 +260,29 @@ export default function LandingPage() {
             </nav>
 
             <div className="hidden md:flex items-center gap-4">
-              <button
-                onClick={() => navigate('/login')}
-                className="text-gray-600 hover:text-gray-900 font-medium transition-colors"
-              >
-                Entrar
-              </button>
-              <button
-                onClick={handleGetStarted}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl font-medium transition-all hover:shadow-lg hover:shadow-blue-500/25"
-              >
-                Começar Grátis
-              </button>
+              {isAuthenticated ? (
+                <button
+                  onClick={() => navigate('/dashboard')}
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl font-medium transition-all hover:shadow-lg hover:shadow-blue-500/25"
+                >
+                  Ir ao Dashboard
+                </button>
+              ) : (
+                <>
+                  <button
+                    onClick={() => navigate('/login')}
+                    className="text-gray-600 hover:text-gray-900 font-medium transition-colors"
+                  >
+                    Entrar
+                  </button>
+                  <button
+                    onClick={handleGetStarted}
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl font-medium transition-all hover:shadow-lg hover:shadow-blue-500/25"
+                  >
+                    Começar Grátis
+                  </button>
+                </>
+              )}
             </div>
 
             {/* Mobile menu button */}
@@ -318,18 +331,29 @@ export default function LandingPage() {
               FAQ
             </button>
             <div className="pt-3 border-t border-gray-100 space-y-3">
-              <button
-                onClick={() => navigate('/login')}
-                className="block w-full text-center py-2.5 text-gray-600 hover:text-gray-900 font-medium border border-gray-200 rounded-xl"
-              >
-                Entrar
-              </button>
-              <button
-                onClick={handleGetStarted}
-                className="block w-full text-center py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-xl"
-              >
-                Começar Grátis
-              </button>
+              {isAuthenticated ? (
+                <button
+                  onClick={() => navigate('/dashboard')}
+                  className="block w-full text-center py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-xl"
+                >
+                  Ir ao Dashboard
+                </button>
+              ) : (
+                <>
+                  <button
+                    onClick={() => navigate('/login')}
+                    className="block w-full text-center py-2.5 text-gray-600 hover:text-gray-900 font-medium border border-gray-200 rounded-xl"
+                  >
+                    Entrar
+                  </button>
+                  <button
+                    onClick={handleGetStarted}
+                    className="block w-full text-center py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-xl"
+                  >
+                    Começar Grátis
+                  </button>
+                </>
+              )}
             </div>
           </div>
         </div>

@@ -147,7 +147,7 @@ export default function Layout({ children }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex space-x-8 py-3">
             <NavLink
-              to="/"
+              to="/dashboard"
               className={({ isActive }) =>
                 `flex items-center px-3 py-2 rounded-md text-sm font-medium ${
                   isActive

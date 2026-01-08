@@ -61,7 +61,7 @@ function App() {
   }
 
   // Landing page - sempre acessível na rota raiz (página principal do site)
-  if (isLandingPage && !isAuthenticated) {
+  if (isLandingPage) {
     return (
       <Routes>
         <Route path="/" element={<LandingPage />} />
