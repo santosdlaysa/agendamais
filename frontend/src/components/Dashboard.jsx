@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Users, UserCheck, Briefcase, Calendar, DollarSign, TrendingUp, MessageSquare, Clock } from 'lucide-react'
+import { Users, UserCheck, Briefcase, Calendar, DollarSign, TrendingUp, MessageSquare, Clock, Eye } from 'lucide-react'
 import api, { reminderService } from '../utils/api'
 
 export default function Dashboard() {
@@ -21,6 +21,7 @@ export default function Dashboard() {
     failed_reminders: 0
   })
   const [upcomingReminders, setUpcomingReminders] = useState([])
+  const [recentAppointmentsList, setRecentAppointmentsList] = useState([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -98,6 +99,14 @@ export default function Dashboard() {
             const aptDate = new Date(apt.appointment_date)
             return aptDate >= thirtyDaysAgo
           }).length
+
+          // Ordenar por data mais recente e pegar os 5 últimos agendamentos
+          const sortedAppointments = [...allAppointments].sort((a, b) => {
+            const dateA = new Date(`${a.appointment_date}T${a.start_time}`)
+            const dateB = new Date(`${b.appointment_date}T${b.start_time}`)
+            return dateB - dateA
+          })
+          setRecentAppointmentsList(sortedAppointments.slice(0, 5))
         }
       } catch (revenueError) {
         // Silently handle error
@@ -221,6 +230,90 @@ export default function Dashboard() {
                 </p>
               </div>
             ))}
+          </div>
+        </div>
+      )}
+
+      {/* Agendamentos Recentes */}
+      {recentAppointmentsList.length > 0 && (
+        <div className="bg-white rounded-lg shadow-sm border p-6">
+          <div className="flex justify-between items-center mb-4">
+            <h3 className="text-lg font-medium text-gray-900">Agendamentos Recentes</h3>
+            <button
+              onClick={() => navigate('/appointments')}
+              className="text-blue-600 hover:text-blue-800 text-sm font-medium"
+            >
+              Ver todos
+            </button>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cliente</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Serviço</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Profissional</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Data/Hora</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ações</th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {recentAppointmentsList.map((appointment) => (
+                  <tr key={appointment.id} className="hover:bg-gray-50">
+                    <td className="px-4 py-3 whitespace-nowrap">
+                      <div className="text-sm font-medium text-gray-900">{appointment.client?.name}</div>
+                      <div className="text-xs text-gray-500">{appointment.client?.phone}</div>
+                    </td>
+                    <td className="px-4 py-3 whitespace-nowrap">
+                      <div className="text-sm text-gray-900">{appointment.service?.name}</div>
+                      <div className="text-xs text-gray-500">R$ {parseFloat(appointment.price || 0).toFixed(2)}</div>
+                    </td>
+                    <td className="px-4 py-3 whitespace-nowrap">
+                      <div className="flex items-center">
+                        {appointment.professional?.color && (
+                          <div
+                            className="w-3 h-3 rounded-full mr-2"
+                            style={{ backgroundColor: appointment.professional.color }}
+                          />
+                        )}
+                        <span className="text-sm text-gray-900">{appointment.professional?.name}</span>
+                      </div>
+                    </td>
+                    <td className="px-4 py-3 whitespace-nowrap">
+                      <div className="text-sm text-gray-900">
+                        {new Date(appointment.appointment_date).toLocaleDateString('pt-BR')}
+                      </div>
+                      <div className="text-xs text-gray-500">
+                        {appointment.start_time?.slice(0, 5)}
+                      </div>
+                    </td>
+                    <td className="px-4 py-3 whitespace-nowrap">
+                      <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                        appointment.status === 'scheduled' ? 'bg-blue-100 text-blue-800' :
+                        appointment.status === 'completed' ? 'bg-green-100 text-green-800' :
+                        appointment.status === 'cancelled' ? 'bg-red-100 text-red-800' :
+                        'bg-gray-100 text-gray-800'
+                      }`}>
+                        {appointment.status === 'scheduled' && 'Agendado'}
+                        {appointment.status === 'completed' && 'Concluído'}
+                        {appointment.status === 'cancelled' && 'Cancelado'}
+                        {appointment.status === 'no_show' && 'Faltou'}
+                      </span>
+                    </td>
+                    <td className="px-4 py-3 whitespace-nowrap">
+                      <button
+                        onClick={() => navigate(`/appointments/${appointment.id}/edit`)}
+                        className="text-blue-600 hover:text-blue-800"
+                        title="Ver detalhes"
+                      >
+                        <Eye className="h-4 w-4" />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
       )}
