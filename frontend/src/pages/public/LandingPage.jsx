@@ -673,7 +673,7 @@ export default function LandingPage() {
           <div className="text-center mt-8">
             <p className="text-gray-600">
               Ainda tem dúvidas?{' '}
-              <a href="mailto:suporte@agendamais.com" className="text-blue-600 hover:text-blue-700 font-medium">
+              <a href="mailto:suporte@agendamais.site" className="text-blue-600 hover:text-blue-700 font-medium">
                 Fale conosco
               </a>
             </p>
@@ -738,7 +738,7 @@ export default function LandingPage() {
             <div>
               <h4 className="font-semibold text-white mb-4">Suporte</h4>
               <ul className="space-y-3 text-gray-400 text-sm">
-                <li><a href="mailto:suporte@agendamais.com" className="hover:text-white transition-colors">suporte@agendamais.com</a></li>
+                <li><a href="mailto:suporte@agendamais.site" className="hover:text-white transition-colors">suporte@agendamais.site</a></li>
                 <li><a href="#" className="hover:text-white transition-colors">Central de Ajuda</a></li>
                 <li><a href="#" className="hover:text-white transition-colors">Tutoriais</a></li>
               </ul>
