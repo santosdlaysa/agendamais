@@ -54,15 +54,17 @@ export default function ReminderSettings() {
   const fetchSettings = async () => {
     try {
       const response = await api.get(`/reminders/settings?professional_id=${selectedProfessional}`)
-      setSettings(response.data.settings || [])
+      const settingsData = response.data.settings
+      setSettings(Array.isArray(settingsData) ? settingsData : [])
     } catch (error) {
-      // Error handled silently
+      setSettings([])
     }
   }
 
   const updateSetting = (reminderType, field, value) => {
     setSettings(prev => {
-      const updated = [...prev]
+      const prevArray = Array.isArray(prev) ? prev : []
+      const updated = [...prevArray]
       const index = updated.findIndex(s => s.reminder_type === reminderType)
 
       if (index >= 0) {
@@ -81,6 +83,7 @@ export default function ReminderSettings() {
   }
 
   const getSetting = (reminderType, field, defaultValue = null) => {
+    if (!Array.isArray(settings)) return defaultValue
     const setting = settings.find(s => s.reminder_type === reminderType)
     return setting ? setting[field] : defaultValue
   }
