@@ -31,6 +31,22 @@ export const bookingService = {
     return response.data
   },
 
+  // Buscar disponibilidade de múltiplos dias (para calendário)
+  getMultiDayAvailability: async (slug, { professionalId, serviceId, days = 14 }) => {
+    try {
+      const params = new URLSearchParams({
+        professional_id: professionalId,
+        service_id: serviceId,
+        days: days
+      })
+      const response = await publicApi.get(`/business/${slug}/availability/multi-day?${params}`)
+      return response.data
+    } catch (err) {
+      console.error('Erro ao buscar disponibilidade multi-dia:', err)
+      return { availability: [] }
+    }
+  },
+
   // Buscar disponibilidade
   getAvailability: async (slug, { serviceId, professionalId, date, days = 7 }) => {
     // Buscar disponibilidade para cada dia
@@ -94,6 +110,12 @@ export const bookingService = {
   // Cancelar agendamento
   cancelAppointment: async (code, phone, reason) => {
     const response = await publicApi.put(`/appointments/${code}/cancel`, { phone, reason })
+    return response.data
+  },
+
+  // Confirmar agendamento (quando require_confirmation = true)
+  confirmAppointment: async (token) => {
+    const response = await publicApi.post(`/appointments/confirm/${token}`)
     return response.data
   }
 }

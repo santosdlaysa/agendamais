@@ -1,11 +1,15 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { Button } from './ui/button'
-import { Calendar, Eye, EyeOff, Loader2 } from 'lucide-react'
+import { Calendar, Eye, EyeOff, Loader2, ArrowLeft } from 'lucide-react'
 
 export default function Login() {
-  const [isLogin, setIsLogin] = useState(true)
+  const location = useLocation()
+  // Verifica se a rota é /registro para iniciar no modo de cadastro
+  const isRegisterRoute = location.pathname === '/registro'
+
+  const [isLogin, setIsLogin] = useState(!isRegisterRoute)
   const [showPassword, setShowPassword] = useState(false)
   const [loading, setLoading] = useState(false)
   const [formData, setFormData] = useState({
@@ -16,6 +20,11 @@ export default function Login() {
 
   const { login, register } = useAuth()
   const navigate = useNavigate()
+
+  // Atualiza o modo quando a rota muda
+  useEffect(() => {
+    setIsLogin(!isRegisterRoute)
+  }, [isRegisterRoute])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -29,10 +38,15 @@ export default function Login() {
           navigate('/')
         }
       } else {
+        // Registro: criar conta e fazer login automaticamente
         const result = await register(formData.name, formData.email, formData.password)
         if (result.success) {
-          setIsLogin(true)
-          setFormData({ name: '', email: '', password: '' })
+          // Fazer login automaticamente após o registro
+          const loginResult = await login(formData.email, formData.password)
+          if (loginResult.success) {
+            // Redirecionar para escolha de plano após registro
+            navigate('/subscription/plans')
+          }
         }
       }
     } finally {
@@ -48,22 +62,36 @@ export default function Login() {
   }
 
   const toggleMode = () => {
-    setIsLogin(!isLogin)
+    const newIsLogin = !isLogin
+    setIsLogin(newIsLogin)
     setFormData({ name: '', email: '', password: '' })
+    // Navegar para a rota correspondente
+    navigate(newIsLogin ? '/login' : '/registro')
   }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
+        {/* Botão voltar para landing page */}
+        <button
+          onClick={() => navigate('/')}
+          className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          Voltar ao início
+        </button>
+
         <div>
           <div className="mx-auto h-12 w-12 flex items-center justify-center rounded-full bg-blue-600">
             <Calendar className="h-8 w-8 text-white" />
           </div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            {isLogin ? 'Entre na sua conta' : 'Crie sua conta'}
+            {isLogin ? 'Entre na sua conta' : 'Crie sua conta grátis'}
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600">
-            Sistema de Agendamento MVP
+            {isLogin
+              ? 'Acesse sua agenda e gerencie seus agendamentos'
+              : 'Comece seu teste gratuito de 7 dias'}
           </p>
         </div>
 

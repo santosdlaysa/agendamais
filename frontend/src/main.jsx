@@ -5,6 +5,7 @@ import { Toaster } from 'react-hot-toast'
 import App from './App.jsx'
 import { AuthProvider } from './contexts/AuthContext.jsx'
 import { SubscriptionProvider } from './contexts/SubscriptionContext.jsx'
+import { OnboardingProvider } from './contexts/OnboardingContext.jsx'
 import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -12,7 +13,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <HashRouter>
       <AuthProvider>
         <SubscriptionProvider>
-          <App />
+          <OnboardingProvider>
+            <App />
+          </OnboardingProvider>
           <Toaster
             position="top-right"
             toastOptions={{

@@ -11,9 +11,10 @@ export default function SubscriptionSuccess() {
     // Atualizar status da assinatura após retorno do Stripe
     const updateAndRedirect = async () => {
       await refreshSubscription()
-      // Redirecionar para gerenciamento após 3 segundos
+      // Redirecionar para o dashboard/onboarding após 3 segundos
+      // O App.jsx vai decidir se mostra onboarding ou dashboard
       setTimeout(() => {
-        navigate('/subscription/manage')
+        navigate('/')
       }, 3000)
     }
     updateAndRedirect()
@@ -32,12 +33,12 @@ export default function SubscriptionSuccess() {
           </h1>
 
           <p className="text-gray-600 mb-6">
-            Seu período de teste de 7 dias começou. Aproveite todos os recursos do plano!
+            Seu período de teste de 7 dias começou. Agora vamos configurar sua conta!
           </p>
 
           <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
             <p className="text-sm text-green-800">
-              Seu cartão foi cadastrado com sucesso. A cobrança será realizada automaticamente após o período de teste.
+              Seu plano foi ativado com sucesso. A cobrança será realizada automaticamente após o período de teste.
             </p>
           </div>
 
@@ -47,10 +48,10 @@ export default function SubscriptionSuccess() {
           </div>
 
           <button
-            onClick={() => navigate('/subscription/manage')}
+            onClick={() => navigate('/')}
             className="mt-6 w-full py-3 px-6 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold transition-colors"
           >
-            Ver Minha Assinatura
+            Configurar Minha Conta
           </button>
         </div>
       </div>

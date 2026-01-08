@@ -54,11 +54,15 @@ export function SubscriptionProvider({ children }) {
       const successUrl = `${baseUrl}/#/subscription/success`
       const cancelUrl = `${baseUrl}/#/subscription/canceled`
 
+      console.log('Creating subscription with URLs:', { baseUrl, successUrl, cancelUrl })
+
       const response = await api.post('/subscriptions/subscribe', {
         plan: planId,
         success_url: successUrl,
         cancel_url: cancelUrl
       })
+
+      console.log('Subscription response:', response.data)
 
       // Retornar checkout_url para redirecionamento externo
       return {

@@ -1,6 +1,9 @@
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { useAuth } from './contexts/AuthContext'
+import { useOnboarding } from './contexts/OnboardingContext'
+import { useSubscription } from './contexts/SubscriptionContext'
 import Login from './components/Login'
+import OnboardingWizard from './components/OnboardingWizard'
 import Dashboard from './components/Dashboard'
 import Layout from './components/Layout'
 import Services from './components/Services'
@@ -22,6 +25,7 @@ import SubscriptionSuccess from './components/SubscriptionSuccess'
 import SubscriptionCanceled from './components/SubscriptionCanceled'
 import Settings from './components/Settings'
 // Páginas públicas de agendamento online
+import LandingPage from './pages/public/LandingPage'
 import BookingPage from './pages/public/BookingPage'
 import BookingConfirmation from './pages/public/BookingConfirmation'
 import BookingLookup from './pages/public/BookingLookup'
@@ -29,11 +33,14 @@ import BookingCancel from './pages/public/BookingCancel'
 
 function App() {
   const { isAuthenticated, loading } = useAuth()
+  const { showOnboarding, loading: onboardingLoading } = useOnboarding()
+  const { hasActiveSubscription, loading: subscriptionLoading } = useSubscription()
   const location = useLocation()
 
   // Verificar se é uma rota pública de agendamento
   // Verifica tanto o pathname do router quanto a URL real (para redirect de /agendar para /#/agendar)
   const isPublicBookingRoute = location.pathname.startsWith('/agendar')
+  const isLandingPage = location.pathname === '/' || location.pathname === ''
 
   // Se acessou /agendar sem hash, redireciona para /#/agendar
   if (window.location.pathname.startsWith('/agendar') && !window.location.hash) {
@@ -53,7 +60,16 @@ function App() {
     )
   }
 
-  if (loading) {
+  // Landing page - sempre acessível na rota raiz (página principal do site)
+  if (isLandingPage && !isAuthenticated) {
+    return (
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+      </Routes>
+    )
+  }
+
+  if (loading || onboardingLoading || (isAuthenticated && subscriptionLoading)) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
@@ -61,14 +77,33 @@ function App() {
     )
   }
 
-  // Verificação de autenticação - login obrigatório
+  // Verificação de autenticação - redireciona para landing page se não autenticado
   if (!isAuthenticated) {
     return (
       <Routes>
+        <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Login />} />
-        <Route path="*" element={<Navigate to="/login" replace />} />
+        <Route path="/registro" element={<Login />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     )
+  }
+
+  // Usuário autenticado mas sem assinatura - deve escolher um plano primeiro
+  if (!hasActiveSubscription()) {
+    return (
+      <Routes>
+        <Route path="/subscription/plans" element={<SubscriptionPlans />} />
+        <Route path="/subscription/success" element={<SubscriptionSuccess />} />
+        <Route path="/subscription/canceled" element={<SubscriptionCanceled />} />
+        <Route path="*" element={<Navigate to="/subscription/plans" replace />} />
+      </Routes>
+    )
+  }
+
+  // Mostrar onboarding para novos usuários (após ter assinatura)
+  if (showOnboarding) {
+    return <OnboardingWizard />
   }
 
   return (

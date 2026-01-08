@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useAuth } from '../contexts/AuthContext'
 import { useSearchParams } from 'react-router-dom'
-import { Settings as SettingsIcon, Users, Shield, Lock, Loader2, Check, Building2, Link, Copy, ExternalLink } from 'lucide-react'
+import { Settings as SettingsIcon, Users, Shield, Lock, Loader2, Check, Building2, Link, Copy, ExternalLink, Calendar, Clock, Bell } from 'lucide-react'
 import api from '../utils/api'
 import toast from 'react-hot-toast'
 
@@ -56,6 +56,19 @@ export default function Settings() {
   })
   const [savingBusiness, setSavingBusiness] = useState(false)
 
+  // Estado das configurações de agendamento
+  const [bookingSettings, setBookingSettings] = useState({
+    min_advance_hours: 2,
+    max_advance_days: 30,
+    slot_interval: 30,
+    start_hour: 8,
+    end_hour: 18,
+    allow_cancellation: true,
+    cancellation_min_hours: 2,
+    require_confirmation: false
+  })
+  const [savingBooking, setSavingBooking] = useState(false)
+
   // Verificar se é admin
   const isAdmin = user?.role === 'admin'
 
@@ -80,6 +93,13 @@ export default function Settings() {
         business_logo: data.business_logo || '',
         online_booking_enabled: data.online_booking_enabled ?? true
       })
+      // Carregar configurações de booking se existirem
+      if (data.booking_settings) {
+        setBookingSettings(prev => ({
+          ...prev,
+          ...data.booking_settings
+        }))
+      }
     } catch (error) {
       console.error('Erro ao carregar dados da empresa:', error)
       // Fallback para /auth/me se /auth/business não existir
@@ -94,9 +114,28 @@ export default function Settings() {
           business_logo: userData.business_logo || '',
           online_booking_enabled: userData.online_booking_enabled ?? true
         })
+        if (userData.booking_settings) {
+          setBookingSettings(prev => ({
+            ...prev,
+            ...userData.booking_settings
+          }))
+        }
       } catch (err) {
         console.error('Erro ao carregar dados:', err)
       }
+    }
+  }
+
+  const handleSaveBookingSettings = async () => {
+    setSavingBooking(true)
+    try {
+      await api.put('/auth/business/booking-settings', bookingSettings)
+      toast.success('Configurações de agendamento salvas!')
+    } catch (error) {
+      console.error('Erro ao salvar configurações:', error)
+      toast.error(error.response?.data?.error || 'Erro ao salvar configurações')
+    } finally {
+      setSavingBooking(false)
     }
   }
 
@@ -264,6 +303,19 @@ export default function Settings() {
             <div className="flex items-center gap-2">
               <Building2 className="w-4 h-4" />
               Empresa
+            </div>
+          </button>
+          <button
+            onClick={() => handleTabChange('booking')}
+            className={`pb-3 px-1 font-medium text-sm border-b-2 transition-colors ${
+              activeTab === 'booking'
+                ? 'border-blue-600 text-blue-600'
+                : 'border-transparent text-gray-500 hover:text-gray-700'
+            }`}
+          >
+            <div className="flex items-center gap-2">
+              <Calendar className="w-4 h-4" />
+              Agendamento Online
             </div>
           </button>
           {isAdmin && (
@@ -467,6 +519,201 @@ export default function Settings() {
                 )}
               </button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {activeTab === 'booking' && (
+        <div className="space-y-6">
+          {/* Configurações de Horário */}
+          <div className="bg-white rounded-xl shadow border p-6">
+            <h3 className="font-semibold text-gray-900 mb-6 flex items-center gap-2">
+              <Clock className="w-5 h-5 text-blue-600" />
+              Horários de Funcionamento
+            </h3>
+
+            <div className="grid md:grid-cols-2 gap-6">
+              {/* Hora de Início */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Horário de Início
+                </label>
+                <select
+                  value={bookingSettings.start_hour}
+                  onChange={(e) => setBookingSettings(prev => ({ ...prev, start_hour: parseInt(e.target.value) }))}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                >
+                  {Array.from({ length: 24 }, (_, i) => (
+                    <option key={i} value={i}>{String(i).padStart(2, '0')}:00</option>
+                  ))}
+                </select>
+                <p className="text-xs text-gray-500 mt-1">Horário de abertura para agendamentos</p>
+              </div>
+
+              {/* Hora de Fim */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Horário de Término
+                </label>
+                <select
+                  value={bookingSettings.end_hour}
+                  onChange={(e) => setBookingSettings(prev => ({ ...prev, end_hour: parseInt(e.target.value) }))}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                >
+                  {Array.from({ length: 24 }, (_, i) => (
+                    <option key={i} value={i}>{String(i).padStart(2, '0')}:00</option>
+                  ))}
+                </select>
+                <p className="text-xs text-gray-500 mt-1">Horário de fechamento para agendamentos</p>
+              </div>
+
+              {/* Intervalo entre slots */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Intervalo entre Horários
+                </label>
+                <select
+                  value={bookingSettings.slot_interval}
+                  onChange={(e) => setBookingSettings(prev => ({ ...prev, slot_interval: parseInt(e.target.value) }))}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                >
+                  <option value={15}>15 minutos</option>
+                  <option value={30}>30 minutos</option>
+                  <option value={45}>45 minutos</option>
+                  <option value={60}>1 hora</option>
+                </select>
+                <p className="text-xs text-gray-500 mt-1">Duração padrão de cada slot de agendamento</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Regras de Agendamento */}
+          <div className="bg-white rounded-xl shadow border p-6">
+            <h3 className="font-semibold text-gray-900 mb-6 flex items-center gap-2">
+              <Calendar className="w-5 h-5 text-blue-600" />
+              Regras de Agendamento
+            </h3>
+
+            <div className="grid md:grid-cols-2 gap-6">
+              {/* Antecedência mínima */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Antecedência Mínima (horas)
+                </label>
+                <input
+                  type="number"
+                  min="0"
+                  max="72"
+                  value={bookingSettings.min_advance_hours}
+                  onChange={(e) => setBookingSettings(prev => ({ ...prev, min_advance_hours: parseInt(e.target.value) || 0 }))}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                />
+                <p className="text-xs text-gray-500 mt-1">
+                  Tempo mínimo antes do horário para agendar (ex: 2h antes)
+                </p>
+              </div>
+
+              {/* Antecedência máxima */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Antecedência Máxima (dias)
+                </label>
+                <input
+                  type="number"
+                  min="1"
+                  max="365"
+                  value={bookingSettings.max_advance_days}
+                  onChange={(e) => setBookingSettings(prev => ({ ...prev, max_advance_days: parseInt(e.target.value) || 30 }))}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                />
+                <p className="text-xs text-gray-500 mt-1">
+                  Quantos dias no futuro o cliente pode agendar
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Cancelamento */}
+          <div className="bg-white rounded-xl shadow border p-6">
+            <h3 className="font-semibold text-gray-900 mb-6 flex items-center gap-2">
+              <Bell className="w-5 h-5 text-blue-600" />
+              Cancelamento e Confirmação
+            </h3>
+
+            <div className="space-y-6">
+              {/* Permitir cancelamento */}
+              <div>
+                <label className="flex items-center gap-3 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={bookingSettings.allow_cancellation}
+                    onChange={(e) => setBookingSettings(prev => ({ ...prev, allow_cancellation: e.target.checked }))}
+                    className="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                  />
+                  <div>
+                    <span className="font-medium text-gray-900">Permitir cancelamento online</span>
+                    <p className="text-sm text-gray-500">Clientes podem cancelar pelo link de consulta</p>
+                  </div>
+                </label>
+              </div>
+
+              {/* Antecedência para cancelar */}
+              {bookingSettings.allow_cancellation && (
+                <div className="ml-8">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Antecedência mínima para cancelar (horas)
+                  </label>
+                  <input
+                    type="number"
+                    min="0"
+                    max="72"
+                    value={bookingSettings.cancellation_min_hours}
+                    onChange={(e) => setBookingSettings(prev => ({ ...prev, cancellation_min_hours: parseInt(e.target.value) || 0 }))}
+                    className="w-full max-w-xs px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  />
+                  <p className="text-xs text-gray-500 mt-1">
+                    Ex: 2h significa que só pode cancelar até 2h antes do horário
+                  </p>
+                </div>
+              )}
+
+              {/* Exigir confirmação */}
+              <div className="pt-4 border-t">
+                <label className="flex items-center gap-3 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={bookingSettings.require_confirmation}
+                    onChange={(e) => setBookingSettings(prev => ({ ...prev, require_confirmation: e.target.checked }))}
+                    className="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                  />
+                  <div>
+                    <span className="font-medium text-gray-900">Exigir confirmação do agendamento</span>
+                    <p className="text-sm text-gray-500">Cliente recebe email/SMS para confirmar o agendamento</p>
+                  </div>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          {/* Botão Salvar */}
+          <div className="flex justify-end">
+            <button
+              onClick={handleSaveBookingSettings}
+              disabled={savingBooking}
+              className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors disabled:opacity-50 flex items-center gap-2"
+            >
+              {savingBooking ? (
+                <>
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  Salvando...
+                </>
+              ) : (
+                <>
+                  <Check className="w-4 h-4" />
+                  Salvar Configurações
+                </>
+              )}
+            </button>
           </div>
         </div>
       )}

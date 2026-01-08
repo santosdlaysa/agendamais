@@ -51,10 +51,15 @@ export default function SubscriptionPlans() {
   const { createSubscription, hasActiveSubscription, subscription, refreshSubscription } = useSubscription()
   const [loading, setLoading] = useState(null)
 
-  const currentPlan = subscription?.plan
+  // Só considera como plano atual se tiver uma assinatura ativa
+  const currentPlan = hasActiveSubscription() ? subscription?.plan : null
+
+  // Verifica se tem uma assinatura pendente (iniciou checkout mas não completou)
+  const hasPendingSubscription = subscription?.status === 'pending'
+  const pendingPlan = hasPendingSubscription ? subscription?.plan : null
 
   const handleSelectPlan = async (planId) => {
-    // Se é o plano atual, não faz nada
+    // Se é o plano atual ativo, não faz nada
     if (planId === currentPlan) {
       return
     }
@@ -74,7 +79,7 @@ export default function SubscriptionPlans() {
           navigate('/subscription/manage')
         }
       } else {
-        // Criar nova assinatura
+        // Criar nova assinatura ou retentar checkout pendente
         const result = await createSubscription(planId)
 
         if (result.success && result.data.checkout_url) {
@@ -140,6 +145,18 @@ export default function SubscriptionPlans() {
             <p className="text-sm text-gray-500 mt-2">
               Sem compromisso. Cancele a qualquer momento.
             </p>
+          )}
+
+          {/* Aviso de assinatura pendente */}
+          {hasPendingSubscription && (
+            <div className="mt-6 max-w-xl mx-auto bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+              <p className="text-yellow-800 font-medium">
+                Você tem uma assinatura pendente do plano {pendingPlan?.toUpperCase()}.
+              </p>
+              <p className="text-yellow-700 text-sm mt-1">
+                Clique no plano desejado para completar o pagamento e ativar sua conta.
+              </p>
+            </div>
           )}
         </div>
 
