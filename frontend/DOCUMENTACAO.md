@@ -483,15 +483,15 @@ frontend/
 
 ---
 
-## 4. Configuracao e Instalacao
+## 6. Configuracao e Instalacao
 
-### 4.1 Pre-requisitos
+### 6.1 Pre-requisitos
 
 - Node.js 18.x ou superior
 - npm 9.x ou superior
 - Git
 
-### 4.2 Instalacao
+### 6.2 Instalacao
 
 ```bash
 # Clonar repositorio
@@ -505,7 +505,7 @@ npm install
 cp .env.example .env
 ```
 
-### 4.3 Variaveis de Ambiente
+### 6.3 Variaveis de Ambiente
 
 ```env
 # URL do backend
@@ -515,7 +515,7 @@ VITE_API_URL=https://agendamaisbackend.onrender.com
 VITE_STRIPE_PUBLIC_KEY=pk_test_your_stripe_public_key_here
 ```
 
-### 4.4 Comandos Disponiveis
+### 6.4 Comandos Disponiveis
 
 | Comando | Descricao |
 |---------|-----------|
@@ -529,9 +529,9 @@ VITE_STRIPE_PUBLIC_KEY=pk_test_your_stripe_public_key_here
 
 ---
 
-## 5. Autenticacao e Autorizacao
+## 7. Autenticacao e Autorizacao
 
-### 5.1 AuthContext
+### 7.1 AuthContext
 
 O `AuthContext` gerencia todo o fluxo de autenticacao:
 
@@ -569,7 +569,7 @@ export function AuthProvider({ children }) {
 }
 ```
 
-### 5.2 Fluxo de Autenticacao
+### 7.2 Fluxo de Autenticacao
 
 ```
 +-----------+     +-----------+     +-----------+
@@ -584,7 +584,7 @@ export function AuthProvider({ children }) {
 +-----------+     +-----------+     +-------------+
 ```
 
-### 5.3 Roles e Permissoes
+### 7.3 Roles e Permissoes
 
 | Role | Permissoes |
 |------|------------|
@@ -604,9 +604,9 @@ export function AuthProvider({ children }) {
 
 ---
 
-## 6. Modulos do Sistema
+## 8. Modulos do Sistema
 
-### 6.1 Dashboard
+### 8.1 Dashboard
 
 **Arquivo:** `src/components/Dashboard.jsx`
 
@@ -618,7 +618,7 @@ export function AuthProvider({ children }) {
 - Proximos lembretes (24h)
 - Acoes rapidas
 
-### 6.2 Clientes
+### 8.2 Clientes
 
 **Arquivos:**
 - `src/components/Clients.jsx` - Listagem
@@ -634,7 +634,7 @@ export function AuthProvider({ children }) {
 | birth_date | date | Nao |
 | notes | text | Nao |
 
-### 6.3 Profissionais
+### 8.3 Profissionais
 
 **Arquivos:**
 - `src/components/Professionals.jsx` - Listagem
@@ -668,7 +668,7 @@ export function AuthProvider({ children }) {
 }
 ```
 
-### 6.4 Servicos
+### 8.4 Servicos
 
 **Arquivos:**
 - `src/components/Services.jsx` - Listagem
@@ -685,7 +685,7 @@ export function AuthProvider({ children }) {
 | category | string | Nao |
 | active | boolean | Sim |
 
-### 6.5 Agendamentos
+### 8.5 Agendamentos
 
 **Arquivos:**
 - `src/components/Appointments.jsx` - Listagem
@@ -701,7 +701,7 @@ export function AuthProvider({ children }) {
 | cancelled | Cancelado | Vermelho |
 | no_show | Nao compareceu | Amarelo |
 
-### 6.6 Relatorios Financeiros
+### 8.6 Relatorios Financeiros
 
 **Arquivo:** `src/components/FinancialReport.jsx`
 
@@ -718,7 +718,7 @@ export function AuthProvider({ children }) {
 - Agendamentos por profissional
 - Servicos mais populares
 
-### 6.7 Lembretes
+### 8.7 Lembretes
 
 **Arquivos:**
 - `src/components/Reminders.jsx` - Listagem
@@ -729,7 +729,7 @@ export function AuthProvider({ children }) {
 - SMS
 - Email
 
-### 6.8 Configuracoes
+### 8.8 Configuracoes
 
 **Arquivo:** `src/components/Settings.jsx`
 
@@ -754,15 +754,15 @@ export function AuthProvider({ children }) {
 
 ---
 
-## 7. Agendamento Online Publico
+## 9. Agendamento Online Publico
 
-### 7.1 Visao Geral
+### 9.1 Visao Geral
 
 O agendamento online permite que clientes agendem servicos 24/7 atraves de um link exclusivo.
 
 **URL:** `https://seusite.com/#/agendar/{slug}`
 
-### 7.2 Fluxo de Agendamento
+### 9.2 Fluxo de Agendamento
 
 ```
 +-------------------------------------------------------------+
@@ -784,7 +784,7 @@ O agendamento online permite que clientes agendem servicos 24/7 atraves de um li
                     +------------------+
 ```
 
-### 7.3 Paginas Publicas
+### 9.3 Paginas Publicas
 
 | Rota | Componente | Descricao |
 |------|------------|-----------|
@@ -793,7 +793,7 @@ O agendamento online permite que clientes agendem servicos 24/7 atraves de um li
 | `/agendar/:slug/consultar` | BookingLookup | Consultar agendamento |
 | `/agendar/:slug/cancelar/:code` | BookingCancel | Cancelar agendamento |
 
-### 7.4 Componentes de Booking
+### 9.4 Componentes de Booking
 
 | Componente | Descricao |
 |------------|-----------|
@@ -803,7 +803,7 @@ O agendamento online permite que clientes agendem servicos 24/7 atraves de um li
 | **BookingClientForm** | Formulario para dados do cliente |
 | **BookingSummary** | Resumo do agendamento antes de confirmar |
 
-### 7.5 API Publica
+### 9.5 API Publica
 
 ```javascript
 // src/services/publicApi.js
@@ -840,9 +840,9 @@ const bookingService = {
 
 ---
 
-## 8. Sistema de Assinaturas
+## 10. Sistema de Assinaturas
 
-### 8.1 SubscriptionContext
+### 10.1 SubscriptionContext
 
 ```jsx
 // src/contexts/SubscriptionContext.jsx
@@ -875,7 +875,7 @@ export function SubscriptionProvider({ children }) {
 }
 ```
 
-### 8.2 Paginas de Assinatura
+### 10.2 Paginas de Assinatura
 
 | Rota | Componente | Descricao |
 |------|------------|-----------|
@@ -886,9 +886,9 @@ export function SubscriptionProvider({ children }) {
 
 ---
 
-## 9. API e Servicos
+## 11. API e Servicos
 
-### 9.1 Instancia Axios Autenticada
+### 11.1 Instancia Axios Autenticada
 
 ```javascript
 // src/utils/api.js
@@ -919,7 +919,7 @@ api.interceptors.response.use(
 )
 ```
 
-### 9.2 Endpoints da API
+### 11.2 Endpoints da API
 
 #### Autenticacao
 
@@ -1003,9 +1003,9 @@ api.interceptors.response.use(
 
 ---
 
-## 10. Componentes de UI
+## 12. Componentes de UI
 
-### 10.1 Icones (Lucide React)
+### 12.1 Icones (Lucide React)
 
 ```jsx
 import {
@@ -1031,7 +1031,7 @@ import {
 } from 'lucide-react'
 ```
 
-### 10.2 Padroes de Estilo
+### 12.2 Padroes de Estilo
 
 **Cores:**
 ```css
@@ -1077,9 +1077,9 @@ border-gray-300  /* Bordas */
 
 ---
 
-## 11. Fluxos do Sistema
+## 13. Fluxos do Sistema
 
-### 11.1 Fluxo de Onboarding
+### 13.1 Fluxo de Onboarding
 
 ```
 +-----------+
@@ -1123,7 +1123,7 @@ border-gray-300  /* Bordas */
 +-----------+
 ```
 
-### 11.2 Fluxo de Agendamento (Admin)
+### 13.2 Fluxo de Agendamento (Admin)
 
 ```
 +-----------+
@@ -1158,7 +1158,7 @@ border-gray-300  /* Bordas */
 +-----------+
 ```
 
-### 11.3 Fluxo de Conclusao de Atendimento
+### 13.3 Fluxo de Conclusao de Atendimento
 
 ```
 +-----------+
@@ -1185,9 +1185,9 @@ border-gray-300  /* Bordas */
 
 ---
 
-## 12. Guia de Desenvolvimento
+## 14. Guia de Desenvolvimento
 
-### 12.1 Criando um Novo Componente
+### 14.1 Criando um Novo Componente
 
 ```jsx
 // src/components/MeuComponente.jsx
@@ -1246,7 +1246,7 @@ export default function MeuComponente() {
 }
 ```
 
-### 12.2 Adicionando uma Nova Rota
+### 14.2 Adicionando uma Nova Rota
 
 ```jsx
 // src/App.jsx
@@ -1257,7 +1257,7 @@ export default function MeuComponente() {
 </Routes>
 ```
 
-### 12.3 Usando Context
+### 14.3 Usando Context
 
 ```jsx
 // Consumindo AuthContext
@@ -1274,7 +1274,7 @@ function MeuComponente() {
 }
 ```
 
-### 12.4 Chamadas de API
+### 14.4 Chamadas de API
 
 ```jsx
 // GET
@@ -1291,7 +1291,7 @@ const response = await api.put('/endpoint/:id', { campo: 'valor' })
 await api.delete('/endpoint/:id')
 ```
 
-### 12.5 Tratamento de Erros
+### 14.5 Tratamento de Erros
 
 ```jsx
 try {
@@ -1304,7 +1304,7 @@ try {
 }
 ```
 
-### 12.6 Validacao de Formulario
+### 14.6 Validacao de Formulario
 
 ```jsx
 const validateForm = () => {
