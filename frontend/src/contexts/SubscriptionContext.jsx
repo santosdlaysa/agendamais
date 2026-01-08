@@ -9,9 +9,14 @@ export function SubscriptionProvider({ children }) {
   const [loading, setLoading] = useState(true)
   const [plans, setPlans] = useState([])
 
-  // Buscar status da assinatura ao carregar
+  // Buscar status da assinatura ao carregar (apenas se autenticado)
   useEffect(() => {
-    fetchSubscriptionStatus()
+    const token = localStorage.getItem('token')
+    if (token) {
+      fetchSubscriptionStatus()
+    } else {
+      setLoading(false)
+    }
   }, [])
 
   const fetchSubscriptionStatus = async () => {
