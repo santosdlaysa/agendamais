@@ -34,8 +34,7 @@ export default function Login() {
       if (isLogin) {
         const result = await login(formData.email, formData.password)
         if (result.success) {
-          // Redirecionamento manual para a dashboard
-          navigate('/')
+          navigate('/dashboard')
         }
       } else {
         // Registro: criar conta e fazer login automaticamente
