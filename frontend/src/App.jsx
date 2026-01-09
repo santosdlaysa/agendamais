@@ -35,7 +35,7 @@ import PrivacyPolicy from './pages/public/PrivacyPolicy'
 import LGPD from './pages/public/LGPD'
 
 function App() {
-  const { isAuthenticated, loading } = useAuth()
+  const { isAuthenticated, loading, user } = useAuth()
   const { showOnboarding, loading: onboardingLoading } = useOnboarding()
   const { hasActiveSubscription, loading: subscriptionLoading } = useSubscription()
   const location = useLocation()
@@ -96,7 +96,9 @@ function App() {
   }
 
   // Usuário autenticado mas sem assinatura - deve escolher um plano primeiro
-  if (!hasActiveSubscription()) {
+  // Admins não precisam de assinatura
+  const isAdmin = user?.role === 'admin'
+  if (!hasActiveSubscription() && !isAdmin) {
     return (
       <Routes>
         <Route path="/login" element={<Login />} />
