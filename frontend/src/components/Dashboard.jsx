@@ -30,93 +30,68 @@ export default function Dashboard() {
 
   const fetchDashboardStats = async () => {
     try {
-      // Fazer requisições básicas uma por vez para identificar qual está falhando
-      let clientsRes, professionalsRes, servicesRes, appointmentsRes
+      // Fazer todas as requisições em paralelo para carregar mais rápido
+      const [
+        clientsRes,
+        professionalsRes,
+        servicesRes,
+        appointmentsRes,
+        allAppointmentsRes,
+        reminderStatsRes,
+        upcomingRes
+      ] = await Promise.allSettled([
+        api.get('/clients?per_page=1'),
+        api.get('/professionals?per_page=1'),
+        api.get('/services?per_page=1'),
+        api.get('/appointments?per_page=1'),
+        api.get('/appointments?per_page=200'),
+        reminderService.getStats(),
+        reminderService.getUpcoming(24)
+      ])
 
-      try {
-        clientsRes = await api.get('/clients?per_page=1')
-      } catch (clientsError) {
-        clientsRes = { data: { pagination: { total: 0 } } }
-      }
-
-      try {
-        professionalsRes = await api.get('/professionals?per_page=1')
-      } catch (professionalsError) {
-        professionalsRes = { data: { pagination: { total: 0 } } }
-      }
-
-      try {
-        servicesRes = await api.get('/services?per_page=1')
-      } catch (servicesError) {
-        servicesRes = { data: { pagination: { total: 0 } } }
-      }
-
-      try {
-        appointmentsRes = await api.get('/appointments?per_page=1')
-      } catch (appointmentsError) {
-        appointmentsRes = { data: { pagination: { total: 0 } } }
-      }
-
-      // Buscar agendamentos concluídos para calcular receita
+      // Processar agendamentos para estatísticas
       let totalRevenue = 0
       let appointmentsByStatus = {}
       let recentAppointments = 0
+      const allAppointments = allAppointmentsRes.status === 'fulfilled'
+        ? (allAppointmentsRes.value.data.appointments || [])
+        : []
 
-      try {
-        // Buscar todos os agendamentos para calcular estatísticas detalhadas
-        let allAppointments = []
+      if (allAppointments.length > 0) {
+        // Calcular receita total dos agendamentos concluídos
+        totalRevenue = allAppointments
+          .filter(apt => apt.status === 'completed' && apt.price)
+          .reduce((sum, apt) => sum + parseFloat(apt.price || 0), 0)
 
-        try {
-          const allAppointmentsRes = await api.get('/appointments?per_page=200')
-          allAppointments = allAppointmentsRes.data.appointments || []
-        } catch (appointmentError) {
-          // Fallback: tentar buscar apenas os concluídos se der erro
-          try {
-            const completedRes = await api.get('/appointments?status=completed&per_page=100')
-            allAppointments = completedRes.data.appointments || []
-          } catch (completedError) {
-            allAppointments = []
-          }
-        }
+        // Contar por status
+        appointmentsByStatus = allAppointments.reduce((acc, apt) => {
+          acc[apt.status] = (acc[apt.status] || 0) + 1
+          return acc
+        }, {})
 
-        if (allAppointments.length > 0) {
-          // Calcular receita total dos agendamentos concluídos
-          totalRevenue = allAppointments
-            .filter(apt => apt.status === 'completed' && apt.price)
-            .reduce((sum, apt) => sum + parseFloat(apt.price || 0), 0)
+        // Agendamentos dos últimos 30 dias
+        const thirtyDaysAgo = new Date()
+        thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30)
 
-          // Contar por status
-          appointmentsByStatus = allAppointments.reduce((acc, apt) => {
-            acc[apt.status] = (acc[apt.status] || 0) + 1
-            return acc
-          }, {})
+        recentAppointments = allAppointments.filter(apt => {
+          const aptDate = new Date(apt.appointment_date)
+          return aptDate >= thirtyDaysAgo
+        }).length
 
-          // Agendamentos dos últimos 30 dias
-          const thirtyDaysAgo = new Date()
-          thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30)
-
-          recentAppointments = allAppointments.filter(apt => {
-            const aptDate = new Date(apt.appointment_date)
-            return aptDate >= thirtyDaysAgo
-          }).length
-
-          // Ordenar por data mais recente e pegar os 5 últimos agendamentos
-          const sortedAppointments = [...allAppointments].sort((a, b) => {
-            const dateA = new Date(`${a.appointment_date}T${a.start_time}`)
-            const dateB = new Date(`${b.appointment_date}T${b.start_time}`)
-            return dateB - dateA
-          })
-          setRecentAppointmentsList(sortedAppointments.slice(0, 5))
-        }
-      } catch (revenueError) {
-        // Silently handle error
+        // Ordenar por data mais recente e pegar os 5 últimos agendamentos
+        const sortedAppointments = [...allAppointments].sort((a, b) => {
+          const dateA = new Date(`${a.appointment_date}T${a.start_time}`)
+          const dateB = new Date(`${b.appointment_date}T${b.start_time}`)
+          return dateB - dateA
+        })
+        setRecentAppointmentsList(sortedAppointments.slice(0, 5))
       }
 
       const newStats = {
-        total_clients: clientsRes.data.pagination?.total || 0,
-        total_professionals: professionalsRes.data.pagination?.total || 0,
-        total_services: servicesRes.data.pagination?.total || 0,
-        total_appointments: appointmentsRes.data.pagination?.total || 0,
+        total_clients: clientsRes.status === 'fulfilled' ? (clientsRes.value.data.pagination?.total || 0) : 0,
+        total_professionals: professionalsRes.status === 'fulfilled' ? (professionalsRes.value.data.pagination?.total || 0) : 0,
+        total_services: servicesRes.status === 'fulfilled' ? (servicesRes.value.data.pagination?.total || 0) : 0,
+        total_appointments: appointmentsRes.status === 'fulfilled' ? (appointmentsRes.value.data.pagination?.total || 0) : 0,
         recent_appointments: recentAppointments,
         total_revenue: totalRevenue,
         appointments_by_status: appointmentsByStatus
@@ -124,15 +99,12 @@ export default function Dashboard() {
 
       setStats(newStats)
 
-      // Fetch reminder stats
-      try {
-        const reminderStatsRes = await reminderService.getStats()
-        setReminderStats(reminderStatsRes.stats || {})
-
-        const upcomingRes = await reminderService.getUpcoming(24)
-        setUpcomingReminders(upcomingRes.reminders || [])
-      } catch (reminderError) {
-        // Silently handle - API may not be available
+      // Processar dados de lembretes (se disponíveis)
+      if (reminderStatsRes.status === 'fulfilled') {
+        setReminderStats(reminderStatsRes.value.stats || {})
+      }
+      if (upcomingRes.status === 'fulfilled') {
+        setUpcomingReminders(upcomingRes.value.reminders || [])
       }
     } catch (error) {
       // Silently handle error
