@@ -99,6 +99,8 @@ function App() {
   if (!hasActiveSubscription()) {
     return (
       <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/registro" element={<Login />} />
         <Route path="/subscription/plans" element={<SubscriptionPlans />} />
         <Route path="/subscription/success" element={<SubscriptionSuccess />} />
         <Route path="/subscription/canceled" element={<SubscriptionCanceled />} />
