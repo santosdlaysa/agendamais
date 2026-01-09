@@ -22,7 +22,12 @@ import {
   Building2,
   Play,
   MessageCircle,
-  CreditCard
+  CreditCard,
+  TrendingUp,
+  DollarSign,
+  Briefcase,
+  Eye,
+  CalendarDays
 } from 'lucide-react'
 
 const PLANS = [
@@ -234,6 +239,12 @@ export default function LandingPage() {
             {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center gap-8">
               <button
+                onClick={() => scrollToSection('demo')}
+                className="text-gray-600 hover:text-gray-900 transition-colors font-medium"
+              >
+                Demonstração
+              </button>
+              <button
                 onClick={() => scrollToSection('features')}
                 className="text-gray-600 hover:text-gray-900 transition-colors font-medium"
               >
@@ -304,6 +315,12 @@ export default function LandingPage() {
           }`}
         >
           <div className="bg-white px-4 py-4 space-y-3">
+            <button
+              onClick={() => scrollToSection('demo')}
+              className="block w-full text-left py-2 text-gray-600 hover:text-gray-900 font-medium"
+            >
+              Demonstração
+            </button>
             <button
               onClick={() => scrollToSection('features')}
               className="block w-full text-left py-2 text-gray-600 hover:text-gray-900 font-medium"
@@ -386,11 +403,11 @@ export default function LandingPage() {
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </button>
               <button
-                onClick={() => scrollToSection('features')}
+                onClick={() => scrollToSection('demo')}
                 className="w-full sm:w-auto text-gray-700 hover:text-gray-900 bg-white hover:bg-gray-50 border border-gray-200 px-8 py-4 rounded-xl font-semibold text-lg transition-all flex items-center justify-center gap-2"
               >
                 <Play className="w-5 h-5" />
-                Ver Como Funciona
+                Ver Demonstração
               </button>
             </div>
 
@@ -414,8 +431,297 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* Demo Section - Dashboard Preview */}
+      <section id="demo" className="py-20 sm:py-24 px-4 bg-white relative overflow-hidden">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-12">
+            <span className="text-blue-600 font-semibold text-sm uppercase tracking-wider">Demonstração</span>
+            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mt-3 mb-4">
+              Veja o sistema em ação
+            </h2>
+            <p className="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto">
+              Interface intuitiva e completa para gerenciar todos os seus agendamentos em um só lugar
+            </p>
+          </div>
+
+          {/* Dashboard Mockup */}
+          <div className="relative max-w-6xl mx-auto">
+            {/* Browser Frame */}
+            <div className="bg-gray-100 rounded-t-xl p-3 flex items-center gap-2 border border-gray-200 border-b-0">
+              <div className="flex gap-1.5">
+                <div className="w-3 h-3 rounded-full bg-red-400"></div>
+                <div className="w-3 h-3 rounded-full bg-yellow-400"></div>
+                <div className="w-3 h-3 rounded-full bg-green-400"></div>
+              </div>
+              <div className="flex-1 ml-4">
+                <div className="bg-white rounded-lg px-4 py-1.5 text-sm text-gray-500 max-w-md mx-auto flex items-center gap-2">
+                  <Shield className="w-3.5 h-3.5 text-green-500" />
+                  agendamais.site/dashboard
+                </div>
+              </div>
+            </div>
+
+            {/* Dashboard Content */}
+            <div className="bg-gray-50 rounded-b-xl border border-gray-200 shadow-2xl overflow-hidden">
+              {/* Dashboard Header */}
+              <div className="bg-white border-b border-gray-200 px-6 py-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center">
+                      <Calendar className="w-5 h-5 text-white" />
+                    </div>
+                    <span className="font-semibold text-gray-900">Sistema de Agendamento</span>
+                  </div>
+                  {/* Nav Tabs */}
+                  <div className="hidden md:flex items-center gap-1">
+                    <div className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 rounded-lg text-sm font-medium text-gray-900">
+                      <BarChart3 className="w-4 h-4" />
+                      Dashboard
+                    </div>
+                    <div className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-gray-500 hover:text-gray-900">
+                      <Users className="w-4 h-4" />
+                      Clientes
+                    </div>
+                    <div className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-gray-500 hover:text-gray-900">
+                      <Briefcase className="w-4 h-4" />
+                      Serviços
+                    </div>
+                    <div className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-gray-500 hover:text-gray-900">
+                      <CalendarDays className="w-4 h-4" />
+                      Agendamentos
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-medium text-sm">
+                      M
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Dashboard Body */}
+              <div className="p-6">
+                <div className="mb-6">
+                  <h3 className="text-xl font-bold text-gray-900">Dashboard</h3>
+                  <p className="text-sm text-gray-500">Visão geral do sistema de agendamento</p>
+                </div>
+
+                {/* Stats Cards Row 1 */}
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-4">
+                  <div className="bg-white rounded-xl p-4 border border-gray-100 shadow-sm">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-blue-500 rounded-xl flex items-center justify-center">
+                        <Users className="w-5 h-5 text-white" />
+                      </div>
+                      <div>
+                        <p className="text-xs text-gray-500">Total de Clientes</p>
+                        <p className="text-xl font-bold text-gray-900">156</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="bg-white rounded-xl p-4 border border-gray-100 shadow-sm">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-purple-500 rounded-xl flex items-center justify-center">
+                        <Briefcase className="w-5 h-5 text-white" />
+                      </div>
+                      <div>
+                        <p className="text-xs text-gray-500">Profissionais</p>
+                        <p className="text-xl font-bold text-gray-900">5</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="bg-white rounded-xl p-4 border border-gray-100 shadow-sm">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-violet-500 rounded-xl flex items-center justify-center">
+                        <Scissors className="w-5 h-5 text-white" />
+                      </div>
+                      <div>
+                        <p className="text-xs text-gray-500">Serviços</p>
+                        <p className="text-xl font-bold text-gray-900">12</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Stats Cards Row 2 */}
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
+                  <div className="bg-white rounded-xl p-4 border border-gray-100 shadow-sm">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-blue-400 rounded-xl flex items-center justify-center">
+                        <CalendarDays className="w-5 h-5 text-white" />
+                      </div>
+                      <div>
+                        <p className="text-xs text-gray-500">Agendamentos</p>
+                        <p className="text-xl font-bold text-gray-900">248</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="bg-white rounded-xl p-4 border border-gray-100 shadow-sm">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-indigo-500 rounded-xl flex items-center justify-center">
+                        <TrendingUp className="w-5 h-5 text-white" />
+                      </div>
+                      <div>
+                        <p className="text-xs text-gray-500">Últimos 30 dias</p>
+                        <p className="text-xl font-bold text-gray-900">47</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="bg-white rounded-xl p-4 border border-gray-100 shadow-sm">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-emerald-500 rounded-xl flex items-center justify-center">
+                        <DollarSign className="w-5 h-5 text-white" />
+                      </div>
+                      <div>
+                        <p className="text-xs text-gray-500">Receita Total</p>
+                        <p className="text-xl font-bold text-gray-900">R$ 8.450</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Recent Appointments Table */}
+                <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
+                  <div className="px-4 py-3 border-b border-gray-100 flex items-center justify-between">
+                    <h4 className="font-semibold text-gray-900">Agendamentos Recentes</h4>
+                    <button className="text-sm text-blue-600 hover:text-blue-700 font-medium">Ver todos</button>
+                  </div>
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-sm">
+                      <thead className="bg-gray-50 text-gray-500 text-xs uppercase">
+                        <tr>
+                          <th className="px-4 py-3 text-left font-medium">Cliente</th>
+                          <th className="px-4 py-3 text-left font-medium hidden sm:table-cell">Serviço</th>
+                          <th className="px-4 py-3 text-left font-medium hidden md:table-cell">Profissional</th>
+                          <th className="px-4 py-3 text-left font-medium">Data/Hora</th>
+                          <th className="px-4 py-3 text-left font-medium">Status</th>
+                          <th className="px-4 py-3 text-center font-medium">Ações</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-gray-100">
+                        <tr className="hover:bg-gray-50">
+                          <td className="px-4 py-3">
+                            <div>
+                              <p className="font-medium text-gray-900">Maria do Carmo</p>
+                              <p className="text-xs text-gray-500">(95) 99137-1313</p>
+                            </div>
+                          </td>
+                          <td className="px-4 py-3 hidden sm:table-cell">
+                            <span className="text-gray-700">Corte</span>
+                            <p className="text-xs text-gray-500">R$ 30,00</p>
+                          </td>
+                          <td className="px-4 py-3 hidden md:table-cell">
+                            <div className="flex items-center gap-2">
+                              <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                              <span className="text-gray-700">Ana Silva</span>
+                            </div>
+                          </td>
+                          <td className="px-4 py-3">
+                            <p className="text-gray-900">08/01/2026</p>
+                            <p className="text-xs text-gray-500">14:00</p>
+                          </td>
+                          <td className="px-4 py-3">
+                            <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">
+                              Concluído
+                            </span>
+                          </td>
+                          <td className="px-4 py-3 text-center">
+                            <button className="p-1.5 text-gray-400 hover:text-gray-600 rounded-lg hover:bg-gray-100">
+                              <Eye className="w-4 h-4" />
+                            </button>
+                          </td>
+                        </tr>
+                        <tr className="hover:bg-gray-50">
+                          <td className="px-4 py-3">
+                            <div>
+                              <p className="font-medium text-gray-900">João Pedro</p>
+                              <p className="text-xs text-gray-500">(95) 98888-2222</p>
+                            </div>
+                          </td>
+                          <td className="px-4 py-3 hidden sm:table-cell">
+                            <span className="text-gray-700">Barba</span>
+                            <p className="text-xs text-gray-500">R$ 25,00</p>
+                          </td>
+                          <td className="px-4 py-3 hidden md:table-cell">
+                            <div className="flex items-center gap-2">
+                              <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+                              <span className="text-gray-700">Carlos Santos</span>
+                            </div>
+                          </td>
+                          <td className="px-4 py-3">
+                            <p className="text-gray-900">09/01/2026</p>
+                            <p className="text-xs text-gray-500">10:30</p>
+                          </td>
+                          <td className="px-4 py-3">
+                            <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-700">
+                              Confirmado
+                            </span>
+                          </td>
+                          <td className="px-4 py-3 text-center">
+                            <button className="p-1.5 text-gray-400 hover:text-gray-600 rounded-lg hover:bg-gray-100">
+                              <Eye className="w-4 h-4" />
+                            </button>
+                          </td>
+                        </tr>
+                        <tr className="hover:bg-gray-50">
+                          <td className="px-4 py-3">
+                            <div>
+                              <p className="font-medium text-gray-900">Fernanda Lima</p>
+                              <p className="text-xs text-gray-500">(95) 97777-3333</p>
+                            </div>
+                          </td>
+                          <td className="px-4 py-3 hidden sm:table-cell">
+                            <span className="text-gray-700">Coloração</span>
+                            <p className="text-xs text-gray-500">R$ 120,00</p>
+                          </td>
+                          <td className="px-4 py-3 hidden md:table-cell">
+                            <div className="flex items-center gap-2">
+                              <div className="w-2 h-2 bg-pink-500 rounded-full"></div>
+                              <span className="text-gray-700">Julia Mendes</span>
+                            </div>
+                          </td>
+                          <td className="px-4 py-3">
+                            <p className="text-gray-900">09/01/2026</p>
+                            <p className="text-xs text-gray-500">15:00</p>
+                          </td>
+                          <td className="px-4 py-3">
+                            <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-700">
+                              Pendente
+                            </span>
+                          </td>
+                          <td className="px-4 py-3 text-center">
+                            <button className="p-1.5 text-gray-400 hover:text-gray-600 rounded-lg hover:bg-gray-100">
+                              <Eye className="w-4 h-4" />
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Decorative gradient overlay */}
+            <div className="absolute -bottom-4 left-0 right-0 h-20 bg-gradient-to-t from-white to-transparent pointer-events-none"></div>
+          </div>
+
+          {/* CTA */}
+          <div className="text-center mt-12">
+            <button
+              onClick={handleGetStarted}
+              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all hover:shadow-xl flex items-center justify-center gap-2 mx-auto group"
+            >
+              Experimente Grátis por 7 Dias
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </button>
+            <p className="text-gray-500 mt-3 text-sm">Sem cartão de crédito. Configure em minutos.</p>
+          </div>
+        </div>
+      </section>
+
       {/* Features Section */}
-      <section id="features" className="py-20 sm:py-24 px-4 bg-white scroll-mt-20">
+      <section id="features" className="py-20 sm:py-24 px-4 bg-gray-50 scroll-mt-20">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <span className="text-blue-600 font-semibold text-sm uppercase tracking-wider">Funcionalidades</span>
