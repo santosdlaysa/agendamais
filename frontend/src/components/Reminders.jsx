@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import toast from 'react-hot-toast'
 import {
   MessageSquare,
   Mail,
@@ -13,7 +14,8 @@ import {
   Settings,
   Play,
   Pause,
-  Send
+  Send,
+  Loader2
 } from 'lucide-react'
 import { Button } from './ui/button'
 import api from '../utils/api'
@@ -31,6 +33,8 @@ export default function Reminders() {
     page: 1,
     per_page: 20
   })
+  const [schedulerLoading, setSchedulerLoading] = useState(false)
+  const [processLoading, setProcessLoading] = useState(false)
 
   useEffect(() => {
     fetchData()
@@ -76,29 +80,44 @@ export default function Reminders() {
 
   const toggleScheduler = async () => {
     try {
+      setSchedulerLoading(true)
       const action = schedulerStatus.running ? 'stop' : 'start'
-      await api.post(`/reminders/scheduler/${action}`)
+      const response = await api.post(`/reminders/scheduler/${action}`)
       setSchedulerStatus(prev => ({ ...prev, running: !prev.running }))
+      toast.success(schedulerStatus.running ? 'Agendador parado!' : 'Agendador iniciado!')
     } catch (error) {
-      // Error handled silently
+      const message = error.response?.data?.message || error.response?.data?.error || 'Erro ao alterar status do agendador'
+      toast.error(message)
+      console.error('Erro toggleScheduler:', error)
+    } finally {
+      setSchedulerLoading(false)
     }
   }
 
   const processReminders = async () => {
     try {
-      await api.post('/reminders/process')
+      setProcessLoading(true)
+      const response = await api.post('/reminders/process')
+      toast.success('Lembretes processados com sucesso!')
       fetchData() // Recarregar dados após processar
     } catch (error) {
-      // Error handled silently
+      const message = error.response?.data?.message || error.response?.data?.error || 'Erro ao processar lembretes'
+      toast.error(message)
+      console.error('Erro processReminders:', error)
+    } finally {
+      setProcessLoading(false)
     }
   }
 
   const sendReminder = async (reminderId) => {
     try {
       await api.post(`/reminders/${reminderId}/send`)
+      toast.success('Lembrete enviado com sucesso!')
       fetchData() // Recarregar dados após enviar
     } catch (error) {
-      // Error handled silently
+      const message = error.response?.data?.message || error.response?.data?.error || 'Erro ao enviar lembrete'
+      toast.error(message)
+      console.error('Erro sendReminder:', error)
     }
   }
 
@@ -210,19 +229,31 @@ export default function Reminders() {
               onClick={toggleScheduler}
               variant={schedulerStatus.running ? "destructive" : "default"}
               size="sm"
+              disabled={schedulerLoading}
               className="flex items-center space-x-2"
             >
-              {schedulerStatus.running ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
-              <span>{schedulerStatus.running ? 'Parar' : 'Iniciar'}</span>
+              {schedulerLoading ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : schedulerStatus.running ? (
+                <Pause className="h-4 w-4" />
+              ) : (
+                <Play className="h-4 w-4" />
+              )}
+              <span>{schedulerLoading ? 'Aguarde...' : schedulerStatus.running ? 'Parar' : 'Iniciar'}</span>
             </Button>
             <Button
               onClick={processReminders}
               variant="outline"
               size="sm"
+              disabled={processLoading}
               className="flex items-center space-x-2"
             >
-              <RefreshCw className="h-4 w-4" />
-              <span>Processar Agora</span>
+              {processLoading ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <RefreshCw className="h-4 w-4" />
+              )}
+              <span>{processLoading ? 'Processando...' : 'Processar Agora'}</span>
             </Button>
           </div>
         </div>
