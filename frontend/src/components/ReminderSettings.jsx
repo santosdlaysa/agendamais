@@ -63,7 +63,7 @@ export default function ReminderSettings() {
 
   const fetchSettings = async () => {
     try {
-      const response = await api.get(`/reminders/settings?professional_id=${selectedProfessional}`)
+      const response = await api.get(`/reminders/settings/professional/${selectedProfessional}`)
       const data = response.data.settings || response.data
       setSettings({
         whatsapp_enabled: data.whatsapp_enabled || false,
@@ -98,8 +98,7 @@ export default function ReminderSettings() {
   const saveSettings = async () => {
     try {
       setSaving(true)
-      await api.put('/reminders/settings', {
-        professional_id: parseInt(selectedProfessional),
+      await api.put(`/reminders/settings/professional/${selectedProfessional}`, {
         whatsapp_enabled: settings.whatsapp_enabled,
         whatsapp_hours_before: settings.whatsapp_hours_before,
         sms_enabled: settings.sms_enabled,
