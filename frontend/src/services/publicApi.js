@@ -117,6 +117,12 @@ export const bookingService = {
   confirmAppointment: async (token) => {
     const response = await publicApi.post(`/appointments/confirm/${token}`)
     return response.data
+  },
+
+  // Criar cliente via agendamento público
+  createClient: async (slug, clientData) => {
+    const response = await publicApi.post(`/business/${slug}/clients`, clientData)
+    return response.data
   }
 }
 

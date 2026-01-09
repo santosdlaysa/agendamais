@@ -205,17 +205,32 @@ export default function BookingPage() {
     try {
       setSubmitting(true)
 
+      const clientPayload = {
+        name: clientData.name.trim(),
+        phone: clientData.phone,
+        email: clientData.email.trim() || null,
+        notes: clientData.notes.trim() || null
+      }
+
+      // Criar/atualizar cliente na base de dados
+      try {
+        await bookingService.createClient(slug, clientPayload)
+      } catch (clientErr) {
+        // Não bloqueia o agendamento se falhar ao salvar cliente
+        console.warn('Erro ao salvar cliente:', clientErr)
+      }
+
       const data = {
         service_id: selectedService.id,
         professional_id: selectedProfessional?.id || selectedTime?.professional_id || professionals[0]?.id,
         date: selectedDate,
         start_time: selectedTime.time,
         client: {
-          name: clientData.name.trim(),
-          phone: clientData.phone,
-          email: clientData.email.trim() || null
+          name: clientPayload.name,
+          phone: clientPayload.phone,
+          email: clientPayload.email
         },
-        notes: clientData.notes.trim() || null
+        notes: clientPayload.notes
       }
 
       const result = await bookingService.createAppointment(slug, data)
