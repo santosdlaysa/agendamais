@@ -1,14 +1,16 @@
 import { useState, useRef, useEffect } from 'react'
 import { useAuth } from '../contexts/AuthContext'
 import { useSubscription } from '../contexts/SubscriptionContext'
-import { NavLink, useNavigate } from 'react-router-dom'
-import { Calendar, LogOut, Users, UserCheck, Briefcase, FileText, BarChart3, MessageSquare, CreditCard, ChevronDown, User, Settings, Building2, Shield } from 'lucide-react'
+import { NavLink, useNavigate, useLocation } from 'react-router-dom'
+import { Calendar, LogOut, Users, UserCheck, Briefcase, FileText, BarChart3, MessageSquare, CreditCard, ChevronDown, User, Settings, Building2, Shield, Menu, X } from 'lucide-react'
 
 export default function Layout({ children }) {
   const { user, logout } = useAuth()
   const { hasActiveSubscription, isInTrial, getTrialDaysRemaining } = useSubscription()
   const navigate = useNavigate()
+  const location = useLocation()
   const [menuOpen, setMenuOpen] = useState(false)
+  const [mobileNavOpen, setMobileNavOpen] = useState(false)
   const menuRef = useRef(null)
 
   // Fechar menu ao clicar fora
@@ -21,6 +23,11 @@ export default function Layout({ children }) {
     document.addEventListener('mousedown', handleClickOutside)
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
+
+  // Fechar menu mobile quando a rota muda
+  useEffect(() => {
+    setMobileNavOpen(false)
+  }, [location.pathname])
 
   const handleMenuItemClick = (path) => {
     setMenuOpen(false)
@@ -38,11 +45,19 @@ export default function Layout({ children }) {
       <header className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
+            {/* Mobile menu button */}
+            <button
+              onClick={() => setMobileNavOpen(!mobileNavOpen)}
+              className="md:hidden p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+            >
+              {mobileNavOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </button>
+
             {/* Logo */}
             <div className="flex items-center">
               <div className="flex-shrink-0 flex items-center">
                 <Calendar className="h-8 w-8 text-blue-600" />
-                <h1 className="ml-2 text-xl font-bold text-gray-900">
+                <h1 className="ml-2 text-xl font-bold text-gray-900 hidden sm:block">
                   Sistema de Agendamento
                 </h1>
               </div>
@@ -142,14 +157,124 @@ export default function Layout({ children }) {
         </div>
       </header>
 
-      {/* Navigation */}
-      <nav className="bg-white border-b">
+      {/* Mobile Navigation */}
+      <div className={`md:hidden bg-white border-b transition-all duration-300 overflow-hidden ${mobileNavOpen ? 'max-h-screen' : 'max-h-0'}`}>
+        <div className="px-4 py-2 space-y-1">
+          <NavLink
+            to="/dashboard"
+            className={({ isActive }) =>
+              `flex items-center px-3 py-3 rounded-md text-base font-medium ${
+                isActive
+                  ? 'text-gray-900 bg-gray-100'
+                  : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+              }`
+            }
+          >
+            <FileText className="h-5 w-5 mr-3" />
+            Dashboard
+          </NavLink>
+          <NavLink
+            to="/clients"
+            className={({ isActive }) =>
+              `flex items-center px-3 py-3 rounded-md text-base font-medium ${
+                isActive
+                  ? 'text-gray-900 bg-gray-100'
+                  : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+              }`
+            }
+          >
+            <Users className="h-5 w-5 mr-3" />
+            Clientes
+          </NavLink>
+          <NavLink
+            to="/professionals"
+            className={({ isActive }) =>
+              `flex items-center px-3 py-3 rounded-md text-base font-medium ${
+                isActive
+                  ? 'text-gray-900 bg-gray-100'
+                  : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+              }`
+            }
+          >
+            <UserCheck className="h-5 w-5 mr-3" />
+            Profissionais
+          </NavLink>
+          <NavLink
+            to="/services"
+            className={({ isActive }) =>
+              `flex items-center px-3 py-3 rounded-md text-base font-medium ${
+                isActive
+                  ? 'text-gray-900 bg-gray-100'
+                  : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+              }`
+            }
+          >
+            <Briefcase className="h-5 w-5 mr-3" />
+            Serviços
+          </NavLink>
+          <NavLink
+            to="/appointments"
+            className={({ isActive }) =>
+              `flex items-center px-3 py-3 rounded-md text-base font-medium ${
+                isActive
+                  ? 'text-gray-900 bg-gray-100'
+                  : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+              }`
+            }
+          >
+            <Calendar className="h-5 w-5 mr-3" />
+            Agendamentos
+          </NavLink>
+          <NavLink
+            to="/reports"
+            className={({ isActive }) =>
+              `flex items-center px-3 py-3 rounded-md text-base font-medium ${
+                isActive
+                  ? 'text-gray-900 bg-gray-100'
+                  : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+              }`
+            }
+          >
+            <BarChart3 className="h-5 w-5 mr-3" />
+            Relatórios
+          </NavLink>
+          <NavLink
+            to="/reminders"
+            className={({ isActive }) =>
+              `flex items-center px-3 py-3 rounded-md text-base font-medium ${
+                isActive
+                  ? 'text-gray-900 bg-gray-100'
+                  : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+              }`
+            }
+          >
+            <MessageSquare className="h-5 w-5 mr-3" />
+            Lembretes
+          </NavLink>
+          <NavLink
+            to={hasActiveSubscription() ? "/subscription/manage" : "/subscription/plans"}
+            className={({ isActive }) =>
+              `flex items-center px-3 py-3 rounded-md text-base font-medium ${
+                isActive
+                  ? 'text-gray-900 bg-gray-100'
+                  : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+              }`
+            }
+          >
+            <CreditCard className="h-5 w-5 mr-3" />
+            {hasActiveSubscription() ? 'Assinatura' : 'Assinar'}
+          </NavLink>
+        </div>
+      </div>
+
+      {/* Desktop Navigation */}
+      <nav className="bg-white border-b hidden md:block">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex space-x-8 py-3">
+          <div className="flex space-x-4 lg:space-x-8 py-3 overflow-x-auto">
             <NavLink
               to="/dashboard"
               className={({ isActive }) =>
-                `flex items-center px-3 py-2 rounded-md text-sm font-medium ${
+                `flex items-center px-3 py-2 rounded-md text-sm font-medium whitespace-nowrap ${
                   isActive
                     ? 'text-gray-900 bg-gray-100'
                     : 'text-gray-500 hover:text-gray-900'
@@ -162,7 +287,7 @@ export default function Layout({ children }) {
             <NavLink
               to="/clients"
               className={({ isActive }) =>
-                `flex items-center px-3 py-2 rounded-md text-sm font-medium ${
+                `flex items-center px-3 py-2 rounded-md text-sm font-medium whitespace-nowrap ${
                   isActive
                     ? 'text-gray-900 bg-gray-100'
                     : 'text-gray-500 hover:text-gray-900'
@@ -175,7 +300,7 @@ export default function Layout({ children }) {
             <NavLink
               to="/professionals"
               className={({ isActive }) =>
-                `flex items-center px-3 py-2 rounded-md text-sm font-medium ${
+                `flex items-center px-3 py-2 rounded-md text-sm font-medium whitespace-nowrap ${
                   isActive
                     ? 'text-gray-900 bg-gray-100'
                     : 'text-gray-500 hover:text-gray-900'
@@ -188,7 +313,7 @@ export default function Layout({ children }) {
             <NavLink
               to="/services"
               className={({ isActive }) =>
-                `flex items-center px-3 py-2 rounded-md text-sm font-medium ${
+                `flex items-center px-3 py-2 rounded-md text-sm font-medium whitespace-nowrap ${
                   isActive
                     ? 'text-gray-900 bg-gray-100'
                     : 'text-gray-500 hover:text-gray-900'
@@ -201,7 +326,7 @@ export default function Layout({ children }) {
             <NavLink
               to="/appointments"
               className={({ isActive }) =>
-                `flex items-center px-3 py-2 rounded-md text-sm font-medium ${
+                `flex items-center px-3 py-2 rounded-md text-sm font-medium whitespace-nowrap ${
                   isActive
                     ? 'text-gray-900 bg-gray-100'
                     : 'text-gray-500 hover:text-gray-900'
@@ -214,7 +339,7 @@ export default function Layout({ children }) {
             <NavLink
               to="/reports"
               className={({ isActive }) =>
-                `flex items-center px-3 py-2 rounded-md text-sm font-medium ${
+                `flex items-center px-3 py-2 rounded-md text-sm font-medium whitespace-nowrap ${
                   isActive
                     ? 'text-gray-900 bg-gray-100'
                     : 'text-gray-500 hover:text-gray-900'
@@ -227,7 +352,7 @@ export default function Layout({ children }) {
             <NavLink
               to="/reminders"
               className={({ isActive }) =>
-                `flex items-center px-3 py-2 rounded-md text-sm font-medium ${
+                `flex items-center px-3 py-2 rounded-md text-sm font-medium whitespace-nowrap ${
                   isActive
                     ? 'text-gray-900 bg-gray-100'
                     : 'text-gray-500 hover:text-gray-900'
@@ -240,7 +365,7 @@ export default function Layout({ children }) {
             <NavLink
               to={hasActiveSubscription() ? "/subscription/manage" : "/subscription/plans"}
               className={({ isActive }) =>
-                `flex items-center px-3 py-2 rounded-md text-sm font-medium ${
+                `flex items-center px-3 py-2 rounded-md text-sm font-medium whitespace-nowrap ${
                   isActive
                     ? 'text-gray-900 bg-gray-100'
                     : 'text-gray-500 hover:text-gray-900'
