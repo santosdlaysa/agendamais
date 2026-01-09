@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import toast from 'react-hot-toast'
 import {
   MessageSquare,
   Mail,
@@ -8,7 +9,8 @@ import {
   User,
   TestTube,
   CheckCircle,
-  XCircle
+  XCircle,
+  Loader2
 } from 'lucide-react'
 import { Button } from './ui/button'
 import api from '../utils/api'
@@ -17,7 +19,15 @@ export default function ReminderSettings() {
   const navigate = useNavigate()
   const [professionals, setProfessionals] = useState([])
   const [selectedProfessional, setSelectedProfessional] = useState('')
-  const [settings, setSettings] = useState([])
+  const [settings, setSettings] = useState({
+    whatsapp_enabled: false,
+    whatsapp_hours_before: 24,
+    sms_enabled: false,
+    sms_hours_before: 24,
+    email_enabled: false,
+    email_hours_before: 24,
+    custom_message: ''
+  })
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [testing, setTesting] = useState({ whatsapp: false, sms: false })
@@ -54,38 +64,35 @@ export default function ReminderSettings() {
   const fetchSettings = async () => {
     try {
       const response = await api.get(`/reminders/settings?professional_id=${selectedProfessional}`)
-      const settingsData = response.data.settings
-      setSettings(Array.isArray(settingsData) ? settingsData : [])
+      const data = response.data.settings || response.data
+      setSettings({
+        whatsapp_enabled: data.whatsapp_enabled || false,
+        whatsapp_hours_before: data.whatsapp_hours_before || 24,
+        sms_enabled: data.sms_enabled || false,
+        sms_hours_before: data.sms_hours_before || 24,
+        email_enabled: data.email_enabled || false,
+        email_hours_before: data.email_hours_before || 24,
+        custom_message: data.custom_message || ''
+      })
     } catch (error) {
-      setSettings([])
+      console.error('Erro ao carregar configurações:', error)
+      setSettings({
+        whatsapp_enabled: false,
+        whatsapp_hours_before: 24,
+        sms_enabled: false,
+        sms_hours_before: 24,
+        email_enabled: false,
+        email_hours_before: 24,
+        custom_message: ''
+      })
     }
   }
 
-  const updateSetting = (reminderType, field, value) => {
-    setSettings(prev => {
-      const prevArray = Array.isArray(prev) ? prev : []
-      const updated = [...prevArray]
-      const index = updated.findIndex(s => s.reminder_type === reminderType)
-
-      if (index >= 0) {
-        updated[index] = { ...updated[index], [field]: value }
-      } else {
-        updated.push({
-          reminder_type: reminderType,
-          enabled: field === 'enabled' ? value : false,
-          hours_before: field === 'hours_before' ? value : 24,
-          custom_message: field === 'custom_message' ? value : null
-        })
-      }
-
-      return updated
-    })
-  }
-
-  const getSetting = (reminderType, field, defaultValue = null) => {
-    if (!Array.isArray(settings)) return defaultValue
-    const setting = settings.find(s => s.reminder_type === reminderType)
-    return setting ? setting[field] : defaultValue
+  const updateSetting = (field, value) => {
+    setSettings(prev => ({
+      ...prev,
+      [field]: value
+    }))
   }
 
   const saveSettings = async () => {
@@ -93,11 +100,19 @@ export default function ReminderSettings() {
       setSaving(true)
       await api.put('/reminders/settings', {
         professional_id: parseInt(selectedProfessional),
-        settings: settings
+        whatsapp_enabled: settings.whatsapp_enabled,
+        whatsapp_hours_before: settings.whatsapp_hours_before,
+        sms_enabled: settings.sms_enabled,
+        sms_hours_before: settings.sms_hours_before,
+        email_enabled: settings.email_enabled,
+        email_hours_before: settings.email_hours_before,
+        custom_message: settings.custom_message
       })
-      alert('Configurações salvas com sucesso!')
+      toast.success('Configurações salvas com sucesso!')
     } catch (error) {
-      alert('Erro ao salvar configurações')
+      const message = error.response?.data?.message || error.response?.data?.error || 'Erro ao salvar configurações'
+      toast.error(message)
+      console.error('Erro ao salvar configurações:', error)
     } finally {
       setSaving(false)
     }
@@ -283,8 +298,8 @@ Aguardamos você!`
                 <input
                   type="checkbox"
                   id="whatsapp-enabled"
-                  checked={getSetting('whatsapp', 'enabled', false)}
-                  onChange={(e) => updateSetting('whatsapp', 'enabled', e.target.checked)}
+                  checked={settings.whatsapp_enabled}
+                  onChange={(e) => updateSetting('whatsapp_enabled', e.target.checked)}
                   className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                 />
                 <label htmlFor="whatsapp-enabled" className="ml-2 block text-sm text-gray-900">
@@ -298,8 +313,8 @@ Aguardamos você!`
                 </label>
                 <input
                   type="number"
-                  value={getSetting('whatsapp', 'hours_before', 24)}
-                  onChange={(e) => updateSetting('whatsapp', 'hours_before', parseInt(e.target.value))}
+                  value={settings.whatsapp_hours_before}
+                  onChange={(e) => updateSetting('whatsapp_hours_before', parseInt(e.target.value) || 24)}
                   min="1"
                   max="168"
                   className="w-24 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -346,8 +361,8 @@ Aguardamos você!`
                 <input
                   type="checkbox"
                   id="sms-enabled"
-                  checked={getSetting('sms', 'enabled', false)}
-                  onChange={(e) => updateSetting('sms', 'enabled', e.target.checked)}
+                  checked={settings.sms_enabled}
+                  onChange={(e) => updateSetting('sms_enabled', e.target.checked)}
                   className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                 />
                 <label htmlFor="sms-enabled" className="ml-2 block text-sm text-gray-900">
@@ -361,8 +376,8 @@ Aguardamos você!`
                 </label>
                 <input
                   type="number"
-                  value={getSetting('sms', 'hours_before', 24)}
-                  onChange={(e) => updateSetting('sms', 'hours_before', parseInt(e.target.value))}
+                  value={settings.sms_hours_before}
+                  onChange={(e) => updateSetting('sms_hours_before', parseInt(e.target.value) || 24)}
                   min="1"
                   max="168"
                   className="w-24 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -381,11 +396,8 @@ Aguardamos você!`
                   Mensagem do lembrete
                 </label>
                 <textarea
-                  value={getSetting('whatsapp', 'custom_message') || getSetting('sms', 'custom_message') || ''}
-                  onChange={(e) => {
-                    updateSetting('whatsapp', 'custom_message', e.target.value)
-                    updateSetting('sms', 'custom_message', e.target.value)
-                  }}
+                  value={settings.custom_message || ''}
+                  onChange={(e) => updateSetting('custom_message', e.target.value)}
                   placeholder={defaultMessage}
                   rows={8}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"

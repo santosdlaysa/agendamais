@@ -97,7 +97,7 @@ export default function Reminders() {
   const processReminders = async () => {
     try {
       setProcessLoading(true)
-      const response = await api.post('/reminders/process')
+      const response = await api.post('/reminders/scheduler/run-now')
       toast.success('Lembretes processados com sucesso!')
       fetchData() // Recarregar dados após processar
     } catch (error) {
