@@ -114,11 +114,9 @@ function App() {
 
   return (
     <Routes>
-      <Route 
-        path="/login" 
-        element={<Navigate to="/" replace />} 
-      />
-      <Route 
+      <Route path="/login" element={<Login />} />
+      <Route path="/registro" element={<Login />} />
+      <Route
         path="/*" 
         element={
           <Layout>
