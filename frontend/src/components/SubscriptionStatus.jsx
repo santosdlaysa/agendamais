@@ -50,6 +50,7 @@ export default function SubscriptionStatus() {
   const {
     subscription,
     loading,
+    refreshing,
     cancelSubscription,
     reactivateSubscription,
     openBillingPortal,
@@ -68,7 +69,8 @@ export default function SubscriptionStatus() {
     refreshSubscription()
   }, [])
 
-  if (loading) {
+  // Só mostra spinner de carregamento na carga inicial
+  if (loading && !subscription) {
     return (
       <div className="bg-white rounded-lg shadow p-6">
         <div className="flex items-center justify-center">
@@ -134,7 +136,10 @@ export default function SubscriptionStatus() {
       <div className="bg-white rounded-lg shadow-lg p-6">
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-2xl font-bold text-gray-900">Minha Assinatura</h2>
+          <div className="flex items-center gap-2">
+            <h2 className="text-2xl font-bold text-gray-900">Minha Assinatura</h2>
+            {refreshing && <Loader2 className="w-5 h-5 animate-spin text-blue-600" />}
+          </div>
           <span
             className={`px-3 py-1 rounded-full text-sm font-medium flex items-center gap-2 bg-${statusConfig.color}-100 text-${statusConfig.color}-800`}
           >

@@ -7,21 +7,27 @@ const SubscriptionContext = createContext()
 export function SubscriptionProvider({ children }) {
   const [subscription, setSubscription] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [refreshing, setRefreshing] = useState(false)
   const [plans, setPlans] = useState([])
 
   // Buscar status da assinatura ao carregar (apenas se autenticado)
   useEffect(() => {
     const token = localStorage.getItem('token')
     if (token) {
-      fetchSubscriptionStatus()
+      fetchSubscriptionStatus(true)
     } else {
       setLoading(false)
     }
   }, [])
 
-  const fetchSubscriptionStatus = async () => {
+  const fetchSubscriptionStatus = async (isInitialLoad = false) => {
     try {
-      setLoading(true)
+      // Só define loading=true na carga inicial para evitar desmontar componentes
+      if (isInitialLoad) {
+        setLoading(true)
+      } else {
+        setRefreshing(true)
+      }
       const response = await api.get('/subscriptions/status')
 
       console.log('Subscription Status Response:', response.data)
@@ -38,6 +44,7 @@ export function SubscriptionProvider({ children }) {
       }
     } finally {
       setLoading(false)
+      setRefreshing(false)
     }
   }
 
@@ -213,9 +220,13 @@ export function SubscriptionProvider({ children }) {
     return Math.max(0, diffDays)
   }
 
+  // Função de refresh que não afeta o loading global
+  const refreshSubscription = () => fetchSubscriptionStatus(false)
+
   const value = {
     subscription,
     loading,
+    refreshing,
     plans,
     hasActiveSubscription,
     canAccessFeature,
@@ -231,7 +242,7 @@ export function SubscriptionProvider({ children }) {
     cancelSubscription,
     reactivateSubscription,
     openBillingPortal,
-    refreshSubscription: fetchSubscriptionStatus
+    refreshSubscription
   }
 
   return (
