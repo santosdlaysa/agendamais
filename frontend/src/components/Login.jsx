@@ -1,12 +1,22 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
-import { Button } from './ui/button'
-import { Calendar, Eye, EyeOff, Loader2, ArrowLeft } from 'lucide-react'
+import {
+  Calendar,
+  Eye,
+  EyeOff,
+  Loader2,
+  ArrowLeft,
+  ArrowRight,
+  Check,
+  Sparkles,
+  Shield,
+  Zap,
+  Users
+} from 'lucide-react'
 
 export default function Login() {
   const location = useLocation()
-  // Verifica se a rota é /registro para iniciar no modo de cadastro
   const isRegisterRoute = location.pathname === '/registro'
 
   const [isLogin, setIsLogin] = useState(!isRegisterRoute)
@@ -21,7 +31,6 @@ export default function Login() {
   const { login, register } = useAuth()
   const navigate = useNavigate()
 
-  // Atualiza o modo quando a rota muda
   useEffect(() => {
     setIsLogin(!isRegisterRoute)
   }, [isRegisterRoute])
@@ -37,13 +46,10 @@ export default function Login() {
           navigate('/dashboard')
         }
       } else {
-        // Registro: criar conta e fazer login automaticamente
         const result = await register(formData.name, formData.email, formData.password)
         if (result.success) {
-          // Fazer login automaticamente após o registro
           const loginResult = await login(formData.email, formData.password)
           if (loginResult.success) {
-            // Redirecionar para escolha de plano após registro
             navigate('/subscription/plans')
           }
         }
@@ -64,126 +70,269 @@ export default function Login() {
     const newIsLogin = !isLogin
     setIsLogin(newIsLogin)
     setFormData({ name: '', email: '', password: '' })
-    // Navegar para a rota correspondente
     navigate(newIsLogin ? '/login' : '/registro')
   }
 
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
-        {/* Botão voltar para landing page */}
-        <button
-          onClick={() => navigate('/')}
-          className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          Voltar ao início
-        </button>
+  const benefits = [
+    { icon: Calendar, text: 'Agendamento online 24/7' },
+    { icon: Users, text: 'Gestão completa de clientes' },
+    { icon: Zap, text: 'Lembretes automáticos' },
+    { icon: Shield, text: 'Dados seguros e protegidos' }
+  ]
 
-        <div>
-          <div className="mx-auto h-12 w-12 flex items-center justify-center rounded-full bg-blue-600">
-            <Calendar className="h-8 w-8 text-white" />
-          </div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            {isLogin ? 'Entre na sua conta' : 'Crie sua conta grátis'}
-          </h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
-            {isLogin
-              ? 'Acesse sua agenda e gerencie seus agendamentos'
-              : 'Comece seu teste gratuito de 7 dias'}
-          </p>
+  return (
+    <div className="min-h-screen flex">
+      {/* Left Side - Branding & Benefits */}
+      <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-violet-600 via-indigo-600 to-violet-700 relative overflow-hidden">
+        {/* Background decorations */}
+        <div className="absolute inset-0">
+          <div className="absolute top-20 left-20 w-72 h-72 bg-white/10 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-20 right-20 w-96 h-96 bg-indigo-400/20 rounded-full blur-3xl"></div>
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-violet-500/10 rounded-full blur-3xl"></div>
         </div>
 
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-          <div className="rounded-md shadow-sm space-y-4">
-            {!isLogin && (
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-                  Nome completo
+        {/* Grid pattern */}
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:50px_50px]"></div>
+
+        {/* Content */}
+        <div className="relative z-10 flex flex-col justify-between p-12 w-full">
+          {/* Logo */}
+          <div className="flex items-center gap-3">
+            <div className="w-12 h-12 bg-white/20 backdrop-blur rounded-2xl flex items-center justify-center">
+              <Calendar className="w-7 h-7 text-white" />
+            </div>
+            <span className="text-2xl font-bold text-white">AgendaMais</span>
+          </div>
+
+          {/* Main Content */}
+          <div className="space-y-8">
+            <div>
+              <h1 className="text-4xl xl:text-5xl font-bold text-white leading-tight mb-4">
+                {isLogin ? 'Bem-vindo de volta!' : 'Comece sua jornada'}
+              </h1>
+              <p className="text-xl text-violet-100">
+                {isLogin
+                  ? 'Entre para acessar sua agenda e gerenciar seus agendamentos.'
+                  : 'Crie sua conta e organize seu negócio de forma inteligente.'
+                }
+              </p>
+            </div>
+
+            {/* Benefits */}
+            <div className="space-y-4">
+              {benefits.map((benefit, i) => (
+                <div
+                  key={i}
+                  className="flex items-center gap-4 p-4 bg-white/10 backdrop-blur rounded-xl border border-white/10"
+                >
+                  <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center">
+                    <benefit.icon className="w-5 h-5 text-white" />
+                  </div>
+                  <span className="text-white font-medium">{benefit.text}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Footer */}
+          <div className="flex items-center gap-2 text-violet-200 text-sm">
+            <Shield className="w-4 h-4" />
+            <span>Seus dados estão seguros e protegidos</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Right Side - Form */}
+      <div className="w-full lg:w-1/2 flex flex-col bg-[#FAFAFA]">
+        {/* Mobile Header */}
+        <div className="lg:hidden bg-gradient-to-r from-violet-600 to-indigo-600 p-6">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-white/20 backdrop-blur rounded-xl flex items-center justify-center">
+              <Calendar className="w-5 h-5 text-white" />
+            </div>
+            <span className="text-xl font-bold text-white">AgendaMais</span>
+          </div>
+        </div>
+
+        {/* Form Container */}
+        <div className="flex-1 flex items-center justify-center p-6 sm:p-12">
+          <div className="w-full max-w-md">
+            {/* Back Button */}
+            <button
+              onClick={() => navigate('/')}
+              className="flex items-center gap-2 text-gray-500 hover:text-gray-900 transition-colors mb-8 group"
+            >
+              <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+              <span className="text-sm font-medium">Voltar ao início</span>
+            </button>
+
+            {/* Header */}
+            <div className="mb-8">
+              <h2 className="text-3xl font-bold text-gray-900 mb-2">
+                {isLogin ? 'Entrar' : 'Criar conta'}
+              </h2>
+              <p className="text-gray-600">
+                {isLogin
+                  ? 'Digite seus dados para acessar sua conta'
+                  : 'Preencha os dados para começar seu teste grátis'
+                }
+              </p>
+            </div>
+
+            {/* Form */}
+            <form onSubmit={handleSubmit} className="space-y-5">
+              {/* Name Field - Only for Register */}
+              {!isLogin && (
+                <div className="space-y-2">
+                  <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+                    Nome completo
+                  </label>
+                  <input
+                    id="name"
+                    name="name"
+                    type="text"
+                    required={!isLogin}
+                    value={formData.name}
+                    onChange={handleChange}
+                    placeholder="Digite seu nome"
+                    className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all"
+                  />
+                </div>
+              )}
+
+              {/* Email Field */}
+              <div className="space-y-2">
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                  Email
                 </label>
                 <input
-                  id="name"
-                  name="name"
-                  type="text"
-                  required={!isLogin}
-                  value={formData.name}
+                  id="email"
+                  name="email"
+                  type="email"
+                  autoComplete="email"
+                  required
+                  value={formData.email}
                   onChange={handleChange}
-                  className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                  placeholder="Digite seu nome completo"
+                  placeholder="seu@email.com"
+                  className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all"
                 />
               </div>
-            )}
 
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                Email
-              </label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                autoComplete="email"
-                required
-                value={formData.email}
-                onChange={handleChange}
-                className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                placeholder="Digite seu email"
-              />
+              {/* Password Field */}
+              <div className="space-y-2">
+                <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                  Senha
+                </label>
+                <div className="relative">
+                  <input
+                    id="password"
+                    name="password"
+                    type={showPassword ? 'text' : 'password'}
+                    autoComplete={isLogin ? 'current-password' : 'new-password'}
+                    required
+                    value={formData.password}
+                    onChange={handleChange}
+                    placeholder="Digite sua senha"
+                    className="w-full px-4 py-3 pr-12 bg-white border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                  >
+                    {showPassword ? (
+                      <EyeOff className="w-5 h-5" />
+                    ) : (
+                      <Eye className="w-5 h-5" />
+                    )}
+                  </button>
+                </div>
+              </div>
+
+              {/* Forgot Password - Only for Login */}
+              {isLogin && (
+                <div className="flex justify-end">
+                  <button
+                    type="button"
+                    className="text-sm text-violet-600 hover:text-violet-700 font-medium"
+                  >
+                    Esqueceu a senha?
+                  </button>
+                </div>
+              )}
+
+              {/* Submit Button */}
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full flex items-center justify-center gap-2 px-6 py-3.5 bg-gray-900 hover:bg-gray-800 disabled:bg-gray-400 text-white font-semibold rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-gray-900/20 disabled:cursor-not-allowed group"
+              >
+                {loading ? (
+                  <Loader2 className="w-5 h-5 animate-spin" />
+                ) : (
+                  <>
+                    {isLogin ? 'Entrar' : 'Criar conta'}
+                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  </>
+                )}
+              </button>
+
+              {/* Trial Badge - Only for Register */}
+              {!isLogin && (
+                <div className="flex items-center justify-center gap-2 p-3 bg-emerald-50 rounded-xl border border-emerald-100">
+                  <Sparkles className="w-4 h-4 text-emerald-600" />
+                  <span className="text-sm text-emerald-700 font-medium">
+                    7 dias grátis • Sem cartão de crédito
+                  </span>
+                </div>
+              )}
+            </form>
+
+            {/* Divider */}
+            <div className="relative my-8">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-gray-200"></div>
+              </div>
+              <div className="relative flex justify-center text-sm">
+                <span className="px-4 bg-[#FAFAFA] text-gray-500">ou</span>
+              </div>
             </div>
 
-            <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
-                Senha
-              </label>
-              <div className="relative">
-                <input
-                  id="password"
-                  name="password"
-                  type={showPassword ? 'text' : 'password'}
-                  autoComplete={isLogin ? 'current-password' : 'new-password'}
-                  required
-                  value={formData.password}
-                  onChange={handleChange}
-                  className="appearance-none relative block w-full px-3 py-2 pr-10 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                  placeholder="Digite sua senha"
-                />
+            {/* Toggle Mode */}
+            <div className="text-center">
+              <p className="text-gray-600">
+                {isLogin ? 'Não tem uma conta?' : 'Já tem uma conta?'}
+                {' '}
                 <button
                   type="button"
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center"
-                  onClick={() => setShowPassword(!showPassword)}
+                  onClick={toggleMode}
+                  className="text-violet-600 hover:text-violet-700 font-semibold"
                 >
-                  {showPassword ? (
-                    <EyeOff className="h-4 w-4 text-gray-400" />
-                  ) : (
-                    <Eye className="h-4 w-4 text-gray-400" />
-                  )}
+                  {isLogin ? 'Cadastre-se' : 'Entrar'}
                 </button>
-              </div>
+              </p>
             </div>
-          </div>
 
-          <div>
-            <Button
-              type="submit"
-              disabled={loading}
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              {isLogin ? 'Entrar' : 'Criar conta'}
-            </Button>
+            {/* Terms - Only for Register */}
+            {!isLogin && (
+              <p className="mt-6 text-center text-xs text-gray-500">
+                Ao criar sua conta, você concorda com nossos{' '}
+                <button onClick={() => navigate('/termos')} className="text-violet-600 hover:underline">
+                  Termos de Uso
+                </button>
+                {' '}e{' '}
+                <button onClick={() => navigate('/privacidade')} className="text-violet-600 hover:underline">
+                  Política de Privacidade
+                </button>
+              </p>
+            )}
           </div>
+        </div>
 
-          <div className="text-center">
-            <button
-              type="button"
-              onClick={toggleMode}
-              className="text-sm text-blue-600 hover:text-blue-500"
-            >
-              {isLogin ? 'Não tem uma conta? Cadastre-se' : 'Já tem uma conta? Entre'}
-            </button>
-          </div>
-        </form>
-
+        {/* Footer */}
+        <div className="p-6 text-center text-sm text-gray-400">
+          © {new Date().getFullYear()} AgendaMais. Todos os direitos reservados.
+        </div>
       </div>
     </div>
   )
