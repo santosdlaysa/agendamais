@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
 import {
@@ -10,7 +10,6 @@ import {
   Check,
   ArrowRight,
   Smartphone,
-  Zap,
   Menu,
   X,
   ChevronDown,
@@ -20,52 +19,51 @@ import {
   Dumbbell,
   Sparkles,
   Building2,
-  Play,
-  MessageCircle,
-  CreditCard,
-  TrendingUp,
-  DollarSign,
-  Briefcase,
-  Eye,
-  CalendarDays
+  Clock,
+  Star,
+  Zap,
+  Globe,
+  MousePointer,
+  MessageCircle
 } from 'lucide-react'
 
 const PLANS = [
   {
     id: 'basic',
-    name: 'Básico',
+    name: 'Starter',
     price: 29,
-    popular: false,
+    description: 'Perfeito para começar',
     features: [
       'Até 100 agendamentos/mês',
       'Até 3 profissionais',
-      'Lembretes básicos',
+      'Lembretes por email',
       'Suporte por email'
     ]
   },
   {
     id: 'pro',
-    name: 'Pro',
+    name: 'Professional',
     price: 59,
     popular: true,
+    description: 'Mais recursos, mais crescimento',
     features: [
       'Agendamentos ilimitados',
       'Até 10 profissionais',
-      'Lembretes WhatsApp/SMS',
+      'Lembretes WhatsApp + SMS',
       'Relatórios avançados',
       'Suporte prioritário'
     ]
   },
   {
     id: 'enterprise',
-    name: 'Enterprise',
+    name: 'Business',
     price: 99,
-    popular: false,
+    description: 'Para grandes operações',
     features: [
-      'Tudo do Pro',
+      'Tudo do Professional',
       'Profissionais ilimitados',
       'API personalizada',
-      'Gestor de conta dedicado',
+      'Gestor dedicado',
       'Suporte 24/7'
     ]
   }
@@ -73,122 +71,91 @@ const PLANS = [
 
 const FEATURES = [
   {
-    icon: Calendar,
-    title: 'Agendamento Online 24/7',
-    description: 'Seus clientes agendam a qualquer hora, pelo celular ou computador. Sem ligações, sem espera.'
+    icon: Globe,
+    title: 'Agendamento 24/7',
+    description: 'Seus clientes agendam a qualquer momento, de qualquer lugar.',
+    color: 'from-violet-500 to-purple-600'
   },
   {
     icon: Bell,
-    title: 'Lembretes Automáticos',
-    description: 'WhatsApp, SMS ou email. Reduza faltas em até 80% com lembretes inteligentes.'
+    title: 'Lembretes Inteligentes',
+    description: 'Reduza faltas em até 80% com notificações automáticas.',
+    color: 'from-amber-500 to-orange-600'
   },
   {
     icon: Users,
     title: 'Gestão de Equipe',
-    description: 'Controle a agenda de múltiplos profissionais. Cada um com seus serviços e horários.'
+    description: 'Cada profissional com sua agenda, serviços e horários.',
+    color: 'from-emerald-500 to-teal-600'
   },
   {
     icon: BarChart3,
-    title: 'Relatórios Completos',
-    description: 'Acompanhe faturamento, serviços mais populares e desempenho da equipe em tempo real.'
+    title: 'Insights em Tempo Real',
+    description: 'Acompanhe métricas e tome decisões baseadas em dados.',
+    color: 'from-sky-500 to-blue-600'
   },
   {
     icon: Smartphone,
     title: 'Link Exclusivo',
-    description: 'Compartilhe seu link de agendamento nas redes sociais, WhatsApp e site.'
+    description: 'Compartilhe nas redes sociais e receba agendamentos.',
+    color: 'from-pink-500 to-rose-600'
   },
   {
     icon: Shield,
-    title: 'Seguro e Confiável',
-    description: 'Seus dados protegidos com criptografia SSL. Backup diário automático.'
+    title: 'Segurança Total',
+    description: 'Criptografia SSL e backup diário automático.',
+    color: 'from-slate-500 to-slate-700'
   }
 ]
 
 const SEGMENTS = [
-  {
-    icon: Scissors,
-    name: 'Salões e Barbearias',
-    description: 'Cortes, coloração, barba e muito mais'
-  },
-  {
-    icon: Sparkles,
-    name: 'Estética e Beleza',
-    description: 'Procedimentos estéticos, unhas, maquiagem'
-  },
-  {
-    icon: Stethoscope,
-    name: 'Clínicas e Consultórios',
-    description: 'Médicos, dentistas, psicólogos'
-  },
-  {
-    icon: Dumbbell,
-    name: 'Personal e Academia',
-    description: 'Personal trainers, estúdios fitness'
-  },
-  {
-    icon: Heart,
-    name: 'Spa e Massagem',
-    description: 'Massoterapia, spa day, relaxamento'
-  },
-  {
-    icon: Building2,
-    name: 'Outros Serviços',
-    description: 'Tatuagem, pet shop, coaching e mais'
-  }
+  { icon: Scissors, name: 'Salões & Barbearias' },
+  { icon: Sparkles, name: 'Estética & Beleza' },
+  { icon: Stethoscope, name: 'Clínicas & Consultórios' },
+  { icon: Dumbbell, name: 'Personal & Fitness' },
+  { icon: Heart, name: 'Spa & Bem-estar' },
+  { icon: Building2, name: 'Outros Serviços' }
 ]
-
 
 const FAQ = [
   {
-    question: 'Posso testar antes de assinar?',
-    answer: 'Sim! Oferecemos 7 dias de teste grátis em todos os planos. Você pode explorar todas as funcionalidades sem compromisso e sem precisar cadastrar cartão de crédito.'
+    q: 'Posso testar antes de assinar?',
+    a: 'Sim! Oferecemos 7 dias grátis em todos os planos, sem precisar de cartão de crédito.'
   },
   {
-    question: 'Como meus clientes fazem o agendamento?',
-    answer: 'Você recebe um link exclusivo (ex: agendamais.com/agendar/seu-negocio) que pode compartilhar no WhatsApp, Instagram, site ou onde preferir. Seus clientes acessam e agendam em segundos!'
+    q: 'Como meus clientes agendam?',
+    a: 'Você recebe um link exclusivo para compartilhar onde quiser. Seus clientes acessam e agendam em segundos!'
   },
   {
-    question: 'Preciso instalar algum aplicativo?',
-    answer: 'Não! O AgendaMais funciona 100% online, direto no navegador. Você acessa de qualquer dispositivo - computador, tablet ou celular - sem precisar instalar nada.'
+    q: 'Preciso instalar algum app?',
+    a: 'Não! Funciona 100% no navegador, em qualquer dispositivo.'
   },
   {
-    question: 'Como funcionam os lembretes automáticos?',
-    answer: 'Você configura quando quer que os lembretes sejam enviados (ex: 24h e 2h antes). O sistema envia automaticamente por WhatsApp, SMS ou email, reduzindo as faltas drasticamente.'
-  },
-  {
-    question: 'Posso mudar de plano depois?',
-    answer: 'Sim! Você pode fazer upgrade ou downgrade a qualquer momento. A mudança é proporcional e você só paga a diferença.'
-  },
-  {
-    question: 'E se eu quiser cancelar?',
-    answer: 'Você pode cancelar quando quiser, sem multas ou fidelidade. Basta acessar as configurações da sua conta.'
+    q: 'Posso cancelar quando quiser?',
+    a: 'Sim, sem multas ou fidelidade. Cancele diretamente nas configurações.'
   }
 ]
 
-function FAQItem({ question, answer, isOpen, onClick }) {
-  return (
-    <div className="border-b border-gray-200 last:border-b-0">
-      <button
-        onClick={onClick}
-        className="w-full py-5 flex items-center justify-between text-left hover:text-blue-600 transition-colors"
-      >
-        <span className="font-medium text-gray-900 pr-4">{question}</span>
-        <ChevronDown
-          className={`w-5 h-5 text-gray-500 flex-shrink-0 transition-transform duration-300 ${
-            isOpen ? 'rotate-180' : ''
-          }`}
-        />
-      </button>
-      <div
-        className={`overflow-hidden transition-all duration-300 ${
-          isOpen ? 'max-h-48 pb-5' : 'max-h-0'
-        }`}
-      >
-        <p className="text-gray-600">{answer}</p>
-      </div>
-    </div>
-  )
-}
+const TESTIMONIALS = [
+  {
+    name: 'Mariana Costa',
+    role: 'Dona de Salão',
+    text: 'Reduzi as faltas em 70% com os lembretes automáticos. Melhor investimento que fiz!',
+    avatar: 'M'
+  },
+  {
+    name: 'Carlos Eduardo',
+    role: 'Barbeiro',
+    text: 'Meus clientes adoram poder agendar pelo celular. Organização total da minha agenda.',
+    avatar: 'C'
+  },
+  {
+    name: 'Dra. Amanda',
+    role: 'Dentista',
+    text: 'Sistema intuitivo e profissional. Recomendo para qualquer consultório.',
+    avatar: 'A'
+  }
+]
 
 export default function LandingPage() {
   const navigate = useNavigate()
@@ -196,6 +163,7 @@ export default function LandingPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [openFAQ, setOpenFAQ] = useState(0)
   const [scrolled, setScrolled] = useState(false)
+  const heroRef = useRef(null)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -205,549 +173,443 @@ export default function LandingPage() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const handleGetStarted = () => {
-    navigate('/registro')
-  }
+  const handleGetStarted = () => navigate('/registro')
 
-  const scrollToSection = (id) => {
+  const scrollTo = (id) => {
     setMobileMenuOpen(false)
-    const element = document.getElementById(id)
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' })
-    }
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
   }
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Header/Navbar */}
-      <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          scrolled
-            ? 'bg-white/95 backdrop-blur-md shadow-sm'
-            : 'bg-transparent'
-        }`}
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16 sm:h-20">
-            <div className="flex items-center gap-2">
-              <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
-                <Calendar className="w-6 h-6 text-white" />
+    <div className="min-h-screen bg-[#FAFAFA] overflow-x-hidden">
+      {/* Navbar */}
+      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        scrolled ? 'bg-white/80 backdrop-blur-xl shadow-sm' : 'bg-transparent'
+      }`}>
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex items-center justify-between h-20">
+            {/* Logo */}
+            <div className="flex items-center gap-3">
+              <div className="relative">
+                <div className="w-11 h-11 bg-gradient-to-br from-violet-600 to-indigo-600 rounded-2xl flex items-center justify-center rotate-3 hover:rotate-0 transition-transform duration-300">
+                  <Calendar className="w-6 h-6 text-white" />
+                </div>
+                <div className="absolute -top-1 -right-1 w-3 h-3 bg-emerald-400 rounded-full animate-pulse"></div>
               </div>
-              <span className="text-xl font-bold text-gray-900">AgendaMais</span>
+              <span className="text-xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
+                AgendaMais
+              </span>
             </div>
 
-            {/* Desktop Navigation */}
-            <nav className="hidden md:flex items-center gap-8">
-              <button
-                onClick={() => scrollToSection('demo')}
-                className="text-gray-600 hover:text-gray-900 transition-colors font-medium"
-              >
-                Demonstração
-              </button>
-              <button
-                onClick={() => scrollToSection('features')}
-                className="text-gray-600 hover:text-gray-900 transition-colors font-medium"
-              >
-                Funcionalidades
-              </button>
-              <button
-                onClick={() => scrollToSection('segments')}
-                className="text-gray-600 hover:text-gray-900 transition-colors font-medium"
-              >
-                Segmentos
-              </button>
-              <button
-                onClick={() => scrollToSection('pricing')}
-                className="text-gray-600 hover:text-gray-900 transition-colors font-medium"
-              >
-                Planos
-              </button>
-              <button
-                onClick={() => scrollToSection('faq')}
-                className="text-gray-600 hover:text-gray-900 transition-colors font-medium"
-              >
-                FAQ
-              </button>
+            {/* Desktop Nav */}
+            <nav className="hidden lg:flex items-center gap-1">
+              {['Recursos', 'Segmentos', 'Preços', 'FAQ'].map((item, i) => (
+                <button
+                  key={item}
+                  onClick={() => scrollTo(['features', 'segments', 'pricing', 'faq'][i])}
+                  className="px-4 py-2 text-gray-600 hover:text-gray-900 font-medium rounded-xl hover:bg-gray-100 transition-all"
+                >
+                  {item}
+                </button>
+              ))}
             </nav>
 
-            <div className="hidden md:flex items-center gap-4">
+            {/* CTA */}
+            <div className="hidden lg:flex items-center gap-3">
               <button
                 onClick={() => navigate('/login')}
-                className="text-gray-600 hover:text-gray-900 font-medium transition-colors"
+                className="px-5 py-2.5 text-gray-700 font-medium hover:text-gray-900 transition-colors"
               >
                 Entrar
               </button>
-              {isAuthenticated ? (
-                <button
-                  onClick={() => navigate('/dashboard')}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl font-medium transition-all hover:shadow-lg hover:shadow-blue-500/25"
-                >
-                  Ir ao Dashboard
-                </button>
-              ) : (
-                <button
-                  onClick={handleGetStarted}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl font-medium transition-all hover:shadow-lg hover:shadow-blue-500/25"
-                >
-                  Começar Grátis
-                </button>
-              )}
+              <button
+                onClick={isAuthenticated ? () => navigate('/dashboard') : handleGetStarted}
+                className="group px-6 py-2.5 bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700 text-white font-semibold rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-violet-500/25 hover:-translate-y-0.5"
+              >
+                {isAuthenticated ? 'Dashboard' : 'Começar Grátis'}
+              </button>
             </div>
 
-            {/* Mobile menu button */}
+            {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 text-gray-600 hover:text-gray-900"
+              className="lg:hidden p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-xl transition-all"
             >
-              {mobileMenuOpen ? (
-                <X className="w-6 h-6" />
-              ) : (
-                <Menu className="w-6 h-6" />
-              )}
+              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
         </div>
 
-        {/* Mobile Navigation */}
-        <div
-          className={`md:hidden transition-all duration-300 overflow-hidden ${
-            mobileMenuOpen ? 'max-h-96 border-t border-gray-100' : 'max-h-0'
-          }`}
-        >
-          <div className="bg-white px-4 py-4 space-y-3">
-            <button
-              onClick={() => scrollToSection('demo')}
-              className="block w-full text-left py-2 text-gray-600 hover:text-gray-900 font-medium"
-            >
-              Demonstração
-            </button>
-            <button
-              onClick={() => scrollToSection('features')}
-              className="block w-full text-left py-2 text-gray-600 hover:text-gray-900 font-medium"
-            >
-              Funcionalidades
-            </button>
-            <button
-              onClick={() => scrollToSection('segments')}
-              className="block w-full text-left py-2 text-gray-600 hover:text-gray-900 font-medium"
-            >
-              Segmentos
-            </button>
-            <button
-              onClick={() => scrollToSection('pricing')}
-              className="block w-full text-left py-2 text-gray-600 hover:text-gray-900 font-medium"
-            >
-              Planos
-            </button>
-            <button
-              onClick={() => scrollToSection('faq')}
-              className="block w-full text-left py-2 text-gray-600 hover:text-gray-900 font-medium"
-            >
-              FAQ
-            </button>
-            <div className="pt-3 border-t border-gray-100 space-y-3">
+        {/* Mobile Menu */}
+        <div className={`lg:hidden absolute top-full left-0 right-0 bg-white border-t transition-all duration-300 ${
+          mobileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
+        }`}>
+          <div className="px-6 py-4 space-y-2">
+            {['Recursos', 'Segmentos', 'Preços', 'FAQ'].map((item, i) => (
+              <button
+                key={item}
+                onClick={() => scrollTo(['features', 'segments', 'pricing', 'faq'][i])}
+                className="block w-full text-left px-4 py-3 text-gray-700 font-medium rounded-xl hover:bg-gray-50"
+              >
+                {item}
+              </button>
+            ))}
+            <div className="pt-4 border-t space-y-2">
               <button
                 onClick={() => navigate('/login')}
-                className="block w-full text-center py-2.5 text-gray-600 hover:text-gray-900 font-medium border border-gray-200 rounded-xl"
+                className="block w-full px-4 py-3 text-center text-gray-700 font-medium rounded-xl border border-gray-200 hover:bg-gray-50"
               >
                 Entrar
               </button>
-              {isAuthenticated ? (
-                <button
-                  onClick={() => navigate('/dashboard')}
-                  className="block w-full text-center py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-xl"
-                >
-                  Ir ao Dashboard
-                </button>
-              ) : (
-                <button
-                  onClick={handleGetStarted}
-                  className="block w-full text-center py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-xl"
-                >
-                  Começar Grátis
-                </button>
-              )}
+              <button
+                onClick={handleGetStarted}
+                className="block w-full px-4 py-3 text-center bg-gradient-to-r from-violet-600 to-indigo-600 text-white font-semibold rounded-xl"
+              >
+                Começar Grátis
+              </button>
             </div>
           </div>
         </div>
       </header>
 
       {/* Hero Section */}
-      <section className="pt-28 sm:pt-36 pb-20 px-4 bg-gradient-to-br from-blue-50 via-white to-purple-50 relative overflow-hidden">
-        {/* Decorative elements */}
-        <div className="absolute top-20 left-10 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse"></div>
-        <div className="absolute bottom-20 right-10 w-72 h-72 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse"></div>
+      <section ref={heroRef} className="relative pt-32 pb-20 lg:pt-40 lg:pb-32 px-6">
+        {/* Background Elements */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-20 left-[10%] w-[500px] h-[500px] bg-gradient-to-br from-violet-200/40 to-transparent rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 right-[5%] w-[600px] h-[600px] bg-gradient-to-tl from-indigo-200/30 to-transparent rounded-full blur-3xl"></div>
+          <div className="absolute top-40 right-[20%] w-[300px] h-[300px] bg-gradient-to-bl from-amber-200/20 to-transparent rounded-full blur-3xl"></div>
+        </div>
+
+        {/* Grid Pattern */}
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.02)_1px,transparent_1px)] bg-[size:60px_60px]"></div>
 
         <div className="max-w-7xl mx-auto relative">
-          <div className="text-center max-w-4xl mx-auto">
-            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-100 to-purple-100 text-blue-700 px-4 py-2 rounded-full text-sm font-medium mb-6 border border-blue-200/50">
-              <Zap className="w-4 h-4" />
-              Teste grátis por 7 dias - Sem cartão de crédito
+          <div className="max-w-4xl">
+            {/* Badge */}
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full shadow-sm border border-gray-100 mb-8">
+              <span className="flex h-2 w-2 relative">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+              </span>
+              <span className="text-sm font-medium text-gray-700">
+                +2.000 negócios já usam AgendaMais
+              </span>
             </div>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-              A agenda online que faz seu{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
-                negócio crescer
+
+            {/* Headline */}
+            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-gray-900 leading-[1.1] mb-6">
+              Sua agenda
+              <br />
+              <span className="relative inline-block">
+                <span className="relative z-10 bg-gradient-to-r from-violet-600 via-indigo-600 to-violet-600 bg-clip-text text-transparent">
+                  sempre cheia
+                </span>
+                <svg className="absolute -bottom-2 left-0 w-full" viewBox="0 0 300 12" fill="none">
+                  <path d="M2 10C50 4 150 0 298 6" stroke="url(#paint0_linear)" strokeWidth="4" strokeLinecap="round"/>
+                  <defs>
+                    <linearGradient id="paint0_linear" x1="2" y1="8" x2="298" y2="8">
+                      <stop stopColor="#7C3AED"/>
+                      <stop offset="1" stopColor="#4F46E5"/>
+                    </linearGradient>
+                  </defs>
+                </svg>
               </span>
             </h1>
-            <p className="text-lg sm:text-xl text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed">
-              Seus clientes agendam 24h por dia, você recebe lembretes automáticos
-              e nunca mais perde um horário. Tudo em um só lugar.
+
+            {/* Subheadline */}
+            <p className="text-xl sm:text-2xl text-gray-600 leading-relaxed mb-10 max-w-2xl">
+              Clientes agendam 24h, você recebe lembretes automáticos e
+              <span className="text-gray-900 font-medium"> nunca mais perde um horário</span>.
             </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 mb-12">
               <button
                 onClick={handleGetStarted}
-                className="w-full sm:w-auto bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all hover:shadow-xl hover:shadow-blue-500/30 flex items-center justify-center gap-2 group"
+                className="group inline-flex items-center justify-center gap-2 px-8 py-4 bg-gray-900 hover:bg-gray-800 text-white font-semibold rounded-2xl transition-all duration-300 hover:shadow-xl hover:shadow-gray-900/20 hover:-translate-y-1"
               >
-                Criar Conta Grátis
+                Começar Gratuitamente
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </button>
               <button
-                onClick={() => scrollToSection('demo')}
-                className="w-full sm:w-auto text-gray-700 hover:text-gray-900 bg-white hover:bg-gray-50 border border-gray-200 px-8 py-4 rounded-xl font-semibold text-lg transition-all flex items-center justify-center gap-2"
+                onClick={() => scrollTo('demo')}
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white hover:bg-gray-50 text-gray-700 font-semibold rounded-2xl border border-gray-200 transition-all duration-300"
               >
-                <Play className="w-5 h-5" />
+                <MousePointer className="w-5 h-5" />
                 Ver Demonstração
               </button>
             </div>
 
-            {/* Trust badges */}
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-sm text-gray-500">
+            {/* Trust Badges */}
+            <div className="flex flex-wrap items-center gap-6 text-sm text-gray-500">
               <div className="flex items-center gap-2">
-                <Shield className="w-4 h-4 text-green-500" />
-                <span>Dados protegidos</span>
+                <div className="w-8 h-8 rounded-lg bg-emerald-100 flex items-center justify-center">
+                  <Check className="w-4 h-4 text-emerald-600" />
+                </div>
+                <span>7 dias grátis</span>
               </div>
               <div className="flex items-center gap-2">
-                <CreditCard className="w-4 h-4 text-green-500" />
-                <span>Sem cartão para testar</span>
+                <div className="w-8 h-8 rounded-lg bg-violet-100 flex items-center justify-center">
+                  <Shield className="w-4 h-4 text-violet-600" />
+                </div>
+                <span>Sem cartão</span>
               </div>
               <div className="flex items-center gap-2">
-                <MessageCircle className="w-4 h-4 text-green-500" />
-                <span>Suporte humanizado</span>
+                <div className="w-8 h-8 rounded-lg bg-amber-100 flex items-center justify-center">
+                  <Zap className="w-4 h-4 text-amber-600" />
+                </div>
+                <span>Setup em 5 min</span>
               </div>
             </div>
           </div>
 
+          {/* Hero Visual - Floating Cards */}
+          <div className="hidden xl:block absolute top-20 right-0 w-[500px]">
+            {/* Main Card */}
+            <div className="relative">
+              <div className="bg-white rounded-3xl shadow-2xl shadow-gray-200/50 p-6 border border-gray-100 transform rotate-2 hover:rotate-0 transition-transform duration-500">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-12 h-12 bg-gradient-to-br from-violet-500 to-indigo-600 rounded-2xl flex items-center justify-center">
+                    <Calendar className="w-6 h-6 text-white" />
+                  </div>
+                  <div>
+                    <p className="font-semibold text-gray-900">Próximo Agendamento</p>
+                    <p className="text-sm text-gray-500">Hoje às 14:00</p>
+                  </div>
+                </div>
+
+                <div className="space-y-3">
+                  {[
+                    { name: 'Maria S.', service: 'Corte + Escova', time: '14:00', color: 'bg-violet-500' },
+                    { name: 'João P.', service: 'Barba', time: '15:00', color: 'bg-emerald-500' },
+                    { name: 'Ana L.', service: 'Coloração', time: '16:30', color: 'bg-amber-500' }
+                  ].map((item, i) => (
+                    <div key={i} className="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                      <div className="flex items-center gap-3">
+                        <div className={`w-10 h-10 ${item.color} rounded-xl flex items-center justify-center text-white font-semibold`}>
+                          {item.name[0]}
+                        </div>
+                        <div>
+                          <p className="font-medium text-gray-900">{item.name}</p>
+                          <p className="text-sm text-gray-500">{item.service}</p>
+                        </div>
+                      </div>
+                      <span className="text-sm font-medium text-gray-700">{item.time}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Floating Mini Card - Stats */}
+              <div className="absolute -left-16 top-8 bg-white rounded-2xl shadow-xl p-4 border border-gray-100 transform -rotate-6 hover:rotate-0 transition-transform duration-500">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-emerald-100 rounded-xl flex items-center justify-center">
+                    <BarChart3 className="w-5 h-5 text-emerald-600" />
+                  </div>
+                  <div>
+                    <p className="text-2xl font-bold text-gray-900">+47%</p>
+                    <p className="text-xs text-gray-500">Este mês</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Floating Mini Card - Reminder */}
+              <div className="absolute -right-8 -bottom-4 bg-white rounded-2xl shadow-xl p-4 border border-gray-100 transform rotate-3 hover:rotate-0 transition-transform duration-500">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-violet-100 rounded-xl flex items-center justify-center">
+                    <Bell className="w-5 h-5 text-violet-600" />
+                  </div>
+                  <div>
+                    <p className="font-medium text-gray-900">Lembrete enviado</p>
+                    <p className="text-xs text-gray-500">Maria S. - 14:00</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Demo Section - Dashboard Preview */}
-      <section id="demo" className="py-20 sm:py-24 px-4 bg-white relative overflow-hidden">
+      {/* Social Proof - Logos Strip */}
+      <section className="py-12 border-y border-gray-100 bg-white">
+        <div className="max-w-7xl mx-auto px-6">
+          <p className="text-center text-sm text-gray-500 mb-8">Usado por profissionais em todo o Brasil</p>
+          <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-6">
+            {SEGMENTS.map((seg, i) => (
+              <div key={i} className="flex items-center gap-2 text-gray-400">
+                <seg.icon className="w-5 h-5" />
+                <span className="font-medium">{seg.name}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Demo Section */}
+      <section id="demo" className="py-24 px-6 bg-gradient-to-b from-white to-gray-50">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <span className="text-blue-600 font-semibold text-sm uppercase tracking-wider">Demonstração</span>
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mt-3 mb-4">
-              Veja o sistema em ação
+          <div className="text-center mb-16">
+            <span className="inline-block px-4 py-1.5 bg-violet-100 text-violet-700 rounded-full text-sm font-semibold mb-4">
+              Demonstração
+            </span>
+            <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
+              Simples de usar, poderoso de verdade
             </h2>
-            <p className="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto">
-              Interface intuitiva e completa para gerenciar todos os seus agendamentos em um só lugar
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Uma interface limpa e intuitiva para você focar no que importa
             </p>
           </div>
 
-          {/* Dashboard Mockup */}
-          <div className="relative max-w-6xl mx-auto">
-            {/* Browser Frame */}
-            <div className="bg-gray-100 rounded-t-xl p-3 flex items-center gap-2 border border-gray-200 border-b-0">
-              <div className="flex gap-1.5">
-                <div className="w-3 h-3 rounded-full bg-red-400"></div>
-                <div className="w-3 h-3 rounded-full bg-yellow-400"></div>
-                <div className="w-3 h-3 rounded-full bg-green-400"></div>
+          {/* Browser Mockup */}
+          <div className="max-w-5xl mx-auto">
+            <div className="bg-gray-900 rounded-t-2xl p-4 flex items-center gap-3">
+              <div className="flex gap-2">
+                <div className="w-3 h-3 rounded-full bg-red-500"></div>
+                <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+                <div className="w-3 h-3 rounded-full bg-green-500"></div>
               </div>
-              <div className="flex-1 ml-4">
-                <div className="bg-white rounded-lg px-4 py-1.5 text-sm text-gray-500 max-w-md mx-auto flex items-center gap-2">
-                  <Shield className="w-3.5 h-3.5 text-green-500" />
+              <div className="flex-1 flex justify-center">
+                <div className="bg-gray-800 rounded-lg px-4 py-1.5 flex items-center gap-2 text-sm text-gray-400">
+                  <Shield className="w-4 h-4 text-green-500" />
                   agendamais.site/dashboard
                 </div>
               </div>
             </div>
 
-            {/* Dashboard Content */}
-            <div className="bg-gray-50 rounded-b-xl border border-gray-200 shadow-2xl overflow-hidden">
+            <div className="bg-[#F8FAFC] rounded-b-2xl border border-t-0 border-gray-200 shadow-2xl overflow-hidden">
               {/* Dashboard Header */}
-              <div className="bg-white border-b border-gray-200 px-6 py-4">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center">
-                      <Calendar className="w-5 h-5 text-white" />
-                    </div>
-                    <span className="font-semibold text-gray-900">Sistema de Agendamento</span>
+              <div className="bg-white border-b border-gray-100 px-6 py-4 flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-gradient-to-br from-violet-500 to-indigo-600 rounded-xl flex items-center justify-center">
+                    <Calendar className="w-5 h-5 text-white" />
                   </div>
-                  {/* Nav Tabs */}
-                  <div className="hidden md:flex items-center gap-1">
-                    <div className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 rounded-lg text-sm font-medium text-gray-900">
-                      <BarChart3 className="w-4 h-4" />
-                      Dashboard
-                    </div>
-                    <div className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-gray-500 hover:text-gray-900">
-                      <Users className="w-4 h-4" />
-                      Clientes
-                    </div>
-                    <div className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-gray-500 hover:text-gray-900">
-                      <Briefcase className="w-4 h-4" />
-                      Serviços
-                    </div>
-                    <div className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-gray-500 hover:text-gray-900">
-                      <CalendarDays className="w-4 h-4" />
-                      Agendamentos
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-medium text-sm">
-                      M
-                    </div>
+                  <span className="font-semibold text-gray-900">AgendaMais</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-9 h-9 bg-violet-100 rounded-xl flex items-center justify-center text-violet-600 font-semibold">
+                    M
                   </div>
                 </div>
               </div>
 
-              {/* Dashboard Body */}
+              {/* Dashboard Content */}
               <div className="p-6">
-                <div className="mb-6">
-                  <h3 className="text-xl font-bold text-gray-900">Dashboard</h3>
-                  <p className="text-sm text-gray-500">Visão geral do sistema de agendamento</p>
-                </div>
-
-                {/* Stats Cards Row 1 */}
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-4">
-                  <div className="bg-white rounded-xl p-4 border border-gray-100 shadow-sm">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-blue-500 rounded-xl flex items-center justify-center">
-                        <Users className="w-5 h-5 text-white" />
-                      </div>
-                      <div>
-                        <p className="text-xs text-gray-500">Total de Clientes</p>
-                        <p className="text-xl font-bold text-gray-900">156</p>
-                      </div>
+                {/* Welcome Banner */}
+                <div className="bg-gradient-to-r from-violet-600 to-indigo-600 rounded-2xl p-6 mb-6 text-white">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-violet-200 text-sm mb-1">Quinta-feira, 12 de Janeiro</p>
+                      <h3 className="text-2xl font-bold mb-1">Boa tarde!</h3>
+                      <p className="text-violet-100">Você tem 5 agendamentos hoje</p>
                     </div>
-                  </div>
-                  <div className="bg-white rounded-xl p-4 border border-gray-100 shadow-sm">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-purple-500 rounded-xl flex items-center justify-center">
-                        <Briefcase className="w-5 h-5 text-white" />
+                    <div className="hidden sm:flex gap-4">
+                      <div className="bg-white/10 backdrop-blur rounded-xl p-4 text-center">
+                        <p className="text-2xl font-bold">5</p>
+                        <p className="text-xs text-violet-200">Hoje</p>
                       </div>
-                      <div>
-                        <p className="text-xs text-gray-500">Profissionais</p>
-                        <p className="text-xl font-bold text-gray-900">5</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="bg-white rounded-xl p-4 border border-gray-100 shadow-sm">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-violet-500 rounded-xl flex items-center justify-center">
-                        <Scissors className="w-5 h-5 text-white" />
-                      </div>
-                      <div>
-                        <p className="text-xs text-gray-500">Serviços</p>
-                        <p className="text-xl font-bold text-gray-900">12</p>
+                      <div className="bg-white/10 backdrop-blur rounded-xl p-4 text-center">
+                        <p className="text-2xl font-bold">87%</p>
+                        <p className="text-xs text-violet-200">Taxa</p>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                {/* Stats Cards Row 2 */}
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
-                  <div className="bg-white rounded-xl p-4 border border-gray-100 shadow-sm">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-blue-400 rounded-xl flex items-center justify-center">
-                        <CalendarDays className="w-5 h-5 text-white" />
+                {/* Stats Grid */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                  {[
+                    { label: 'Clientes', value: '156', icon: Users, color: 'amber' },
+                    { label: 'Serviços', value: '12', icon: Sparkles, color: 'violet' },
+                    { label: 'Este mês', value: '47', icon: Calendar, color: 'sky' },
+                    { label: 'Receita', value: 'R$ 8.4k', icon: BarChart3, color: 'emerald' }
+                  ].map((stat, i) => (
+                    <div key={i} className="bg-white rounded-xl p-4 border border-gray-100">
+                      <div className={`w-10 h-10 bg-${stat.color}-100 rounded-xl flex items-center justify-center mb-3`}>
+                        <stat.icon className={`w-5 h-5 text-${stat.color}-600`} />
                       </div>
-                      <div>
-                        <p className="text-xs text-gray-500">Agendamentos</p>
-                        <p className="text-xl font-bold text-gray-900">248</p>
-                      </div>
+                      <p className="text-2xl font-bold text-gray-900">{stat.value}</p>
+                      <p className="text-sm text-gray-500">{stat.label}</p>
                     </div>
-                  </div>
-                  <div className="bg-white rounded-xl p-4 border border-gray-100 shadow-sm">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-indigo-500 rounded-xl flex items-center justify-center">
-                        <TrendingUp className="w-5 h-5 text-white" />
-                      </div>
-                      <div>
-                        <p className="text-xs text-gray-500">Últimos 30 dias</p>
-                        <p className="text-xl font-bold text-gray-900">47</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="bg-white rounded-xl p-4 border border-gray-100 shadow-sm">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-emerald-500 rounded-xl flex items-center justify-center">
-                        <DollarSign className="w-5 h-5 text-white" />
-                      </div>
-                      <div>
-                        <p className="text-xs text-gray-500">Receita Total</p>
-                        <p className="text-xl font-bold text-gray-900">R$ 8.450</p>
-                      </div>
-                    </div>
-                  </div>
+                  ))}
                 </div>
 
-                {/* Recent Appointments Table */}
-                <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
-                  <div className="px-4 py-3 border-b border-gray-100 flex items-center justify-between">
-                    <h4 className="font-semibold text-gray-900">Agendamentos Recentes</h4>
-                    <button className="text-sm text-blue-600 hover:text-blue-700 font-medium">Ver todos</button>
+                {/* Recent List */}
+                <div className="bg-white rounded-xl border border-gray-100 overflow-hidden">
+                  <div className="px-5 py-4 border-b border-gray-100 flex items-center justify-between">
+                    <h4 className="font-semibold text-gray-900">Agendamentos de Hoje</h4>
+                    <span className="text-sm text-violet-600 font-medium">Ver todos</span>
                   </div>
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-sm">
-                      <thead className="bg-gray-50 text-gray-500 text-xs uppercase">
-                        <tr>
-                          <th className="px-4 py-3 text-left font-medium">Cliente</th>
-                          <th className="px-4 py-3 text-left font-medium hidden sm:table-cell">Serviço</th>
-                          <th className="px-4 py-3 text-left font-medium hidden md:table-cell">Profissional</th>
-                          <th className="px-4 py-3 text-left font-medium">Data/Hora</th>
-                          <th className="px-4 py-3 text-left font-medium">Status</th>
-                          <th className="px-4 py-3 text-center font-medium">Ações</th>
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y divide-gray-100">
-                        <tr className="hover:bg-gray-50">
-                          <td className="px-4 py-3">
-                            <div>
-                              <p className="font-medium text-gray-900">Maria do Carmo</p>
-                              <p className="text-xs text-gray-500">(95) 99137-1313</p>
-                            </div>
-                          </td>
-                          <td className="px-4 py-3 hidden sm:table-cell">
-                            <span className="text-gray-700">Corte</span>
-                            <p className="text-xs text-gray-500">R$ 30,00</p>
-                          </td>
-                          <td className="px-4 py-3 hidden md:table-cell">
-                            <div className="flex items-center gap-2">
-                              <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                              <span className="text-gray-700">Ana Silva</span>
-                            </div>
-                          </td>
-                          <td className="px-4 py-3">
-                            <p className="text-gray-900">08/01/2026</p>
-                            <p className="text-xs text-gray-500">14:00</p>
-                          </td>
-                          <td className="px-4 py-3">
-                            <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">
-                              Concluído
-                            </span>
-                          </td>
-                          <td className="px-4 py-3 text-center">
-                            <button className="p-1.5 text-gray-400 hover:text-gray-600 rounded-lg hover:bg-gray-100">
-                              <Eye className="w-4 h-4" />
-                            </button>
-                          </td>
-                        </tr>
-                        <tr className="hover:bg-gray-50">
-                          <td className="px-4 py-3">
-                            <div>
-                              <p className="font-medium text-gray-900">João Pedro</p>
-                              <p className="text-xs text-gray-500">(95) 98888-2222</p>
-                            </div>
-                          </td>
-                          <td className="px-4 py-3 hidden sm:table-cell">
-                            <span className="text-gray-700">Barba</span>
-                            <p className="text-xs text-gray-500">R$ 25,00</p>
-                          </td>
-                          <td className="px-4 py-3 hidden md:table-cell">
-                            <div className="flex items-center gap-2">
-                              <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
-                              <span className="text-gray-700">Carlos Santos</span>
-                            </div>
-                          </td>
-                          <td className="px-4 py-3">
-                            <p className="text-gray-900">09/01/2026</p>
-                            <p className="text-xs text-gray-500">10:30</p>
-                          </td>
-                          <td className="px-4 py-3">
-                            <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-700">
-                              Confirmado
-                            </span>
-                          </td>
-                          <td className="px-4 py-3 text-center">
-                            <button className="p-1.5 text-gray-400 hover:text-gray-600 rounded-lg hover:bg-gray-100">
-                              <Eye className="w-4 h-4" />
-                            </button>
-                          </td>
-                        </tr>
-                        <tr className="hover:bg-gray-50">
-                          <td className="px-4 py-3">
-                            <div>
-                              <p className="font-medium text-gray-900">Fernanda Lima</p>
-                              <p className="text-xs text-gray-500">(95) 97777-3333</p>
-                            </div>
-                          </td>
-                          <td className="px-4 py-3 hidden sm:table-cell">
-                            <span className="text-gray-700">Coloração</span>
-                            <p className="text-xs text-gray-500">R$ 120,00</p>
-                          </td>
-                          <td className="px-4 py-3 hidden md:table-cell">
-                            <div className="flex items-center gap-2">
-                              <div className="w-2 h-2 bg-pink-500 rounded-full"></div>
-                              <span className="text-gray-700">Julia Mendes</span>
-                            </div>
-                          </td>
-                          <td className="px-4 py-3">
-                            <p className="text-gray-900">09/01/2026</p>
-                            <p className="text-xs text-gray-500">15:00</p>
-                          </td>
-                          <td className="px-4 py-3">
-                            <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-700">
-                              Pendente
-                            </span>
-                          </td>
-                          <td className="px-4 py-3 text-center">
-                            <button className="p-1.5 text-gray-400 hover:text-gray-600 rounded-lg hover:bg-gray-100">
-                              <Eye className="w-4 h-4" />
-                            </button>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
+                  <div className="divide-y divide-gray-50">
+                    {[
+                      { name: 'Maria Silva', service: 'Corte + Escova', time: '14:00', status: 'confirmado' },
+                      { name: 'João Pedro', service: 'Barba', time: '15:00', status: 'confirmado' },
+                      { name: 'Ana Costa', service: 'Coloração', time: '16:30', status: 'pendente' }
+                    ].map((item, i) => (
+                      <div key={i} className="flex items-center justify-between px-5 py-4 hover:bg-gray-50">
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 bg-gradient-to-br from-violet-400 to-indigo-500 rounded-xl flex items-center justify-center text-white font-semibold">
+                            {item.name[0]}
+                          </div>
+                          <div>
+                            <p className="font-medium text-gray-900">{item.name}</p>
+                            <p className="text-sm text-gray-500">{item.service}</p>
+                          </div>
+                        </div>
+                        <div className="text-right">
+                          <p className="font-medium text-gray-900">{item.time}</p>
+                          <span className={`text-xs font-medium ${
+                            item.status === 'confirmado' ? 'text-emerald-600' : 'text-amber-600'
+                          }`}>
+                            {item.status === 'confirmado' ? 'Confirmado' : 'Pendente'}
+                          </span>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
             </div>
-
-            {/* Decorative gradient overlay */}
-            <div className="absolute -bottom-4 left-0 right-0 h-20 bg-gradient-to-t from-white to-transparent pointer-events-none"></div>
           </div>
 
-          {/* CTA */}
           <div className="text-center mt-12">
             <button
               onClick={handleGetStarted}
-              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all hover:shadow-xl flex items-center justify-center gap-2 mx-auto group"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-gray-900 hover:bg-gray-800 text-white font-semibold rounded-2xl transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
             >
-              Experimente Grátis por 7 Dias
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              Experimente Grátis
+              <ArrowRight className="w-5 h-5" />
             </button>
-            <p className="text-gray-500 mt-3 text-sm">Sem cartão de crédito. Configure em minutos.</p>
           </div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-20 sm:py-24 px-4 bg-gray-50 scroll-mt-20">
+      <section id="features" className="py-24 px-6 bg-white scroll-mt-20">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <span className="text-blue-600 font-semibold text-sm uppercase tracking-wider">Funcionalidades</span>
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mt-3 mb-4">
-              Tudo que você precisa em um só lugar
+            <span className="inline-block px-4 py-1.5 bg-emerald-100 text-emerald-700 rounded-full text-sm font-semibold mb-4">
+              Recursos
+            </span>
+            <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
+              Tudo em um só lugar
             </h2>
-            <p className="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto">
-              Ferramentas poderosas e fáceis de usar para você focar no que importa: atender bem seus clientes.
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Ferramentas poderosas para gerenciar seu negócio de forma inteligente
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            {FEATURES.map((feature, index) => (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {FEATURES.map((feature, i) => (
               <div
-                key={index}
-                className="p-6 sm:p-8 rounded-2xl bg-gray-50 hover:bg-gradient-to-br hover:from-blue-50 hover:to-purple-50 border border-gray-100 hover:border-blue-200 transition-all duration-300 group"
+                key={i}
+                className="group relative p-8 bg-gray-50 hover:bg-white rounded-3xl border border-transparent hover:border-gray-200 hover:shadow-xl transition-all duration-500"
               >
-                <div className="w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300 shadow-lg shadow-blue-500/20">
+                <div className={`w-14 h-14 bg-gradient-to-br ${feature.color} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
                   <feature.icon className="w-7 h-7 text-white" />
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                  {feature.title}
-                </h3>
-                <p className="text-gray-600 leading-relaxed">
-                  {feature.description}
-                </p>
+                <h3 className="text-xl font-bold text-gray-900 mb-3">{feature.title}</h3>
+                <p className="text-gray-600 leading-relaxed">{feature.description}</p>
               </div>
             ))}
           </div>
@@ -755,313 +617,293 @@ export default function LandingPage() {
       </section>
 
       {/* Segments Section */}
-      <section id="segments" className="py-20 sm:py-24 px-4 bg-gradient-to-br from-gray-50 to-white scroll-mt-20">
+      <section id="segments" className="py-24 px-6 bg-gradient-to-b from-gray-50 to-white scroll-mt-20">
         <div className="max-w-7xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div>
+              <span className="inline-block px-4 py-1.5 bg-amber-100 text-amber-700 rounded-full text-sm font-semibold mb-4">
+                Para Você
+              </span>
+              <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-6">
+                Feito para quem<br />trabalha com hora marcada
+              </h2>
+              <p className="text-xl text-gray-600 mb-8">
+                De salões de beleza a consultórios médicos, o AgendaMais se adapta ao seu negócio.
+              </p>
+
+              <div className="grid grid-cols-2 gap-4">
+                {SEGMENTS.map((seg, i) => (
+                  <div
+                    key={i}
+                    className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-gray-100 hover:border-violet-200 hover:shadow-lg transition-all cursor-pointer group"
+                  >
+                    <div className="w-12 h-12 bg-gradient-to-br from-violet-100 to-indigo-100 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                      <seg.icon className="w-6 h-6 text-violet-600" />
+                    </div>
+                    <span className="font-medium text-gray-900">{seg.name}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Testimonials */}
+            <div className="space-y-6">
+              {TESTIMONIALS.map((t, i) => (
+                <div
+                  key={i}
+                  className={`p-6 bg-white rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 ${
+                    i === 1 ? 'lg:translate-x-8' : ''
+                  }`}
+                >
+                  <div className="flex gap-1 mb-4">
+                    {[...Array(5)].map((_, j) => (
+                      <Star key={j} className="w-5 h-5 fill-amber-400 text-amber-400" />
+                    ))}
+                  </div>
+                  <p className="text-gray-700 mb-6 text-lg leading-relaxed">"{t.text}"</p>
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 bg-gradient-to-br from-violet-500 to-indigo-600 rounded-full flex items-center justify-center text-white font-bold">
+                      {t.avatar}
+                    </div>
+                    <div>
+                      <p className="font-semibold text-gray-900">{t.name}</p>
+                      <p className="text-sm text-gray-500">{t.role}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* How it Works */}
+      <section className="py-24 px-6 bg-gray-900 text-white relative overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-violet-500/20 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-indigo-500/20 rounded-full blur-3xl"></div>
+        </div>
+
+        <div className="max-w-7xl mx-auto relative">
           <div className="text-center mb-16">
-            <span className="text-blue-600 font-semibold text-sm uppercase tracking-wider">Para quem é</span>
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mt-3 mb-4">
-              Ideal para diversos segmentos
+            <span className="inline-block px-4 py-1.5 bg-white/10 backdrop-blur text-white rounded-full text-sm font-semibold mb-4">
+              Como Funciona
+            </span>
+            <h2 className="text-4xl sm:text-5xl font-bold mb-4">
+              3 passos para começar
             </h2>
-            <p className="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto">
-              De salões de beleza a clínicas médicas, o AgendaMais se adapta ao seu negócio.
+            <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+              Configure em minutos e comece a receber agendamentos
             </p>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 max-w-5xl mx-auto">
-            {SEGMENTS.map((segment, index) => (
-              <div
-                key={index}
-                className="bg-white p-6 rounded-2xl border border-gray-100 hover:border-blue-200 hover:shadow-lg transition-all duration-300 text-center group cursor-pointer"
-              >
-                <div className="w-16 h-16 bg-gradient-to-br from-blue-100 to-purple-100 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-                  <segment.icon className="w-8 h-8 text-blue-600" />
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              { num: '01', title: 'Crie sua conta', desc: 'Cadastro gratuito em menos de 2 minutos' },
+              { num: '02', title: 'Configure', desc: 'Adicione serviços, equipe e horários' },
+              { num: '03', title: 'Compartilhe', desc: 'Envie seu link e receba agendamentos' }
+            ].map((step, i) => (
+              <div key={i} className="relative group">
+                <div className="absolute -inset-1 bg-gradient-to-r from-violet-600 to-indigo-600 rounded-3xl opacity-0 group-hover:opacity-100 blur transition-opacity duration-300"></div>
+                <div className="relative bg-gray-800 p-8 rounded-3xl border border-gray-700 h-full">
+                  <span className="text-6xl font-bold text-gray-700 group-hover:text-violet-500 transition-colors">
+                    {step.num}
+                  </span>
+                  <h3 className="text-2xl font-bold mt-4 mb-2">{step.title}</h3>
+                  <p className="text-gray-400">{step.desc}</p>
                 </div>
-                <h3 className="font-semibold text-gray-900 mb-1">
-                  {segment.name}
-                </h3>
-                <p className="text-sm text-gray-500">
-                  {segment.description}
-                </p>
+                {i < 2 && (
+                  <div className="hidden md:block absolute top-1/2 -right-4 w-8 h-0.5 bg-gray-700"></div>
+                )}
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* How it Works */}
-      <section className="py-20 sm:py-24 px-4 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <span className="text-blue-600 font-semibold text-sm uppercase tracking-wider">Primeiros passos</span>
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mt-3 mb-4">
-              Comece em 3 passos simples
-            </h2>
-            <p className="text-lg sm:text-xl text-gray-600">
-              Configure sua agenda e comece a receber agendamentos em minutos
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            <div className="text-center relative">
-              <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center text-white text-3xl font-bold mx-auto mb-6 shadow-xl shadow-blue-500/30">
-                1
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">Crie sua conta</h3>
-              <p className="text-gray-600">
-                Cadastre-se gratuitamente e configure seu negócio em minutos. Sem burocracia.
-              </p>
-              <div className="hidden md:block absolute top-10 left-[60%] w-[80%] h-0.5 bg-gradient-to-r from-blue-200 to-transparent"></div>
-            </div>
-            <div className="text-center relative">
-              <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-500 rounded-2xl flex items-center justify-center text-white text-3xl font-bold mx-auto mb-6 shadow-xl shadow-purple-500/30">
-                2
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">Configure serviços</h3>
-              <p className="text-gray-600">
-                Adicione seus serviços, profissionais e horários de atendimento disponíveis.
-              </p>
-              <div className="hidden md:block absolute top-10 left-[60%] w-[80%] h-0.5 bg-gradient-to-r from-purple-200 to-transparent"></div>
-            </div>
-            <div className="text-center">
-              <div className="w-20 h-20 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center text-white text-3xl font-bold mx-auto mb-6 shadow-xl shadow-pink-500/30">
-                3
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">Compartilhe o link</h3>
-              <p className="text-gray-600">
-                Divulgue seu link exclusivo e comece a receber agendamentos online hoje!
-              </p>
-            </div>
-          </div>
-
-          <div className="text-center mt-12">
-            <button
-              onClick={handleGetStarted}
-              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all hover:shadow-xl flex items-center justify-center gap-2 mx-auto group"
-            >
-              Começar Agora - É Grátis
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </button>
-          </div>
-        </div>
-      </section>
-
       {/* Pricing Section */}
-      <section id="pricing" className="py-20 sm:py-24 px-4 bg-gradient-to-br from-gray-50 to-white scroll-mt-20">
+      <section id="pricing" className="py-24 px-6 bg-white scroll-mt-20">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <span className="text-blue-600 font-semibold text-sm uppercase tracking-wider">Planos e Preços</span>
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mt-3 mb-4">
-              Escolha o plano ideal para você
+            <span className="inline-block px-4 py-1.5 bg-sky-100 text-sky-700 rounded-full text-sm font-semibold mb-4">
+              Planos
+            </span>
+            <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
+              Escolha seu plano
             </h2>
-            <p className="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto">
-              Todos os planos incluem 7 dias grátis. Cancele quando quiser.
+            <p className="text-xl text-gray-600">
+              7 dias grátis em todos os planos. Cancele quando quiser.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
             {PLANS.map((plan) => (
               <div
                 key={plan.id}
-                className={`relative bg-white rounded-3xl p-6 sm:p-8 transition-all duration-300 ${
+                className={`relative p-8 rounded-3xl transition-all duration-300 ${
                   plan.popular
-                    ? 'ring-2 ring-blue-500 shadow-2xl shadow-blue-500/20 md:scale-105 z-10'
-                    : 'border border-gray-200 hover:border-blue-200 hover:shadow-xl'
+                    ? 'bg-gray-900 text-white scale-105 shadow-2xl'
+                    : 'bg-white border-2 border-gray-100 hover:border-violet-200 hover:shadow-xl'
                 }`}
               >
                 {plan.popular && (
                   <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                    <span className="bg-gradient-to-r from-blue-500 to-purple-500 text-white px-5 py-1.5 rounded-full text-sm font-semibold shadow-lg">
+                    <span className="px-4 py-1.5 bg-gradient-to-r from-violet-500 to-indigo-500 text-white text-sm font-bold rounded-full shadow-lg">
                       Mais Popular
                     </span>
                   </div>
                 )}
 
-                <div className="text-center mb-8">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-2">
-                    {plan.name}
-                  </h3>
-                  <div className="flex items-baseline justify-center gap-1 mb-2">
-                    <span className="text-sm text-gray-500">R$</span>
-                    <span className="text-5xl font-bold text-gray-900">
-                      {plan.price}
-                    </span>
-                    <span className="text-gray-500">/mês</span>
-                  </div>
-                  <p className="text-sm text-green-600 font-semibold">
-                    7 dias grátis para testar
-                  </p>
+                <div className="mb-6">
+                  <h3 className="text-xl font-bold mb-1">{plan.name}</h3>
+                  <p className={plan.popular ? 'text-gray-400' : 'text-gray-500'}>{plan.description}</p>
+                </div>
+
+                <div className="flex items-baseline gap-1 mb-6">
+                  <span className={`text-sm ${plan.popular ? 'text-gray-400' : 'text-gray-500'}`}>R$</span>
+                  <span className="text-5xl font-bold">{plan.price}</span>
+                  <span className={plan.popular ? 'text-gray-400' : 'text-gray-500'}>/mês</span>
                 </div>
 
                 <ul className="space-y-4 mb-8">
-                  {plan.features.map((feature, index) => (
-                    <li key={index} className="flex items-start gap-3">
-                      <div className="flex-shrink-0 w-5 h-5 rounded-full bg-green-100 flex items-center justify-center mt-0.5">
-                        <Check className="w-3 h-3 text-green-600" />
+                  {plan.features.map((feature, i) => (
+                    <li key={i} className="flex items-start gap-3">
+                      <div className={`w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 ${
+                        plan.popular ? 'bg-violet-500' : 'bg-emerald-100'
+                      }`}>
+                        <Check className={`w-3 h-3 ${plan.popular ? 'text-white' : 'text-emerald-600'}`} />
                       </div>
-                      <span className="text-gray-700">
-                        {feature}
-                      </span>
+                      <span className={plan.popular ? 'text-gray-300' : 'text-gray-600'}>{feature}</span>
                     </li>
                   ))}
                 </ul>
 
                 <button
                   onClick={handleGetStarted}
-                  className={`w-full py-3.5 px-6 rounded-xl font-semibold transition-all flex items-center justify-center gap-2 group ${
+                  className={`w-full py-4 rounded-xl font-semibold transition-all duration-300 ${
                     plan.popular
-                      ? 'bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white shadow-lg hover:shadow-xl'
-                      : 'bg-gray-100 hover:bg-gray-200 text-gray-900'
+                      ? 'bg-white text-gray-900 hover:bg-gray-100'
+                      : 'bg-gray-900 text-white hover:bg-gray-800'
                   }`}
                 >
                   Começar Grátis
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </button>
               </div>
             ))}
-          </div>
-
-          {/* Additional Info */}
-          <div className="mt-12 text-center">
-            <p className="text-gray-600 mb-4 font-medium">
-              Todos os planos incluem:
-            </p>
-            <div className="flex flex-wrap justify-center gap-4 sm:gap-6 text-sm text-gray-700">
-              <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-full border border-gray-100">
-                <Check className="w-4 h-4 text-green-600" />
-                <span>Suporte técnico</span>
-              </div>
-              <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-full border border-gray-100">
-                <Check className="w-4 h-4 text-green-600" />
-                <span>Atualizações automáticas</span>
-              </div>
-              <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-full border border-gray-100">
-                <Check className="w-4 h-4 text-green-600" />
-                <span>Segurança SSL</span>
-              </div>
-              <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-full border border-gray-100">
-                <Check className="w-4 h-4 text-green-600" />
-                <span>Backup diário</span>
-              </div>
-            </div>
           </div>
         </div>
       </section>
 
       {/* FAQ Section */}
-      <section id="faq" className="py-20 sm:py-24 px-4 bg-gradient-to-br from-gray-50 to-white scroll-mt-20">
+      <section id="faq" className="py-24 px-6 bg-gray-50 scroll-mt-20">
         <div className="max-w-3xl mx-auto">
           <div className="text-center mb-12">
-            <span className="text-blue-600 font-semibold text-sm uppercase tracking-wider">FAQ</span>
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mt-3 mb-4">
-              Perguntas frequentes
+            <span className="inline-block px-4 py-1.5 bg-rose-100 text-rose-700 rounded-full text-sm font-semibold mb-4">
+              FAQ
+            </span>
+            <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
+              Dúvidas frequentes
             </h2>
-            <p className="text-lg text-gray-600">
-              Tire suas dúvidas sobre o AgendaMais
-            </p>
           </div>
 
-          <div className="bg-white rounded-2xl border border-gray-200 divide-y divide-gray-200 shadow-sm">
-            {FAQ.map((item, index) => (
-              <FAQItem
-                key={index}
-                question={item.question}
-                answer={item.answer}
-                isOpen={openFAQ === index}
-                onClick={() => setOpenFAQ(openFAQ === index ? -1 : index)}
-              />
+          <div className="bg-white rounded-3xl border border-gray-200 overflow-hidden divide-y divide-gray-100">
+            {FAQ.map((item, i) => (
+              <div key={i}>
+                <button
+                  onClick={() => setOpenFAQ(openFAQ === i ? -1 : i)}
+                  className="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-gray-50 transition-colors"
+                >
+                  <span className="font-semibold text-gray-900 pr-4">{item.q}</span>
+                  <ChevronDown className={`w-5 h-5 text-gray-400 flex-shrink-0 transition-transform duration-300 ${
+                    openFAQ === i ? 'rotate-180' : ''
+                  }`} />
+                </button>
+                <div className={`overflow-hidden transition-all duration-300 ${
+                  openFAQ === i ? 'max-h-40' : 'max-h-0'
+                }`}>
+                  <p className="px-6 pb-5 text-gray-600">{item.a}</p>
+                </div>
+              </div>
             ))}
           </div>
 
-          <div className="text-center mt-8">
-            <p className="text-gray-600">
-              Ainda tem dúvidas?{' '}
-              <a href="mailto:suporte@agendamais.site" className="text-blue-600 hover:text-blue-700 font-medium">
-                Fale conosco
-              </a>
-            </p>
-          </div>
+          <p className="text-center mt-8 text-gray-600">
+            Ainda tem dúvidas?{' '}
+            <a href="mailto:suporte@agendamais.site" className="text-violet-600 font-semibold hover:underline">
+              Fale conosco
+            </a>
+          </p>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-20 sm:py-24 px-4 bg-gradient-to-br from-blue-600 via-blue-700 to-purple-700 relative overflow-hidden">
-        {/* Decorative elements */}
-        <div className="absolute top-0 left-0 w-full h-full opacity-10">
-          <div className="absolute top-10 left-10 w-40 h-40 bg-white rounded-full"></div>
-          <div className="absolute bottom-10 right-10 w-60 h-60 bg-white rounded-full"></div>
+      {/* Final CTA */}
+      <section className="py-24 px-6 bg-gradient-to-br from-violet-600 via-indigo-600 to-violet-700 relative overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-white/5 rounded-full blur-3xl"></div>
         </div>
 
         <div className="max-w-4xl mx-auto text-center relative">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6">
-            Pronto para organizar sua agenda?
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">
+            Pronto para começar?
           </h2>
-          <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
-            Junte-se a milhares de profissionais que já transformaram seu negócio.
-            Comece seu teste gratuito de 7 dias agora!
+          <p className="text-xl text-violet-100 mb-10 max-w-2xl mx-auto">
+            Junte-se a milhares de profissionais que já transformaram seu negócio com AgendaMais
           </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <button
-              onClick={handleGetStarted}
-              className="w-full sm:w-auto bg-white text-blue-600 hover:bg-blue-50 px-8 py-4 rounded-xl font-semibold text-lg transition-all hover:shadow-2xl flex items-center justify-center gap-2 group"
-            >
-              Criar Minha Conta Grátis
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </button>
-          </div>
-          <p className="text-blue-200 mt-6 text-sm">
-            Sem cartão de crédito. Cancele quando quiser.
+          <button
+            onClick={handleGetStarted}
+            className="group inline-flex items-center gap-3 px-10 py-5 bg-white text-gray-900 font-bold text-lg rounded-2xl transition-all duration-300 hover:shadow-2xl hover:-translate-y-1"
+          >
+            Criar Minha Conta Grátis
+            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+          </button>
+          <p className="text-violet-200 mt-6 text-sm">
+            7 dias grátis • Sem cartão de crédito • Cancele quando quiser
           </p>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="py-12 sm:py-16 px-4 bg-gray-900">
+      <footer className="py-16 px-6 bg-gray-900">
         <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-4 gap-8 mb-8">
-            <div className="md:col-span-1">
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-10 h-10 bg-gradient-to-br from-blue-400 to-blue-500 rounded-xl flex items-center justify-center">
+          <div className="grid md:grid-cols-4 gap-12 mb-12">
+            <div>
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-11 h-11 bg-gradient-to-br from-violet-500 to-indigo-600 rounded-2xl flex items-center justify-center">
                   <Calendar className="w-6 h-6 text-white" />
                 </div>
                 <span className="text-xl font-bold text-white">AgendaMais</span>
               </div>
-              <p className="text-gray-400 text-sm leading-relaxed">
-                A solução completa para gestão de agendamentos do seu negócio. Simples, prático e eficiente.
+              <p className="text-gray-400 leading-relaxed">
+                A solução completa para gestão de agendamentos do seu negócio.
               </p>
             </div>
-            <div>
-              <h4 className="font-semibold text-white mb-4">Produto</h4>
-              <ul className="space-y-3 text-gray-400 text-sm">
-                <li><button onClick={() => scrollToSection('features')} className="hover:text-white transition-colors">Funcionalidades</button></li>
-                <li><button onClick={() => scrollToSection('pricing')} className="hover:text-white transition-colors">Planos</button></li>
-                <li><button onClick={() => scrollToSection('faq')} className="hover:text-white transition-colors">FAQ</button></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-semibold text-white mb-4">Suporte</h4>
-              <ul className="space-y-3 text-gray-400 text-sm">
-                <li><a href="mailto:suporte@agendamais.site" className="hover:text-white transition-colors">suporte@agendamais.site</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Central de Ajuda</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Tutoriais</a></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-semibold text-white mb-4">Legal</h4>
-              <ul className="space-y-3 text-gray-400 text-sm">
-                <li><button onClick={() => navigate('/termos')} className="hover:text-white transition-colors">Termos de Uso</button></li>
-                <li><button onClick={() => navigate('/privacidade')} className="hover:text-white transition-colors">Politica de Privacidade</button></li>
-                <li><button onClick={() => navigate('/lgpd')} className="hover:text-white transition-colors">LGPD</button></li>
-              </ul>
-            </div>
+
+            {[
+              { title: 'Produto', links: ['Recursos', 'Planos', 'FAQ'] },
+              { title: 'Suporte', links: ['suporte@agendamais.site', 'Central de Ajuda'] },
+              { title: 'Legal', links: ['Termos de Uso', 'Privacidade', 'LGPD'] }
+            ].map((col, i) => (
+              <div key={i}>
+                <h4 className="font-semibold text-white mb-4">{col.title}</h4>
+                <ul className="space-y-3">
+                  {col.links.map((link, j) => (
+                    <li key={j}>
+                      <a href="#" className="text-gray-400 hover:text-white transition-colors">{link}</a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
+
           <div className="border-t border-gray-800 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
             <p className="text-gray-400 text-sm">
-              &copy; {new Date().getFullYear()} AgendaMais. Todos os direitos reservados.
+              © {new Date().getFullYear()} AgendaMais. Todos os direitos reservados.
             </p>
-            <div className="flex items-center gap-4">
-              <span className="text-gray-500 text-sm">Feito com</span>
+            <div className="flex items-center gap-2 text-gray-500 text-sm">
+              <span>Feito com</span>
               <Heart className="w-4 h-4 text-red-500 fill-red-500" />
-              <span className="text-gray-500 text-sm">no Brasil</span>
+              <span>no Brasil</span>
             </div>
           </div>
         </div>
