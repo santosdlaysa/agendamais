@@ -460,98 +460,12 @@ export default function LandingPage() {
               </div>
             </div>
 
-            <div className="bg-[#F8FAFC] rounded-b-2xl border border-t-0 border-jet-black-200 shadow-2xl overflow-hidden">
-              {/* Dashboard Header */}
-              <div className="bg-white border-b border-jet-black-100 px-6 py-4 flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-gradient-to-br from-periwinkle-500 to-space-indigo-600 rounded-xl flex items-center justify-center">
-                    <Calendar className="w-5 h-5 text-white" />
-                  </div>
-                  <span className="font-semibold text-jet-black-900">AgendaMais</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-9 h-9 bg-periwinkle-100 rounded-xl flex items-center justify-center text-periwinkle-600 font-semibold">
-                    M
-                  </div>
-                </div>
-              </div>
-
-              {/* Dashboard Content */}
-              <div className="p-6">
-                {/* Welcome Banner */}
-                <div className="bg-gradient-to-r from-periwinkle-600 to-space-indigo-600 rounded-2xl p-6 mb-6 text-white">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-periwinkle-200 text-sm mb-1">Quinta-feira, 12 de Janeiro</p>
-                      <h3 className="text-2xl font-bold mb-1">Boa tarde!</h3>
-                      <p className="text-periwinkle-100">Você tem 5 agendamentos hoje</p>
-                    </div>
-                    <div className="hidden sm:flex gap-4">
-                      <div className="bg-white/10 backdrop-blur rounded-xl p-4 text-center">
-                        <p className="text-2xl font-bold">5</p>
-                        <p className="text-xs text-periwinkle-200">Hoje</p>
-                      </div>
-                      <div className="bg-white/10 backdrop-blur rounded-xl p-4 text-center">
-                        <p className="text-2xl font-bold">87%</p>
-                        <p className="text-xs text-periwinkle-200">Taxa</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Stats Grid */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-                  {[
-                    { label: 'Clientes', value: '156', icon: Users, color: 'amber' },
-                    { label: 'Serviços', value: '12', icon: Sparkles, color: 'violet' },
-                    { label: 'Este mês', value: '47', icon: Calendar, color: 'sky' },
-                    { label: 'Receita', value: 'R$ 8.4k', icon: BarChart3, color: 'emerald' }
-                  ].map((stat, i) => (
-                    <div key={i} className="bg-white rounded-xl p-4 border border-jet-black-100">
-                      <div className={`w-10 h-10 bg-${stat.color}-100 rounded-xl flex items-center justify-center mb-3`}>
-                        <stat.icon className={`w-5 h-5 text-${stat.color}-600`} />
-                      </div>
-                      <p className="text-2xl font-bold text-jet-black-900">{stat.value}</p>
-                      <p className="text-sm text-jet-black-500">{stat.label}</p>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Recent List */}
-                <div className="bg-white rounded-xl border border-jet-black-100 overflow-hidden">
-                  <div className="px-5 py-4 border-b border-jet-black-100 flex items-center justify-between">
-                    <h4 className="font-semibold text-jet-black-900">Agendamentos de Hoje</h4>
-                    <span className="text-sm text-periwinkle-600 font-medium">Ver todos</span>
-                  </div>
-                  <div className="divide-y divide-jet-black-50">
-                    {[
-                      { name: 'Maria Silva', service: 'Corte + Escova', time: '14:00', status: 'confirmado' },
-                      { name: 'João Pedro', service: 'Barba', time: '15:00', status: 'confirmado' },
-                      { name: 'Ana Costa', service: 'Coloração', time: '16:30', status: 'pendente' }
-                    ].map((item, i) => (
-                      <div key={i} className="flex items-center justify-between px-5 py-4 hover:bg-jet-black-50">
-                        <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 bg-gradient-to-br from-periwinkle-400 to-space-indigo-500 rounded-xl flex items-center justify-center text-white font-semibold">
-                            {item.name[0]}
-                          </div>
-                          <div>
-                            <p className="font-medium text-jet-black-900">{item.name}</p>
-                            <p className="text-sm text-jet-black-500">{item.service}</p>
-                          </div>
-                        </div>
-                        <div className="text-right">
-                          <p className="font-medium text-jet-black-900">{item.time}</p>
-                          <span className={`text-xs font-medium ${
-                            item.status === 'confirmado' ? 'text-emerald-600' : 'text-amber-600'
-                          }`}>
-                            {item.status === 'confirmado' ? 'Confirmado' : 'Pendente'}
-                          </span>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
+            <div className="bg-white rounded-b-2xl border border-t-0 border-jet-black-200 shadow-2xl overflow-hidden">
+              <img
+                src="/demo-dashboard.png"
+                alt="Dashboard do AgendaMais"
+                className="w-full h-auto"
+              />
             </div>
           </div>
 

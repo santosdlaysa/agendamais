@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react'
 import { useAuth } from '../contexts/AuthContext'
 import { useSubscription } from '../contexts/SubscriptionContext'
 import { NavLink, useLocation } from 'react-router-dom'
-import { Calendar, LogOut, Users, UserCheck, Briefcase, FileText, BarChart3, MessageSquare, CreditCard, ChevronDown, Building2, Shield, Menu } from 'lucide-react'
+import { Calendar, LogOut, Users, UserCheck, Briefcase, FileText, BarChart3, MessageSquare, CreditCard, ChevronDown, Building2, Shield, Menu, PanelLeftClose, PanelLeft } from 'lucide-react'
 import api from '../utils/api'
 
 export default function Layout({ children }) {
@@ -10,9 +10,19 @@ export default function Layout({ children }) {
   const { hasActiveSubscription, isInTrial, getTrialDaysRemaining } = useSubscription()
   const location = useLocation()
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(() => {
+    const saved = localStorage.getItem('sidebarCollapsed')
+    return saved ? JSON.parse(saved) : false
+  })
   const [userMenuOpen, setUserMenuOpen] = useState(false)
   const [businessName, setBusinessName] = useState('')
   const userMenuRef = useRef(null)
+  const sidebarRef = useRef(null)
+
+  // Persistir estado da sidebar colapsada
+  useEffect(() => {
+    localStorage.setItem('sidebarCollapsed', JSON.stringify(sidebarCollapsed))
+  }, [sidebarCollapsed])
 
   // Fechar menu do usuário ao clicar fora
   useEffect(() => {
@@ -24,6 +34,18 @@ export default function Layout({ children }) {
     document.addEventListener('mousedown', handleClickOutside)
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
+
+  // Colapsar sidebar ao clicar fora (apenas desktop)
+  useEffect(() => {
+    const handleClickOutsideSidebar = (event) => {
+      const isDesktop = window.innerWidth >= 1024
+      if (isDesktop && !sidebarCollapsed && sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+        setSidebarCollapsed(true)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutsideSidebar)
+    return () => document.removeEventListener('mousedown', handleClickOutsideSidebar)
+  }, [sidebarCollapsed])
 
   // Fechar sidebar mobile quando a rota muda
   useEffect(() => {
@@ -51,109 +73,133 @@ export default function Layout({ children }) {
     logout()
   }
 
-  const navLinkClass = ({ isActive }) =>
-    `flex items-center px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+  const navLinkClass = ({ isActive }, collapsed = false) =>
+    `flex items-center ${collapsed ? 'justify-center px-2' : 'px-3'} py-2.5 rounded-lg text-sm font-medium transition-colors ${
       isActive
         ? 'bg-periwinkle-100 text-periwinkle-700'
         : 'text-jet-black-600 hover:bg-jet-black-100 hover:text-jet-black-900'
     }`
 
-  const SidebarContent = () => (
+  const getNavLinkClass = (collapsed) => ({ isActive }) => navLinkClass({ isActive }, collapsed)
+
+  const SidebarContent = ({ collapsed = false }) => (
     <div className="flex flex-col h-full">
       {/* Logo */}
-      <div className="flex items-center h-16 px-4 border-b border-jet-black-200">
-        <Calendar className="h-8 w-8 text-periwinkle-600 flex-shrink-0" />
-        <h1 className="ml-3 text-lg font-bold text-jet-black-900 truncate">
-          {businessName || 'AgendaMais'}
-        </h1>
+      <div className={`flex ${collapsed ? 'flex-col items-center justify-center py-3 gap-2' : 'flex-row items-center justify-between h-16 px-4'} border-b border-jet-black-200`}>
+        <div className="flex items-center min-w-0">
+          <Calendar className="h-8 w-8 text-periwinkle-600 flex-shrink-0" />
+          {!collapsed && (
+            <h1 className="ml-3 text-lg font-bold text-jet-black-900 truncate">
+              {businessName || 'AgendaMais'}
+            </h1>
+          )}
+        </div>
+        <button
+          onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
+          className="hidden lg:flex p-1.5 rounded-lg text-jet-black-400 hover:bg-jet-black-100 hover:text-jet-black-600 transition-colors flex-shrink-0"
+          title={collapsed ? 'Expandir sidebar' : 'Recolher sidebar'}
+        >
+          {collapsed ? <PanelLeft className="h-5 w-5" /> : <PanelLeftClose className="h-5 w-5" />}
+        </button>
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 px-3 py-4 space-y-6 overflow-y-auto">
+      <nav className={`flex-1 ${collapsed ? 'px-2' : 'px-3'} py-4 space-y-6 overflow-y-auto`}>
         {/* Dia a dia do negócio */}
         <div>
-          <p className="px-3 mb-2 text-xs font-semibold text-jet-black-400 uppercase tracking-wider">
-            Dia a dia
-          </p>
+          {!collapsed && (
+            <p className="px-3 mb-2 text-xs font-semibold text-jet-black-400 uppercase tracking-wider">
+              Dia a dia
+            </p>
+          )}
           <div className="space-y-1">
-            <NavLink to="/dashboard" className={navLinkClass}>
-              <FileText className="h-5 w-5 mr-3 flex-shrink-0" />
-              Dashboard
+            <NavLink to="/dashboard" className={getNavLinkClass(collapsed)} title="Dashboard">
+              <FileText className={`h-5 w-5 ${collapsed ? '' : 'mr-3'} flex-shrink-0`} />
+              {!collapsed && 'Dashboard'}
             </NavLink>
-            <NavLink to="/appointments" className={navLinkClass}>
-              <Calendar className="h-5 w-5 mr-3 flex-shrink-0" />
-              Agendamentos
+            <NavLink to="/appointments" className={getNavLinkClass(collapsed)} title="Agendamentos">
+              <Calendar className={`h-5 w-5 ${collapsed ? '' : 'mr-3'} flex-shrink-0`} />
+              {!collapsed && 'Agendamentos'}
             </NavLink>
-            <NavLink to="/reminders" className={navLinkClass} title="Envie lembretes automáticos para seus clientes">
-              <MessageSquare className="h-5 w-5 mr-3 flex-shrink-0" />
-              <div className="flex flex-col">
-                <span>Lembretes</span>
-                <span className="text-xs text-jet-black-400 font-normal">Notifique seus clientes</span>
-              </div>
+            <NavLink to="/reminders" className={getNavLinkClass(collapsed)} title="Lembretes - Notifique seus clientes">
+              <MessageSquare className={`h-5 w-5 ${collapsed ? '' : 'mr-3'} flex-shrink-0`} />
+              {!collapsed && (
+                <div className="flex flex-col">
+                  <span>Lembretes</span>
+                  <span className="text-xs text-jet-black-400 font-normal">Notifique seus clientes</span>
+                </div>
+              )}
             </NavLink>
-            <NavLink to="/reports" className={navLinkClass}>
-              <BarChart3 className="h-5 w-5 mr-3 flex-shrink-0" />
-              Relatórios
+            <NavLink to="/reports" className={getNavLinkClass(collapsed)} title="Relatórios">
+              <BarChart3 className={`h-5 w-5 ${collapsed ? '' : 'mr-3'} flex-shrink-0`} />
+              {!collapsed && 'Relatórios'}
             </NavLink>
           </div>
         </div>
 
         {/* Cadastros */}
         <div>
-          <p className="px-3 mb-2 text-xs font-semibold text-jet-black-400 uppercase tracking-wider">
-            Cadastros
-          </p>
+          {!collapsed && (
+            <p className="px-3 mb-2 text-xs font-semibold text-jet-black-400 uppercase tracking-wider">
+              Cadastros
+            </p>
+          )}
           <div className="space-y-1">
-            <NavLink to="/clients" className={navLinkClass}>
-              <Users className="h-5 w-5 mr-3 flex-shrink-0" />
-              Clientes
+            <NavLink to="/clients" className={getNavLinkClass(collapsed)} title="Clientes">
+              <Users className={`h-5 w-5 ${collapsed ? '' : 'mr-3'} flex-shrink-0`} />
+              {!collapsed && 'Clientes'}
             </NavLink>
-            <NavLink to="/professionals" className={navLinkClass}>
-              <UserCheck className="h-5 w-5 mr-3 flex-shrink-0" />
-              Profissionais
+            <NavLink to="/professionals" className={getNavLinkClass(collapsed)} title="Profissionais">
+              <UserCheck className={`h-5 w-5 ${collapsed ? '' : 'mr-3'} flex-shrink-0`} />
+              {!collapsed && 'Profissionais'}
             </NavLink>
-            <NavLink to="/services" className={navLinkClass}>
-              <Briefcase className="h-5 w-5 mr-3 flex-shrink-0" />
-              Serviços
+            <NavLink to="/services" className={getNavLinkClass(collapsed)} title="Serviços">
+              <Briefcase className={`h-5 w-5 ${collapsed ? '' : 'mr-3'} flex-shrink-0`} />
+              {!collapsed && 'Serviços'}
             </NavLink>
           </div>
         </div>
 
         {/* Plano */}
         <div>
-          <p className="px-3 mb-2 text-xs font-semibold text-jet-black-400 uppercase tracking-wider">
-            Plano
-          </p>
+          {!collapsed && (
+            <p className="px-3 mb-2 text-xs font-semibold text-jet-black-400 uppercase tracking-wider">
+              Plano
+            </p>
+          )}
           <div className="space-y-1">
             <NavLink
               to={hasActiveSubscription() ? "/subscription/manage" : "/subscription/plans"}
-              className={navLinkClass}
+              className={getNavLinkClass(collapsed)}
+              title={hasActiveSubscription() ? 'Assinatura' : 'Assinar'}
             >
-              <CreditCard className="h-5 w-5 mr-3 flex-shrink-0" />
-              {hasActiveSubscription() ? 'Assinatura' : 'Assinar'}
+              <CreditCard className={`h-5 w-5 ${collapsed ? '' : 'mr-3'} flex-shrink-0`} />
+              {!collapsed && (hasActiveSubscription() ? 'Assinatura' : 'Assinar')}
             </NavLink>
           </div>
         </div>
 
         {/* Configurações */}
         <div>
-          <p className="px-3 mb-2 text-xs font-semibold text-jet-black-400 uppercase tracking-wider">
-            Configurações
-          </p>
+          {!collapsed && (
+            <p className="px-3 mb-2 text-xs font-semibold text-jet-black-400 uppercase tracking-wider">
+              Configurações
+            </p>
+          )}
           <div className="space-y-1">
-            <NavLink to="/settings?tab=business" className={navLinkClass}>
-              <Building2 className="h-5 w-5 mr-3 flex-shrink-0" />
-              Empresa
+            <NavLink to="/settings?tab=business" className={getNavLinkClass(collapsed)} title="Empresa">
+              <Building2 className={`h-5 w-5 ${collapsed ? '' : 'mr-3'} flex-shrink-0`} />
+              {!collapsed && 'Empresa'}
             </NavLink>
             {user?.role === 'admin' && (
               <>
-                <NavLink to="/settings?tab=permissions" className={navLinkClass}>
-                  <Shield className="h-5 w-5 mr-3 flex-shrink-0" />
-                  Permissões
+                <NavLink to="/settings?tab=permissions" className={getNavLinkClass(collapsed)} title="Permissões">
+                  <Shield className={`h-5 w-5 ${collapsed ? '' : 'mr-3'} flex-shrink-0`} />
+                  {!collapsed && 'Permissões'}
                 </NavLink>
-                <NavLink to="/settings?tab=users" className={navLinkClass}>
-                  <Users className="h-5 w-5 mr-3 flex-shrink-0" />
-                  Usuários
+                <NavLink to="/settings?tab=users" className={getNavLinkClass(collapsed)} title="Usuários">
+                  <Users className={`h-5 w-5 ${collapsed ? '' : 'mr-3'} flex-shrink-0`} />
+                  {!collapsed && 'Usuários'}
                 </NavLink>
               </>
             )}
@@ -166,27 +212,32 @@ export default function Layout({ children }) {
         <div className="relative" ref={userMenuRef}>
           <button
             onClick={() => setUserMenuOpen(!userMenuOpen)}
-            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-jet-black-100 transition-colors"
+            className={`w-full flex items-center ${collapsed ? 'justify-center' : 'gap-3'} ${collapsed ? 'px-2' : 'px-3'} py-2.5 rounded-lg hover:bg-jet-black-100 transition-colors`}
+            title={collapsed ? user?.name : undefined}
           >
             <div className="w-9 h-9 bg-periwinkle-600 rounded-full flex items-center justify-center flex-shrink-0">
               <span className="text-white text-sm font-medium">
                 {user?.name?.charAt(0).toUpperCase()}
               </span>
             </div>
-            <div className="flex-1 text-left min-w-0">
-              <p className="text-sm font-medium text-jet-black-900 truncate">{user?.name}</p>
-              {isInTrial() && (
-                <p className="text-xs text-periwinkle-600">
-                  Trial: {getTrialDaysRemaining()} dias
-                </p>
-              )}
-            </div>
-            <ChevronDown className={`w-4 h-4 text-jet-black-500 transition-transform flex-shrink-0 ${userMenuOpen ? 'rotate-180' : ''}`} />
+            {!collapsed && (
+              <>
+                <div className="flex-1 text-left min-w-0">
+                  <p className="text-sm font-medium text-jet-black-900 truncate">{user?.name}</p>
+                  {isInTrial() && (
+                    <p className="text-xs text-periwinkle-600">
+                      Trial: {getTrialDaysRemaining()} dias
+                    </p>
+                  )}
+                </div>
+                <ChevronDown className={`w-4 h-4 text-jet-black-500 transition-transform flex-shrink-0 ${userMenuOpen ? 'rotate-180' : ''}`} />
+              </>
+            )}
           </button>
 
           {/* User Dropdown Menu */}
           {userMenuOpen && (
-            <div className="absolute bottom-full left-0 right-0 mb-2 bg-white rounded-lg shadow-lg border py-1 z-50">
+            <div className={`absolute bottom-full ${collapsed ? 'left-0 min-w-48' : 'left-0 right-0'} mb-2 bg-white rounded-lg shadow-lg border py-1 z-50`}>
               {/* User Info */}
               <div className="px-4 py-3 border-b">
                 <p className="text-sm font-medium text-jet-black-900">{user?.name}</p>
@@ -231,16 +282,21 @@ export default function Layout({ children }) {
           sidebarOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
-        <SidebarContent />
+        <SidebarContent collapsed={false} />
       </aside>
 
       {/* Sidebar - Desktop (fixed) */}
-      <aside className="hidden lg:flex lg:flex-col lg:w-64 lg:fixed lg:inset-y-0 bg-white border-r border-jet-black-200">
-        <SidebarContent />
+      <aside
+        ref={sidebarRef}
+        className={`hidden lg:flex lg:flex-col lg:fixed lg:inset-y-0 bg-white border-r border-jet-black-200 transition-all duration-300 ease-in-out ${
+          sidebarCollapsed ? 'lg:w-16' : 'lg:w-64'
+        }`}
+      >
+        <SidebarContent collapsed={sidebarCollapsed} />
       </aside>
 
       {/* Main content area */}
-      <div className="lg:pl-64 flex flex-col min-h-screen">
+      <div className={`flex flex-col min-h-screen transition-all duration-300 ease-in-out ${sidebarCollapsed ? 'lg:pl-16' : 'lg:pl-64'}`}>
         {/* Mobile header */}
         <header className="lg:hidden bg-white shadow-sm border-b sticky top-0 z-30">
           <div className="flex items-center justify-between h-16 px-4">
