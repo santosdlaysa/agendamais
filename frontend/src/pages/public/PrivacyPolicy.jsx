@@ -18,7 +18,7 @@ export default function PrivacyPolicy() {
               <span>Voltar</span>
             </button>
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center">
+              <div className="w-8 h-8 bg-gradient-to-br from-periwinkle-500 to-periwinkle-600 rounded-lg flex items-center justify-center">
                 <Calendar className="w-5 h-5 text-white" />
               </div>
               <span className="text-lg font-bold text-jet-black-900">AgendaMais</span>
@@ -166,7 +166,7 @@ export default function PrivacyPolicy() {
                 <li><strong>Oposição:</strong> se opor a determinados tratamentos de dados</li>
               </ul>
               <p className="text-jet-black-600 mt-4">
-                Para exercer esses direitos, entre em contato através do email: <a href="mailto:privacidade@agendamais.site" className="text-blue-600 hover:underline">privacidade@agendamais.site</a>
+                Para exercer esses direitos, entre em contato através do email: <a href="mailto:privacidade@agendamais.site" className="text-periwinkle-600 hover:underline">privacidade@agendamais.site</a>
               </p>
             </section>
 

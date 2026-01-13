@@ -54,8 +54,8 @@ export default function SubscriptionSuccess() {
       <div className="min-h-screen bg-jet-black-50 flex items-center justify-center">
         <div className="max-w-md w-full mx-4">
           <div className="bg-white rounded-2xl shadow-lg p-8 text-center">
-            <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
-              <Loader2 className="w-10 h-10 text-blue-600 animate-spin" />
+            <div className="w-16 h-16 bg-periwinkle-100 rounded-full flex items-center justify-center mx-auto mb-6">
+              <Loader2 className="w-10 h-10 text-periwinkle-600 animate-spin" />
             </div>
 
             <h1 className="text-2xl font-bold text-jet-black-900 mb-2">
@@ -92,7 +92,7 @@ export default function SubscriptionSuccess() {
             <div className="space-y-3">
               <button
                 onClick={() => window.location.reload()}
-                className="w-full py-3 px-6 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold transition-colors"
+                className="w-full py-3 px-6 bg-periwinkle-600 hover:bg-periwinkle-700 text-white rounded-lg font-semibold transition-colors"
               >
                 Tentar Novamente
               </button>
@@ -140,7 +140,7 @@ export default function SubscriptionSuccess() {
 
           <button
             onClick={() => navigate('/')}
-            className="mt-6 w-full py-3 px-6 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold transition-colors"
+            className="mt-6 w-full py-3 px-6 bg-periwinkle-600 hover:bg-periwinkle-700 text-white rounded-lg font-semibold transition-colors"
           >
             Configurar Minha Conta
           </button>

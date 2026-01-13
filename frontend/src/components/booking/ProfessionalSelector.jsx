@@ -31,12 +31,12 @@ export default function ProfessionalSelector({
             onClick={() => onSelect(null)}
             className={`relative p-4 rounded-xl border-2 text-center transition-all duration-200 hover:shadow-md ${
               selectedProfessional === null
-                ? 'border-blue-500 bg-blue-50 ring-2 ring-blue-200'
-                : 'border-jet-black-200 bg-white hover:border-blue-300'
+                ? 'border-periwinkle-500 bg-periwinkle-50 ring-2 ring-periwinkle-200'
+                : 'border-jet-black-200 bg-white hover:border-periwinkle-300'
             }`}
           >
             {selectedProfessional === null && (
-              <div className="absolute top-3 right-3 w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center">
+              <div className="absolute top-3 right-3 w-6 h-6 bg-periwinkle-500 rounded-full flex items-center justify-center">
                 <Check className="w-4 h-4 text-white" />
               </div>
             )}
@@ -59,12 +59,12 @@ export default function ProfessionalSelector({
               onClick={() => onSelect(professional)}
               className={`relative p-4 rounded-xl border-2 text-center transition-all duration-200 hover:shadow-md ${
                 isSelected
-                  ? 'border-blue-500 bg-blue-50 ring-2 ring-blue-200'
-                  : 'border-jet-black-200 bg-white hover:border-blue-300'
+                  ? 'border-periwinkle-500 bg-periwinkle-50 ring-2 ring-periwinkle-200'
+                  : 'border-jet-black-200 bg-white hover:border-periwinkle-300'
               }`}
             >
               {isSelected && (
-                <div className="absolute top-3 right-3 w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center">
+                <div className="absolute top-3 right-3 w-6 h-6 bg-periwinkle-500 rounded-full flex items-center justify-center">
                   <Check className="w-4 h-4 text-white" />
                 </div>
               )}
@@ -76,7 +76,7 @@ export default function ProfessionalSelector({
                   className="w-16 h-16 mx-auto rounded-full object-cover mb-3"
                 />
               ) : (
-                <div className="w-16 h-16 mx-auto rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white text-xl font-bold mb-3">
+                <div className="w-16 h-16 mx-auto rounded-full bg-gradient-to-br from-periwinkle-400 to-periwinkle-600 flex items-center justify-center text-white text-xl font-bold mb-3">
                   {professional.name?.charAt(0) || 'P'}
                 </div>
               )}

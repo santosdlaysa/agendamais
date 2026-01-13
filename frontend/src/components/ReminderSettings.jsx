@@ -158,7 +158,7 @@ Aguardamos você!`
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-periwinkle-600"></div>
       </div>
     )
   }
@@ -245,7 +245,7 @@ Aguardamos você!`
             <select
               value={selectedProfessional}
               onChange={(e) => setSelectedProfessional(e.target.value)}
-              className="w-full px-3 py-2 border border-jet-black-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 border border-jet-black-300 rounded-md focus:outline-none focus:ring-2 focus:ring-periwinkle-500"
             >
               {professionals.map((professional, index) => (
                 <option key={professional.id || index} value={professional.id || ''}>
@@ -299,7 +299,7 @@ Aguardamos você!`
                   id="whatsapp-enabled"
                   checked={settings.whatsapp_enabled}
                   onChange={(e) => updateSetting('whatsapp_enabled', e.target.checked)}
-                  className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-jet-black-300 rounded"
+                  className="h-4 w-4 text-periwinkle-600 focus:ring-periwinkle-500 border-jet-black-300 rounded"
                 />
                 <label htmlFor="whatsapp-enabled" className="ml-2 block text-sm text-jet-black-900">
                   Habilitar lembretes via WhatsApp
@@ -316,7 +316,7 @@ Aguardamos você!`
                   onChange={(e) => updateSetting('whatsapp_hours_before', parseInt(e.target.value) || 24)}
                   min="1"
                   max="168"
-                  className="w-24 px-3 py-2 border border-jet-black-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-24 px-3 py-2 border border-jet-black-300 rounded-md focus:outline-none focus:ring-2 focus:ring-periwinkle-500"
                 />
               </div>
             </div>
@@ -326,7 +326,7 @@ Aguardamos você!`
           <div className="bg-white rounded-lg shadow-sm border p-6">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center space-x-3">
-                <Mail className="h-6 w-6 text-blue-600" />
+                <Mail className="h-6 w-6 text-periwinkle-600" />
                 <h3 className="text-lg font-medium text-jet-black-900">SMS</h3>
               </div>
               <div className="flex items-center space-x-2">
@@ -362,7 +362,7 @@ Aguardamos você!`
                   id="sms-enabled"
                   checked={settings.sms_enabled}
                   onChange={(e) => updateSetting('sms_enabled', e.target.checked)}
-                  className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-jet-black-300 rounded"
+                  className="h-4 w-4 text-periwinkle-600 focus:ring-periwinkle-500 border-jet-black-300 rounded"
                 />
                 <label htmlFor="sms-enabled" className="ml-2 block text-sm text-jet-black-900">
                   Habilitar lembretes via SMS
@@ -379,7 +379,7 @@ Aguardamos você!`
                   onChange={(e) => updateSetting('sms_hours_before', parseInt(e.target.value) || 24)}
                   min="1"
                   max="168"
-                  className="w-24 px-3 py-2 border border-jet-black-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-24 px-3 py-2 border border-jet-black-300 rounded-md focus:outline-none focus:ring-2 focus:ring-periwinkle-500"
                 />
               </div>
             </div>
@@ -399,7 +399,7 @@ Aguardamos você!`
                   onChange={(e) => updateSetting('custom_message', e.target.value)}
                   placeholder={defaultMessage}
                   rows={8}
-                  className="w-full px-3 py-2 border border-jet-black-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-jet-black-300 rounded-md focus:outline-none focus:ring-2 focus:ring-periwinkle-500"
                 />
               </div>
 

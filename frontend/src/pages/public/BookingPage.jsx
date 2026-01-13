@@ -253,7 +253,7 @@ export default function BookingPage() {
     return (
       <div className="min-h-screen bg-jet-black-50 flex items-center justify-center">
         <div className="text-center">
-          <Loader2 className="w-12 h-12 text-blue-600 animate-spin mx-auto" />
+          <Loader2 className="w-12 h-12 text-periwinkle-600 animate-spin mx-auto" />
           <p className="mt-4 text-jet-black-600">Carregando...</p>
         </div>
       </div>
@@ -384,7 +384,7 @@ export default function BookingPage() {
             className={`flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-colors ${
               isNextDisabled()
                 ? 'bg-jet-black-200 text-jet-black-400 cursor-not-allowed'
-                : 'bg-blue-600 text-white hover:bg-blue-700'
+                : 'bg-periwinkle-600 text-white hover:bg-periwinkle-700'
             }`}
           >
             {submitting && <Loader2 className="w-5 h-5 animate-spin" />}
@@ -397,7 +397,7 @@ export default function BookingPage() {
         <div className="text-center mt-8">
           <button
             onClick={() => navigate(`/agendar/${slug}/consultar`)}
-            className="text-sm text-blue-600 hover:text-blue-800 underline"
+            className="text-sm text-periwinkle-600 hover:text-periwinkle-800 underline"
           >
             Já tem um agendamento? Consulte aqui
           </button>

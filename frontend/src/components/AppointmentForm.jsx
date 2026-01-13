@@ -238,7 +238,7 @@ export default function AppointmentForm() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-periwinkle-600"></div>
       </div>
     )
   }
@@ -283,7 +283,7 @@ export default function AppointmentForm() {
                   name="client_id"
                   value={formData.client_id}
                   onChange={handleInputChange}
-                  className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-black ${
+                  className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-periwinkle-500 focus:border-periwinkle-500 bg-white text-black ${
                     errors.client_id ? 'border-red-500' : 'border-jet-black-300'
                   }`}
                 >
@@ -302,7 +302,7 @@ export default function AppointmentForm() {
                   <button
                     type="button"
                     onClick={() => navigate('/clients/new')}
-                    className="text-blue-600 hover:text-blue-800 ml-1"
+                    className="text-periwinkle-600 hover:text-periwinkle-800 ml-1"
                   >
                     Cadastre aqui
                   </button>
@@ -318,7 +318,7 @@ export default function AppointmentForm() {
                   name="professional_id"
                   value={formData.professional_id}
                   onChange={handleInputChange}
-                  className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-black ${
+                  className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-periwinkle-500 focus:border-periwinkle-500 bg-white text-black ${
                     errors.professional_id ? 'border-red-500' : 'border-jet-black-300'
                   }`}
                 >
@@ -350,7 +350,7 @@ export default function AppointmentForm() {
                   value={formData.service_id}
                   onChange={handleInputChange}
                   disabled={!formData.professional_id}
-                  className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-black disabled:bg-jet-black-100 disabled:cursor-not-allowed ${
+                  className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-periwinkle-500 focus:border-periwinkle-500 bg-white text-black disabled:bg-jet-black-100 disabled:cursor-not-allowed ${
                     errors.service_id ? 'border-red-500' : 'border-jet-black-300'
                   }`}
                 >
@@ -379,7 +379,7 @@ export default function AppointmentForm() {
                   onChange={handleInputChange}
                   min="0"
                   step="0.01"
-                  className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-black ${
+                  className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-periwinkle-500 focus:border-periwinkle-500 bg-white text-black ${
                     errors.price ? 'border-red-500' : 'border-jet-black-300'
                   }`}
                   placeholder="0.00"
@@ -394,9 +394,9 @@ export default function AppointmentForm() {
             </div>
 
             {selectedService && (
-              <div className="mt-4 p-4 bg-blue-50 rounded-lg">
-                <h4 className="text-sm font-medium text-blue-900 mb-2">Detalhes do Serviço</h4>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-blue-700">
+              <div className="mt-4 p-4 bg-periwinkle-50 rounded-lg">
+                <h4 className="text-sm font-medium text-periwinkle-900 mb-2">Detalhes do Serviço</h4>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-periwinkle-700">
                   <div>
                     <strong>Duração:</strong> {selectedService.duration} minutos
                   </div>
@@ -428,7 +428,7 @@ export default function AppointmentForm() {
                   value={formData.appointment_date}
                   onChange={handleInputChange}
                   min={new Date().toISOString().split('T')[0]}
-                  className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-black ${
+                  className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-periwinkle-500 focus:border-periwinkle-500 bg-white text-black ${
                     errors.appointment_date ? 'border-red-500' : 'border-jet-black-300'
                   }`}
                 />
@@ -447,7 +447,7 @@ export default function AppointmentForm() {
                   name="start_time"
                   value={formData.start_time}
                   onChange={handleInputChange}
-                  className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-black ${
+                  className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-periwinkle-500 focus:border-periwinkle-500 bg-white text-black ${
                     errors.start_time ? 'border-red-500' : 'border-jet-black-300'
                   }`}
                 />
@@ -501,7 +501,7 @@ export default function AppointmentForm() {
                   name="status"
                   value={formData.status}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-black"
+                  className="w-full px-3 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-periwinkle-500 focus:border-periwinkle-500 bg-white text-black"
                 >
                   <option value="scheduled">Agendado</option>
                   <option value="completed">Concluído</option>
@@ -519,7 +519,7 @@ export default function AppointmentForm() {
                   value={formData.notes}
                   onChange={handleInputChange}
                   rows={4}
-                  className="w-full px-3 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-black"
+                  className="w-full px-3 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-periwinkle-500 focus:border-periwinkle-500 bg-white text-black"
                   placeholder="Observações especiais sobre o agendamento..."
                 />
               </div>
@@ -539,7 +539,7 @@ export default function AppointmentForm() {
             <button
               type="submit"
               disabled={saving || !availability.available}
-              className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
+              className="flex items-center px-4 py-2 bg-periwinkle-600 text-white rounded-lg hover:bg-periwinkle-700 disabled:opacity-50"
             >
               <Save className="w-4 h-4 mr-2" />
               {saving ? 'Salvando...' : (isEditMode ? 'Atualizar' : 'Criar')} Agendamento

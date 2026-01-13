@@ -34,12 +34,12 @@ export default function ServiceSelector({ services, selectedService, onSelect, l
               onClick={() => onSelect(service)}
               className={`relative p-4 rounded-xl border-2 text-left transition-all duration-200 hover:shadow-md ${
                 isSelected
-                  ? 'border-blue-500 bg-blue-50 ring-2 ring-blue-200'
-                  : 'border-jet-black-200 bg-white hover:border-blue-300'
+                  ? 'border-periwinkle-500 bg-periwinkle-50 ring-2 ring-periwinkle-200'
+                  : 'border-jet-black-200 bg-white hover:border-periwinkle-300'
               }`}
             >
               {isSelected && (
-                <div className="absolute top-3 right-3 w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center">
+                <div className="absolute top-3 right-3 w-6 h-6 bg-periwinkle-500 rounded-full flex items-center justify-center">
                   <Check className="w-4 h-4 text-white" />
                 </div>
               )}
@@ -54,7 +54,7 @@ export default function ServiceSelector({ services, selectedService, onSelect, l
 
                 <div className="flex items-center gap-4 mt-3">
                   <div className="flex items-center gap-1 text-sm text-jet-black-600">
-                    <Clock className="w-4 h-4 text-blue-500" />
+                    <Clock className="w-4 h-4 text-periwinkle-500" />
                     <span>{service.duration} min</span>
                   </div>
                   <div className="flex items-center gap-1 text-sm font-semibold text-green-600">

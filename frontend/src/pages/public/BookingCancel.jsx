@@ -92,7 +92,7 @@ export default function BookingCancel() {
   if (loading) {
     return (
       <div className="min-h-screen bg-jet-black-50 flex items-center justify-center">
-        <Loader2 className="w-12 h-12 text-blue-600 animate-spin" />
+        <Loader2 className="w-12 h-12 text-periwinkle-600 animate-spin" />
       </div>
     )
   }
@@ -111,7 +111,7 @@ export default function BookingCancel() {
           </p>
           <Link
             to={`/agendar/${slug}`}
-            className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors"
+            className="inline-flex items-center px-6 py-3 bg-periwinkle-600 text-white rounded-lg font-medium hover:bg-periwinkle-700 transition-colors"
           >
             Fazer novo agendamento
           </Link>
@@ -132,7 +132,7 @@ export default function BookingCancel() {
           <p className="text-jet-black-600 mb-8">{error}</p>
           <Link
             to={`/agendar/${slug}`}
-            className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors"
+            className="inline-flex items-center px-6 py-3 bg-periwinkle-600 text-white rounded-lg font-medium hover:bg-periwinkle-700 transition-colors"
           >
             Voltar ao início
           </Link>

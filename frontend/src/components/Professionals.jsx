@@ -77,7 +77,7 @@ export default function Professionals() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-periwinkle-600"></div>
       </div>
     )
   }
@@ -92,7 +92,7 @@ export default function Professionals() {
         </div>
         <button
           onClick={() => navigate('/professionals/new')}
-          className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+          className="flex items-center px-4 py-2 bg-periwinkle-600 text-white rounded-lg hover:bg-periwinkle-700"
         >
           <Plus className="w-4 h-4 mr-2" />
           Novo Profissional
@@ -110,7 +110,7 @@ export default function Professionals() {
                 placeholder="Buscar profissionais..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full pl-10 pr-4 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-periwinkle-500 focus:border-periwinkle-500"
               />
             </div>
           </div>
@@ -120,7 +120,7 @@ export default function Professionals() {
               id="showInactive"
               checked={showInactive}
               onChange={(e) => setShowInactive(e.target.checked)}
-              className="h-4 w-4 text-blue-600 border-jet-black-300 rounded focus:ring-blue-500"
+              className="h-4 w-4 text-periwinkle-600 border-jet-black-300 rounded focus:ring-periwinkle-500"
             />
             <label htmlFor="showInactive" className="text-sm text-jet-black-700">
               Mostrar inativos
@@ -148,7 +148,7 @@ export default function Professionals() {
             {professionals.length === 0 && (
               <button
                 onClick={() => navigate('/professionals/new')}
-                className="flex items-center mx-auto px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                className="flex items-center mx-auto px-4 py-2 bg-periwinkle-600 text-white rounded-lg hover:bg-periwinkle-700"
               >
                 <Plus className="w-4 h-4 mr-2" />
                 Novo Profissional
@@ -163,8 +163,8 @@ export default function Professionals() {
                   <div className="flex-1">
                     <div className="flex items-center space-x-3">
                       <div className="flex-shrink-0">
-                        <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-                          <UserCheck className="w-6 h-6 text-blue-600" />
+                        <div className="w-12 h-12 bg-periwinkle-100 rounded-full flex items-center justify-center">
+                          <UserCheck className="w-6 h-6 text-periwinkle-600" />
                         </div>
                       </div>
                       <div>
@@ -250,7 +250,7 @@ export default function Professionals() {
                     
                     <button
                       onClick={() => navigate(`/professionals/${professional.id}/edit`)}
-                      className="p-2 text-blue-600 hover:bg-blue-50 border border-blue-200 rounded-lg"
+                      className="p-2 text-periwinkle-600 hover:bg-periwinkle-50 border border-periwinkle-200 rounded-lg"
                       title="Editar profissional"
                     >
                       <Edit className="w-4 h-4" />
@@ -286,7 +286,7 @@ export default function Professionals() {
               <p className="text-sm text-jet-black-600">Profissionais Ativos</p>
             </div>
             <div>
-              <p className="text-2xl font-bold text-blue-600">
+              <p className="text-2xl font-bold text-periwinkle-600">
                 {professionals.reduce((acc, prof) => acc + (prof.services ? prof.services.length : 0), 0)}
               </p>
               <p className="text-sm text-jet-black-600">Total de Serviços Oferecidos</p>

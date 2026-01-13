@@ -79,11 +79,11 @@ export default function DateTimePicker({
       let className = 'p-2 text-center rounded-lg text-sm transition-all duration-200 '
 
       if (isSelected) {
-        className += 'bg-blue-600 text-white font-semibold'
+        className += 'bg-periwinkle-600 text-white font-semibold'
       } else if (isPast || !isInRange) {
         className += 'text-jet-black-300 cursor-not-allowed'
       } else if (isAvailable) {
-        className += 'text-jet-black-900 hover:bg-blue-100 cursor-pointer font-medium'
+        className += 'text-jet-black-900 hover:bg-periwinkle-100 cursor-pointer font-medium'
       } else {
         className += 'text-jet-black-400 cursor-not-allowed line-through'
       }
@@ -128,7 +128,7 @@ export default function DateTimePicker({
   return (
     <div className="space-y-6">
       <h2 className="text-lg font-semibold text-jet-black-900 flex items-center gap-2">
-        <Calendar className="w-5 h-5 text-blue-500" />
+        <Calendar className="w-5 h-5 text-periwinkle-500" />
         Escolha a data e horário
       </h2>
 
@@ -155,7 +155,7 @@ export default function DateTimePicker({
 
           {loading ? (
             <div className="h-64 flex items-center justify-center">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600" />
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-periwinkle-600" />
             </div>
           ) : (
             renderCalendar()
@@ -163,7 +163,7 @@ export default function DateTimePicker({
 
           <div className="flex items-center gap-4 mt-4 text-xs text-jet-black-500">
             <div className="flex items-center gap-1">
-              <div className="w-3 h-3 rounded bg-blue-600" />
+              <div className="w-3 h-3 rounded bg-periwinkle-600" />
               <span>Selecionado</span>
             </div>
             <div className="flex items-center gap-1">
@@ -180,7 +180,7 @@ export default function DateTimePicker({
         {/* Horários */}
         <div className="bg-white rounded-xl border p-4">
           <h3 className="font-semibold text-jet-black-900 mb-4 flex items-center gap-2">
-            <Clock className="w-5 h-5 text-blue-500" />
+            <Clock className="w-5 h-5 text-periwinkle-500" />
             Horários disponíveis
           </h3>
 
@@ -202,8 +202,8 @@ export default function DateTimePicker({
                     onClick={() => onSelectTime(slot)}
                     className={`py-3 px-2 rounded-lg text-sm font-medium transition-all duration-200 ${
                       isSelected
-                        ? 'bg-blue-600 text-white'
-                        : 'bg-jet-black-50 text-jet-black-700 hover:bg-blue-100 hover:text-blue-700'
+                        ? 'bg-periwinkle-600 text-white'
+                        : 'bg-jet-black-50 text-jet-black-700 hover:bg-periwinkle-100 hover:text-periwinkle-700'
                     }`}
                   >
                     {slot.time}
@@ -214,8 +214,8 @@ export default function DateTimePicker({
           )}
 
           {selectedTime && (
-            <div className="mt-4 p-3 bg-blue-50 rounded-lg">
-              <p className="text-sm text-blue-800">
+            <div className="mt-4 p-3 bg-periwinkle-50 rounded-lg">
+              <p className="text-sm text-periwinkle-800">
                 <span className="font-semibold">Horário selecionado:</span>{' '}
                 {selectedTime.time} - {selectedTime.end_time}
                 {selectedTime.professional_name && (

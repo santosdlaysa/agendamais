@@ -273,7 +273,7 @@ export default function Settings() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
+        <Loader2 className="w-8 h-8 animate-spin text-periwinkle-600" />
       </div>
     )
   }
@@ -296,7 +296,7 @@ export default function Settings() {
             onClick={() => handleTabChange('business')}
             className={`pb-3 px-1 font-medium text-sm border-b-2 transition-colors ${
               activeTab === 'business'
-                ? 'border-blue-600 text-blue-600'
+                ? 'border-periwinkle-600 text-periwinkle-600'
                 : 'border-transparent text-jet-black-500 hover:text-jet-black-700'
             }`}
           >
@@ -309,7 +309,7 @@ export default function Settings() {
             onClick={() => handleTabChange('booking')}
             className={`pb-3 px-1 font-medium text-sm border-b-2 transition-colors ${
               activeTab === 'booking'
-                ? 'border-blue-600 text-blue-600'
+                ? 'border-periwinkle-600 text-periwinkle-600'
                 : 'border-transparent text-jet-black-500 hover:text-jet-black-700'
             }`}
           >
@@ -324,7 +324,7 @@ export default function Settings() {
                 onClick={() => handleTabChange('permissions')}
                 className={`pb-3 px-1 font-medium text-sm border-b-2 transition-colors ${
                   activeTab === 'permissions'
-                    ? 'border-blue-600 text-blue-600'
+                    ? 'border-periwinkle-600 text-periwinkle-600'
                     : 'border-transparent text-jet-black-500 hover:text-jet-black-700'
                 }`}
               >
@@ -337,7 +337,7 @@ export default function Settings() {
                 onClick={() => handleTabChange('users')}
                 className={`pb-3 px-1 font-medium text-sm border-b-2 transition-colors ${
                   activeTab === 'users'
-                    ? 'border-blue-600 text-blue-600'
+                    ? 'border-periwinkle-600 text-periwinkle-600'
                     : 'border-transparent text-jet-black-500 hover:text-jet-black-700'
                 }`}
               >
@@ -356,12 +356,12 @@ export default function Settings() {
         <div className="space-y-6">
           {/* Link de Agendamento */}
           {businessData.slug && (
-            <div className="bg-gradient-to-r from-blue-600 to-blue-700 rounded-xl p-6 text-white">
+            <div className="bg-gradient-to-r from-periwinkle-600 to-periwinkle-700 rounded-xl p-6 text-white">
               <div className="flex items-center gap-2 mb-2">
                 <Link className="w-5 h-5" />
                 <h3 className="font-semibold">Link de Agendamento Online</h3>
               </div>
-              <p className="text-blue-100 text-sm mb-4">
+              <p className="text-periwinkle-100 text-sm mb-4">
                 Compartilhe este link com seus clientes para que eles agendem diretamente
               </p>
               <div className="flex items-center gap-2">
@@ -373,7 +373,7 @@ export default function Settings() {
                 />
                 <button
                   onClick={copyBookingLink}
-                  className="px-4 py-2 bg-white text-blue-600 rounded-lg font-medium hover:bg-blue-50 transition-colors flex items-center gap-2"
+                  className="px-4 py-2 bg-white text-periwinkle-600 rounded-lg font-medium hover:bg-periwinkle-50 transition-colors flex items-center gap-2"
                 >
                   <Copy className="w-4 h-4" />
                   Copiar
@@ -393,7 +393,7 @@ export default function Settings() {
           {/* Dados da Empresa */}
           <div className="bg-white rounded-xl shadow border p-6">
             <h3 className="font-semibold text-jet-black-900 mb-6 flex items-center gap-2">
-              <Building2 className="w-5 h-5 text-blue-600" />
+              <Building2 className="w-5 h-5 text-periwinkle-600" />
               Dados da Empresa
             </h3>
 
@@ -413,7 +413,7 @@ export default function Settings() {
                       slug: prev.slug || generateSlug(e.target.value)
                     }))
                   }}
-                  className="w-full px-4 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-4 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-periwinkle-500 focus:border-periwinkle-500"
                   placeholder="Ex: Barbearia do João"
                 />
               </div>
@@ -431,7 +431,7 @@ export default function Settings() {
                     type="text"
                     value={businessData.slug}
                     onChange={(e) => setBusinessData(prev => ({ ...prev, slug: generateSlug(e.target.value) }))}
-                    className="flex-1 px-4 py-2 border border-jet-black-300 rounded-r-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="flex-1 px-4 py-2 border border-jet-black-300 rounded-r-lg focus:ring-2 focus:ring-periwinkle-500 focus:border-periwinkle-500"
                     placeholder="minha-empresa"
                   />
                 </div>
@@ -449,7 +449,7 @@ export default function Settings() {
                   type="tel"
                   value={businessData.business_phone}
                   onChange={(e) => setBusinessData(prev => ({ ...prev, business_phone: e.target.value }))}
-                  className="w-full px-4 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-4 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-periwinkle-500 focus:border-periwinkle-500"
                   placeholder="(00) 00000-0000"
                 />
               </div>
@@ -463,7 +463,7 @@ export default function Settings() {
                   type="text"
                   value={businessData.business_address}
                   onChange={(e) => setBusinessData(prev => ({ ...prev, business_address: e.target.value }))}
-                  className="w-full px-4 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-4 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-periwinkle-500 focus:border-periwinkle-500"
                   placeholder="Rua, número, bairro, cidade"
                 />
               </div>
@@ -477,7 +477,7 @@ export default function Settings() {
                   type="url"
                   value={businessData.business_logo}
                   onChange={(e) => setBusinessData(prev => ({ ...prev, business_logo: e.target.value }))}
-                  className="w-full px-4 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-4 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-periwinkle-500 focus:border-periwinkle-500"
                   placeholder="https://exemplo.com/logo.png"
                 />
               </div>
@@ -489,7 +489,7 @@ export default function Settings() {
                     type="checkbox"
                     checked={businessData.online_booking_enabled}
                     onChange={(e) => setBusinessData(prev => ({ ...prev, online_booking_enabled: e.target.checked }))}
-                    className="w-5 h-5 rounded border-jet-black-300 text-blue-600 focus:ring-blue-500"
+                    className="w-5 h-5 rounded border-jet-black-300 text-periwinkle-600 focus:ring-periwinkle-500"
                   />
                   <div>
                     <span className="font-medium text-jet-black-900">Habilitar agendamento online</span>
@@ -504,7 +504,7 @@ export default function Settings() {
               <button
                 onClick={handleSaveBusiness}
                 disabled={savingBusiness}
-                className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors disabled:opacity-50 flex items-center gap-2"
+                className="px-6 py-2 bg-periwinkle-600 hover:bg-periwinkle-700 text-white rounded-lg font-medium transition-colors disabled:opacity-50 flex items-center gap-2"
               >
                 {savingBusiness ? (
                   <>
@@ -528,7 +528,7 @@ export default function Settings() {
           {/* Configurações de Horário */}
           <div className="bg-white rounded-xl shadow border p-6">
             <h3 className="font-semibold text-jet-black-900 mb-6 flex items-center gap-2">
-              <Clock className="w-5 h-5 text-blue-600" />
+              <Clock className="w-5 h-5 text-periwinkle-600" />
               Horários de Funcionamento
             </h3>
 
@@ -541,7 +541,7 @@ export default function Settings() {
                 <select
                   value={bookingSettings.start_hour}
                   onChange={(e) => setBookingSettings(prev => ({ ...prev, start_hour: parseInt(e.target.value) }))}
-                  className="w-full px-4 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-4 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-periwinkle-500 focus:border-periwinkle-500"
                 >
                   {Array.from({ length: 24 }, (_, i) => (
                     <option key={i} value={i}>{String(i).padStart(2, '0')}:00</option>
@@ -558,7 +558,7 @@ export default function Settings() {
                 <select
                   value={bookingSettings.end_hour}
                   onChange={(e) => setBookingSettings(prev => ({ ...prev, end_hour: parseInt(e.target.value) }))}
-                  className="w-full px-4 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-4 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-periwinkle-500 focus:border-periwinkle-500"
                 >
                   {Array.from({ length: 24 }, (_, i) => (
                     <option key={i} value={i}>{String(i).padStart(2, '0')}:00</option>
@@ -575,7 +575,7 @@ export default function Settings() {
                 <select
                   value={bookingSettings.slot_interval}
                   onChange={(e) => setBookingSettings(prev => ({ ...prev, slot_interval: parseInt(e.target.value) }))}
-                  className="w-full px-4 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-4 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-periwinkle-500 focus:border-periwinkle-500"
                 >
                   <option value={15}>15 minutos</option>
                   <option value={30}>30 minutos</option>
@@ -590,7 +590,7 @@ export default function Settings() {
           {/* Regras de Agendamento */}
           <div className="bg-white rounded-xl shadow border p-6">
             <h3 className="font-semibold text-jet-black-900 mb-6 flex items-center gap-2">
-              <Calendar className="w-5 h-5 text-blue-600" />
+              <Calendar className="w-5 h-5 text-periwinkle-600" />
               Regras de Agendamento
             </h3>
 
@@ -606,7 +606,7 @@ export default function Settings() {
                   max="72"
                   value={bookingSettings.min_advance_hours}
                   onChange={(e) => setBookingSettings(prev => ({ ...prev, min_advance_hours: parseInt(e.target.value) || 0 }))}
-                  className="w-full px-4 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-4 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-periwinkle-500 focus:border-periwinkle-500"
                 />
                 <p className="text-xs text-jet-black-500 mt-1">
                   Tempo mínimo antes do horário para agendar (ex: 2h antes)
@@ -624,7 +624,7 @@ export default function Settings() {
                   max="365"
                   value={bookingSettings.max_advance_days}
                   onChange={(e) => setBookingSettings(prev => ({ ...prev, max_advance_days: parseInt(e.target.value) || 30 }))}
-                  className="w-full px-4 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-4 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-periwinkle-500 focus:border-periwinkle-500"
                 />
                 <p className="text-xs text-jet-black-500 mt-1">
                   Quantos dias no futuro o cliente pode agendar
@@ -636,7 +636,7 @@ export default function Settings() {
           {/* Cancelamento */}
           <div className="bg-white rounded-xl shadow border p-6">
             <h3 className="font-semibold text-jet-black-900 mb-6 flex items-center gap-2">
-              <Bell className="w-5 h-5 text-blue-600" />
+              <Bell className="w-5 h-5 text-periwinkle-600" />
               Cancelamento e Confirmação
             </h3>
 
@@ -648,7 +648,7 @@ export default function Settings() {
                     type="checkbox"
                     checked={bookingSettings.allow_cancellation}
                     onChange={(e) => setBookingSettings(prev => ({ ...prev, allow_cancellation: e.target.checked }))}
-                    className="w-5 h-5 rounded border-jet-black-300 text-blue-600 focus:ring-blue-500"
+                    className="w-5 h-5 rounded border-jet-black-300 text-periwinkle-600 focus:ring-periwinkle-500"
                   />
                   <div>
                     <span className="font-medium text-jet-black-900">Permitir cancelamento online</span>
@@ -669,7 +669,7 @@ export default function Settings() {
                     max="72"
                     value={bookingSettings.cancellation_min_hours}
                     onChange={(e) => setBookingSettings(prev => ({ ...prev, cancellation_min_hours: parseInt(e.target.value) || 0 }))}
-                    className="w-full max-w-xs px-4 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full max-w-xs px-4 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-periwinkle-500 focus:border-periwinkle-500"
                   />
                   <p className="text-xs text-jet-black-500 mt-1">
                     Ex: 2h significa que só pode cancelar até 2h antes do horário
@@ -684,7 +684,7 @@ export default function Settings() {
                     type="checkbox"
                     checked={bookingSettings.require_confirmation}
                     onChange={(e) => setBookingSettings(prev => ({ ...prev, require_confirmation: e.target.checked }))}
-                    className="w-5 h-5 rounded border-jet-black-300 text-blue-600 focus:ring-blue-500"
+                    className="w-5 h-5 rounded border-jet-black-300 text-periwinkle-600 focus:ring-periwinkle-500"
                   />
                   <div>
                     <span className="font-medium text-jet-black-900">Exigir confirmação do agendamento</span>
@@ -700,7 +700,7 @@ export default function Settings() {
             <button
               onClick={handleSaveBookingSettings}
               disabled={savingBooking}
-              className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors disabled:opacity-50 flex items-center gap-2"
+              className="px-6 py-2 bg-periwinkle-600 hover:bg-periwinkle-700 text-white rounded-lg font-medium transition-colors disabled:opacity-50 flex items-center gap-2"
             >
               {savingBooking ? (
                 <>
@@ -732,7 +732,7 @@ export default function Settings() {
                   key={u.id}
                   onClick={() => handleSelectUser(u)}
                   className={`w-full p-4 text-left hover:bg-jet-black-50 transition-colors ${
-                    selectedUser?.id === u.id ? 'bg-blue-50' : ''
+                    selectedUser?.id === u.id ? 'bg-periwinkle-50' : ''
                   }`}
                 >
                   <p className="font-medium text-jet-black-900">{u.name}</p>
@@ -741,7 +741,7 @@ export default function Settings() {
                     u.role === 'admin'
                       ? 'bg-red-100 text-red-700'
                       : u.role === 'manager'
-                      ? 'bg-blue-100 text-blue-700'
+                      ? 'bg-periwinkle-100 text-periwinkle-700'
                       : 'bg-green-100 text-green-700'
                   }`}>
                     {ROLES.find(r => r.id === u.role)?.name || u.role}
@@ -784,7 +784,7 @@ export default function Settings() {
                         type="checkbox"
                         checked={userPermissions[permission.id] || false}
                         onChange={() => handleTogglePermission(permission.id)}
-                        className="mt-1 w-4 h-4 rounded border-jet-black-300 text-blue-600 focus:ring-blue-500"
+                        className="mt-1 w-4 h-4 rounded border-jet-black-300 text-periwinkle-600 focus:ring-periwinkle-500"
                         disabled={selectedUser.role === 'admin'}
                       />
                       <div>
@@ -807,7 +807,7 @@ export default function Settings() {
                   <button
                     onClick={handleSavePermissions}
                     disabled={saving || selectedUser.role === 'admin'}
-                    className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                    className="px-4 py-2 bg-periwinkle-600 hover:bg-periwinkle-700 text-white rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
                   >
                     {saving ? (
                       <>
@@ -837,7 +837,7 @@ export default function Settings() {
         <div className="bg-white rounded-lg shadow border">
           <div className="p-4 border-b flex justify-between items-center">
             <h3 className="font-semibold text-jet-black-900">Todos os Usuários</h3>
-            <button className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition-colors">
+            <button className="px-4 py-2 bg-periwinkle-600 hover:bg-periwinkle-700 text-white rounded-lg text-sm font-medium transition-colors">
               + Novo Usuário
             </button>
           </div>
@@ -862,7 +862,7 @@ export default function Settings() {
                         u.role === 'admin'
                           ? 'bg-red-100 text-red-700'
                           : u.role === 'manager'
-                          ? 'bg-blue-100 text-blue-700'
+                          ? 'bg-periwinkle-100 text-periwinkle-700'
                           : 'bg-green-100 text-green-700'
                       }`}>
                         {ROLES.find(r => r.id === u.role)?.name || u.role}
@@ -877,7 +877,7 @@ export default function Settings() {
                           setActiveTab('permissions')
                           handleSelectUser(u)
                         }}
-                        className="text-blue-600 hover:text-blue-800 text-sm font-medium"
+                        className="text-periwinkle-600 hover:text-periwinkle-800 text-sm font-medium"
                       >
                         Editar
                       </button>

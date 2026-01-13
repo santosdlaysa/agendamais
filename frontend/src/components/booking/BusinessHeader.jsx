@@ -19,7 +19,7 @@ export default function BusinessHeader({ business }) {
             className="w-16 h-16 rounded-xl object-cover"
           />
         ) : (
-          <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white text-2xl font-bold">
+          <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-periwinkle-500 to-periwinkle-600 flex items-center justify-center text-white text-2xl font-bold">
             {name?.charAt(0) || 'E'}
           </div>
         )}

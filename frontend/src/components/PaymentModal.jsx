@@ -139,8 +139,8 @@ export default function PaymentModal() {
           <p className="text-jet-black-600 mb-4">
             Você tem 3 dias de teste gratuito para aproveitar todos os recursos do plano {planInfo.name}.
           </p>
-          <div className="bg-blue-50 rounded-lg p-4 mb-6">
-            <p className="text-sm text-blue-900">
+          <div className="bg-periwinkle-50 rounded-lg p-4 mb-6">
+            <p className="text-sm text-periwinkle-900">
               Após o período de teste, você será cobrado R$ {planInfo.price}/mês.
               Cancele a qualquer momento.
             </p>
@@ -158,30 +158,30 @@ export default function PaymentModal() {
       <div className="bg-white rounded-2xl shadow-xl overflow-hidden max-w-4xl w-full">
         <div className="grid md:grid-cols-2">
           {/* Left Side - Summary */}
-          <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-8 text-white">
+          <div className="bg-gradient-to-br from-periwinkle-500 to-periwinkle-600 p-8 text-white">
             <h2 className="text-2xl font-bold mb-6">Resumo da Assinatura</h2>
 
             <div className="space-y-4 mb-8">
               <div>
-                <p className="text-blue-100 text-sm mb-1">Plano</p>
+                <p className="text-periwinkle-100 text-sm mb-1">Plano</p>
                 <p className="text-2xl font-bold">{planInfo.name}</p>
               </div>
 
               <div>
-                <p className="text-blue-100 text-sm mb-1">Valor</p>
+                <p className="text-periwinkle-100 text-sm mb-1">Valor</p>
                 <p className="text-2xl font-bold">R$ {planInfo.price}/mês</p>
               </div>
 
               <div className="bg-white/10 rounded-lg p-4 mt-6">
                 <p className="text-sm font-medium mb-2">Teste Gratuito</p>
-                <p className="text-sm text-blue-100">
+                <p className="text-sm text-periwinkle-100">
                   3 dias grátis para experimentar todos os recursos.
                   Cancele a qualquer momento.
                 </p>
               </div>
             </div>
 
-            <div className="space-y-2 text-sm text-blue-100">
+            <div className="space-y-2 text-sm text-periwinkle-100">
               <div className="flex items-center gap-2">
                 <CheckCircle className="w-4 h-4" />
                 <span>Sem compromisso</span>
@@ -239,7 +239,7 @@ export default function PaymentModal() {
                 </label>
                 <div
                   id="card-element"
-                  className="w-full px-4 py-3 border border-jet-black-300 rounded-lg focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-transparent"
+                  className="w-full px-4 py-3 border border-jet-black-300 rounded-lg focus-within:ring-2 focus-within:ring-periwinkle-500 focus-within:border-transparent"
                 />
               </div>
 
@@ -267,7 +267,7 @@ export default function PaymentModal() {
               <button
                 type="submit"
                 disabled={loading || !stripe}
-                className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white py-3 px-6 rounded-lg font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg hover:shadow-xl"
+                className="w-full bg-gradient-to-r from-periwinkle-500 to-periwinkle-600 hover:from-periwinkle-600 hover:to-periwinkle-700 text-white py-3 px-6 rounded-lg font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg hover:shadow-xl"
               >
                 {loading ? (
                   <>
@@ -284,11 +284,11 @@ export default function PaymentModal() {
 
               <p className="text-xs text-center text-jet-black-500">
                 Ao confirmar, você concorda com nossos{' '}
-                <a href="#" className="text-blue-600 hover:underline">
+                <a href="#" className="text-periwinkle-600 hover:underline">
                   Termos de Uso
                 </a>{' '}
                 e{' '}
-                <a href="#" className="text-blue-600 hover:underline">
+                <a href="#" className="text-periwinkle-600 hover:underline">
                   Política de Privacidade
                 </a>
               </p>

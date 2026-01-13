@@ -139,7 +139,7 @@ export default function ServiceForm() {
   if (loading && isEditMode) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-periwinkle-600"></div>
       </div>
     )
   }
@@ -182,7 +182,7 @@ export default function ServiceForm() {
                   name="name"
                   value={formData.name}
                   onChange={handleInputChange}
-                  className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                  className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-periwinkle-500 focus:border-periwinkle-500 ${
                     errors.name ? 'border-red-500' : 'border-jet-black-300'
                   }`}
                   placeholder="Ex: Corte de cabelo"
@@ -203,7 +203,7 @@ export default function ServiceForm() {
                   onChange={handleInputChange}
                   min="0"
                   step="0.01"
-                  className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                  className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-periwinkle-500 focus:border-periwinkle-500 ${
                     errors.price ? 'border-red-500' : 'border-jet-black-300'
                   }`}
                   placeholder="0.00"
@@ -224,7 +224,7 @@ export default function ServiceForm() {
                 value={formData.duration}
                 onChange={handleInputChange}
                 min="1"
-                className={`w-full md:w-1/3 px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                className={`w-full md:w-1/3 px-3 py-2 border rounded-lg focus:ring-2 focus:ring-periwinkle-500 focus:border-periwinkle-500 ${
                   errors.duration ? 'border-red-500' : 'border-jet-black-300'
                 }`}
                 placeholder="60"
@@ -243,7 +243,7 @@ export default function ServiceForm() {
                 value={formData.description}
                 onChange={handleInputChange}
                 rows={4}
-                className="w-full px-3 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full px-3 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-periwinkle-500 focus:border-periwinkle-500"
                 placeholder="Descreva os detalhes do serviço..."
               />
             </div>
@@ -265,7 +265,7 @@ export default function ServiceForm() {
                       id={`professional-${professional.id}`}
                       checked={formData.professional_ids.includes(professional.id)}
                       onChange={() => handleProfessionalChange(professional.id)}
-                      className="h-4 w-4 text-blue-600 border-jet-black-300 rounded focus:ring-blue-500"
+                      className="h-4 w-4 text-periwinkle-600 border-jet-black-300 rounded focus:ring-periwinkle-500"
                     />
                     <label htmlFor={`professional-${professional.id}`} className="flex-1 cursor-pointer">
                       <div className="text-sm font-medium text-jet-black-900">{professional.name}</div>
@@ -282,7 +282,7 @@ export default function ServiceForm() {
                 <button
                   type="button"
                   onClick={() => navigate('/professionals/new')}
-                  className="text-blue-600 hover:text-blue-800 ml-1"
+                  className="text-periwinkle-600 hover:text-periwinkle-800 ml-1"
                 >
                   Cadastre o primeiro profissional
                 </button>
@@ -300,7 +300,7 @@ export default function ServiceForm() {
                 name="active"
                 checked={formData.active}
                 onChange={handleInputChange}
-                className="h-4 w-4 text-blue-600 border-jet-black-300 rounded focus:ring-blue-500"
+                className="h-4 w-4 text-periwinkle-600 border-jet-black-300 rounded focus:ring-periwinkle-500"
               />
               <label htmlFor="active" className="text-sm font-medium text-jet-black-700">
                 Serviço ativo
@@ -324,7 +324,7 @@ export default function ServiceForm() {
             <button
               type="submit"
               disabled={loading}
-              className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
+              className="flex items-center px-4 py-2 bg-periwinkle-600 text-white rounded-lg hover:bg-periwinkle-700 disabled:opacity-50"
             >
               <Save className="w-4 h-4 mr-2" />
               {loading ? 'Salvando...' : (isEditMode ? 'Atualizar' : 'Criar')} Serviço

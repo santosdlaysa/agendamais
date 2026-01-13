@@ -14,7 +14,7 @@ const PLANS = [
     features: [
       'Até 100 agendamentos/mês',
       'Até 3 profissionais',
-      'Lembretes básicos',
+      'Lembretes por WhatsApp',
       'Suporte por email'
     ]
   },
@@ -166,7 +166,7 @@ export default function SubscriptionPlans() {
             <div
               key={plan.id}
               className={`relative bg-white rounded-2xl shadow-lg p-8 transition-all hover:shadow-xl ${
-                plan.popular ? 'ring-2 ring-blue-500 transform scale-105' : ''
+                plan.popular ? 'ring-2 ring-periwinkle-500 transform scale-105' : ''
               } ${plan.id === currentPlan ? 'ring-2 ring-green-500' : ''}`}
             >
               {/* Current Plan Badge */}
@@ -181,7 +181,7 @@ export default function SubscriptionPlans() {
               {/* Popular Badge */}
               {plan.popular && plan.id !== currentPlan && (
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                  <span className="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-4 py-1 rounded-full text-sm font-medium shadow-lg">
+                  <span className="bg-gradient-to-r from-periwinkle-500 to-periwinkle-600 text-white px-4 py-1 rounded-full text-sm font-medium shadow-lg">
                     Mais Popular
                   </span>
                 </div>
@@ -225,7 +225,7 @@ export default function SubscriptionPlans() {
                   plan.id === currentPlan
                     ? 'bg-green-100 text-green-800 cursor-default'
                     : plan.popular
-                    ? 'bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white shadow-lg hover:shadow-xl'
+                    ? 'bg-gradient-to-r from-periwinkle-500 to-periwinkle-600 hover:from-periwinkle-600 hover:to-periwinkle-700 text-white shadow-lg hover:shadow-xl'
                     : 'bg-jet-black-100 hover:bg-jet-black-200 text-jet-black-900'
                 } disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2`}
               >
@@ -270,7 +270,7 @@ export default function SubscriptionPlans() {
             Dúvidas sobre os planos?{' '}
             <a
               href="mailto:suporte@agendamais.site"
-              className="text-blue-600 hover:text-blue-700 font-medium"
+              className="text-periwinkle-600 hover:text-periwinkle-700 font-medium"
             >
               Entre em contato
             </a>

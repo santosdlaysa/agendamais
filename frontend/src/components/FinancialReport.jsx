@@ -266,7 +266,7 @@ const FinancialReport = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-periwinkle-600"></div>
       </div>
     )
   }
@@ -309,7 +309,7 @@ const FinancialReport = () => {
               type="date"
               value={filters.startDate}
               onChange={(e) => handleFilterChange('startDate', e.target.value)}
-              className="w-full px-3 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-3 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-periwinkle-500 focus:border-periwinkle-500"
             />
           </div>
 
@@ -321,7 +321,7 @@ const FinancialReport = () => {
               type="date"
               value={filters.endDate}
               onChange={(e) => handleFilterChange('endDate', e.target.value)}
-              className="w-full px-3 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-3 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-periwinkle-500 focus:border-periwinkle-500"
             />
           </div>
 
@@ -332,7 +332,7 @@ const FinancialReport = () => {
             <select
               value={filters.professionalId}
               onChange={(e) => handleFilterChange('professionalId', e.target.value)}
-              className="w-full px-3 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-3 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-periwinkle-500 focus:border-periwinkle-500"
             >
               <option value="">Todos os profissionais</option>
               {professionals.map((professional) => (
@@ -350,7 +350,7 @@ const FinancialReport = () => {
             <select
               value={filters.serviceId}
               onChange={(e) => handleFilterChange('serviceId', e.target.value)}
-              className="w-full px-3 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-3 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-periwinkle-500 focus:border-periwinkle-500"
             >
               <option value="">Todos os serviços</option>
               {services.map((service) => (
@@ -378,7 +378,7 @@ const FinancialReport = () => {
           </button>
           <button
             onClick={clearFilters}
-            className="text-sm text-blue-600 hover:text-blue-800"
+            className="text-sm text-periwinkle-600 hover:text-periwinkle-800"
           >
             Limpar filtros
           </button>
@@ -405,8 +405,8 @@ const FinancialReport = () => {
 
             <div className="bg-white rounded-lg shadow-sm border p-6">
               <div className="flex items-center">
-                <div className="p-3 bg-blue-100 rounded-lg">
-                  <Calendar className="w-6 h-6 text-blue-600" />
+                <div className="p-3 bg-periwinkle-100 rounded-lg">
+                  <Calendar className="w-6 h-6 text-periwinkle-600" />
                 </div>
                 <div className="ml-4">
                   <p className="text-sm text-jet-black-600">Total de Agendamentos</p>

@@ -23,7 +23,7 @@ import CompleteAppointmentModal from './CompleteAppointmentModal'
 const STATUS_CONFIG = {
   scheduled: {
     label: 'Agendado',
-    color: 'bg-blue-100 text-blue-800',
+    color: 'bg-periwinkle-100 text-periwinkle-800',
     icon: Calendar
   },
   completed: {
@@ -166,7 +166,7 @@ export default function Appointments() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-periwinkle-600"></div>
       </div>
     )
   }
@@ -181,7 +181,7 @@ export default function Appointments() {
         </div>
         <button
           onClick={() => navigate('/appointments/new')}
-          className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+          className="flex items-center px-4 py-2 bg-periwinkle-600 text-white rounded-lg hover:bg-periwinkle-700"
         >
           <Plus className="w-4 h-4 mr-2" />
           Novo Agendamento
@@ -202,7 +202,7 @@ export default function Appointments() {
                 placeholder="Cliente ou profissional..."
                 value={filters.search}
                 onChange={(e) => handleFilterChange('search', e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full pl-10 pr-4 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-periwinkle-500 focus:border-periwinkle-500"
               />
             </div>
           </div>
@@ -214,7 +214,7 @@ export default function Appointments() {
             <select
               value={filters.status}
               onChange={(e) => handleFilterChange('status', e.target.value)}
-              className="w-full px-3 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-3 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-periwinkle-500 focus:border-periwinkle-500"
             >
               <option value="">Todos os status</option>
               {Object.entries(STATUS_CONFIG).map(([key, config]) => (
@@ -230,7 +230,7 @@ export default function Appointments() {
             <select
               value={filters.professional_id}
               onChange={(e) => handleFilterChange('professional_id', e.target.value)}
-              className="w-full px-3 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-3 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-periwinkle-500 focus:border-periwinkle-500"
             >
               <option value="">Todos os profissionais</option>
               {professionals.map((professional) => (
@@ -249,7 +249,7 @@ export default function Appointments() {
               type="date"
               value={filters.start_date}
               onChange={(e) => handleFilterChange('start_date', e.target.value)}
-              className="w-full px-3 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-3 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-periwinkle-500 focus:border-periwinkle-500"
             />
           </div>
         </div>
@@ -260,7 +260,7 @@ export default function Appointments() {
           </div>
           <button
             onClick={clearFilters}
-            className="text-sm text-blue-600 hover:text-blue-800"
+            className="text-sm text-periwinkle-600 hover:text-periwinkle-800"
           >
             Limpar filtros
           </button>
@@ -286,7 +286,7 @@ export default function Appointments() {
             {!Object.values(filters).some(v => v) && (
               <button
                 onClick={() => navigate('/appointments/new')}
-                className="flex items-center mx-auto px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                className="flex items-center mx-auto px-4 py-2 bg-periwinkle-600 text-white rounded-lg hover:bg-periwinkle-700"
               >
                 <Plus className="w-4 h-4 mr-2" />
                 Novo Agendamento
@@ -378,7 +378,7 @@ export default function Appointments() {
                       
                       <button
                         onClick={() => navigate(`/appointments/${appointment.id}/edit`)}
-                        className="p-2 text-blue-600 hover:bg-blue-50 border border-blue-200 rounded-lg"
+                        className="p-2 text-periwinkle-600 hover:bg-periwinkle-50 border border-periwinkle-200 rounded-lg"
                         title="Editar agendamento"
                       >
                         <Edit className="w-4 h-4" />
@@ -427,7 +427,7 @@ export default function Appointments() {
                     onClick={() => handlePageChange(page)}
                     className={`px-3 py-2 text-sm border rounded-md ${
                       page === pagination.page
-                        ? 'bg-blue-600 text-white border-blue-600'
+                        ? 'bg-periwinkle-600 text-white border-periwinkle-600'
                         : 'border-jet-black-300 hover:bg-jet-black-50'
                     }`}
                   >

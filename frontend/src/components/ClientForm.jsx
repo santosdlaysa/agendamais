@@ -117,7 +117,7 @@ export default function ClientForm() {
   if (loading && isEditMode) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-periwinkle-600"></div>
       </div>
     )
   }
@@ -149,8 +149,8 @@ export default function ClientForm() {
         <form onSubmit={handleSubmit} className="p-6 space-y-6">
           {/* Profile Header */}
           <div className="flex items-center space-x-4 pb-6 border-b">
-            <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center">
-              <User className="w-8 h-8 text-blue-600" />
+            <div className="w-16 h-16 bg-periwinkle-100 rounded-full flex items-center justify-center">
+              <User className="w-8 h-8 text-periwinkle-600" />
             </div>
             <div>
               <h3 className="text-lg font-medium text-jet-black-900">
@@ -175,7 +175,7 @@ export default function ClientForm() {
                   name="name"
                   value={formData.name}
                   onChange={handleInputChange}
-                  className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                  className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-periwinkle-500 focus:border-periwinkle-500 ${
                     errors.name ? 'border-red-500' : 'border-jet-black-300'
                   }`}
                   placeholder="Ex: Maria Silva"
@@ -194,7 +194,7 @@ export default function ClientForm() {
                   name="phone"
                   value={formData.phone}
                   onChange={handleInputChange}
-                  className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                  className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-periwinkle-500 focus:border-periwinkle-500 ${
                     errors.phone ? 'border-red-500' : 'border-jet-black-300'
                   }`}
                   placeholder="(11) 99999-9999"
@@ -216,7 +216,7 @@ export default function ClientForm() {
                   name="email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                  className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-periwinkle-500 focus:border-periwinkle-500 ${
                     errors.email ? 'border-red-500' : 'border-jet-black-300'
                   }`}
                   placeholder="maria@exemplo.com"
@@ -243,7 +243,7 @@ export default function ClientForm() {
                 value={formData.notes}
                 onChange={handleInputChange}
                 rows={4}
-                className="w-full px-3 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full px-3 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-periwinkle-500 focus:border-periwinkle-500"
                 placeholder="Preferências, alergias, histórico, ou qualquer informação relevante sobre o cliente..."
               />
               <p className="mt-1 text-xs text-jet-black-500">
@@ -284,7 +284,7 @@ export default function ClientForm() {
             <button
               type="submit"
               disabled={loading}
-              className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
+              className="flex items-center px-4 py-2 bg-periwinkle-600 text-white rounded-lg hover:bg-periwinkle-700 disabled:opacity-50"
             >
               <Save className="w-4 h-4 mr-2" />
               {loading ? 'Salvando...' : (isEditMode ? 'Atualizar' : 'Criar')} Cliente
@@ -295,9 +295,9 @@ export default function ClientForm() {
 
       {/* Tips */}
       {!isEditMode && (
-        <div className="bg-blue-50 rounded-lg p-4">
-          <h4 className="text-sm font-medium text-blue-900 mb-2">💡 Dicas para cadastro</h4>
-          <ul className="text-sm text-blue-700 space-y-1">
+        <div className="bg-periwinkle-50 rounded-lg p-4">
+          <h4 className="text-sm font-medium text-periwinkle-900 mb-2">💡 Dicas para cadastro</h4>
+          <ul className="text-sm text-periwinkle-700 space-y-1">
             <li>• Apenas o nome é obrigatório</li>
             <li>• Telefone e email facilitam o contato</li>
             <li>• Use as observações para preferências especiais</li>

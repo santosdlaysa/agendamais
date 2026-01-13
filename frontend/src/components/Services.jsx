@@ -74,7 +74,7 @@ export default function Services() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-periwinkle-600"></div>
       </div>
     )
   }
@@ -89,7 +89,7 @@ export default function Services() {
         </div>
         <button
           onClick={() => navigate('/services/new')}
-          className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+          className="flex items-center px-4 py-2 bg-periwinkle-600 text-white rounded-lg hover:bg-periwinkle-700"
         >
           <Plus className="w-4 h-4 mr-2" />
           Novo Serviço
@@ -107,7 +107,7 @@ export default function Services() {
                 placeholder="Buscar serviços..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full pl-10 pr-4 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-periwinkle-500 focus:border-periwinkle-500"
               />
             </div>
           </div>
@@ -117,7 +117,7 @@ export default function Services() {
               id="showInactive"
               checked={showInactive}
               onChange={(e) => setShowInactive(e.target.checked)}
-              className="h-4 w-4 text-blue-600 border-jet-black-300 rounded focus:ring-blue-500"
+              className="h-4 w-4 text-periwinkle-600 border-jet-black-300 rounded focus:ring-periwinkle-500"
             />
             <label htmlFor="showInactive" className="text-sm text-jet-black-700">
               Mostrar inativos
@@ -145,7 +145,7 @@ export default function Services() {
             {services.length === 0 && (
               <button
                 onClick={() => navigate('/services/new')}
-                className="flex items-center mx-auto px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                className="flex items-center mx-auto px-4 py-2 bg-periwinkle-600 text-white rounded-lg hover:bg-periwinkle-700"
               >
                 <Plus className="w-4 h-4 mr-2" />
                 Novo Serviço
@@ -194,7 +194,7 @@ export default function Services() {
                           {service.professionals.map((professional) => (
                             <span
                               key={professional.id}
-                              className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800"
+                              className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-periwinkle-100 text-periwinkle-800"
                             >
                               {professional.name}
                             </span>
@@ -219,7 +219,7 @@ export default function Services() {
                     
                     <button
                       onClick={() => navigate(`/services/${service.id}/edit`)}
-                      className="p-2 text-blue-600 hover:bg-blue-50 border border-blue-200 rounded-lg"
+                      className="p-2 text-periwinkle-600 hover:bg-periwinkle-50 border border-periwinkle-200 rounded-lg"
                       title="Editar serviço"
                     >
                       <Edit className="w-4 h-4" />
@@ -255,7 +255,7 @@ export default function Services() {
               <p className="text-sm text-jet-black-600">Serviços Ativos</p>
             </div>
             <div>
-              <p className="text-2xl font-bold text-blue-600">
+              <p className="text-2xl font-bold text-periwinkle-600">
                 R$ {services.reduce((acc, service) => acc + parseFloat(service.price), 0).toFixed(2)}
               </p>
               <p className="text-sm text-jet-black-600">Valor Total dos Serviços</p>

@@ -26,10 +26,10 @@ export default function BookingSummary({
 
       <div className="bg-white rounded-xl border overflow-hidden">
         {/* Header do estabelecimento */}
-        <div className="bg-gradient-to-r from-blue-600 to-blue-700 p-4 text-white">
+        <div className="bg-gradient-to-r from-periwinkle-600 to-periwinkle-700 p-4 text-white">
           <h3 className="font-semibold text-lg">{business?.business_name || business?.name}</h3>
           {(business?.business_address || business?.address) && (
-            <p className="text-blue-100 text-sm flex items-center gap-1 mt-1">
+            <p className="text-periwinkle-100 text-sm flex items-center gap-1 mt-1">
               <MapPin className="w-4 h-4" />
               {business.business_address || business.address}
             </p>
@@ -40,8 +40,8 @@ export default function BookingSummary({
         <div className="p-6 space-y-4">
           {/* Serviço */}
           <div className="flex items-start gap-3 pb-4 border-b">
-            <div className="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center flex-shrink-0">
-              <Briefcase className="w-5 h-5 text-blue-600" />
+            <div className="w-10 h-10 rounded-lg bg-periwinkle-100 flex items-center justify-center flex-shrink-0">
+              <Briefcase className="w-5 h-5 text-periwinkle-600" />
             </div>
             <div className="flex-1">
               <p className="text-sm text-jet-black-500">Serviço</p>
@@ -123,9 +123,9 @@ export default function BookingSummary({
       </div>
 
       {/* Política de cancelamento */}
-      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-        <h4 className="font-medium text-blue-900 mb-1">Política de cancelamento</h4>
-        <p className="text-sm text-blue-700">
+      <div className="bg-periwinkle-50 border border-periwinkle-200 rounded-lg p-4">
+        <h4 className="font-medium text-periwinkle-900 mb-1">Política de cancelamento</h4>
+        <p className="text-sm text-periwinkle-700">
           Você pode cancelar ou reagendar gratuitamente com até{' '}
           <strong>{business?.settings?.cancellation_hours || 24} horas</strong> de
           antecedência.

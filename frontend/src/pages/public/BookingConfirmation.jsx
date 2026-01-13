@@ -80,7 +80,7 @@ export default function BookingConfirmation() {
   if (loading) {
     return (
       <div className="min-h-screen bg-jet-black-50 flex items-center justify-center">
-        <Loader2 className="w-12 h-12 text-blue-600 animate-spin" />
+        <Loader2 className="w-12 h-12 text-periwinkle-600 animate-spin" />
       </div>
     )
   }
@@ -93,7 +93,7 @@ export default function BookingConfirmation() {
           <p className="text-jet-black-600 mb-4">{error}</p>
           <Link
             to={`/agendar/${slug}`}
-            className="text-blue-600 hover:text-blue-800 underline"
+            className="text-periwinkle-600 hover:text-periwinkle-800 underline"
           >
             Fazer novo agendamento
           </Link>
@@ -122,7 +122,7 @@ export default function BookingConfirmation() {
         <div className="bg-white rounded-xl shadow-sm border p-6 mb-6">
           <p className="text-sm text-jet-black-500 mb-2 text-center">Código do agendamento</p>
           <div className="flex items-center justify-center gap-2">
-            <span className="text-2xl font-mono font-bold text-blue-600">{bookingCode}</span>
+            <span className="text-2xl font-mono font-bold text-periwinkle-600">{bookingCode}</span>
             <button
               onClick={copyCode}
               className="p-2 text-jet-black-400 hover:text-jet-black-600 hover:bg-jet-black-100 rounded-lg transition-colors"
@@ -138,15 +138,15 @@ export default function BookingConfirmation() {
 
         {/* Detalhes do agendamento */}
         <div className="bg-white rounded-xl shadow-sm border overflow-hidden mb-6">
-          <div className="bg-gradient-to-r from-blue-600 to-blue-700 p-4 text-white">
+          <div className="bg-gradient-to-r from-periwinkle-600 to-periwinkle-700 p-4 text-white">
             <h2 className="font-semibold">{appointment?.business?.name}</h2>
           </div>
 
           <div className="p-6 space-y-4">
             {/* Serviço */}
             <div className="flex items-start gap-3">
-              <div className="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center flex-shrink-0">
-                <Calendar className="w-5 h-5 text-blue-600" />
+              <div className="w-10 h-10 rounded-lg bg-periwinkle-100 flex items-center justify-center flex-shrink-0">
+                <Calendar className="w-5 h-5 text-periwinkle-600" />
               </div>
               <div>
                 <p className="text-sm text-jet-black-500">Serviço</p>
@@ -204,7 +204,7 @@ export default function BookingConfirmation() {
                   <p className="text-sm text-jet-black-500">Telefone</p>
                   <a
                     href={`tel:${appointment?.business?.phone}`}
-                    className="font-semibold text-blue-600 hover:text-blue-800"
+                    className="font-semibold text-periwinkle-600 hover:text-periwinkle-800"
                   >
                     {appointment?.business?.phone}
                   </a>
@@ -236,7 +236,7 @@ export default function BookingConfirmation() {
 
           <Link
             to={`/agendar/${slug}`}
-            className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-blue-600 rounded-lg font-medium text-white hover:bg-blue-700 transition-colors"
+            className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-periwinkle-600 rounded-lg font-medium text-white hover:bg-periwinkle-700 transition-colors"
           >
             Fazer novo agendamento
           </Link>

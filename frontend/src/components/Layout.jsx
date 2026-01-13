@@ -56,7 +56,7 @@ export default function Layout({ children }) {
             {/* Logo */}
             <div className="flex items-center">
               <div className="flex-shrink-0 flex items-center">
-                <Calendar className="h-8 w-8 text-blue-600" />
+                <Calendar className="h-8 w-8 text-periwinkle-600" />
                 <h1 className="ml-2 text-xl font-bold text-jet-black-900 hidden sm:block">
                   Sistema de Agendamento
                 </h1>
@@ -69,7 +69,7 @@ export default function Layout({ children }) {
                 onClick={() => setMenuOpen(!menuOpen)}
                 className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-jet-black-100 transition-colors"
               >
-                <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+                <div className="w-8 h-8 bg-periwinkle-600 rounded-full flex items-center justify-center">
                   <span className="text-white text-sm font-medium">
                     {user?.name?.charAt(0).toUpperCase()}
                   </span>
@@ -77,7 +77,7 @@ export default function Layout({ children }) {
                 <div className="text-left hidden sm:block">
                   <p className="text-sm font-medium text-jet-black-900">{user?.name}</p>
                   {isInTrial() && (
-                    <p className="text-xs text-blue-600">
+                    <p className="text-xs text-periwinkle-600">
                       Trial: {getTrialDaysRemaining()} dias
                     </p>
                   )}
@@ -93,7 +93,7 @@ export default function Layout({ children }) {
                     <p className="text-sm font-medium text-jet-black-900">{user?.name}</p>
                     <p className="text-xs text-jet-black-500">{user?.email}</p>
                     {isInTrial() && (
-                      <span className="inline-block mt-1 px-2 py-0.5 bg-blue-100 text-blue-700 text-xs rounded-full">
+                      <span className="inline-block mt-1 px-2 py-0.5 bg-periwinkle-100 text-periwinkle-700 text-xs rounded-full">
                         Trial: {getTrialDaysRemaining()} dias restantes
                       </span>
                     )}

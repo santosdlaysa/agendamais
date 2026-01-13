@@ -36,7 +36,7 @@ const PLANS = [
     features: [
       'Até 100 agendamentos/mês',
       'Até 3 profissionais',
-      'Lembretes por email',
+      'Lembretes por WhatsApp',
       'Suporte por email'
     ]
   },
@@ -92,7 +92,7 @@ const FEATURES = [
     icon: BarChart3,
     title: 'Insights em Tempo Real',
     description: 'Acompanhe métricas e tome decisões baseadas em dados.',
-    color: 'from-sky-500 to-blue-600'
+    color: 'from-sky-500 to-periwinkle-600'
   },
   {
     icon: Smartphone,

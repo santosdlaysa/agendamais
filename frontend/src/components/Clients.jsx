@@ -78,7 +78,7 @@ export default function Clients() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-periwinkle-600"></div>
       </div>
     )
   }
@@ -93,7 +93,7 @@ export default function Clients() {
         </div>
         <button
           onClick={() => navigate('/clients/new')}
-          className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+          className="flex items-center px-4 py-2 bg-periwinkle-600 text-white rounded-lg hover:bg-periwinkle-700"
         >
           <Plus className="w-4 h-4 mr-2" />
           Novo Cliente
@@ -111,7 +111,7 @@ export default function Clients() {
                 placeholder="Buscar clientes por nome, telefone ou email..."
                 value={searchTerm}
                 onChange={handleSearchChange}
-                className="w-full pl-10 pr-4 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full pl-10 pr-4 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-periwinkle-500 focus:border-periwinkle-500"
               />
             </div>
           </div>
@@ -137,7 +137,7 @@ export default function Clients() {
             {!searchTerm && (
               <button
                 onClick={() => navigate('/clients/new')}
-                className="flex items-center mx-auto px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                className="flex items-center mx-auto px-4 py-2 bg-periwinkle-600 text-white rounded-lg hover:bg-periwinkle-700"
               >
                 <Plus className="w-4 h-4 mr-2" />
                 Novo Cliente
@@ -152,8 +152,8 @@ export default function Clients() {
                   <div className="flex-1">
                     <div className="flex items-center space-x-3">
                       <div className="flex-shrink-0">
-                        <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-                          <User className="w-6 h-6 text-blue-600" />
+                        <div className="w-12 h-12 bg-periwinkle-100 rounded-full flex items-center justify-center">
+                          <User className="w-6 h-6 text-periwinkle-600" />
                         </div>
                       </div>
                       <div>
@@ -215,7 +215,7 @@ export default function Clients() {
                   <div className="flex items-center space-x-2">
                     <button
                       onClick={() => navigate(`/clients/${client.id}/edit`)}
-                      className="p-2 text-blue-600 hover:bg-blue-50 border border-blue-200 rounded-lg"
+                      className="p-2 text-periwinkle-600 hover:bg-periwinkle-50 border border-periwinkle-200 rounded-lg"
                       title="Editar cliente"
                     >
                       <Edit className="w-4 h-4" />
@@ -263,7 +263,7 @@ export default function Clients() {
                     onClick={() => handlePageChange(page)}
                     className={`px-3 py-2 text-sm border rounded-md ${
                       page === pagination.page
-                        ? 'bg-blue-600 text-white border-blue-600'
+                        ? 'bg-periwinkle-600 text-white border-periwinkle-600'
                         : 'border-jet-black-300 hover:bg-jet-black-50'
                     }`}
                   >
@@ -299,7 +299,7 @@ export default function Clients() {
               <p className="text-sm text-jet-black-600">Agendamentos Concluídos</p>
             </div>
             <div>
-              <p className="text-2xl font-bold text-blue-600">
+              <p className="text-2xl font-bold text-periwinkle-600">
                 {clients.reduce((acc, client) => acc + (client.stats?.total_appointments || 0), 0)}
               </p>
               <p className="text-sm text-jet-black-600">Total de Agendamentos</p>

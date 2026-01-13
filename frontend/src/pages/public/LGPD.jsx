@@ -51,7 +51,7 @@ export default function LGPD() {
               <span>Voltar</span>
             </button>
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center">
+              <div className="w-8 h-8 bg-gradient-to-br from-periwinkle-500 to-periwinkle-600 rounded-lg flex items-center justify-center">
                 <Calendar className="w-5 h-5 text-white" />
               </div>
               <span className="text-lg font-bold text-jet-black-900">AgendaMais</span>
@@ -61,7 +61,7 @@ export default function LGPD() {
       </header>
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-blue-600 to-blue-700 py-16 px-4">
+      <section className="bg-gradient-to-br from-periwinkle-600 to-periwinkle-700 py-16 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <div className="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
             <Shield className="w-8 h-8 text-white" />
@@ -69,7 +69,7 @@ export default function LGPD() {
           <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">
             LGPD - Lei Geral de Proteção de Dados
           </h1>
-          <p className="text-blue-100 text-lg max-w-2xl mx-auto">
+          <p className="text-periwinkle-100 text-lg max-w-2xl mx-auto">
             Conheça seus direitos e saiba como o AgendaMais protege suas informações pessoais em conformidade com a Lei 13.709/2018.
           </p>
         </div>
@@ -82,9 +82,9 @@ export default function LGPD() {
           <h2 className="text-2xl font-bold text-jet-black-900 mb-6 text-center">Seus Direitos como Titular de Dados</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
             {rights.map((right, index) => (
-              <div key={index} className="bg-white rounded-xl p-6 border border-jet-black-200 hover:border-blue-200 hover:shadow-lg transition-all">
-                <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-4">
-                  <right.icon className="w-6 h-6 text-blue-600" />
+              <div key={index} className="bg-white rounded-xl p-6 border border-jet-black-200 hover:border-periwinkle-200 hover:shadow-lg transition-all">
+                <div className="w-12 h-12 bg-periwinkle-100 rounded-xl flex items-center justify-center mb-4">
+                  <right.icon className="w-6 h-6 text-periwinkle-600" />
                 </div>
                 <h3 className="font-semibold text-jet-black-900 mb-2">{right.title}</h3>
                 <p className="text-jet-black-600 text-sm">{right.description}</p>
@@ -144,8 +144,8 @@ export default function LGPD() {
                 <li>Histórico de agendamentos</li>
               </ul>
 
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mt-4">
-                <p className="text-blue-800 text-sm">
+              <div className="bg-periwinkle-50 border border-periwinkle-200 rounded-lg p-4 mt-4">
+                <p className="text-periwinkle-800 text-sm">
                   <strong>Importante:</strong> Os dados dos clientes finais são de responsabilidade compartilhada entre o AgendaMais (operador) e o estabelecimento (controlador). O estabelecimento deve informar seus clientes sobre o uso da plataforma.
                 </p>
               </div>
@@ -214,7 +214,7 @@ export default function LGPD() {
               <ol className="list-decimal pl-6 text-jet-black-600 space-y-3">
                 <li>
                   <strong>Email:</strong> Envie sua solicitação para{' '}
-                  <a href="mailto:lgpd@agendamais.site" className="text-blue-600 hover:underline">
+                  <a href="mailto:lgpd@agendamais.site" className="text-periwinkle-600 hover:underline">
                     lgpd@agendamais.site
                   </a>
                 </li>
@@ -254,7 +254,7 @@ export default function LGPD() {
               <div className="bg-white border border-jet-black-200 rounded-lg p-4 mt-4">
                 <p className="text-jet-black-600">
                   <strong>Contato do DPO:</strong><br />
-                  Email: <a href="mailto:dpo@agendamais.site" className="text-blue-600 hover:underline">dpo@agendamais.site</a>
+                  Email: <a href="mailto:dpo@agendamais.site" className="text-periwinkle-600 hover:underline">dpo@agendamais.site</a>
                 </p>
               </div>
             </section>
@@ -265,7 +265,7 @@ export default function LGPD() {
                 Se você acredita que seus direitos não foram atendidos adequadamente, você pode apresentar uma reclamação à Autoridade Nacional de Proteção de Dados (ANPD):
               </p>
               <ul className="list-none text-jet-black-600 mt-4 space-y-2">
-                <li><strong>Site:</strong> <a href="https://www.gov.br/anpd" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">www.gov.br/anpd</a></li>
+                <li><strong>Site:</strong> <a href="https://www.gov.br/anpd" target="_blank" rel="noopener noreferrer" className="text-periwinkle-600 hover:underline">www.gov.br/anpd</a></li>
                 <li><strong>Canal de denúncias:</strong> Peticionamento eletrônico no site da ANPD</li>
               </ul>
             </section>
@@ -283,14 +283,14 @@ export default function LGPD() {
         </div>
 
         {/* Contact CTA */}
-        <div className="mt-12 bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl p-8 text-center border border-blue-100">
+        <div className="mt-12 bg-gradient-to-br from-periwinkle-50 to-purple-50 rounded-2xl p-8 text-center border border-periwinkle-100">
           <h3 className="text-xl font-semibold text-jet-black-900 mb-3">Ainda tem dúvidas?</h3>
           <p className="text-jet-black-600 mb-6">
             Nossa equipe está pronta para ajudar com qualquer questão sobre privacidade e proteção de dados.
           </p>
           <a
             href="mailto:lgpd@agendamais.site"
-            className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-medium transition-colors"
+            className="inline-flex items-center gap-2 bg-periwinkle-600 hover:bg-periwinkle-700 text-white px-6 py-3 rounded-xl font-medium transition-colors"
           >
             <Shield className="w-5 h-5" />
             Falar com DPO

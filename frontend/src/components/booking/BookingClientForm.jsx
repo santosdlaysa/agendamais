@@ -29,7 +29,7 @@ export default function BookingClientForm({ clientData, onChange, errors = {} })
         {/* Nome */}
         <div>
           <label className="flex items-center gap-2 text-sm font-medium text-jet-black-700 mb-2">
-            <User className="w-4 h-4 text-blue-500" />
+            <User className="w-4 h-4 text-periwinkle-500" />
             Nome completo *
           </label>
           <input
@@ -37,7 +37,7 @@ export default function BookingClientForm({ clientData, onChange, errors = {} })
             value={clientData.name}
             onChange={(e) => onChange({ ...clientData, name: e.target.value })}
             placeholder="Digite seu nome completo"
-            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors ${
+            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-periwinkle-500 focus:border-periwinkle-500 transition-colors ${
               errors.name ? 'border-red-500' : 'border-jet-black-300'
             }`}
           />
@@ -49,7 +49,7 @@ export default function BookingClientForm({ clientData, onChange, errors = {} })
         {/* Telefone */}
         <div>
           <label className="flex items-center gap-2 text-sm font-medium text-jet-black-700 mb-2">
-            <Phone className="w-4 h-4 text-blue-500" />
+            <Phone className="w-4 h-4 text-periwinkle-500" />
             Telefone / WhatsApp *
           </label>
           <input
@@ -58,7 +58,7 @@ export default function BookingClientForm({ clientData, onChange, errors = {} })
             onChange={handlePhoneChange}
             placeholder="(00) 00000-0000"
             maxLength={15}
-            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors ${
+            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-periwinkle-500 focus:border-periwinkle-500 transition-colors ${
               errors.phone ? 'border-red-500' : 'border-jet-black-300'
             }`}
           />
@@ -73,7 +73,7 @@ export default function BookingClientForm({ clientData, onChange, errors = {} })
         {/* Email */}
         <div>
           <label className="flex items-center gap-2 text-sm font-medium text-jet-black-700 mb-2">
-            <Mail className="w-4 h-4 text-blue-500" />
+            <Mail className="w-4 h-4 text-periwinkle-500" />
             Email (opcional)
           </label>
           <input
@@ -81,7 +81,7 @@ export default function BookingClientForm({ clientData, onChange, errors = {} })
             value={clientData.email}
             onChange={(e) => onChange({ ...clientData, email: e.target.value })}
             placeholder="seu@email.com"
-            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors ${
+            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-periwinkle-500 focus:border-periwinkle-500 transition-colors ${
               errors.email ? 'border-red-500' : 'border-jet-black-300'
             }`}
           />
@@ -93,7 +93,7 @@ export default function BookingClientForm({ clientData, onChange, errors = {} })
         {/* Observações */}
         <div>
           <label className="flex items-center gap-2 text-sm font-medium text-jet-black-700 mb-2">
-            <MessageSquare className="w-4 h-4 text-blue-500" />
+            <MessageSquare className="w-4 h-4 text-periwinkle-500" />
             Observações (opcional)
           </label>
           <textarea
@@ -101,7 +101,7 @@ export default function BookingClientForm({ clientData, onChange, errors = {} })
             onChange={(e) => onChange({ ...clientData, notes: e.target.value })}
             placeholder="Alguma informação adicional que devemos saber?"
             rows={3}
-            className="w-full px-4 py-3 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors resize-none"
+            className="w-full px-4 py-3 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-periwinkle-500 focus:border-periwinkle-500 transition-colors resize-none"
           />
         </div>
       </div>

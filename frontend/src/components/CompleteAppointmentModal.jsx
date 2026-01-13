@@ -121,7 +121,7 @@ const CompleteAppointmentModal = ({ appointment, onComplete, onClose }) => {
                 onClick={() => setPaymentMethod('cartao_credito')}
                 className={`flex items-center justify-center p-3 rounded-lg border-2 transition-colors ${
                   paymentMethod === 'cartao_credito'
-                    ? 'border-blue-500 bg-blue-50 text-blue-700'
+                    ? 'border-periwinkle-500 bg-periwinkle-50 text-blue-700'
                     : 'border-jet-black-300 bg-white text-jet-black-700 hover:border-jet-black-400'
                 }`}
               >
@@ -186,7 +186,7 @@ const CompleteAppointmentModal = ({ appointment, onComplete, onClose }) => {
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
                 rows={3}
-                className="w-full px-3 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full px-3 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-periwinkle-500 focus:border-periwinkle-500"
               />
             </div>
 
@@ -217,7 +217,7 @@ const CompleteAppointmentModal = ({ appointment, onComplete, onClose }) => {
                     placeholder={`Padrão: R$ ${parseFloat(appointment.service.price).toFixed(2)}`}
                     value={customPrice}
                     onChange={(e) => setCustomPrice(e.target.value)}
-                    className="w-full px-3 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-periwinkle-500 focus:border-periwinkle-500"
                   />
                   <p className="text-xs text-jet-black-500 mt-1">
                     Deixe em branco para usar o preço padrão do serviço
@@ -252,7 +252,7 @@ const CompleteAppointmentModal = ({ appointment, onComplete, onClose }) => {
           <button
             onClick={handleComplete}
             disabled={loading}
-            className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex-1 px-4 py-2 bg-periwinkle-600 text-white rounded-lg hover:bg-periwinkle-700 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? 'Processando...' : 'Concluir e Calcular'}
           </button>

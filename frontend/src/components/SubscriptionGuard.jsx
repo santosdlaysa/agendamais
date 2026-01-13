@@ -35,7 +35,7 @@ export default function SubscriptionGuard({
   if (loading) {
     return (
       <div className="flex items-center justify-center p-8">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-periwinkle-600"></div>
       </div>
     )
   }
@@ -47,10 +47,10 @@ export default function SubscriptionGuard({
     }
 
     return (
-      <div className="bg-gradient-to-br from-blue-50 to-space-indigo-50 rounded-xl shadow-lg p-8 border border-blue-100">
+      <div className="bg-gradient-to-br from-periwinkle-50 to-space-indigo-50 rounded-xl shadow-lg p-8 border border-periwinkle-100">
         <div className="text-center max-w-md mx-auto">
           {/* Icon */}
-          <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-space-indigo-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+          <div className="w-16 h-16 bg-gradient-to-br from-periwinkle-500 to-space-indigo-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
             <Lock className="w-8 h-8 text-white" />
           </div>
 
@@ -72,19 +72,19 @@ export default function SubscriptionGuard({
             </p>
             <ul className="space-y-2 text-sm text-jet-black-700">
               <li className="flex items-center gap-2">
-                <Zap className="w-4 h-4 text-blue-600" />
+                <Zap className="w-4 h-4 text-periwinkle-600" />
                 <span>Agendamentos ilimitados</span>
               </li>
               <li className="flex items-center gap-2">
-                <Zap className="w-4 h-4 text-blue-600" />
+                <Zap className="w-4 h-4 text-periwinkle-600" />
                 <span>Lembretes automáticos</span>
               </li>
               <li className="flex items-center gap-2">
-                <Zap className="w-4 h-4 text-blue-600" />
+                <Zap className="w-4 h-4 text-periwinkle-600" />
                 <span>Relatórios avançados</span>
               </li>
               <li className="flex items-center gap-2">
-                <Zap className="w-4 h-4 text-blue-600" />
+                <Zap className="w-4 h-4 text-periwinkle-600" />
                 <span>Suporte prioritário</span>
               </li>
             </ul>
@@ -93,7 +93,7 @@ export default function SubscriptionGuard({
           {/* CTA */}
           <button
             onClick={() => navigate('/subscription/plans')}
-            className="w-full bg-gradient-to-r from-blue-500 to-space-indigo-600 hover:from-blue-600 hover:to-space-indigo-700 text-white py-3 px-6 rounded-lg font-semibold transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
+            className="w-full bg-gradient-to-r from-periwinkle-500 to-space-indigo-600 hover:from-periwinkle-600 hover:to-space-indigo-700 text-white py-3 px-6 rounded-lg font-semibold transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
           >
             Ver Planos e Preços
             <ArrowRight className="w-5 h-5" />

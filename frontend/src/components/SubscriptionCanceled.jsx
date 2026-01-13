@@ -29,7 +29,7 @@ export default function SubscriptionCanceled() {
           <div className="space-y-3">
             <button
               onClick={() => navigate('/subscription/plans')}
-              className="w-full py-3 px-6 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold transition-colors"
+              className="w-full py-3 px-6 bg-periwinkle-600 hover:bg-periwinkle-700 text-white rounded-lg font-semibold transition-colors"
             >
               Tentar Novamente
             </button>

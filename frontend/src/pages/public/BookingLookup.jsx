@@ -53,7 +53,7 @@ export default function BookingLookup() {
 
   const getStatusColor = (status) => {
     const colors = {
-      scheduled: 'bg-blue-100 text-blue-800',
+      scheduled: 'bg-periwinkle-100 text-periwinkle-800',
       confirmed: 'bg-green-100 text-green-800',
       completed: 'bg-jet-black-100 text-jet-black-800',
       cancelled: 'bg-red-100 text-red-800',
@@ -101,12 +101,12 @@ export default function BookingLookup() {
               value={code}
               onChange={(e) => setCode(e.target.value.toUpperCase())}
               placeholder="Ex: AGD-2025-ABC123"
-              className="flex-1 px-4 py-3 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 font-mono uppercase"
+              className="flex-1 px-4 py-3 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-periwinkle-500 focus:border-periwinkle-500 font-mono uppercase"
             />
             <button
               type="submit"
               disabled={loading}
-              className="px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 disabled:opacity-50 transition-colors flex items-center gap-2"
+              className="px-6 py-3 bg-periwinkle-600 text-white rounded-lg font-medium hover:bg-periwinkle-700 disabled:opacity-50 transition-colors flex items-center gap-2"
             >
               {loading ? (
                 <Loader2 className="w-5 h-5 animate-spin" />
@@ -140,8 +140,8 @@ export default function BookingLookup() {
             {/* Detalhes */}
             <div className="p-6 space-y-4">
               <div className="flex items-start gap-3">
-                <div className="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center">
-                  <Calendar className="w-5 h-5 text-blue-600" />
+                <div className="w-10 h-10 rounded-lg bg-periwinkle-100 flex items-center justify-center">
+                  <Calendar className="w-5 h-5 text-periwinkle-600" />
                 </div>
                 <div>
                   <p className="text-sm text-jet-black-500">Data</p>
@@ -203,7 +203,7 @@ export default function BookingLookup() {
         <div className="text-center mt-8">
           <Link
             to={`/agendar/${slug}`}
-            className="text-blue-600 hover:text-blue-800 underline"
+            className="text-periwinkle-600 hover:text-periwinkle-800 underline"
           >
             Fazer novo agendamento
           </Link>

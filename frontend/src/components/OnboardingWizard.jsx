@@ -450,7 +450,7 @@ export default function OnboardingWizard() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/30">
+                <div className="w-10 h-10 bg-gradient-to-br from-periwinkle-500 to-periwinkle-600 rounded-xl flex items-center justify-center shadow-lg shadow-periwinkle-500/30">
                   <Calendar className="w-6 h-6 text-white" />
                 </div>
                 <div>
@@ -479,13 +479,13 @@ export default function OnboardingWizard() {
                 <span className="text-sm font-medium text-jet-black-600">
                   Passo {currentStep} de {steps.length - 2}
                 </span>
-                <span className="text-sm font-medium text-blue-600">
+                <span className="text-sm font-medium text-periwinkle-600">
                   {progressPercentage}% completo
                 </span>
               </div>
               <div className="h-2 bg-jet-black-100 rounded-full overflow-hidden">
                 <div
-                  className="h-full bg-gradient-to-r from-blue-500 to-purple-500 rounded-full transition-all duration-500 ease-out"
+                  className="h-full bg-gradient-to-r from-periwinkle-500 to-purple-500 rounded-full transition-all duration-500 ease-out"
                   style={{ width: `${progressPercentage}%` }}
                 />
               </div>
@@ -502,14 +502,14 @@ export default function OnboardingWizard() {
                           isCompleted
                             ? 'bg-green-500 text-white'
                             : isActive
-                            ? 'bg-blue-600 text-white ring-4 ring-blue-100'
+                            ? 'bg-periwinkle-600 text-white ring-4 ring-periwinkle-100'
                             : 'bg-jet-black-200 text-jet-black-400'
                         }`}
                       >
                         {isCompleted ? <Check className="w-4 h-4" /> : idx + 1}
                       </div>
                       <span className={`mt-1 text-xs font-medium hidden sm:block ${
-                        isActive ? 'text-blue-600' : isCompleted ? 'text-green-600' : 'text-jet-black-400'
+                        isActive ? 'text-periwinkle-600' : isCompleted ? 'text-green-600' : 'text-jet-black-400'
                       }`}>
                         {step.title}
                       </span>
@@ -541,7 +541,7 @@ export default function OnboardingWizard() {
                   <button
                     onClick={handleNext}
                     disabled={saving}
-                    className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-xl font-semibold transition-all shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-periwinkle-600 to-periwinkle-700 hover:from-periwinkle-700 hover:to-periwinkle-800 text-white rounded-xl font-semibold transition-all shadow-lg shadow-periwinkle-500/30 hover:shadow-xl hover:shadow-periwinkle-500/40 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {saving ? (
                       <>
@@ -586,7 +586,7 @@ function WelcomeStep({ onNext, onSkip, selectedType, onSelectType }) {
       {/* Header com botão */}
       <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6 mb-8">
         <div className="flex items-start gap-4">
-          <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-xl shadow-purple-500/30 flex-shrink-0">
+          <div className="w-16 h-16 bg-gradient-to-br from-periwinkle-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-xl shadow-purple-500/30 flex-shrink-0">
             <Rocket className="w-8 h-8 text-white" />
           </div>
           <div>
@@ -611,7 +611,7 @@ function WelcomeStep({ onNext, onSkip, selectedType, onSelectType }) {
             disabled={!selectedType}
             className={`px-6 py-3 rounded-xl font-semibold transition-all flex items-center gap-2 whitespace-nowrap ${
               selectedType
-                ? 'bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white shadow-lg shadow-blue-500/30'
+                ? 'bg-gradient-to-r from-periwinkle-600 to-periwinkle-700 hover:from-periwinkle-700 hover:to-periwinkle-800 text-white shadow-lg shadow-periwinkle-500/30'
                 : 'bg-jet-black-100 text-jet-black-400 cursor-not-allowed'
             }`}
           >
@@ -633,18 +633,18 @@ function WelcomeStep({ onNext, onSkip, selectedType, onSelectType }) {
               onClick={() => onSelectType(type.id)}
               className={`p-4 lg:p-5 rounded-xl border-2 transition-all text-left group ${
                 isSelected
-                  ? 'border-blue-500 bg-blue-50 shadow-lg shadow-blue-500/20'
-                  : 'border-jet-black-100 hover:border-blue-200 hover:bg-jet-black-50'
+                  ? 'border-periwinkle-500 bg-periwinkle-50 shadow-lg shadow-periwinkle-500/20'
+                  : 'border-jet-black-100 hover:border-periwinkle-200 hover:bg-jet-black-50'
               }`}
             >
               <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-3 transition-all ${
                 isSelected
-                  ? 'bg-blue-500 text-white'
-                  : 'bg-jet-black-100 text-jet-black-500 group-hover:bg-blue-100 group-hover:text-blue-600'
+                  ? 'bg-periwinkle-500 text-white'
+                  : 'bg-jet-black-100 text-jet-black-500 group-hover:bg-periwinkle-100 group-hover:text-periwinkle-600'
               }`}>
                 <Icon className="w-6 h-6" />
               </div>
-              <p className={`font-medium ${isSelected ? 'text-blue-700' : 'text-jet-black-700'}`}>
+              <p className={`font-medium ${isSelected ? 'text-periwinkle-700' : 'text-jet-black-700'}`}>
                 {type.name}
               </p>
             </button>
@@ -659,7 +659,7 @@ function BusinessStep({ data, onChange, errors, generateSlug, slugAvailable, che
   return (
     <div>
       <div className="flex items-center gap-3 mb-8">
-        <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/25">
+        <div className="w-12 h-12 bg-gradient-to-br from-periwinkle-500 to-periwinkle-600 rounded-xl flex items-center justify-center shadow-lg shadow-periwinkle-500/25">
           <Building2 className="w-6 h-6 text-white" />
         </div>
         <div>
@@ -687,7 +687,7 @@ function BusinessStep({ data, onChange, errors, generateSlug, slugAvailable, che
               className={`w-full px-4 py-3 border-2 rounded-xl focus:ring-0 transition-colors ${
                 errors.business_name
                   ? 'border-red-300 focus:border-red-500'
-                  : 'border-jet-black-200 focus:border-blue-500'
+                  : 'border-jet-black-200 focus:border-periwinkle-500'
               }`}
               placeholder="Ex: Salão da Maria, Barbearia Premium..."
             />
@@ -717,7 +717,7 @@ function BusinessStep({ data, onChange, errors, generateSlug, slugAvailable, che
                       ? 'border-red-300 focus:border-red-500'
                       : slugAvailable === true
                       ? 'border-green-300 focus:border-green-500'
-                      : 'border-jet-black-200 focus:border-blue-500'
+                      : 'border-jet-black-200 focus:border-periwinkle-500'
                   }`}
                   placeholder="minha-empresa"
                 />
@@ -753,7 +753,7 @@ function BusinessStep({ data, onChange, errors, generateSlug, slugAvailable, che
               type="tel"
               value={data.business_phone}
               onChange={(e) => onChange({ business_phone: e.target.value })}
-              className="w-full px-4 py-3 border-2 border-jet-black-200 rounded-xl focus:border-blue-500 focus:ring-0 transition-colors"
+              className="w-full px-4 py-3 border-2 border-jet-black-200 rounded-xl focus:border-periwinkle-500 focus:ring-0 transition-colors"
               placeholder="(00) 00000-0000"
             />
           </div>
@@ -766,7 +766,7 @@ function BusinessStep({ data, onChange, errors, generateSlug, slugAvailable, che
               type="text"
               value={data.business_address}
               onChange={(e) => onChange({ business_address: e.target.value })}
-              className="w-full px-4 py-3 border-2 border-jet-black-200 rounded-xl focus:border-blue-500 focus:ring-0 transition-colors"
+              className="w-full px-4 py-3 border-2 border-jet-black-200 rounded-xl focus:border-periwinkle-500 focus:ring-0 transition-colors"
               placeholder="Rua, número, bairro"
             />
           </div>
@@ -775,12 +775,12 @@ function BusinessStep({ data, onChange, errors, generateSlug, slugAvailable, che
         {/* Coluna Direita - Preview */}
         <div className="space-y-5">
           {data.slug && data.slug.length >= 3 && slugAvailable ? (
-            <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl p-6 border border-blue-100 h-full">
+            <div className="bg-gradient-to-br from-periwinkle-50 to-purple-50 rounded-2xl p-6 border border-periwinkle-100 h-full">
               <div className="flex items-center gap-2 mb-4">
-                <Globe className="w-5 h-5 text-blue-600" />
+                <Globe className="w-5 h-5 text-periwinkle-600" />
                 <span className="font-semibold text-jet-black-900">Preview do seu link</span>
               </div>
-              <div className="bg-white rounded-xl p-4 border border-blue-100 mb-4">
+              <div className="bg-white rounded-xl p-4 border border-periwinkle-100 mb-4">
                 <code className="text-sm text-jet-black-700 break-all">
                   {getBookingUrl()}
                 </code>
@@ -788,7 +788,7 @@ function BusinessStep({ data, onChange, errors, generateSlug, slugAvailable, che
               <div className="flex gap-2">
                 <button
                   onClick={copyBookingLink}
-                  className="flex-1 py-2.5 bg-white border border-blue-200 rounded-lg hover:bg-blue-50 transition-colors flex items-center justify-center gap-2 text-blue-600 font-medium"
+                  className="flex-1 py-2.5 bg-white border border-periwinkle-200 rounded-lg hover:bg-periwinkle-50 transition-colors flex items-center justify-center gap-2 text-periwinkle-600 font-medium"
                 >
                   <Copy className="w-4 h-4" />
                   Copiar Link
@@ -797,7 +797,7 @@ function BusinessStep({ data, onChange, errors, generateSlug, slugAvailable, che
                   href={getBookingUrl()}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="py-2.5 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center gap-2"
+                  className="py-2.5 px-4 bg-periwinkle-600 text-white rounded-lg hover:bg-periwinkle-700 transition-colors flex items-center justify-center gap-2"
                 >
                   <ExternalLink className="w-4 h-4" />
                 </a>
@@ -838,9 +838,9 @@ function ServicesStep({ services, onAddService, onRemoveService, onUpdateService
         </div>
 
         {businessInfo && (
-          <div className="bg-blue-50 border border-blue-100 rounded-xl px-4 py-2 flex items-center gap-2">
-            <Zap className="w-4 h-4 text-blue-600" />
-            <span className="text-sm text-blue-700">Sugestões para <strong>{businessInfo.name}</strong></span>
+          <div className="bg-periwinkle-50 border border-periwinkle-100 rounded-xl px-4 py-2 flex items-center gap-2">
+            <Zap className="w-4 h-4 text-periwinkle-600" />
+            <span className="text-sm text-periwinkle-700">Sugestões para <strong>{businessInfo.name}</strong></span>
           </div>
         )}
       </div>
@@ -874,14 +874,14 @@ function ServicesStep({ services, onAddService, onRemoveService, onUpdateService
                 type="text"
                 value={service.name}
                 onChange={(e) => onUpdateService(index, 'name', e.target.value)}
-                className="w-full px-4 py-3 border-2 border-jet-black-200 rounded-xl focus:border-blue-500 focus:ring-0 transition-colors"
+                className="w-full px-4 py-3 border-2 border-jet-black-200 rounded-xl focus:border-periwinkle-500 focus:ring-0 transition-colors"
                 placeholder="Nome do serviço"
               />
               <div className="grid grid-cols-2 gap-3">
                 <select
                   value={service.duration}
                   onChange={(e) => onUpdateService(index, 'duration', parseInt(e.target.value))}
-                  className="w-full px-4 py-3 border-2 border-jet-black-200 rounded-xl focus:border-blue-500 focus:ring-0 transition-colors bg-white"
+                  className="w-full px-4 py-3 border-2 border-jet-black-200 rounded-xl focus:border-periwinkle-500 focus:ring-0 transition-colors bg-white"
                 >
                   {DURATION_OPTIONS.map(opt => (
                     <option key={opt.value} value={opt.value}>{opt.label}</option>
@@ -893,7 +893,7 @@ function ServicesStep({ services, onAddService, onRemoveService, onUpdateService
                     type="number"
                     value={service.price}
                     onChange={(e) => onUpdateService(index, 'price', e.target.value)}
-                    className="w-full pl-12 pr-4 py-3 border-2 border-jet-black-200 rounded-xl focus:border-blue-500 focus:ring-0 transition-colors"
+                    className="w-full pl-12 pr-4 py-3 border-2 border-jet-black-200 rounded-xl focus:border-periwinkle-500 focus:ring-0 transition-colors"
                     placeholder="0,00"
                     step="0.01"
                     min="0"
@@ -906,7 +906,7 @@ function ServicesStep({ services, onAddService, onRemoveService, onUpdateService
 
         <button
           onClick={onAddService}
-          className="h-full min-h-[180px] border-2 border-dashed border-jet-black-200 rounded-xl text-jet-black-400 hover:border-blue-300 hover:text-blue-600 hover:bg-blue-50/50 transition-all flex flex-col items-center justify-center gap-2"
+          className="h-full min-h-[180px] border-2 border-dashed border-jet-black-200 rounded-xl text-jet-black-400 hover:border-periwinkle-300 hover:text-periwinkle-600 hover:bg-periwinkle-50/50 transition-all flex flex-col items-center justify-center gap-2"
         >
           <Plus className="w-8 h-8" />
           <span className="font-medium">Adicionar Serviço</span>
@@ -946,7 +946,7 @@ function ProfessionalStep({ data, onChange, errors, services, businessType }) {
               className={`w-full px-4 py-3 border-2 rounded-xl focus:ring-0 transition-colors ${
                 errors.professional_name
                   ? 'border-red-300 focus:border-red-500'
-                  : 'border-jet-black-200 focus:border-blue-500'
+                  : 'border-jet-black-200 focus:border-periwinkle-500'
               }`}
               placeholder="Ex: Maria Silva, João Santos..."
             />
@@ -969,7 +969,7 @@ function ProfessionalStep({ data, onChange, errors, services, businessType }) {
               className={`w-full px-4 py-3 border-2 rounded-xl focus:ring-0 transition-colors ${
                 errors.professional_role
                   ? 'border-red-300 focus:border-red-500'
-                  : 'border-jet-black-200 focus:border-blue-500'
+                  : 'border-jet-black-200 focus:border-periwinkle-500'
               }`}
               placeholder="Ex: Cabeleireira, Barbeiro, Esteticista..."
             />
@@ -1006,7 +1006,7 @@ function ProfessionalStep({ data, onChange, errors, services, businessType }) {
               type="email"
               value={data.email}
               onChange={(e) => onChange({ email: e.target.value })}
-              className="w-full px-4 py-3 border-2 border-jet-black-200 rounded-xl focus:border-blue-500 focus:ring-0 transition-colors"
+              className="w-full px-4 py-3 border-2 border-jet-black-200 rounded-xl focus:border-periwinkle-500 focus:ring-0 transition-colors"
               placeholder="email@exemplo.com"
             />
           </div>
@@ -1019,7 +1019,7 @@ function ProfessionalStep({ data, onChange, errors, services, businessType }) {
               type="tel"
               value={data.phone}
               onChange={(e) => onChange({ phone: e.target.value })}
-              className="w-full px-4 py-3 border-2 border-jet-black-200 rounded-xl focus:border-blue-500 focus:ring-0 transition-colors"
+              className="w-full px-4 py-3 border-2 border-jet-black-200 rounded-xl focus:border-periwinkle-500 focus:ring-0 transition-colors"
               placeholder="(00) 00000-0000"
             />
           </div>
@@ -1125,7 +1125,7 @@ function ScheduleStep({ data, onChange }) {
                 type="checkbox"
                 checked={data[day].enabled}
                 onChange={() => toggleDay(day)}
-                className="w-5 h-5 rounded border-jet-black-300 text-blue-600 focus:ring-blue-500"
+                className="w-5 h-5 rounded border-jet-black-300 text-periwinkle-600 focus:ring-periwinkle-500"
               />
               <span className={`font-medium ${data[day].enabled ? 'text-jet-black-900' : 'text-jet-black-400'}`}>
                 {label}
@@ -1138,14 +1138,14 @@ function ScheduleStep({ data, onChange }) {
                   type="time"
                   value={data[day].start}
                   onChange={(e) => updateTime(day, 'start', e.target.value)}
-                  className="px-3 py-2 border-2 border-jet-black-200 rounded-lg focus:ring-0 focus:border-blue-500 transition-colors"
+                  className="px-3 py-2 border-2 border-jet-black-200 rounded-lg focus:ring-0 focus:border-periwinkle-500 transition-colors"
                 />
                 <span className="text-jet-black-400">às</span>
                 <input
                   type="time"
                   value={data[day].end}
                   onChange={(e) => updateTime(day, 'end', e.target.value)}
-                  className="px-3 py-2 border-2 border-jet-black-200 rounded-lg focus:ring-0 focus:border-blue-500 transition-colors"
+                  className="px-3 py-2 border-2 border-jet-black-200 rounded-lg focus:ring-0 focus:border-periwinkle-500 transition-colors"
                 />
               </div>
             )}
@@ -1174,18 +1174,18 @@ function CompleteStep({ onComplete, businessName, bookingUrl, copyBookingLink, s
           </p>
 
           {/* Link de Agendamento */}
-          <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-5 border border-blue-100 text-left mb-6">
+          <div className="bg-gradient-to-r from-periwinkle-50 to-purple-50 rounded-2xl p-5 border border-periwinkle-100 text-left mb-6">
             <div className="flex items-center gap-2 mb-3">
-              <Globe className="w-5 h-5 text-blue-600" />
+              <Globe className="w-5 h-5 text-periwinkle-600" />
               <span className="font-semibold text-jet-black-900">Seu link de agendamento</span>
             </div>
             <div className="flex items-center gap-2">
-              <code className="flex-1 text-sm bg-white px-4 py-3 rounded-xl border border-blue-100 text-jet-black-700 truncate">
+              <code className="flex-1 text-sm bg-white px-4 py-3 rounded-xl border border-periwinkle-100 text-jet-black-700 truncate">
                 {bookingUrl}
               </code>
               <button
                 onClick={copyBookingLink}
-                className="p-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors shadow-lg shadow-blue-500/30"
+                className="p-3 bg-periwinkle-600 text-white rounded-xl hover:bg-periwinkle-700 transition-colors shadow-lg shadow-periwinkle-500/30"
               >
                 <Copy className="w-5 h-5" />
               </button>
@@ -1193,16 +1193,16 @@ function CompleteStep({ onComplete, businessName, bookingUrl, copyBookingLink, s
                 href={bookingUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-3 bg-white border border-blue-200 rounded-xl hover:bg-blue-50 transition-colors"
+                className="p-3 bg-white border border-periwinkle-200 rounded-xl hover:bg-periwinkle-50 transition-colors"
               >
-                <ExternalLink className="w-5 h-5 text-blue-600" />
+                <ExternalLink className="w-5 h-5 text-periwinkle-600" />
               </a>
             </div>
           </div>
 
           <button
             onClick={onComplete}
-            className="w-full lg:w-auto px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-xl font-semibold text-lg transition-all shadow-xl shadow-blue-500/30 hover:shadow-2xl flex items-center justify-center gap-2"
+            className="w-full lg:w-auto px-8 py-4 bg-gradient-to-r from-periwinkle-600 to-periwinkle-700 hover:from-periwinkle-700 hover:to-periwinkle-800 text-white rounded-xl font-semibold text-lg transition-all shadow-xl shadow-periwinkle-500/30 hover:shadow-2xl flex items-center justify-center gap-2"
           >
             Ir para o Dashboard
             <ArrowRight className="w-5 h-5" />

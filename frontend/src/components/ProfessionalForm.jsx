@@ -323,7 +323,7 @@ export default function ProfessionalForm() {
   if (loading && isEditMode) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-periwinkle-600"></div>
       </div>
     )
   }
@@ -359,7 +359,7 @@ export default function ProfessionalForm() {
               onClick={() => setActiveTab('info')}
               className={`px-4 py-2 font-medium text-sm rounded-lg transition-colors ${
                 activeTab === 'info'
-                  ? 'bg-blue-100 text-blue-700'
+                  ? 'bg-periwinkle-100 text-periwinkle-700'
                   : 'text-jet-black-500 hover:text-jet-black-700 hover:bg-jet-black-100'
               }`}
             >
@@ -370,7 +370,7 @@ export default function ProfessionalForm() {
               onClick={() => setActiveTab('hours')}
               className={`px-4 py-2 font-medium text-sm rounded-lg transition-colors flex items-center gap-2 ${
                 activeTab === 'hours'
-                  ? 'bg-blue-100 text-blue-700'
+                  ? 'bg-periwinkle-100 text-periwinkle-700'
                   : 'text-jet-black-500 hover:text-jet-black-700 hover:bg-jet-black-100'
               }`}
             >
@@ -382,7 +382,7 @@ export default function ProfessionalForm() {
               onClick={() => setActiveTab('blocked')}
               className={`px-4 py-2 font-medium text-sm rounded-lg transition-colors flex items-center gap-2 ${
                 activeTab === 'blocked'
-                  ? 'bg-blue-100 text-blue-700'
+                  ? 'bg-periwinkle-100 text-periwinkle-700'
                   : 'text-jet-black-500 hover:text-jet-black-700 hover:bg-jet-black-100'
               }`}
             >
@@ -410,7 +410,7 @@ export default function ProfessionalForm() {
                   name="name"
                   value={formData.name}
                   onChange={handleInputChange}
-                  className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                  className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-periwinkle-500 focus:border-periwinkle-500 ${
                     errors.name ? 'border-red-500' : 'border-jet-black-300'
                   }`}
                   placeholder="Ex: João Silva"
@@ -429,7 +429,7 @@ export default function ProfessionalForm() {
                   name="role"
                   value={formData.role}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-3 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-periwinkle-500 focus:border-periwinkle-500"
                   placeholder="Ex: Cabeleireiro, Massagista, etc."
                 />
               </div>
@@ -449,7 +449,7 @@ export default function ProfessionalForm() {
                   name="phone"
                   value={formData.phone}
                   onChange={handleInputChange}
-                  className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                  className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-periwinkle-500 focus:border-periwinkle-500 ${
                     errors.phone ? 'border-red-500' : 'border-jet-black-300'
                   }`}
                   placeholder="(11) 99999-9999"
@@ -468,7 +468,7 @@ export default function ProfessionalForm() {
                   name="email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                  className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-periwinkle-500 focus:border-periwinkle-500 ${
                     errors.email ? 'border-red-500' : 'border-jet-black-300'
                   }`}
                   placeholder="joao@exemplo.com"
@@ -535,7 +535,7 @@ export default function ProfessionalForm() {
                       id={`service-${service.id}`}
                       checked={formData.service_ids.includes(service.id)}
                       onChange={() => handleServiceChange(service.id)}
-                      className="h-4 w-4 text-blue-600 border-jet-black-300 rounded focus:ring-blue-500"
+                      className="h-4 w-4 text-periwinkle-600 border-jet-black-300 rounded focus:ring-periwinkle-500"
                     />
                     <label htmlFor={`service-${service.id}`} className="flex-1 cursor-pointer">
                       <div className="text-sm font-medium text-jet-black-900">{service.name}</div>
@@ -552,7 +552,7 @@ export default function ProfessionalForm() {
                 <button
                   type="button"
                   onClick={() => navigate('/services/new')}
-                  className="text-blue-600 hover:text-blue-800 ml-1"
+                  className="text-periwinkle-600 hover:text-periwinkle-800 ml-1"
                 >
                   Cadastre o primeiro serviço
                 </button>
@@ -570,7 +570,7 @@ export default function ProfessionalForm() {
                 name="active"
                 checked={formData.active}
                 onChange={handleInputChange}
-                className="h-4 w-4 text-blue-600 border-jet-black-300 rounded focus:ring-blue-500"
+                className="h-4 w-4 text-periwinkle-600 border-jet-black-300 rounded focus:ring-periwinkle-500"
               />
               <label htmlFor="active" className="text-sm font-medium text-jet-black-700">
                 Profissional ativo
@@ -594,7 +594,7 @@ export default function ProfessionalForm() {
             <button
               type="submit"
               disabled={loading}
-              className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
+              className="flex items-center px-4 py-2 bg-periwinkle-600 text-white rounded-lg hover:bg-periwinkle-700 disabled:opacity-50"
             >
               <Save className="w-4 h-4 mr-2" />
               {loading ? 'Salvando...' : (isEditMode ? 'Atualizar' : 'Criar')} Profissional
@@ -609,7 +609,7 @@ export default function ProfessionalForm() {
         <div className="bg-white rounded-lg shadow-sm border p-6">
           <div className="mb-6">
             <h3 className="text-lg font-medium text-jet-black-900 flex items-center gap-2">
-              <Clock className="w-5 h-5 text-blue-600" />
+              <Clock className="w-5 h-5 text-periwinkle-600" />
               Horários de Trabalho
             </h3>
             <p className="text-sm text-jet-black-500 mt-1">
@@ -633,7 +633,7 @@ export default function ProfessionalForm() {
                       type="checkbox"
                       checked={workingHours[day.id]?.enabled || false}
                       onChange={(e) => handleWorkingHourChange(day.id, 'enabled', e.target.checked)}
-                      className="w-5 h-5 rounded border-jet-black-300 text-blue-600 focus:ring-blue-500"
+                      className="w-5 h-5 rounded border-jet-black-300 text-periwinkle-600 focus:ring-periwinkle-500"
                     />
                     <span className={`font-medium ${workingHours[day.id]?.enabled ? 'text-jet-black-900' : 'text-jet-black-500'}`}>
                       {day.name}
@@ -647,14 +647,14 @@ export default function ProfessionalForm() {
                           type="time"
                           value={workingHours[day.id]?.start || '09:00'}
                           onChange={(e) => handleWorkingHourChange(day.id, 'start', e.target.value)}
-                          className="px-3 py-1.5 border border-jet-black-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500"
+                          className="px-3 py-1.5 border border-jet-black-300 rounded-lg text-sm focus:ring-2 focus:ring-periwinkle-500"
                         />
                         <span className="text-jet-black-500">às</span>
                         <input
                           type="time"
                           value={workingHours[day.id]?.end || '18:00'}
                           onChange={(e) => handleWorkingHourChange(day.id, 'end', e.target.value)}
-                          className="px-3 py-1.5 border border-jet-black-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500"
+                          className="px-3 py-1.5 border border-jet-black-300 rounded-lg text-sm focus:ring-2 focus:ring-periwinkle-500"
                         />
                       </div>
 
@@ -688,7 +688,7 @@ export default function ProfessionalForm() {
               type="button"
               onClick={handleSaveWorkingHours}
               disabled={savingHours}
-              className="flex items-center px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
+              className="flex items-center px-6 py-2 bg-periwinkle-600 text-white rounded-lg hover:bg-periwinkle-700 disabled:opacity-50"
             >
               {savingHours ? (
                 <>
@@ -727,7 +727,7 @@ export default function ProfessionalForm() {
                   value={newBlockedDate}
                   onChange={(e) => setNewBlockedDate(e.target.value)}
                   min={new Date().toISOString().split('T')[0]}
-                  className="px-4 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  className="px-4 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-periwinkle-500"
                 />
               </div>
               <div className="flex-1 min-w-[200px]">
@@ -737,7 +737,7 @@ export default function ProfessionalForm() {
                   value={newBlockedReason}
                   onChange={(e) => setNewBlockedReason(e.target.value)}
                   placeholder="Ex: Consulta médica"
-                  className="w-full px-4 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-periwinkle-500"
                 />
               </div>
               <button
@@ -769,7 +769,7 @@ export default function ProfessionalForm() {
                   value={blockPeriodStart}
                   onChange={(e) => setBlockPeriodStart(e.target.value)}
                   min={new Date().toISOString().split('T')[0]}
-                  className="px-4 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  className="px-4 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-periwinkle-500"
                 />
               </div>
               <div>
@@ -779,7 +779,7 @@ export default function ProfessionalForm() {
                   value={blockPeriodEnd}
                   onChange={(e) => setBlockPeriodEnd(e.target.value)}
                   min={blockPeriodStart || new Date().toISOString().split('T')[0]}
-                  className="px-4 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  className="px-4 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-periwinkle-500"
                 />
               </div>
               <button
@@ -799,7 +799,7 @@ export default function ProfessionalForm() {
 
             {loadingBlocked ? (
               <div className="flex items-center justify-center py-8">
-                <Loader2 className="w-6 h-6 animate-spin text-blue-600" />
+                <Loader2 className="w-6 h-6 animate-spin text-periwinkle-600" />
               </div>
             ) : blockedDates.length === 0 ? (
               <p className="text-jet-black-500 text-center py-8">

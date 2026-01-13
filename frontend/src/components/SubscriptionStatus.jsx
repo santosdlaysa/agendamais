@@ -74,7 +74,7 @@ export default function SubscriptionStatus() {
     return (
       <div className="bg-white rounded-lg shadow p-6">
         <div className="flex items-center justify-center">
-          <Loader2 className="w-6 h-6 animate-spin text-blue-600" />
+          <Loader2 className="w-6 h-6 animate-spin text-periwinkle-600" />
           <span className="ml-2 text-jet-black-600">Carregando...</span>
         </div>
       </div>
@@ -138,7 +138,7 @@ export default function SubscriptionStatus() {
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-2">
             <h2 className="text-2xl font-bold text-jet-black-900">Minha Assinatura</h2>
-            {refreshing && <Loader2 className="w-5 h-5 animate-spin text-blue-600" />}
+            {refreshing && <Loader2 className="w-5 h-5 animate-spin text-periwinkle-600" />}
           </div>
           <span
             className={`px-3 py-1 rounded-full text-sm font-medium flex items-center gap-2 bg-${statusConfig.color}-100 text-${statusConfig.color}-800`}
@@ -155,8 +155,8 @@ export default function SubscriptionStatus() {
         <div className="grid md:grid-cols-2 gap-6 mb-6">
           {/* Plan */}
           <div className="flex items-start gap-3">
-            <div className="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center flex-shrink-0">
-              <CreditCard className="w-5 h-5 text-blue-600" />
+            <div className="w-10 h-10 rounded-lg bg-periwinkle-100 flex items-center justify-center flex-shrink-0">
+              <CreditCard className="w-5 h-5 text-periwinkle-600" />
             </div>
             <div>
               <p className="text-sm text-jet-black-600 mb-1">Plano Atual</p>
@@ -211,21 +211,21 @@ export default function SubscriptionStatus() {
 
         {/* Payment Method Warning - Trial sem cartão */}
         {subscription.status === 'trialing' && !hasPaymentMethod() && (
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+          <div className="bg-periwinkle-50 border border-periwinkle-200 rounded-lg p-4 mb-6">
             <div className="flex items-start gap-3">
-              <CreditCard className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
+              <CreditCard className="w-5 h-5 text-periwinkle-600 flex-shrink-0 mt-0.5" />
               <div className="flex-1">
-                <p className="text-sm font-medium text-blue-900 mb-1">
+                <p className="text-sm font-medium text-periwinkle-900 mb-1">
                   Cadastre seu cartão
                 </p>
-                <p className="text-sm text-blue-800 mb-3">
+                <p className="text-sm text-periwinkle-800 mb-3">
                   Você está no período de teste gratuito. Cadastre seu cartão para continuar
                   usando o sistema após o término do trial.
                 </p>
                 <button
                   onClick={handleOpenBilling}
                   disabled={billingLoading}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors disabled:opacity-50 flex items-center gap-2"
+                  className="bg-periwinkle-600 hover:bg-periwinkle-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors disabled:opacity-50 flex items-center gap-2"
                 >
                   {billingLoading ? (
                     <>
@@ -306,7 +306,7 @@ export default function SubscriptionStatus() {
           <div className="flex flex-wrap gap-3 pt-4 border-t">
             <button
               onClick={() => navigate('/subscription/plans')}
-              className="flex-1 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg font-medium transition-colors"
+              className="flex-1 bg-periwinkle-500 hover:bg-periwinkle-600 text-white py-2 px-4 rounded-lg font-medium transition-colors"
             >
               Alterar Plano
             </button>

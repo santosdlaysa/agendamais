@@ -86,7 +86,7 @@ export default function ApiDebug() {
         <button
           onClick={testEndpoints}
           disabled={testing}
-          className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
+          className="flex items-center px-4 py-2 bg-periwinkle-600 text-white rounded-lg hover:bg-periwinkle-700 disabled:opacity-50"
         >
           <RefreshCw className={`w-4 h-4 mr-2 ${testing ? 'animate-spin' : ''}`} />
           {testing ? 'Testando...' : 'Testar Endpoints'}

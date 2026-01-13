@@ -137,7 +137,7 @@ export default function Reminders() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-periwinkle-600"></div>
       </div>
     )
   }
@@ -166,7 +166,7 @@ export default function Reminders() {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <div className="bg-white rounded-lg shadow-sm border p-4">
           <div className="flex items-center">
-            <div className="bg-blue-500 p-2 rounded-lg">
+            <div className="bg-periwinkle-500 p-2 rounded-lg">
               <MessageSquare className="h-5 w-5 text-white" />
             </div>
             <div className="ml-3">
@@ -267,7 +267,7 @@ export default function Reminders() {
             <select
               value={filters.status}
               onChange={(e) => setFilters(prev => ({ ...prev, status: e.target.value, page: 1 }))}
-              className="w-full px-3 py-2 border border-jet-black-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 border border-jet-black-300 rounded-md focus:outline-none focus:ring-2 focus:ring-periwinkle-500"
             >
               <option value="">Todos</option>
               <option value="pending">Pendente</option>
@@ -281,7 +281,7 @@ export default function Reminders() {
             <select
               value={filters.reminder_type}
               onChange={(e) => setFilters(prev => ({ ...prev, reminder_type: e.target.value, page: 1 }))}
-              className="w-full px-3 py-2 border border-jet-black-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 border border-jet-black-300 rounded-md focus:outline-none focus:ring-2 focus:ring-periwinkle-500"
             >
               <option value="">Todos</option>
               <option value="whatsapp">WhatsApp</option>
@@ -367,7 +367,7 @@ export default function Reminders() {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center">
-                          <TypeIcon className={`h-4 w-4 mr-2 ${reminder.reminder_type === 'whatsapp' ? 'text-green-600' : 'text-blue-600'}`} />
+                          <TypeIcon className={`h-4 w-4 mr-2 ${reminder.reminder_type === 'whatsapp' ? 'text-green-600' : 'text-periwinkle-600'}`} />
                           <span className="text-sm text-jet-black-900 capitalize">
                             {reminder.reminder_type}
                           </span>
