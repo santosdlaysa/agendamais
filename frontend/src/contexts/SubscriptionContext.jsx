@@ -6,7 +6,7 @@ import { useAuth } from './AuthContext'
 const SubscriptionContext = createContext()
 
 export function SubscriptionProvider({ children }) {
-  const { isAuthenticated } = useAuth()
+  const { isAuthenticated, loading: authLoading } = useAuth()
   const [subscription, setSubscription] = useState(null)
   const [loading, setLoading] = useState(true)
   const [refreshing, setRefreshing] = useState(false)
@@ -14,7 +14,11 @@ export function SubscriptionProvider({ children }) {
   const previousAuthState = useRef(isAuthenticated)
 
   // Buscar status da assinatura quando autenticado
+  // Espera o AuthContext terminar de carregar antes de tomar qualquer decisão
   useEffect(() => {
+    // Aguardar AuthContext terminar de carregar
+    if (authLoading) return
+
     if (isAuthenticated) {
       fetchSubscriptionStatus(true)
     } else {
@@ -25,7 +29,7 @@ export function SubscriptionProvider({ children }) {
       setLoading(false)
     }
     previousAuthState.current = isAuthenticated
-  }, [isAuthenticated])
+  }, [isAuthenticated, authLoading])
 
   const fetchSubscriptionStatus = async (isInitialLoad = false) => {
     try {
