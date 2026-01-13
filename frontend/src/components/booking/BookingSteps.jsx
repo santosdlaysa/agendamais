@@ -10,10 +10,11 @@ const steps = [
 export default function BookingSteps({ currentStep }) {
   return (
     <div className="w-full py-4">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center">
         {steps.map((step, index) => (
-          <div key={step.number} className="flex items-center flex-1">
-            <div className="flex flex-col items-center flex-1">
+          <div key={step.number} className="flex items-center flex-1 last:flex-none">
+            {/* Step circle and title */}
+            <div className="flex flex-col items-center">
               <div
                 className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold transition-all duration-300 ${
                   currentStep > step.number
@@ -30,16 +31,17 @@ export default function BookingSteps({ currentStep }) {
                 )}
               </div>
               <span
-                className={`mt-2 text-xs font-medium hidden sm:block ${
+                className={`mt-2 text-xs font-medium text-center hidden sm:block ${
                   currentStep >= step.number ? 'text-periwinkle-600' : 'text-jet-black-400'
                 }`}
               >
                 {step.title}
               </span>
             </div>
+            {/* Connector line */}
             {index < steps.length - 1 && (
               <div
-                className={`h-1 flex-1 mx-2 rounded transition-all duration-300 ${
+                className={`h-1 flex-1 mx-3 rounded transition-all duration-300 ${
                   currentStep > step.number ? 'bg-green-500' : 'bg-jet-black-200'
                 }`}
               />
