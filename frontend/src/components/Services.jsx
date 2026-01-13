@@ -84,8 +84,8 @@ export default function Services() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Serviços</h1>
-          <p className="text-gray-600">Gerencie os serviços oferecidos</p>
+          <h1 className="text-2xl font-bold text-jet-black-900">Serviços</h1>
+          <p className="text-jet-black-600">Gerencie os serviços oferecidos</p>
         </div>
         <button
           onClick={() => navigate('/services/new')}
@@ -101,13 +101,13 @@ export default function Services() {
         <div className="flex items-center space-x-4">
           <div className="flex-1">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-jet-black-400 w-4 h-4" />
               <input
                 type="text"
                 placeholder="Buscar serviços..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full pl-10 pr-4 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               />
             </div>
           </div>
@@ -117,9 +117,9 @@ export default function Services() {
               id="showInactive"
               checked={showInactive}
               onChange={(e) => setShowInactive(e.target.checked)}
-              className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+              className="h-4 w-4 text-blue-600 border-jet-black-300 rounded focus:ring-blue-500"
             />
-            <label htmlFor="showInactive" className="text-sm text-gray-700">
+            <label htmlFor="showInactive" className="text-sm text-jet-black-700">
               Mostrar inativos
             </label>
           </div>
@@ -130,13 +130,13 @@ export default function Services() {
       <div className="bg-white rounded-lg shadow-sm border">
         {filteredServices.length === 0 ? (
           <div className="text-center py-12">
-            <div className="text-gray-400 mb-4">
+            <div className="text-jet-black-400 mb-4">
               <Users className="w-16 h-16 mx-auto" />
             </div>
-            <h3 className="text-lg font-medium text-gray-900 mb-2">
+            <h3 className="text-lg font-medium text-jet-black-900 mb-2">
               {services.length === 0 ? 'Nenhum serviço cadastrado' : 'Nenhum serviço encontrado'}
             </h3>
-            <p className="text-gray-600 mb-6">
+            <p className="text-jet-black-600 mb-6">
               {services.length === 0 
                 ? 'Comece cadastrando o primeiro serviço do seu negócio'
                 : 'Tente ajustar os filtros ou termos de busca'
@@ -153,13 +153,13 @@ export default function Services() {
             )}
           </div>
         ) : (
-          <div className="divide-y divide-gray-200">
+          <div className="divide-y divide-jet-black-200">
             {filteredServices.map((service) => (
-              <div key={service.id} className="p-6 hover:bg-gray-50">
+              <div key={service.id} className="p-6 hover:bg-jet-black-50">
                 <div className="flex items-center justify-between">
                   <div className="flex-1">
                     <div className="flex items-center space-x-3">
-                      <h3 className="text-lg font-medium text-gray-900">
+                      <h3 className="text-lg font-medium text-jet-black-900">
                         {service.name}
                       </h3>
                       {!service.active && (
@@ -170,10 +170,10 @@ export default function Services() {
                     </div>
                     
                     {service.description && (
-                      <p className="text-gray-600 mt-1">{service.description}</p>
+                      <p className="text-jet-black-600 mt-1">{service.description}</p>
                     )}
                     
-                    <div className="flex items-center space-x-6 mt-3 text-sm text-gray-500">
+                    <div className="flex items-center space-x-6 mt-3 text-sm text-jet-black-500">
                       <div className="flex items-center">
                         <DollarSign className="w-4 h-4 mr-1" />
                         R$ {parseFloat(service.price).toFixed(2)}
@@ -245,20 +245,20 @@ export default function Services() {
         <div className="bg-white rounded-lg shadow-sm border p-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
             <div>
-              <p className="text-2xl font-bold text-gray-900">{services.length}</p>
-              <p className="text-sm text-gray-600">Total de Serviços</p>
+              <p className="text-2xl font-bold text-jet-black-900">{services.length}</p>
+              <p className="text-sm text-jet-black-600">Total de Serviços</p>
             </div>
             <div>
               <p className="text-2xl font-bold text-green-600">
                 {services.filter(s => s.active).length}
               </p>
-              <p className="text-sm text-gray-600">Serviços Ativos</p>
+              <p className="text-sm text-jet-black-600">Serviços Ativos</p>
             </div>
             <div>
               <p className="text-2xl font-bold text-blue-600">
                 R$ {services.reduce((acc, service) => acc + parseFloat(service.price), 0).toFixed(2)}
               </p>
-              <p className="text-sm text-gray-600">Valor Total dos Serviços</p>
+              <p className="text-sm text-jet-black-600">Valor Total dos Serviços</p>
             </div>
           </div>
         </div>

@@ -57,7 +57,7 @@ export default function DateTimePicker({
 
     // Cabeçalho dos dias da semana
     const header = weekDays.map((day) => (
-      <div key={day} className="text-center text-xs font-medium text-gray-500 py-2">
+      <div key={day} className="text-center text-xs font-medium text-jet-black-500 py-2">
         {day}
       </div>
     ))
@@ -81,11 +81,11 @@ export default function DateTimePicker({
       if (isSelected) {
         className += 'bg-blue-600 text-white font-semibold'
       } else if (isPast || !isInRange) {
-        className += 'text-gray-300 cursor-not-allowed'
+        className += 'text-jet-black-300 cursor-not-allowed'
       } else if (isAvailable) {
-        className += 'text-gray-900 hover:bg-blue-100 cursor-pointer font-medium'
+        className += 'text-jet-black-900 hover:bg-blue-100 cursor-pointer font-medium'
       } else {
-        className += 'text-gray-400 cursor-not-allowed line-through'
+        className += 'text-jet-black-400 cursor-not-allowed line-through'
       }
 
       days.push(
@@ -127,7 +127,7 @@ export default function DateTimePicker({
 
   return (
     <div className="space-y-6">
-      <h2 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
+      <h2 className="text-lg font-semibold text-jet-black-900 flex items-center gap-2">
         <Calendar className="w-5 h-5 text-blue-500" />
         Escolha a data e horário
       </h2>
@@ -138,16 +138,16 @@ export default function DateTimePicker({
           <div className="flex items-center justify-between mb-4">
             <button
               onClick={previousMonth}
-              className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+              className="p-2 hover:bg-jet-black-100 rounded-lg transition-colors"
             >
               <ChevronLeft className="w-5 h-5" />
             </button>
-            <h3 className="font-semibold text-gray-900">
+            <h3 className="font-semibold text-jet-black-900">
               {monthNames[currentMonth.getMonth()]} {currentMonth.getFullYear()}
             </h3>
             <button
               onClick={nextMonth}
-              className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+              className="p-2 hover:bg-jet-black-100 rounded-lg transition-colors"
             >
               <ChevronRight className="w-5 h-5" />
             </button>
@@ -161,17 +161,17 @@ export default function DateTimePicker({
             renderCalendar()
           )}
 
-          <div className="flex items-center gap-4 mt-4 text-xs text-gray-500">
+          <div className="flex items-center gap-4 mt-4 text-xs text-jet-black-500">
             <div className="flex items-center gap-1">
               <div className="w-3 h-3 rounded bg-blue-600" />
               <span>Selecionado</span>
             </div>
             <div className="flex items-center gap-1">
-              <div className="w-3 h-3 rounded bg-gray-100 border" />
+              <div className="w-3 h-3 rounded bg-jet-black-100 border" />
               <span>Disponível</span>
             </div>
             <div className="flex items-center gap-1">
-              <div className="w-3 h-3 rounded bg-gray-200" />
+              <div className="w-3 h-3 rounded bg-jet-black-200" />
               <span>Indisponível</span>
             </div>
           </div>
@@ -179,17 +179,17 @@ export default function DateTimePicker({
 
         {/* Horários */}
         <div className="bg-white rounded-xl border p-4">
-          <h3 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
+          <h3 className="font-semibold text-jet-black-900 mb-4 flex items-center gap-2">
             <Clock className="w-5 h-5 text-blue-500" />
             Horários disponíveis
           </h3>
 
           {!selectedDate ? (
-            <div className="h-64 flex items-center justify-center text-gray-500">
+            <div className="h-64 flex items-center justify-center text-jet-black-500">
               Selecione uma data primeiro
             </div>
           ) : timeSlots.length === 0 ? (
-            <div className="h-64 flex items-center justify-center text-gray-500">
+            <div className="h-64 flex items-center justify-center text-jet-black-500">
               Nenhum horário disponível nesta data
             </div>
           ) : (
@@ -203,7 +203,7 @@ export default function DateTimePicker({
                     className={`py-3 px-2 rounded-lg text-sm font-medium transition-all duration-200 ${
                       isSelected
                         ? 'bg-blue-600 text-white'
-                        : 'bg-gray-50 text-gray-700 hover:bg-blue-100 hover:text-blue-700'
+                        : 'bg-jet-black-50 text-jet-black-700 hover:bg-blue-100 hover:text-blue-700'
                     }`}
                   >
                     {slot.time}

@@ -127,7 +127,7 @@ export default function Reminders() {
       sent: { text: 'Enviado', class: 'bg-green-100 text-green-800', icon: CheckCircle },
       failed: { text: 'Falhou', class: 'bg-red-100 text-red-800', icon: XCircle }
     }
-    return badges[status] || { text: status, class: 'bg-gray-100 text-gray-800', icon: AlertCircle }
+    return badges[status] || { text: status, class: 'bg-jet-black-100 text-jet-black-800', icon: AlertCircle }
   }
 
   const getReminderTypeIcon = (type) => {
@@ -147,8 +147,8 @@ export default function Reminders() {
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Lembretes Automáticos</h1>
-          <p className="text-gray-600">Gerencie os lembretes de agendamento</p>
+          <h1 className="text-2xl font-bold text-jet-black-900">Lembretes Automáticos</h1>
+          <p className="text-jet-black-600">Gerencie os lembretes de agendamento</p>
         </div>
         <div className="flex space-x-2">
           <Button
@@ -170,8 +170,8 @@ export default function Reminders() {
               <MessageSquare className="h-5 w-5 text-white" />
             </div>
             <div className="ml-3">
-              <p className="text-sm font-medium text-gray-600">Total</p>
-              <p className="text-xl font-bold text-gray-900">{stats.total_reminders || 0}</p>
+              <p className="text-sm font-medium text-jet-black-600">Total</p>
+              <p className="text-xl font-bold text-jet-black-900">{stats.total_reminders || 0}</p>
             </div>
           </div>
         </div>
@@ -182,8 +182,8 @@ export default function Reminders() {
               <CheckCircle className="h-5 w-5 text-white" />
             </div>
             <div className="ml-3">
-              <p className="text-sm font-medium text-gray-600">Enviados</p>
-              <p className="text-xl font-bold text-gray-900">{stats.sent_reminders || 0}</p>
+              <p className="text-sm font-medium text-jet-black-600">Enviados</p>
+              <p className="text-xl font-bold text-jet-black-900">{stats.sent_reminders || 0}</p>
             </div>
           </div>
         </div>
@@ -194,8 +194,8 @@ export default function Reminders() {
               <Clock className="h-5 w-5 text-white" />
             </div>
             <div className="ml-3">
-              <p className="text-sm font-medium text-gray-600">Pendentes</p>
-              <p className="text-xl font-bold text-gray-900">{stats.pending_reminders || 0}</p>
+              <p className="text-sm font-medium text-jet-black-600">Pendentes</p>
+              <p className="text-xl font-bold text-jet-black-900">{stats.pending_reminders || 0}</p>
             </div>
           </div>
         </div>
@@ -206,8 +206,8 @@ export default function Reminders() {
               <XCircle className="h-5 w-5 text-white" />
             </div>
             <div className="ml-3">
-              <p className="text-sm font-medium text-gray-600">Falharam</p>
-              <p className="text-xl font-bold text-gray-900">{stats.failed_reminders || 0}</p>
+              <p className="text-sm font-medium text-jet-black-600">Falharam</p>
+              <p className="text-xl font-bold text-jet-black-900">{stats.failed_reminders || 0}</p>
             </div>
           </div>
         </div>
@@ -263,11 +263,11 @@ export default function Reminders() {
       <div className="bg-white rounded-lg shadow-sm border p-4">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
+            <label className="block text-sm font-medium text-jet-black-700 mb-1">Status</label>
             <select
               value={filters.status}
               onChange={(e) => setFilters(prev => ({ ...prev, status: e.target.value, page: 1 }))}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 border border-jet-black-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="">Todos</option>
               <option value="pending">Pendente</option>
@@ -277,11 +277,11 @@ export default function Reminders() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Tipo</label>
+            <label className="block text-sm font-medium text-jet-black-700 mb-1">Tipo</label>
             <select
               value={filters.reminder_type}
               onChange={(e) => setFilters(prev => ({ ...prev, reminder_type: e.target.value, page: 1 }))}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 border border-jet-black-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="">Todos</option>
               <option value="whatsapp">WhatsApp</option>
@@ -305,40 +305,40 @@ export default function Reminders() {
       {/* Reminders List */}
       <div className="bg-white rounded-lg shadow-sm border">
         <div className="px-4 py-3 border-b">
-          <h3 className="text-lg font-medium text-gray-900">Lista de Lembretes</h3>
+          <h3 className="text-lg font-medium text-jet-black-900">Lista de Lembretes</h3>
         </div>
 
         {reminders.length === 0 ? (
           <div className="p-8 text-center">
-            <MessageSquare className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-            <p className="text-gray-500">Nenhum lembrete encontrado</p>
+            <MessageSquare className="h-12 w-12 text-jet-black-400 mx-auto mb-4" />
+            <p className="text-jet-black-500">Nenhum lembrete encontrado</p>
           </div>
         ) : (
           <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
+            <table className="min-w-full divide-y divide-jet-black-200">
+              <thead className="bg-jet-black-50">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-jet-black-500 uppercase tracking-wider">
                     Cliente
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-jet-black-500 uppercase tracking-wider">
                     Agendamento
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-jet-black-500 uppercase tracking-wider">
                     Tipo
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-jet-black-500 uppercase tracking-wider">
                     Status
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-jet-black-500 uppercase tracking-wider">
                     Agendado para
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-jet-black-500 uppercase tracking-wider">
                     Ações
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
+              <tbody className="bg-white divide-y divide-jet-black-200">
                 {reminders.map((reminder) => {
                   const statusBadge = getStatusBadge(reminder.status)
                   const TypeIcon = getReminderTypeIcon(reminder.reminder_type)
@@ -347,20 +347,20 @@ export default function Reminders() {
                     <tr key={reminder.id}>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div>
-                          <div className="text-sm font-medium text-gray-900">
+                          <div className="text-sm font-medium text-jet-black-900">
                             {reminder.appointment?.client?.name || 'N/A'}
                           </div>
-                          <div className="text-sm text-gray-500">
+                          <div className="text-sm text-jet-black-500">
                             {reminder.phone_number}
                           </div>
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div>
-                          <div className="text-sm font-medium text-gray-900">
+                          <div className="text-sm font-medium text-jet-black-900">
                             {reminder.appointment?.service?.name || 'N/A'}
                           </div>
-                          <div className="text-sm text-gray-500">
+                          <div className="text-sm text-jet-black-500">
                             {reminder.appointment?.appointment_date} {reminder.appointment?.start_time}
                           </div>
                         </div>
@@ -368,7 +368,7 @@ export default function Reminders() {
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center">
                           <TypeIcon className={`h-4 w-4 mr-2 ${reminder.reminder_type === 'whatsapp' ? 'text-green-600' : 'text-blue-600'}`} />
-                          <span className="text-sm text-gray-900 capitalize">
+                          <span className="text-sm text-jet-black-900 capitalize">
                             {reminder.reminder_type}
                           </span>
                         </div>
@@ -379,7 +379,7 @@ export default function Reminders() {
                           {statusBadge.text}
                         </span>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-jet-black-900">
                         {new Date(reminder.reminder_time).toLocaleString('pt-BR')}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">

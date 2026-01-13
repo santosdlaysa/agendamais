@@ -79,7 +79,7 @@ export default function BookingConfirmation() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-jet-black-50 flex items-center justify-center">
         <Loader2 className="w-12 h-12 text-blue-600 animate-spin" />
       </div>
     )
@@ -87,10 +87,10 @@ export default function BookingConfirmation() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-jet-black-50 flex items-center justify-center p-4">
         <div className="text-center">
-          <h1 className="text-xl font-bold text-gray-900 mb-2">Agendamento não encontrado</h1>
-          <p className="text-gray-600 mb-4">{error}</p>
+          <h1 className="text-xl font-bold text-jet-black-900 mb-2">Agendamento não encontrado</h1>
+          <p className="text-jet-black-600 mb-4">{error}</p>
           <Link
             to={`/agendar/${slug}`}
             className="text-blue-600 hover:text-blue-800 underline"
@@ -103,35 +103,35 @@ export default function BookingConfirmation() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-10 px-4">
+    <div className="min-h-screen bg-jet-black-50 py-10 px-4">
       <div className="max-w-lg mx-auto">
         {/* Sucesso Header */}
         <div className="text-center mb-8">
           <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
             <CheckCircle className="w-12 h-12 text-green-600" />
           </div>
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">
+          <h1 className="text-2xl font-bold text-jet-black-900 mb-2">
             Agendamento Confirmado!
           </h1>
-          <p className="text-gray-600">
+          <p className="text-jet-black-600">
             Seu agendamento foi realizado com sucesso.
           </p>
         </div>
 
         {/* Código do agendamento */}
         <div className="bg-white rounded-xl shadow-sm border p-6 mb-6">
-          <p className="text-sm text-gray-500 mb-2 text-center">Código do agendamento</p>
+          <p className="text-sm text-jet-black-500 mb-2 text-center">Código do agendamento</p>
           <div className="flex items-center justify-center gap-2">
             <span className="text-2xl font-mono font-bold text-blue-600">{bookingCode}</span>
             <button
               onClick={copyCode}
-              className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+              className="p-2 text-jet-black-400 hover:text-jet-black-600 hover:bg-jet-black-100 rounded-lg transition-colors"
               title="Copiar código"
             >
               <Copy className="w-5 h-5" />
             </button>
           </div>
-          <p className="text-xs text-gray-400 text-center mt-2">
+          <p className="text-xs text-jet-black-400 text-center mt-2">
             Guarde este código para consultas ou cancelamentos
           </p>
         </div>
@@ -149,8 +149,8 @@ export default function BookingConfirmation() {
                 <Calendar className="w-5 h-5 text-blue-600" />
               </div>
               <div>
-                <p className="text-sm text-gray-500">Serviço</p>
-                <p className="font-semibold text-gray-900">{appointment?.service?.name}</p>
+                <p className="text-sm text-jet-black-500">Serviço</p>
+                <p className="font-semibold text-jet-black-900">{appointment?.service?.name}</p>
               </div>
             </div>
 
@@ -160,11 +160,11 @@ export default function BookingConfirmation() {
                 <Clock className="w-5 h-5 text-orange-600" />
               </div>
               <div>
-                <p className="text-sm text-gray-500">Data e Horário</p>
-                <p className="font-semibold text-gray-900 capitalize">
+                <p className="text-sm text-jet-black-500">Data e Horário</p>
+                <p className="font-semibold text-jet-black-900 capitalize">
                   {formatDate(appointment?.appointment_date)}
                 </p>
-                <p className="text-sm text-gray-600">
+                <p className="text-sm text-jet-black-600">
                   {appointment?.start_time} - {appointment?.end_time}
                 </p>
               </div>
@@ -176,8 +176,8 @@ export default function BookingConfirmation() {
                 <User className="w-5 h-5 text-purple-600" />
               </div>
               <div>
-                <p className="text-sm text-gray-500">Profissional</p>
-                <p className="font-semibold text-gray-900">{appointment?.professional?.name}</p>
+                <p className="text-sm text-jet-black-500">Profissional</p>
+                <p className="font-semibold text-jet-black-900">{appointment?.professional?.name}</p>
               </div>
             </div>
 
@@ -188,8 +188,8 @@ export default function BookingConfirmation() {
                   <MapPin className="w-5 h-5 text-green-600" />
                 </div>
                 <div>
-                  <p className="text-sm text-gray-500">Endereço</p>
-                  <p className="font-semibold text-gray-900">{appointment?.business?.address}</p>
+                  <p className="text-sm text-jet-black-500">Endereço</p>
+                  <p className="font-semibold text-jet-black-900">{appointment?.business?.address}</p>
                 </div>
               </div>
             )}
@@ -201,7 +201,7 @@ export default function BookingConfirmation() {
                   <Phone className="w-5 h-5 text-teal-600" />
                 </div>
                 <div>
-                  <p className="text-sm text-gray-500">Telefone</p>
+                  <p className="text-sm text-jet-black-500">Telefone</p>
                   <a
                     href={`tel:${appointment?.business?.phone}`}
                     className="font-semibold text-blue-600 hover:text-blue-800"
@@ -214,9 +214,9 @@ export default function BookingConfirmation() {
           </div>
 
           {/* Valor */}
-          <div className="bg-gray-50 p-4 border-t">
+          <div className="bg-jet-black-50 p-4 border-t">
             <div className="flex items-center justify-between">
-              <span className="text-gray-600">Valor</span>
+              <span className="text-jet-black-600">Valor</span>
               <span className="text-xl font-bold text-green-600">
                 R$ {parseFloat(appointment?.service?.price || 0).toFixed(2)}
               </span>
@@ -228,7 +228,7 @@ export default function BookingConfirmation() {
         <div className="space-y-3">
           <button
             onClick={addToGoogleCalendar}
-            className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-white border border-gray-300 rounded-lg font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+            className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-white border border-jet-black-300 rounded-lg font-medium text-jet-black-700 hover:bg-jet-black-50 transition-colors"
           >
             <ExternalLink className="w-5 h-5" />
             Adicionar ao Google Calendar

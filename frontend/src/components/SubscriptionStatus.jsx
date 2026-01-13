@@ -75,7 +75,7 @@ export default function SubscriptionStatus() {
       <div className="bg-white rounded-lg shadow p-6">
         <div className="flex items-center justify-center">
           <Loader2 className="w-6 h-6 animate-spin text-blue-600" />
-          <span className="ml-2 text-gray-600">Carregando...</span>
+          <span className="ml-2 text-jet-black-600">Carregando...</span>
         </div>
       </div>
     )
@@ -137,7 +137,7 @@ export default function SubscriptionStatus() {
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-2">
-            <h2 className="text-2xl font-bold text-gray-900">Minha Assinatura</h2>
+            <h2 className="text-2xl font-bold text-jet-black-900">Minha Assinatura</h2>
             {refreshing && <Loader2 className="w-5 h-5 animate-spin text-blue-600" />}
           </div>
           <span
@@ -149,7 +149,7 @@ export default function SubscriptionStatus() {
         </div>
 
         {/* Status Description */}
-        <p className="text-gray-600 mb-6">{statusConfig.description}</p>
+        <p className="text-jet-black-600 mb-6">{statusConfig.description}</p>
 
         {/* Subscription Details */}
         <div className="grid md:grid-cols-2 gap-6 mb-6">
@@ -159,9 +159,9 @@ export default function SubscriptionStatus() {
               <CreditCard className="w-5 h-5 text-blue-600" />
             </div>
             <div>
-              <p className="text-sm text-gray-600 mb-1">Plano Atual</p>
-              <p className="font-semibold text-gray-900">{planInfo.name}</p>
-              <p className="text-sm text-gray-500">R$ {planInfo.price}/mês</p>
+              <p className="text-sm text-jet-black-600 mb-1">Plano Atual</p>
+              <p className="font-semibold text-jet-black-900">{planInfo.name}</p>
+              <p className="text-sm text-jet-black-500">R$ {planInfo.price}/mês</p>
             </div>
           </div>
 
@@ -173,16 +173,16 @@ export default function SubscriptionStatus() {
             <div>
               {subscription.status === 'trialing' && subscription.trial_end ? (
                 <>
-                  <p className="text-sm text-gray-600 mb-1">Término do Teste</p>
-                  <p className="font-semibold text-gray-900">
+                  <p className="text-sm text-jet-black-600 mb-1">Término do Teste</p>
+                  <p className="font-semibold text-jet-black-900">
                     {new Date(subscription.trial_end).toLocaleDateString('pt-BR')}
                   </p>
-                  <p className="text-sm text-gray-500">{trialDays} dias restantes</p>
+                  <p className="text-sm text-jet-black-500">{trialDays} dias restantes</p>
                 </>
               ) : (
                 <>
-                  <p className="text-sm text-gray-600 mb-1">Data de Início</p>
-                  <p className="font-semibold text-gray-900">
+                  <p className="text-sm text-jet-black-600 mb-1">Data de Início</p>
+                  <p className="font-semibold text-jet-black-900">
                     {new Date(subscription.start_date).toLocaleDateString('pt-BR')}
                   </p>
                 </>
@@ -313,7 +313,7 @@ export default function SubscriptionStatus() {
             <button
               onClick={handleOpenBilling}
               disabled={billingLoading}
-              className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-800 py-2 px-4 rounded-lg font-medium transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+              className="flex-1 bg-jet-black-100 hover:bg-jet-black-200 text-jet-black-800 py-2 px-4 rounded-lg font-medium transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
             >
               {billingLoading ? (
                 <>
@@ -329,7 +329,7 @@ export default function SubscriptionStatus() {
             </button>
             <button
               onClick={() => setShowCancelModal(true)}
-              className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-800 py-2 px-4 rounded-lg font-medium transition-colors"
+              className="flex-1 bg-jet-black-100 hover:bg-jet-black-200 text-jet-black-800 py-2 px-4 rounded-lg font-medium transition-colors"
             >
               Cancelar Assinatura
             </button>
@@ -341,10 +341,10 @@ export default function SubscriptionStatus() {
       {showCancelModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6">
-            <h3 className="text-xl font-bold text-gray-900 mb-4">
+            <h3 className="text-xl font-bold text-jet-black-900 mb-4">
               Cancelar Assinatura
             </h3>
-            <p className="text-gray-600 mb-6">
+            <p className="text-jet-black-600 mb-6">
               Tem certeza que deseja cancelar sua assinatura? Você manterá acesso
               até o fim do período pago.
             </p>
@@ -352,7 +352,7 @@ export default function SubscriptionStatus() {
               <button
                 onClick={() => setShowCancelModal(false)}
                 disabled={cancelLoading}
-                className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-800 py-2 px-4 rounded-lg font-medium transition-colors disabled:opacity-50"
+                className="flex-1 bg-jet-black-100 hover:bg-jet-black-200 text-jet-black-800 py-2 px-4 rounded-lg font-medium transition-colors disabled:opacity-50"
               >
                 Não, manter
               </button>

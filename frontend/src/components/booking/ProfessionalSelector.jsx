@@ -10,10 +10,10 @@ export default function ProfessionalSelector({
   if (loading) {
     return (
       <div className="space-y-4">
-        <h2 className="text-lg font-semibold text-gray-900">Escolha o profissional</h2>
+        <h2 className="text-lg font-semibold text-jet-black-900">Escolha o profissional</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {[1, 2, 3].map((i) => (
-            <div key={i} className="animate-pulse bg-gray-100 rounded-xl h-40" />
+            <div key={i} className="animate-pulse bg-jet-black-100 rounded-xl h-40" />
           ))}
         </div>
       </div>
@@ -22,7 +22,7 @@ export default function ProfessionalSelector({
 
   return (
     <div className="space-y-4">
-      <h2 className="text-lg font-semibold text-gray-900">Escolha o profissional</h2>
+      <h2 className="text-lg font-semibold text-jet-black-900">Escolha o profissional</h2>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         {/* Opção "Sem preferência" */}
@@ -32,7 +32,7 @@ export default function ProfessionalSelector({
             className={`relative p-4 rounded-xl border-2 text-center transition-all duration-200 hover:shadow-md ${
               selectedProfessional === null
                 ? 'border-blue-500 bg-blue-50 ring-2 ring-blue-200'
-                : 'border-gray-200 bg-white hover:border-blue-300'
+                : 'border-jet-black-200 bg-white hover:border-blue-300'
             }`}
           >
             {selectedProfessional === null && (
@@ -41,12 +41,12 @@ export default function ProfessionalSelector({
               </div>
             )}
 
-            <div className="w-16 h-16 mx-auto rounded-full bg-gray-100 flex items-center justify-center mb-3">
-              <User className="w-8 h-8 text-gray-400" />
+            <div className="w-16 h-16 mx-auto rounded-full bg-jet-black-100 flex items-center justify-center mb-3">
+              <User className="w-8 h-8 text-jet-black-400" />
             </div>
 
-            <h3 className="font-semibold text-gray-900">Sem preferência</h3>
-            <p className="text-sm text-gray-500 mt-1">Qualquer profissional disponível</p>
+            <h3 className="font-semibold text-jet-black-900">Sem preferência</h3>
+            <p className="text-sm text-jet-black-500 mt-1">Qualquer profissional disponível</p>
           </button>
         )}
 
@@ -60,7 +60,7 @@ export default function ProfessionalSelector({
               className={`relative p-4 rounded-xl border-2 text-center transition-all duration-200 hover:shadow-md ${
                 isSelected
                   ? 'border-blue-500 bg-blue-50 ring-2 ring-blue-200'
-                  : 'border-gray-200 bg-white hover:border-blue-300'
+                  : 'border-jet-black-200 bg-white hover:border-blue-300'
               }`}
             >
               {isSelected && (
@@ -81,16 +81,16 @@ export default function ProfessionalSelector({
                 </div>
               )}
 
-              <h3 className="font-semibold text-gray-900">{professional.name}</h3>
+              <h3 className="font-semibold text-jet-black-900">{professional.name}</h3>
 
               {professional.role && (
-                <p className="text-sm text-gray-500">{professional.role}</p>
+                <p className="text-sm text-jet-black-500">{professional.role}</p>
               )}
 
               {professional.rating && (
                 <div className="flex items-center justify-center gap-1 mt-2">
                   <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
-                  <span className="text-sm font-medium text-gray-700">
+                  <span className="text-sm font-medium text-jet-black-700">
                     {professional.rating.toFixed(1)}
                   </span>
                 </div>
@@ -101,7 +101,7 @@ export default function ProfessionalSelector({
       </div>
 
       {professionals.length === 0 && (
-        <p className="text-center text-gray-500 py-4">
+        <p className="text-center text-jet-black-500 py-4">
           Nenhum profissional disponível para este serviço.
         </p>
       )}

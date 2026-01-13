@@ -252,15 +252,15 @@ export default function AppointmentForm() {
         <div className="flex items-center space-x-3">
           <button
             onClick={() => navigate('/appointments')}
-            className="flex items-center justify-center w-10 h-10 rounded-lg border border-gray-300 hover:bg-gray-50"
+            className="flex items-center justify-center w-10 h-10 rounded-lg border border-jet-black-300 hover:bg-jet-black-50"
           >
             <ArrowLeft className="w-5 h-5" />
           </button>
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">
+            <h1 className="text-2xl font-bold text-jet-black-900">
               {isEditMode ? 'Editar Agendamento' : 'Novo Agendamento'}
             </h1>
-            <p className="text-gray-600">
+            <p className="text-jet-black-600">
               {isEditMode ? 'Atualize as informações do agendamento' : 'Preencha os dados do novo agendamento'}
             </p>
           </div>
@@ -272,10 +272,10 @@ export default function AppointmentForm() {
         <form onSubmit={handleSubmit} className="p-6 space-y-6">
           {/* Cliente e Profissional */}
           <div>
-            <h3 className="text-lg font-medium text-gray-900 mb-4">Cliente e Profissional</h3>
+            <h3 className="text-lg font-medium text-jet-black-900 mb-4">Cliente e Profissional</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-jet-black-700 mb-2">
                   <User className="w-4 h-4 inline mr-1" />
                   Cliente *
                 </label>
@@ -284,7 +284,7 @@ export default function AppointmentForm() {
                   value={formData.client_id}
                   onChange={handleInputChange}
                   className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-black ${
-                    errors.client_id ? 'border-red-500' : 'border-gray-300'
+                    errors.client_id ? 'border-red-500' : 'border-jet-black-300'
                   }`}
                 >
                   <option value="">Selecione um cliente</option>
@@ -297,7 +297,7 @@ export default function AppointmentForm() {
                 {errors.client_id && (
                   <p className="mt-1 text-sm text-red-600">{errors.client_id}</p>
                 )}
-                <p className="mt-1 text-xs text-gray-500">
+                <p className="mt-1 text-xs text-jet-black-500">
                   Não encontrou o cliente? 
                   <button
                     type="button"
@@ -310,7 +310,7 @@ export default function AppointmentForm() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-jet-black-700 mb-2">
                   <UserCheck className="w-4 h-4 inline mr-1" />
                   Profissional *
                 </label>
@@ -319,7 +319,7 @@ export default function AppointmentForm() {
                   value={formData.professional_id}
                   onChange={handleInputChange}
                   className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-black ${
-                    errors.professional_id ? 'border-red-500' : 'border-gray-300'
+                    errors.professional_id ? 'border-red-500' : 'border-jet-black-300'
                   }`}
                 >
                   <option value="">Selecione um profissional</option>
@@ -338,10 +338,10 @@ export default function AppointmentForm() {
 
           {/* Serviço */}
           <div>
-            <h3 className="text-lg font-medium text-gray-900 mb-4">Serviço</h3>
+            <h3 className="text-lg font-medium text-jet-black-900 mb-4">Serviço</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-jet-black-700 mb-2">
                   <Briefcase className="w-4 h-4 inline mr-1" />
                   Serviço *
                 </label>
@@ -350,8 +350,8 @@ export default function AppointmentForm() {
                   value={formData.service_id}
                   onChange={handleInputChange}
                   disabled={!formData.professional_id}
-                  className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-black disabled:bg-gray-100 disabled:cursor-not-allowed ${
-                    errors.service_id ? 'border-red-500' : 'border-gray-300'
+                  className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-black disabled:bg-jet-black-100 disabled:cursor-not-allowed ${
+                    errors.service_id ? 'border-red-500' : 'border-jet-black-300'
                   }`}
                 >
                   <option value="">
@@ -369,7 +369,7 @@ export default function AppointmentForm() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-jet-black-700 mb-2">
                   Preço (R$) *
                 </label>
                 <input
@@ -380,14 +380,14 @@ export default function AppointmentForm() {
                   min="0"
                   step="0.01"
                   className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-black ${
-                    errors.price ? 'border-red-500' : 'border-gray-300'
+                    errors.price ? 'border-red-500' : 'border-jet-black-300'
                   }`}
                   placeholder="0.00"
                 />
                 {errors.price && (
                   <p className="mt-1 text-sm text-red-600">{errors.price}</p>
                 )}
-                <p className="mt-1 text-xs text-gray-500">
+                <p className="mt-1 text-xs text-jet-black-500">
                   Preço preenchido automaticamente com base no serviço
                 </p>
               </div>
@@ -415,10 +415,10 @@ export default function AppointmentForm() {
 
           {/* Data e Horário */}
           <div>
-            <h3 className="text-lg font-medium text-gray-900 mb-4">Data e Horário</h3>
+            <h3 className="text-lg font-medium text-jet-black-900 mb-4">Data e Horário</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-jet-black-700 mb-2">
                   <Calendar className="w-4 h-4 inline mr-1" />
                   Data do Agendamento *
                 </label>
@@ -429,7 +429,7 @@ export default function AppointmentForm() {
                   onChange={handleInputChange}
                   min={new Date().toISOString().split('T')[0]}
                   className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-black ${
-                    errors.appointment_date ? 'border-red-500' : 'border-gray-300'
+                    errors.appointment_date ? 'border-red-500' : 'border-jet-black-300'
                   }`}
                 />
                 {errors.appointment_date && (
@@ -438,7 +438,7 @@ export default function AppointmentForm() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-jet-black-700 mb-2">
                   <Clock className="w-4 h-4 inline mr-1" />
                   Horário de Início *
                 </label>
@@ -448,14 +448,14 @@ export default function AppointmentForm() {
                   value={formData.start_time}
                   onChange={handleInputChange}
                   className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-black ${
-                    errors.start_time ? 'border-red-500' : 'border-gray-300'
+                    errors.start_time ? 'border-red-500' : 'border-jet-black-300'
                   }`}
                 />
                 {errors.start_time && (
                   <p className="mt-1 text-sm text-red-600">{errors.start_time}</p>
                 )}
                 {availability.end_time && (
-                  <p className="mt-1 text-xs text-gray-500">
+                  <p className="mt-1 text-xs text-jet-black-500">
                     Término previsto: {availability.end_time}
                   </p>
                 )}
@@ -491,17 +491,17 @@ export default function AppointmentForm() {
 
           {/* Status e Observações */}
           <div>
-            <h3 className="text-lg font-medium text-gray-900 mb-4">Informações Adicionais</h3>
+            <h3 className="text-lg font-medium text-jet-black-900 mb-4">Informações Adicionais</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-jet-black-700 mb-2">
                   Status
                 </label>
                 <select
                   name="status"
                   value={formData.status}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-black"
+                  className="w-full px-3 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-black"
                 >
                   <option value="scheduled">Agendado</option>
                   <option value="completed">Concluído</option>
@@ -511,7 +511,7 @@ export default function AppointmentForm() {
               </div>
 
               <div className="md:col-span-1">
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-jet-black-700 mb-2">
                   Observações
                 </label>
                 <textarea
@@ -519,7 +519,7 @@ export default function AppointmentForm() {
                   value={formData.notes}
                   onChange={handleInputChange}
                   rows={4}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-black"
+                  className="w-full px-3 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-black"
                   placeholder="Observações especiais sobre o agendamento..."
                 />
               </div>
@@ -531,7 +531,7 @@ export default function AppointmentForm() {
             <button
               type="button"
               onClick={() => navigate('/appointments')}
-              className="flex items-center px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50"
+              className="flex items-center px-4 py-2 border border-jet-black-300 rounded-lg text-jet-black-700 hover:bg-jet-black-50"
             >
               <X className="w-4 h-4 mr-2" />
               Cancelar

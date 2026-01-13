@@ -128,15 +128,15 @@ export default function PaymentModal() {
 
   if (success) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-jet-black-50 flex items-center justify-center p-4">
         <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full text-center">
           <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
             <CheckCircle className="w-10 h-10 text-green-600" />
           </div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">
+          <h2 className="text-2xl font-bold text-jet-black-900 mb-2">
             Assinatura Criada!
           </h2>
-          <p className="text-gray-600 mb-4">
+          <p className="text-jet-black-600 mb-4">
             Você tem 3 dias de teste gratuito para aproveitar todos os recursos do plano {planInfo.name}.
           </p>
           <div className="bg-blue-50 rounded-lg p-4 mb-6">
@@ -145,7 +145,7 @@ export default function PaymentModal() {
               Cancele a qualquer momento.
             </p>
           </div>
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-jet-black-500">
             Redirecionando para o dashboard...
           </p>
         </div>
@@ -154,7 +154,7 @@ export default function PaymentModal() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-jet-black-50 flex items-center justify-center p-4">
       <div className="bg-white rounded-2xl shadow-xl overflow-hidden max-w-4xl w-full">
         <div className="grid md:grid-cols-2">
           {/* Left Side - Summary */}
@@ -199,7 +199,7 @@ export default function PaymentModal() {
 
           {/* Right Side - Payment Form */}
           <div className="p-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">
+            <h2 className="text-2xl font-bold text-jet-black-900 mb-6">
               Dados de Pagamento
             </h2>
 
@@ -207,39 +207,39 @@ export default function PaymentModal() {
               {/* User Info */}
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-jet-black-700 mb-2">
                     Nome Completo
                   </label>
                   <input
                     type="text"
                     value={user?.name || ''}
                     disabled
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-600"
+                    className="w-full px-4 py-2 border border-jet-black-300 rounded-lg bg-jet-black-50 text-jet-black-600"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-jet-black-700 mb-2">
                     Email
                   </label>
                   <input
                     type="email"
                     value={user?.email || ''}
                     disabled
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-600"
+                    className="w-full px-4 py-2 border border-jet-black-300 rounded-lg bg-jet-black-50 text-jet-black-600"
                   />
                 </div>
               </div>
 
               {/* Card Element */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-jet-black-700 mb-2">
                   <CreditCard className="w-4 h-4 inline mr-2" />
                   Cartão de Crédito
                 </label>
                 <div
                   id="card-element"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-transparent"
+                  className="w-full px-4 py-3 border border-jet-black-300 rounded-lg focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-transparent"
                 />
               </div>
 
@@ -252,8 +252,8 @@ export default function PaymentModal() {
               )}
 
               {/* Info Box */}
-              <div className="bg-gray-50 rounded-lg p-4 text-sm text-gray-600">
-                <p className="font-medium text-gray-900 mb-1">
+              <div className="bg-jet-black-50 rounded-lg p-4 text-sm text-jet-black-600">
+                <p className="font-medium text-jet-black-900 mb-1">
                   Como funciona:
                 </p>
                 <ol className="list-decimal list-inside space-y-1">
@@ -282,7 +282,7 @@ export default function PaymentModal() {
                 )}
               </button>
 
-              <p className="text-xs text-center text-gray-500">
+              <p className="text-xs text-center text-jet-black-500">
                 Ao confirmar, você concorda com nossos{' '}
                 <a href="#" className="text-blue-600 hover:underline">
                   Termos de Uso

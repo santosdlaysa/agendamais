@@ -8,7 +8,7 @@
   font-weight: 400;
 
   color-scheme: light;
-  color: #1f2937;
+  color: #16181d;
   background-color: #ffffff;
 
   font-synthesis: none;
@@ -20,19 +20,19 @@
 
 @layer base {
   * {
-    @apply border-gray-200;
+    @apply border-jet-black-200;
   }
   body {
-    @apply bg-white text-gray-900;
+    @apply bg-white text-jet-black-900;
   }
   input,
   textarea,
   select {
-    @apply bg-white text-gray-900;
+    @apply bg-white text-jet-black-900;
   }
   input::placeholder,
   textarea::placeholder {
-    @apply text-gray-400;
+    @apply text-jet-black-400;
   }
 }
 
@@ -154,7 +154,7 @@
 
 /* Gradient text utility */
 .text-gradient {
-  background: linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #ec4899 100%);
+  background: linear-gradient(135deg, #3a00cc 0%, #6d33ff 50%, #455cba 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

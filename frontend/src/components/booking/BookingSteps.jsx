@@ -20,7 +20,7 @@ export default function BookingSteps({ currentStep }) {
                     ? 'bg-green-500 text-white'
                     : currentStep === step.number
                     ? 'bg-blue-600 text-white ring-4 ring-blue-100'
-                    : 'bg-gray-200 text-gray-500'
+                    : 'bg-jet-black-200 text-jet-black-500'
                 }`}
               >
                 {currentStep > step.number ? (
@@ -31,7 +31,7 @@ export default function BookingSteps({ currentStep }) {
               </div>
               <span
                 className={`mt-2 text-xs font-medium hidden sm:block ${
-                  currentStep >= step.number ? 'text-blue-600' : 'text-gray-400'
+                  currentStep >= step.number ? 'text-blue-600' : 'text-jet-black-400'
                 }`}
               >
                 {step.title}
@@ -40,7 +40,7 @@ export default function BookingSteps({ currentStep }) {
             {index < steps.length - 1 && (
               <div
                 className={`h-1 flex-1 mx-2 rounded transition-all duration-300 ${
-                  currentStep > step.number ? 'bg-green-500' : 'bg-gray-200'
+                  currentStep > step.number ? 'bg-green-500' : 'bg-jet-black-200'
                 }`}
               />
             )}

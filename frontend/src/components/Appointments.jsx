@@ -176,8 +176,8 @@ export default function Appointments() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Agendamentos</h1>
-          <p className="text-gray-600">Gerencie todos os agendamentos</p>
+          <h1 className="text-2xl font-bold text-jet-black-900">Agendamentos</h1>
+          <p className="text-jet-black-600">Gerencie todos os agendamentos</p>
         </div>
         <button
           onClick={() => navigate('/appointments/new')}
@@ -192,29 +192,29 @@ export default function Appointments() {
       <div className="bg-white rounded-lg shadow-sm border p-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-jet-black-700 mb-1">
               Buscar
             </label>
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-jet-black-400 w-4 h-4" />
               <input
                 type="text"
                 placeholder="Cliente ou profissional..."
                 value={filters.search}
                 onChange={(e) => handleFilterChange('search', e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full pl-10 pr-4 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-jet-black-700 mb-1">
               Status
             </label>
             <select
               value={filters.status}
               onChange={(e) => handleFilterChange('status', e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-3 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             >
               <option value="">Todos os status</option>
               {Object.entries(STATUS_CONFIG).map(([key, config]) => (
@@ -224,13 +224,13 @@ export default function Appointments() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-jet-black-700 mb-1">
               Profissional
             </label>
             <select
               value={filters.professional_id}
               onChange={(e) => handleFilterChange('professional_id', e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-3 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             >
               <option value="">Todos os profissionais</option>
               {professionals.map((professional) => (
@@ -242,20 +242,20 @@ export default function Appointments() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-jet-black-700 mb-1">
               Data
             </label>
             <input
               type="date"
               value={filters.start_date}
               onChange={(e) => handleFilterChange('start_date', e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-3 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
           </div>
         </div>
 
         <div className="flex items-center justify-between">
-          <div className="text-sm text-gray-600">
+          <div className="text-sm text-jet-black-600">
             {appointments.length} agendamentos encontrados
           </div>
           <button
@@ -271,13 +271,13 @@ export default function Appointments() {
       <div className="bg-white rounded-lg shadow-sm border">
         {appointments.length === 0 ? (
           <div className="text-center py-12">
-            <div className="text-gray-400 mb-4">
+            <div className="text-jet-black-400 mb-4">
               <Calendar className="w-16 h-16 mx-auto" />
             </div>
-            <h3 className="text-lg font-medium text-gray-900 mb-2">
+            <h3 className="text-lg font-medium text-jet-black-900 mb-2">
               Nenhum agendamento encontrado
             </h3>
-            <p className="text-gray-600 mb-6">
+            <p className="text-jet-black-600 mb-6">
               {Object.values(filters).some(v => v) 
                 ? 'Tente ajustar os filtros de busca'
                 : 'Comece criando o primeiro agendamento'
@@ -294,12 +294,12 @@ export default function Appointments() {
             )}
           </div>
         ) : (
-          <div className="divide-y divide-gray-200">
+          <div className="divide-y divide-jet-black-200">
             {appointments.map((appointment) => {
               const StatusIcon = STATUS_CONFIG[appointment.status]?.icon || Calendar
               
               return (
-                <div key={appointment.id} className="p-6 hover:bg-gray-50">
+                <div key={appointment.id} className="p-6 hover:bg-jet-black-50">
                   <div className="flex items-center justify-between">
                     <div className="flex-1">
                       <div className="flex items-center space-x-3">
@@ -309,7 +309,7 @@ export default function Appointments() {
                         />
                         <div>
                           <div className="flex items-center space-x-2">
-                            <h3 className="text-lg font-medium text-gray-900">
+                            <h3 className="text-lg font-medium text-jet-black-900">
                               {appointment.client.name}
                             </h3>
                             <span 
@@ -320,7 +320,7 @@ export default function Appointments() {
                             </span>
                           </div>
                           
-                          <div className="flex items-center space-x-6 mt-2 text-sm text-gray-500">
+                          <div className="flex items-center space-x-6 mt-2 text-sm text-jet-black-500">
                             <div className="flex items-center">
                               <Calendar className="w-4 h-4 mr-1" />
                               {formatDate(appointment.appointment_date)}
@@ -344,7 +344,7 @@ export default function Appointments() {
                           </div>
 
                           {appointment.notes && (
-                            <div className="mt-2 text-sm text-gray-600">
+                            <div className="mt-2 text-sm text-jet-black-600">
                               <strong>Observações:</strong> {appointment.notes}
                             </div>
                           )}
@@ -404,7 +404,7 @@ export default function Appointments() {
       {pagination.pages > 1 && (
         <div className="bg-white rounded-lg shadow-sm border p-4">
           <div className="flex items-center justify-between">
-            <div className="text-sm text-gray-600">
+            <div className="text-sm text-jet-black-600">
               Página {pagination.page} de {pagination.pages} 
               ({pagination.total} agendamentos no total)
             </div>
@@ -412,7 +412,7 @@ export default function Appointments() {
               <button
                 onClick={() => handlePageChange(pagination.page - 1)}
                 disabled={pagination.page <= 1}
-                className="px-3 py-2 text-sm border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-3 py-2 text-sm border border-jet-black-300 rounded-md hover:bg-jet-black-50 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Anterior
               </button>
@@ -428,7 +428,7 @@ export default function Appointments() {
                     className={`px-3 py-2 text-sm border rounded-md ${
                       page === pagination.page
                         ? 'bg-blue-600 text-white border-blue-600'
-                        : 'border-gray-300 hover:bg-gray-50'
+                        : 'border-jet-black-300 hover:bg-jet-black-50'
                     }`}
                   >
                     {page}
@@ -439,7 +439,7 @@ export default function Appointments() {
               <button
                 onClick={() => handlePageChange(pagination.page + 1)}
                 disabled={pagination.page >= pagination.pages}
-                className="px-3 py-2 text-sm border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-3 py-2 text-sm border border-jet-black-300 rounded-md hover:bg-jet-black-50 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Próxima
               </button>
@@ -456,8 +456,8 @@ export default function Appointments() {
               const count = appointments.filter(a => a.status === status).length
               return (
                 <div key={status}>
-                  <p className="text-2xl font-bold text-gray-900">{count}</p>
-                  <p className="text-sm text-gray-600">{config.label}</p>
+                  <p className="text-2xl font-bold text-jet-black-900">{count}</p>
+                  <p className="text-sm text-jet-black-600">{config.label}</p>
                 </div>
               )
             })}

@@ -282,11 +282,11 @@ export default function Settings() {
     <div className="max-w-6xl mx-auto">
       {/* Header */}
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
+        <h1 className="text-2xl font-bold text-jet-black-900 flex items-center gap-2">
           <SettingsIcon className="w-6 h-6" />
           Configurações
         </h1>
-        <p className="text-gray-600">Gerencie usuários e permissões do sistema</p>
+        <p className="text-jet-black-600">Gerencie usuários e permissões do sistema</p>
       </div>
 
       {/* Tabs */}
@@ -297,7 +297,7 @@ export default function Settings() {
             className={`pb-3 px-1 font-medium text-sm border-b-2 transition-colors ${
               activeTab === 'business'
                 ? 'border-blue-600 text-blue-600'
-                : 'border-transparent text-gray-500 hover:text-gray-700'
+                : 'border-transparent text-jet-black-500 hover:text-jet-black-700'
             }`}
           >
             <div className="flex items-center gap-2">
@@ -310,7 +310,7 @@ export default function Settings() {
             className={`pb-3 px-1 font-medium text-sm border-b-2 transition-colors ${
               activeTab === 'booking'
                 ? 'border-blue-600 text-blue-600'
-                : 'border-transparent text-gray-500 hover:text-gray-700'
+                : 'border-transparent text-jet-black-500 hover:text-jet-black-700'
             }`}
           >
             <div className="flex items-center gap-2">
@@ -325,7 +325,7 @@ export default function Settings() {
                 className={`pb-3 px-1 font-medium text-sm border-b-2 transition-colors ${
                   activeTab === 'permissions'
                     ? 'border-blue-600 text-blue-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700'
+                    : 'border-transparent text-jet-black-500 hover:text-jet-black-700'
                 }`}
               >
                 <div className="flex items-center gap-2">
@@ -338,7 +338,7 @@ export default function Settings() {
                 className={`pb-3 px-1 font-medium text-sm border-b-2 transition-colors ${
                   activeTab === 'users'
                     ? 'border-blue-600 text-blue-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700'
+                    : 'border-transparent text-jet-black-500 hover:text-jet-black-700'
                 }`}
               >
                 <div className="flex items-center gap-2">
@@ -392,7 +392,7 @@ export default function Settings() {
 
           {/* Dados da Empresa */}
           <div className="bg-white rounded-xl shadow border p-6">
-            <h3 className="font-semibold text-gray-900 mb-6 flex items-center gap-2">
+            <h3 className="font-semibold text-jet-black-900 mb-6 flex items-center gap-2">
               <Building2 className="w-5 h-5 text-blue-600" />
               Dados da Empresa
             </h3>
@@ -400,7 +400,7 @@ export default function Settings() {
             <div className="grid md:grid-cols-2 gap-6">
               {/* Nome da Empresa */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-jet-black-700 mb-2">
                   Nome da Empresa *
                 </label>
                 <input
@@ -413,71 +413,71 @@ export default function Settings() {
                       slug: prev.slug || generateSlug(e.target.value)
                     }))
                   }}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-4 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   placeholder="Ex: Barbearia do João"
                 />
               </div>
 
               {/* Slug */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-jet-black-700 mb-2">
                   Slug (URL) *
                 </label>
                 <div className="flex">
-                  <span className="inline-flex items-center px-3 rounded-l-lg border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
+                  <span className="inline-flex items-center px-3 rounded-l-lg border border-r-0 border-jet-black-300 bg-jet-black-50 text-jet-black-500 text-sm">
                     /agendar/
                   </span>
                   <input
                     type="text"
                     value={businessData.slug}
                     onChange={(e) => setBusinessData(prev => ({ ...prev, slug: generateSlug(e.target.value) }))}
-                    className="flex-1 px-4 py-2 border border-gray-300 rounded-r-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="flex-1 px-4 py-2 border border-jet-black-300 rounded-r-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     placeholder="minha-empresa"
                   />
                 </div>
-                <p className="text-xs text-gray-500 mt-1">
+                <p className="text-xs text-jet-black-500 mt-1">
                   Este será o link que seus clientes usarão para agendar
                 </p>
               </div>
 
               {/* Telefone */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-jet-black-700 mb-2">
                   Telefone / WhatsApp
                 </label>
                 <input
                   type="tel"
                   value={businessData.business_phone}
                   onChange={(e) => setBusinessData(prev => ({ ...prev, business_phone: e.target.value }))}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-4 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   placeholder="(00) 00000-0000"
                 />
               </div>
 
               {/* Endereço */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-jet-black-700 mb-2">
                   Endereço
                 </label>
                 <input
                   type="text"
                   value={businessData.business_address}
                   onChange={(e) => setBusinessData(prev => ({ ...prev, business_address: e.target.value }))}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-4 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   placeholder="Rua, número, bairro, cidade"
                 />
               </div>
 
               {/* Logo URL */}
               <div className="md:col-span-2">
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-jet-black-700 mb-2">
                   URL do Logo
                 </label>
                 <input
                   type="url"
                   value={businessData.business_logo}
                   onChange={(e) => setBusinessData(prev => ({ ...prev, business_logo: e.target.value }))}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-4 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   placeholder="https://exemplo.com/logo.png"
                 />
               </div>
@@ -489,11 +489,11 @@ export default function Settings() {
                     type="checkbox"
                     checked={businessData.online_booking_enabled}
                     onChange={(e) => setBusinessData(prev => ({ ...prev, online_booking_enabled: e.target.checked }))}
-                    className="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                    className="w-5 h-5 rounded border-jet-black-300 text-blue-600 focus:ring-blue-500"
                   />
                   <div>
-                    <span className="font-medium text-gray-900">Habilitar agendamento online</span>
-                    <p className="text-sm text-gray-500">Permite que clientes agendem pelo link público</p>
+                    <span className="font-medium text-jet-black-900">Habilitar agendamento online</span>
+                    <p className="text-sm text-jet-black-500">Permite que clientes agendem pelo link público</p>
                   </div>
                 </label>
               </div>
@@ -527,7 +527,7 @@ export default function Settings() {
         <div className="space-y-6">
           {/* Configurações de Horário */}
           <div className="bg-white rounded-xl shadow border p-6">
-            <h3 className="font-semibold text-gray-900 mb-6 flex items-center gap-2">
+            <h3 className="font-semibold text-jet-black-900 mb-6 flex items-center gap-2">
               <Clock className="w-5 h-5 text-blue-600" />
               Horários de Funcionamento
             </h3>
@@ -535,61 +535,61 @@ export default function Settings() {
             <div className="grid md:grid-cols-2 gap-6">
               {/* Hora de Início */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-jet-black-700 mb-2">
                   Horário de Início
                 </label>
                 <select
                   value={bookingSettings.start_hour}
                   onChange={(e) => setBookingSettings(prev => ({ ...prev, start_hour: parseInt(e.target.value) }))}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-4 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 >
                   {Array.from({ length: 24 }, (_, i) => (
                     <option key={i} value={i}>{String(i).padStart(2, '0')}:00</option>
                   ))}
                 </select>
-                <p className="text-xs text-gray-500 mt-1">Horário de abertura para agendamentos</p>
+                <p className="text-xs text-jet-black-500 mt-1">Horário de abertura para agendamentos</p>
               </div>
 
               {/* Hora de Fim */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-jet-black-700 mb-2">
                   Horário de Término
                 </label>
                 <select
                   value={bookingSettings.end_hour}
                   onChange={(e) => setBookingSettings(prev => ({ ...prev, end_hour: parseInt(e.target.value) }))}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-4 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 >
                   {Array.from({ length: 24 }, (_, i) => (
                     <option key={i} value={i}>{String(i).padStart(2, '0')}:00</option>
                   ))}
                 </select>
-                <p className="text-xs text-gray-500 mt-1">Horário de fechamento para agendamentos</p>
+                <p className="text-xs text-jet-black-500 mt-1">Horário de fechamento para agendamentos</p>
               </div>
 
               {/* Intervalo entre slots */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-jet-black-700 mb-2">
                   Intervalo entre Horários
                 </label>
                 <select
                   value={bookingSettings.slot_interval}
                   onChange={(e) => setBookingSettings(prev => ({ ...prev, slot_interval: parseInt(e.target.value) }))}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-4 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 >
                   <option value={15}>15 minutos</option>
                   <option value={30}>30 minutos</option>
                   <option value={45}>45 minutos</option>
                   <option value={60}>1 hora</option>
                 </select>
-                <p className="text-xs text-gray-500 mt-1">Duração padrão de cada slot de agendamento</p>
+                <p className="text-xs text-jet-black-500 mt-1">Duração padrão de cada slot de agendamento</p>
               </div>
             </div>
           </div>
 
           {/* Regras de Agendamento */}
           <div className="bg-white rounded-xl shadow border p-6">
-            <h3 className="font-semibold text-gray-900 mb-6 flex items-center gap-2">
+            <h3 className="font-semibold text-jet-black-900 mb-6 flex items-center gap-2">
               <Calendar className="w-5 h-5 text-blue-600" />
               Regras de Agendamento
             </h3>
@@ -597,7 +597,7 @@ export default function Settings() {
             <div className="grid md:grid-cols-2 gap-6">
               {/* Antecedência mínima */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-jet-black-700 mb-2">
                   Antecedência Mínima (horas)
                 </label>
                 <input
@@ -606,16 +606,16 @@ export default function Settings() {
                   max="72"
                   value={bookingSettings.min_advance_hours}
                   onChange={(e) => setBookingSettings(prev => ({ ...prev, min_advance_hours: parseInt(e.target.value) || 0 }))}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-4 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 />
-                <p className="text-xs text-gray-500 mt-1">
+                <p className="text-xs text-jet-black-500 mt-1">
                   Tempo mínimo antes do horário para agendar (ex: 2h antes)
                 </p>
               </div>
 
               {/* Antecedência máxima */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-jet-black-700 mb-2">
                   Antecedência Máxima (dias)
                 </label>
                 <input
@@ -624,9 +624,9 @@ export default function Settings() {
                   max="365"
                   value={bookingSettings.max_advance_days}
                   onChange={(e) => setBookingSettings(prev => ({ ...prev, max_advance_days: parseInt(e.target.value) || 30 }))}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-4 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 />
-                <p className="text-xs text-gray-500 mt-1">
+                <p className="text-xs text-jet-black-500 mt-1">
                   Quantos dias no futuro o cliente pode agendar
                 </p>
               </div>
@@ -635,7 +635,7 @@ export default function Settings() {
 
           {/* Cancelamento */}
           <div className="bg-white rounded-xl shadow border p-6">
-            <h3 className="font-semibold text-gray-900 mb-6 flex items-center gap-2">
+            <h3 className="font-semibold text-jet-black-900 mb-6 flex items-center gap-2">
               <Bell className="w-5 h-5 text-blue-600" />
               Cancelamento e Confirmação
             </h3>
@@ -648,11 +648,11 @@ export default function Settings() {
                     type="checkbox"
                     checked={bookingSettings.allow_cancellation}
                     onChange={(e) => setBookingSettings(prev => ({ ...prev, allow_cancellation: e.target.checked }))}
-                    className="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                    className="w-5 h-5 rounded border-jet-black-300 text-blue-600 focus:ring-blue-500"
                   />
                   <div>
-                    <span className="font-medium text-gray-900">Permitir cancelamento online</span>
-                    <p className="text-sm text-gray-500">Clientes podem cancelar pelo link de consulta</p>
+                    <span className="font-medium text-jet-black-900">Permitir cancelamento online</span>
+                    <p className="text-sm text-jet-black-500">Clientes podem cancelar pelo link de consulta</p>
                   </div>
                 </label>
               </div>
@@ -660,7 +660,7 @@ export default function Settings() {
               {/* Antecedência para cancelar */}
               {bookingSettings.allow_cancellation && (
                 <div className="ml-8">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-jet-black-700 mb-2">
                     Antecedência mínima para cancelar (horas)
                   </label>
                   <input
@@ -669,9 +669,9 @@ export default function Settings() {
                     max="72"
                     value={bookingSettings.cancellation_min_hours}
                     onChange={(e) => setBookingSettings(prev => ({ ...prev, cancellation_min_hours: parseInt(e.target.value) || 0 }))}
-                    className="w-full max-w-xs px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full max-w-xs px-4 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   />
-                  <p className="text-xs text-gray-500 mt-1">
+                  <p className="text-xs text-jet-black-500 mt-1">
                     Ex: 2h significa que só pode cancelar até 2h antes do horário
                   </p>
                 </div>
@@ -684,11 +684,11 @@ export default function Settings() {
                     type="checkbox"
                     checked={bookingSettings.require_confirmation}
                     onChange={(e) => setBookingSettings(prev => ({ ...prev, require_confirmation: e.target.checked }))}
-                    className="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                    className="w-5 h-5 rounded border-jet-black-300 text-blue-600 focus:ring-blue-500"
                   />
                   <div>
-                    <span className="font-medium text-gray-900">Exigir confirmação do agendamento</span>
-                    <p className="text-sm text-gray-500">Cliente recebe email/SMS para confirmar o agendamento</p>
+                    <span className="font-medium text-jet-black-900">Exigir confirmação do agendamento</span>
+                    <p className="text-sm text-jet-black-500">Cliente recebe email/SMS para confirmar o agendamento</p>
                   </div>
                 </label>
               </div>
@@ -723,20 +723,20 @@ export default function Settings() {
           {/* Lista de Usuários */}
           <div className="bg-white rounded-lg shadow border">
             <div className="p-4 border-b">
-              <h3 className="font-semibold text-gray-900">Usuários</h3>
-              <p className="text-sm text-gray-500">Selecione para editar</p>
+              <h3 className="font-semibold text-jet-black-900">Usuários</h3>
+              <p className="text-sm text-jet-black-500">Selecione para editar</p>
             </div>
             <div className="divide-y max-h-96 overflow-y-auto">
               {users.map(u => (
                 <button
                   key={u.id}
                   onClick={() => handleSelectUser(u)}
-                  className={`w-full p-4 text-left hover:bg-gray-50 transition-colors ${
+                  className={`w-full p-4 text-left hover:bg-jet-black-50 transition-colors ${
                     selectedUser?.id === u.id ? 'bg-blue-50' : ''
                   }`}
                 >
-                  <p className="font-medium text-gray-900">{u.name}</p>
-                  <p className="text-sm text-gray-500">{u.email}</p>
+                  <p className="font-medium text-jet-black-900">{u.name}</p>
+                  <p className="text-sm text-jet-black-500">{u.email}</p>
                   <span className={`inline-block mt-1 px-2 py-0.5 text-xs rounded-full ${
                     u.role === 'admin'
                       ? 'bg-red-100 text-red-700'
@@ -757,10 +757,10 @@ export default function Settings() {
               <>
                 <div className="p-4 border-b flex justify-between items-center">
                   <div>
-                    <h3 className="font-semibold text-gray-900">
+                    <h3 className="font-semibold text-jet-black-900">
                       Permissões de {selectedUser.name}
                     </h3>
-                    <p className="text-sm text-gray-500">{selectedUser.email}</p>
+                    <p className="text-sm text-jet-black-500">{selectedUser.email}</p>
                   </div>
                   <select
                     value={selectedUser.role}
@@ -778,18 +778,18 @@ export default function Settings() {
                   {PERMISSIONS.map(permission => (
                     <label
                       key={permission.id}
-                      className="flex items-start gap-3 p-3 rounded-lg hover:bg-gray-50 cursor-pointer"
+                      className="flex items-start gap-3 p-3 rounded-lg hover:bg-jet-black-50 cursor-pointer"
                     >
                       <input
                         type="checkbox"
                         checked={userPermissions[permission.id] || false}
                         onChange={() => handleTogglePermission(permission.id)}
-                        className="mt-1 w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                        className="mt-1 w-4 h-4 rounded border-jet-black-300 text-blue-600 focus:ring-blue-500"
                         disabled={selectedUser.role === 'admin'}
                       />
                       <div>
-                        <p className="font-medium text-gray-900">{permission.name}</p>
-                        <p className="text-sm text-gray-500">{permission.description}</p>
+                        <p className="font-medium text-jet-black-900">{permission.name}</p>
+                        <p className="text-sm text-jet-black-500">{permission.description}</p>
                       </div>
                     </label>
                   ))}
@@ -824,8 +824,8 @@ export default function Settings() {
                 </div>
               </>
             ) : (
-              <div className="p-8 text-center text-gray-500">
-                <Shield className="w-12 h-12 mx-auto mb-3 text-gray-300" />
+              <div className="p-8 text-center text-jet-black-500">
+                <Shield className="w-12 h-12 mx-auto mb-3 text-jet-black-300" />
                 <p>Selecione um usuário para editar suas permissões</p>
               </div>
             )}
@@ -836,27 +836,27 @@ export default function Settings() {
       {activeTab === 'users' && (
         <div className="bg-white rounded-lg shadow border">
           <div className="p-4 border-b flex justify-between items-center">
-            <h3 className="font-semibold text-gray-900">Todos os Usuários</h3>
+            <h3 className="font-semibold text-jet-black-900">Todos os Usuários</h3>
             <button className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition-colors">
               + Novo Usuário
             </button>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full">
-              <thead className="bg-gray-50">
+              <thead className="bg-jet-black-50">
                 <tr>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Nome</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Email</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Função</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Permissões</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Ações</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-jet-black-500 uppercase">Nome</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-jet-black-500 uppercase">Email</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-jet-black-500 uppercase">Função</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-jet-black-500 uppercase">Permissões</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-jet-black-500 uppercase">Ações</th>
                 </tr>
               </thead>
               <tbody className="divide-y">
                 {users.map(u => (
-                  <tr key={u.id} className="hover:bg-gray-50">
-                    <td className="px-4 py-3 font-medium text-gray-900">{u.name}</td>
-                    <td className="px-4 py-3 text-gray-600">{u.email}</td>
+                  <tr key={u.id} className="hover:bg-jet-black-50">
+                    <td className="px-4 py-3 font-medium text-jet-black-900">{u.name}</td>
+                    <td className="px-4 py-3 text-jet-black-600">{u.email}</td>
                     <td className="px-4 py-3">
                       <span className={`px-2 py-1 text-xs rounded-full ${
                         u.role === 'admin'
@@ -868,7 +868,7 @@ export default function Settings() {
                         {ROLES.find(r => r.id === u.role)?.name || u.role}
                       </span>
                     </td>
-                    <td className="px-4 py-3 text-sm text-gray-600">
+                    <td className="px-4 py-3 text-sm text-jet-black-600">
                       {u.role === 'admin' ? 'Todas' : `${u.permissions?.length || 0} permissões`}
                     </td>
                     <td className="px-4 py-3">

@@ -23,12 +23,12 @@ export default function BookingClientForm({ clientData, onChange, errors = {} })
 
   return (
     <div className="space-y-6">
-      <h2 className="text-lg font-semibold text-gray-900">Seus dados</h2>
+      <h2 className="text-lg font-semibold text-jet-black-900">Seus dados</h2>
 
       <div className="bg-white rounded-xl border p-6 space-y-4">
         {/* Nome */}
         <div>
-          <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
+          <label className="flex items-center gap-2 text-sm font-medium text-jet-black-700 mb-2">
             <User className="w-4 h-4 text-blue-500" />
             Nome completo *
           </label>
@@ -38,7 +38,7 @@ export default function BookingClientForm({ clientData, onChange, errors = {} })
             onChange={(e) => onChange({ ...clientData, name: e.target.value })}
             placeholder="Digite seu nome completo"
             className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors ${
-              errors.name ? 'border-red-500' : 'border-gray-300'
+              errors.name ? 'border-red-500' : 'border-jet-black-300'
             }`}
           />
           {errors.name && (
@@ -48,7 +48,7 @@ export default function BookingClientForm({ clientData, onChange, errors = {} })
 
         {/* Telefone */}
         <div>
-          <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
+          <label className="flex items-center gap-2 text-sm font-medium text-jet-black-700 mb-2">
             <Phone className="w-4 h-4 text-blue-500" />
             Telefone / WhatsApp *
           </label>
@@ -59,20 +59,20 @@ export default function BookingClientForm({ clientData, onChange, errors = {} })
             placeholder="(00) 00000-0000"
             maxLength={15}
             className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors ${
-              errors.phone ? 'border-red-500' : 'border-gray-300'
+              errors.phone ? 'border-red-500' : 'border-jet-black-300'
             }`}
           />
           {errors.phone && (
             <p className="mt-1 text-sm text-red-600">{errors.phone}</p>
           )}
-          <p className="mt-1 text-xs text-gray-500">
+          <p className="mt-1 text-xs text-jet-black-500">
             Usaremos este número para confirmar seu agendamento
           </p>
         </div>
 
         {/* Email */}
         <div>
-          <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
+          <label className="flex items-center gap-2 text-sm font-medium text-jet-black-700 mb-2">
             <Mail className="w-4 h-4 text-blue-500" />
             Email (opcional)
           </label>
@@ -82,7 +82,7 @@ export default function BookingClientForm({ clientData, onChange, errors = {} })
             onChange={(e) => onChange({ ...clientData, email: e.target.value })}
             placeholder="seu@email.com"
             className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors ${
-              errors.email ? 'border-red-500' : 'border-gray-300'
+              errors.email ? 'border-red-500' : 'border-jet-black-300'
             }`}
           />
           {errors.email && (
@@ -92,7 +92,7 @@ export default function BookingClientForm({ clientData, onChange, errors = {} })
 
         {/* Observações */}
         <div>
-          <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
+          <label className="flex items-center gap-2 text-sm font-medium text-jet-black-700 mb-2">
             <MessageSquare className="w-4 h-4 text-blue-500" />
             Observações (opcional)
           </label>
@@ -101,7 +101,7 @@ export default function BookingClientForm({ clientData, onChange, errors = {} })
             onChange={(e) => onChange({ ...clientData, notes: e.target.value })}
             placeholder="Alguma informação adicional que devemos saber?"
             rows={3}
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors resize-none"
+            className="w-full px-4 py-3 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors resize-none"
           />
         </div>
       </div>

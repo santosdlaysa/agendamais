@@ -144,7 +144,7 @@ export default function Dashboard() {
       cancelled: 'text-rose-600 bg-rose-50',
       no_show: 'text-amber-600 bg-amber-50'
     }
-    return colors[status] || 'text-gray-600 bg-gray-50'
+    return colors[status] || 'text-jet-black-600 bg-jet-black-50'
   }
 
   const getStatusLabel = (status) => {
@@ -162,10 +162,10 @@ export default function Dashboard() {
       <div className="min-h-[60vh] flex items-center justify-center">
         <div className="text-center">
           <div className="relative w-16 h-16 mx-auto mb-4">
-            <div className="absolute inset-0 rounded-full border-4 border-violet-100"></div>
-            <div className="absolute inset-0 rounded-full border-4 border-violet-600 border-t-transparent animate-spin"></div>
+            <div className="absolute inset-0 rounded-full border-4 border-periwinkle-100"></div>
+            <div className="absolute inset-0 rounded-full border-4 border-periwinkle-600 border-t-transparent animate-spin"></div>
           </div>
-          <p className="text-gray-500">Carregando...</p>
+          <p className="text-jet-black-500">Carregando...</p>
         </div>
       </div>
     )
@@ -179,16 +179,16 @@ export default function Dashboard() {
   return (
     <div className="space-y-6 pb-8">
       {/* Welcome Banner */}
-      <div className="bg-gradient-to-r from-violet-600 to-indigo-600 rounded-2xl p-6 md:p-8 text-white relative overflow-hidden">
+      <div className="bg-gradient-to-r from-periwinkle-600 to-space-indigo-600 rounded-2xl p-6 md:p-8 text-white relative overflow-hidden">
         {/* Background decoration */}
         <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl"></div>
-        <div className="absolute bottom-0 left-0 w-48 h-48 bg-indigo-400/20 rounded-full translate-y-1/2 -translate-x-1/2 blur-3xl"></div>
+        <div className="absolute bottom-0 left-0 w-48 h-48 bg-space-indigo-400/20 rounded-full translate-y-1/2 -translate-x-1/2 blur-3xl"></div>
 
         <div className="relative flex flex-col md:flex-row md:items-center md:justify-between gap-6">
           <div>
-            <p className="text-violet-200 text-sm mb-1 capitalize">{getFormattedDate()}</p>
+            <p className="text-periwinkle-200 text-sm mb-1 capitalize">{getFormattedDate()}</p>
             <h1 className="text-2xl md:text-3xl font-bold mb-2">{getGreeting()}!</h1>
-            <p className="text-violet-100">
+            <p className="text-periwinkle-100">
               {scheduledCount > 0
                 ? `Você tem ${scheduledCount} agendamento${scheduledCount > 1 ? 's' : ''} pendente${scheduledCount > 1 ? 's' : ''}`
                 : 'Você não tem agendamentos pendentes'}
@@ -198,17 +198,17 @@ export default function Dashboard() {
           <div className="flex gap-4">
             <div className="bg-white/10 backdrop-blur rounded-xl p-4 text-center min-w-[80px]">
               <p className="text-2xl md:text-3xl font-bold">{scheduledCount}</p>
-              <p className="text-xs text-violet-200">Pendentes</p>
+              <p className="text-xs text-periwinkle-200">Pendentes</p>
             </div>
             <div className="bg-white/10 backdrop-blur rounded-xl p-4 text-center min-w-[80px]">
               <p className="text-2xl md:text-3xl font-bold">{completionRate}%</p>
-              <p className="text-xs text-violet-200">Taxa</p>
+              <p className="text-xs text-periwinkle-200">Taxa</p>
             </div>
             <div className="hidden sm:block bg-white/10 backdrop-blur rounded-xl p-4 text-center min-w-[80px]">
               <p className="text-2xl md:text-3xl font-bold">
                 {(stats.total_revenue / 1000).toFixed(1)}k
               </p>
-              <p className="text-xs text-violet-200">Receita</p>
+              <p className="text-xs text-periwinkle-200">Receita</p>
             </div>
           </div>
         </div>
@@ -227,60 +227,60 @@ export default function Dashboard() {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div
           onClick={() => navigate('/clients')}
-          className="bg-white rounded-xl p-5 border border-gray-100 hover:border-amber-200 hover:shadow-lg hover:shadow-amber-100/50 cursor-pointer transition-all duration-300 group"
+          className="bg-white rounded-xl p-5 border border-jet-black-100 hover:border-amber-200 hover:shadow-lg hover:shadow-amber-100/50 cursor-pointer transition-all duration-300 group"
         >
           <div className="w-11 h-11 bg-amber-100 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
             <Users className="w-5 h-5 text-amber-600" />
           </div>
-          <p className="text-2xl md:text-3xl font-bold text-gray-900">{stats.total_clients}</p>
-          <p className="text-sm text-gray-500">Clientes</p>
+          <p className="text-2xl md:text-3xl font-bold text-jet-black-900">{stats.total_clients}</p>
+          <p className="text-sm text-jet-black-500">Clientes</p>
         </div>
 
         <div
           onClick={() => navigate('/services')}
-          className="bg-white rounded-xl p-5 border border-gray-100 hover:border-violet-200 hover:shadow-lg hover:shadow-violet-100/50 cursor-pointer transition-all duration-300 group"
+          className="bg-white rounded-xl p-5 border border-jet-black-100 hover:border-periwinkle-200 hover:shadow-lg hover:shadow-periwinkle-100/50 cursor-pointer transition-all duration-300 group"
         >
-          <div className="w-11 h-11 bg-violet-100 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-            <Sparkles className="w-5 h-5 text-violet-600" />
+          <div className="w-11 h-11 bg-periwinkle-100 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+            <Sparkles className="w-5 h-5 text-periwinkle-600" />
           </div>
-          <p className="text-2xl md:text-3xl font-bold text-gray-900">{stats.total_services}</p>
-          <p className="text-sm text-gray-500">Serviços</p>
+          <p className="text-2xl md:text-3xl font-bold text-jet-black-900">{stats.total_services}</p>
+          <p className="text-sm text-jet-black-500">Serviços</p>
         </div>
 
         <div
           onClick={() => navigate('/appointments')}
-          className="bg-white rounded-xl p-5 border border-gray-100 hover:border-sky-200 hover:shadow-lg hover:shadow-sky-100/50 cursor-pointer transition-all duration-300 group"
+          className="bg-white rounded-xl p-5 border border-jet-black-100 hover:border-sky-200 hover:shadow-lg hover:shadow-sky-100/50 cursor-pointer transition-all duration-300 group"
         >
           <div className="w-11 h-11 bg-sky-100 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
             <Calendar className="w-5 h-5 text-sky-600" />
           </div>
-          <p className="text-2xl md:text-3xl font-bold text-gray-900">{stats.recent_appointments}</p>
-          <p className="text-sm text-gray-500">Este mês</p>
+          <p className="text-2xl md:text-3xl font-bold text-jet-black-900">{stats.recent_appointments}</p>
+          <p className="text-sm text-jet-black-500">Este mês</p>
         </div>
 
         <div
           onClick={() => navigate('/reports')}
-          className="bg-white rounded-xl p-5 border border-gray-100 hover:border-emerald-200 hover:shadow-lg hover:shadow-emerald-100/50 cursor-pointer transition-all duration-300 group"
+          className="bg-white rounded-xl p-5 border border-jet-black-100 hover:border-emerald-200 hover:shadow-lg hover:shadow-emerald-100/50 cursor-pointer transition-all duration-300 group"
         >
           <div className="w-11 h-11 bg-emerald-100 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
             <BarChart3 className="w-5 h-5 text-emerald-600" />
           </div>
-          <p className="text-2xl md:text-3xl font-bold text-gray-900">
+          <p className="text-2xl md:text-3xl font-bold text-jet-black-900">
             R$ {(stats.total_revenue / 1000).toFixed(1)}k
           </p>
-          <p className="text-sm text-gray-500">Receita</p>
+          <p className="text-sm text-jet-black-500">Receita</p>
         </div>
       </div>
 
       {/* Main Content Grid */}
       <div className="grid lg:grid-cols-3 gap-6">
         {/* Appointments List - Takes 2 columns */}
-        <div className="lg:col-span-2 bg-white rounded-xl border border-gray-100 overflow-hidden">
-          <div className="px-5 py-4 border-b border-gray-100 flex items-center justify-between">
-            <h3 className="font-semibold text-gray-900">Agendamentos Recentes</h3>
+        <div className="lg:col-span-2 bg-white rounded-xl border border-jet-black-100 overflow-hidden">
+          <div className="px-5 py-4 border-b border-jet-black-100 flex items-center justify-between">
+            <h3 className="font-semibold text-jet-black-900">Agendamentos Recentes</h3>
             <button
               onClick={() => navigate('/appointments')}
-              className="text-sm text-violet-600 hover:text-violet-700 font-medium flex items-center gap-1 group"
+              className="text-sm text-periwinkle-600 hover:text-periwinkle-700 font-medium flex items-center gap-1 group"
             >
               Ver todos
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -288,28 +288,28 @@ export default function Dashboard() {
           </div>
 
           {recentAppointmentsList.length > 0 ? (
-            <div className="divide-y divide-gray-50">
+            <div className="divide-y divide-jet-black-50">
               {recentAppointmentsList.map((appointment) => (
                 <div
                   key={appointment.id}
                   onClick={() => navigate(`/appointments/${appointment.id}/edit`)}
-                  className="flex items-center justify-between px-5 py-4 hover:bg-gray-50 cursor-pointer transition-colors"
+                  className="flex items-center justify-between px-5 py-4 hover:bg-jet-black-50 cursor-pointer transition-colors"
                 >
                   <div className="flex items-center gap-4">
-                    <div className="w-11 h-11 bg-gradient-to-br from-violet-400 to-indigo-500 rounded-xl flex items-center justify-center text-white font-semibold">
+                    <div className="w-11 h-11 bg-gradient-to-br from-periwinkle-400 to-space-indigo-500 rounded-xl flex items-center justify-center text-white font-semibold">
                       {appointment.client?.name?.charAt(0)?.toUpperCase() || '?'}
                     </div>
                     <div>
-                      <p className="font-medium text-gray-900">{appointment.client?.name}</p>
-                      <p className="text-sm text-gray-500">{appointment.service?.name}</p>
+                      <p className="font-medium text-jet-black-900">{appointment.client?.name}</p>
+                      <p className="text-sm text-jet-black-500">{appointment.service?.name}</p>
                     </div>
                   </div>
                   <div className="text-right">
-                    <p className="font-medium text-gray-900">
+                    <p className="font-medium text-jet-black-900">
                       {new Date(appointment.appointment_date).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short' })}
                     </p>
                     <div className="flex items-center gap-2 justify-end">
-                      <span className="text-sm text-gray-500">{appointment.start_time?.slice(0, 5)}</span>
+                      <span className="text-sm text-jet-black-500">{appointment.start_time?.slice(0, 5)}</span>
                       <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${getStatusColor(appointment.status)}`}>
                         {getStatusLabel(appointment.status)}
                       </span>
@@ -320,11 +320,11 @@ export default function Dashboard() {
             </div>
           ) : (
             <div className="p-8 text-center">
-              <Calendar className="w-12 h-12 text-gray-300 mx-auto mb-3" />
-              <p className="text-gray-500">Nenhum agendamento recente</p>
+              <Calendar className="w-12 h-12 text-jet-black-300 mx-auto mb-3" />
+              <p className="text-jet-black-500">Nenhum agendamento recente</p>
               <button
                 onClick={() => navigate('/appointments/new')}
-                className="mt-4 text-violet-600 hover:text-violet-700 font-medium text-sm"
+                className="mt-4 text-periwinkle-600 hover:text-periwinkle-700 font-medium text-sm"
               >
                 Criar primeiro agendamento
               </button>
@@ -335,8 +335,8 @@ export default function Dashboard() {
         {/* Sidebar - Quick Actions & Reminders */}
         <div className="space-y-6">
           {/* Quick Actions */}
-          <div className="bg-white rounded-xl border border-gray-100 p-5">
-            <h3 className="font-semibold text-gray-900 mb-4">Ações Rápidas</h3>
+          <div className="bg-white rounded-xl border border-jet-black-100 p-5">
+            <h3 className="font-semibold text-jet-black-900 mb-4">Ações Rápidas</h3>
             <div className="space-y-2">
               <button
                 onClick={() => navigate('/clients/new')}
@@ -345,7 +345,7 @@ export default function Dashboard() {
                 <div className="w-10 h-10 bg-amber-100 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
                   <Users className="w-5 h-5 text-amber-600" />
                 </div>
-                <span className="font-medium text-gray-700">Novo Cliente</span>
+                <span className="font-medium text-jet-black-700">Novo Cliente</span>
               </button>
 
               <button
@@ -355,17 +355,17 @@ export default function Dashboard() {
                 <div className="w-10 h-10 bg-emerald-100 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
                   <UserCheck className="w-5 h-5 text-emerald-600" />
                 </div>
-                <span className="font-medium text-gray-700">Novo Profissional</span>
+                <span className="font-medium text-jet-black-700">Novo Profissional</span>
               </button>
 
               <button
                 onClick={() => navigate('/services/new')}
-                className="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-violet-50 text-left transition-colors group"
+                className="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-periwinkle-50 text-left transition-colors group"
               >
-                <div className="w-10 h-10 bg-violet-100 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
-                  <Briefcase className="w-5 h-5 text-violet-600" />
+                <div className="w-10 h-10 bg-periwinkle-100 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <Briefcase className="w-5 h-5 text-periwinkle-600" />
                 </div>
-                <span className="font-medium text-gray-700">Novo Serviço</span>
+                <span className="font-medium text-jet-black-700">Novo Serviço</span>
               </button>
 
               <button
@@ -375,19 +375,19 @@ export default function Dashboard() {
                 <div className="w-10 h-10 bg-sky-100 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
                   <Calendar className="w-5 h-5 text-sky-600" />
                 </div>
-                <span className="font-medium text-gray-700">Novo Agendamento</span>
+                <span className="font-medium text-jet-black-700">Novo Agendamento</span>
               </button>
             </div>
           </div>
 
           {/* Reminders */}
           {reminderStats.total_reminders > 0 && (
-            <div className="bg-white rounded-xl border border-gray-100 p-5">
+            <div className="bg-white rounded-xl border border-jet-black-100 p-5">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="font-semibold text-gray-900">Lembretes</h3>
+                <h3 className="font-semibold text-jet-black-900">Lembretes</h3>
                 <button
                   onClick={() => navigate('/reminders')}
-                  className="text-sm text-violet-600 hover:text-violet-700 font-medium"
+                  className="text-sm text-periwinkle-600 hover:text-periwinkle-700 font-medium"
                 >
                   Ver todos
                 </button>
@@ -410,18 +410,18 @@ export default function Dashboard() {
 
               {upcomingReminders.length > 0 && (
                 <div className="space-y-2">
-                  <p className="text-xs font-medium text-gray-500 uppercase tracking-wide">Próximos (24h)</p>
+                  <p className="text-xs font-medium text-jet-black-500 uppercase tracking-wide">Próximos (24h)</p>
                   {upcomingReminders.slice(0, 3).map((reminder) => (
-                    <div key={reminder.id} className="flex items-center justify-between p-2 bg-gray-50 rounded-lg">
+                    <div key={reminder.id} className="flex items-center justify-between p-2 bg-jet-black-50 rounded-lg">
                       <div className="flex items-center gap-2">
-                        <div className="w-8 h-8 bg-violet-100 rounded-lg flex items-center justify-center text-violet-600 font-medium text-sm">
+                        <div className="w-8 h-8 bg-periwinkle-100 rounded-lg flex items-center justify-center text-periwinkle-600 font-medium text-sm">
                           {reminder.appointment?.client?.name?.charAt(0)?.toUpperCase() || '?'}
                         </div>
-                        <span className="text-sm text-gray-900 truncate max-w-[120px]">
+                        <span className="text-sm text-jet-black-900 truncate max-w-[120px]">
                           {reminder.appointment?.client?.name}
                         </span>
                       </div>
-                      <span className="text-xs text-gray-500">
+                      <span className="text-xs text-jet-black-500">
                         {new Date(reminder.reminder_time).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}
                       </span>
                     </div>
@@ -433,8 +433,8 @@ export default function Dashboard() {
 
           {/* Status Overview */}
           {stats.appointments_by_status && Object.keys(stats.appointments_by_status).length > 0 && (
-            <div className="bg-white rounded-xl border border-gray-100 p-5">
-              <h3 className="font-semibold text-gray-900 mb-4">Status</h3>
+            <div className="bg-white rounded-xl border border-jet-black-100 p-5">
+              <h3 className="font-semibold text-jet-black-900 mb-4">Status</h3>
               <div className="space-y-3">
                 {Object.entries(stats.appointments_by_status).map(([status, count]) => {
                   const percentage = totalStatusCount > 0 ? Math.round((count / totalStatusCount) * 100) : 0
@@ -442,10 +442,10 @@ export default function Dashboard() {
                   return (
                     <div key={status}>
                       <div className="flex items-center justify-between text-sm mb-1">
-                        <span className="text-gray-700">{getStatusLabel(status)}</span>
-                        <span className="font-medium text-gray-900">{count}</span>
+                        <span className="text-jet-black-700">{getStatusLabel(status)}</span>
+                        <span className="font-medium text-jet-black-900">{count}</span>
                       </div>
-                      <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+                      <div className="h-2 bg-jet-black-100 rounded-full overflow-hidden">
                         <div
                           className={`h-full rounded-full transition-all duration-700 ${
                             status === 'completed' ? 'bg-emerald-500' :

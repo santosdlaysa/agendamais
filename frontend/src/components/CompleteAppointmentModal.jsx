@@ -65,10 +65,10 @@ const CompleteAppointmentModal = ({ appointment, onComplete, onClose }) => {
       <div className="bg-white rounded-lg shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto">
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b">
-          <h2 className="text-xl font-semibold text-gray-900">Concluir Agendamento</h2>
+          <h2 className="text-xl font-semibold text-jet-black-900">Concluir Agendamento</h2>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-gray-100 rounded-full"
+            className="p-2 hover:bg-jet-black-100 rounded-full"
           >
             <X className="w-5 h-5" />
           </button>
@@ -77,22 +77,22 @@ const CompleteAppointmentModal = ({ appointment, onComplete, onClose }) => {
         {/* Content */}
         <div className="p-6">
           {/* Appointment Info */}
-          <div className="bg-gray-50 rounded-lg p-4 mb-6">
+          <div className="bg-jet-black-50 rounded-lg p-4 mb-6">
             <div className="space-y-2 text-sm">
               <div className="flex justify-between">
-                <span className="text-gray-600">Cliente:</span>
+                <span className="text-jet-black-600">Cliente:</span>
                 <span className="font-medium">{appointment.client.name}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-600">Serviço:</span>
+                <span className="text-jet-black-600">Serviço:</span>
                 <span className="font-medium">{appointment.service.name}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-600">Profissional:</span>
+                <span className="text-jet-black-600">Profissional:</span>
                 <span className="font-medium">{appointment.professional.name}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-600">Preço Original:</span>
+                <span className="text-jet-black-600">Preço Original:</span>
                 <span className="font-medium text-green-600">R$ {parseFloat(appointment.service.price).toFixed(2)}</span>
               </div>
             </div>
@@ -100,7 +100,7 @@ const CompleteAppointmentModal = ({ appointment, onComplete, onClose }) => {
 
           {/* Payment Method Selection */}
           <div className="mb-6">
-            <label className="block text-sm font-medium text-gray-700 mb-3">
+            <label className="block text-sm font-medium text-jet-black-700 mb-3">
               Forma de Pagamento
             </label>
             <div className="grid grid-cols-2 gap-3">
@@ -110,7 +110,7 @@ const CompleteAppointmentModal = ({ appointment, onComplete, onClose }) => {
                 className={`flex items-center justify-center p-3 rounded-lg border-2 transition-colors ${
                   paymentMethod === 'dinheiro'
                     ? 'border-green-500 bg-green-50 text-green-700'
-                    : 'border-gray-300 bg-white text-gray-700 hover:border-gray-400'
+                    : 'border-jet-black-300 bg-white text-jet-black-700 hover:border-jet-black-400'
                 }`}
               >
                 <Banknote className="w-5 h-5 mr-2" />
@@ -122,7 +122,7 @@ const CompleteAppointmentModal = ({ appointment, onComplete, onClose }) => {
                 className={`flex items-center justify-center p-3 rounded-lg border-2 transition-colors ${
                   paymentMethod === 'cartao_credito'
                     ? 'border-blue-500 bg-blue-50 text-blue-700'
-                    : 'border-gray-300 bg-white text-gray-700 hover:border-gray-400'
+                    : 'border-jet-black-300 bg-white text-jet-black-700 hover:border-jet-black-400'
                 }`}
               >
                 <CreditCard className="w-5 h-5 mr-2" />
@@ -134,7 +134,7 @@ const CompleteAppointmentModal = ({ appointment, onComplete, onClose }) => {
                 className={`flex items-center justify-center p-3 rounded-lg border-2 transition-colors ${
                   paymentMethod === 'cartao_debito'
                     ? 'border-purple-500 bg-purple-50 text-purple-700'
-                    : 'border-gray-300 bg-white text-gray-700 hover:border-gray-400'
+                    : 'border-jet-black-300 bg-white text-jet-black-700 hover:border-jet-black-400'
                 }`}
               >
                 <CreditCard className="w-5 h-5 mr-2" />
@@ -146,7 +146,7 @@ const CompleteAppointmentModal = ({ appointment, onComplete, onClose }) => {
                 className={`flex items-center justify-center p-3 rounded-lg border-2 transition-colors ${
                   paymentMethod === 'pix'
                     ? 'border-orange-500 bg-orange-50 text-orange-700'
-                    : 'border-gray-300 bg-white text-gray-700 hover:border-gray-400'
+                    : 'border-jet-black-300 bg-white text-jet-black-700 hover:border-jet-black-400'
                 }`}
               >
                 <DollarSign className="w-5 h-5 mr-2" />
@@ -169,15 +169,15 @@ const CompleteAppointmentModal = ({ appointment, onComplete, onClose }) => {
 
           {/* Or separator */}
           <div className="flex items-center mb-4">
-            <hr className="flex-1 border-gray-300" />
-            <span className="px-3 text-sm text-gray-500">ou</span>
-            <hr className="flex-1 border-gray-300" />
+            <hr className="flex-1 border-jet-black-300" />
+            <span className="px-3 text-sm text-jet-black-500">ou</span>
+            <hr className="flex-1 border-jet-black-300" />
           </div>
 
           {/* Custom completion form */}
           <div className="space-y-4">
             <div>
-              <label className="flex items-center text-sm font-medium text-gray-700 mb-2">
+              <label className="flex items-center text-sm font-medium text-jet-black-700 mb-2">
                 <FileText className="w-4 h-4 mr-2" />
                 Observações
               </label>
@@ -186,7 +186,7 @@ const CompleteAppointmentModal = ({ appointment, onComplete, onClose }) => {
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
                 rows={3}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full px-3 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               />
             </div>
 
@@ -199,14 +199,14 @@ const CompleteAppointmentModal = ({ appointment, onComplete, onClose }) => {
                   onChange={(e) => setShowCustomPrice(e.target.checked)}
                   className="mr-2"
                 />
-                <label htmlFor="customPrice" className="text-sm font-medium text-gray-700">
+                <label htmlFor="customPrice" className="text-sm font-medium text-jet-black-700">
                   Usar preço personalizado
                 </label>
               </div>
               
               {showCustomPrice && (
                 <div>
-                  <label className="flex items-center text-sm font-medium text-gray-700 mb-2">
+                  <label className="flex items-center text-sm font-medium text-jet-black-700 mb-2">
                     <DollarSign className="w-4 h-4 mr-2" />
                     Preço Personalizado
                   </label>
@@ -217,9 +217,9 @@ const CompleteAppointmentModal = ({ appointment, onComplete, onClose }) => {
                     placeholder={`Padrão: R$ ${parseFloat(appointment.service.price).toFixed(2)}`}
                     value={customPrice}
                     onChange={(e) => setCustomPrice(e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   />
-                  <p className="text-xs text-gray-500 mt-1">
+                  <p className="text-xs text-jet-black-500 mt-1">
                     Deixe em branco para usar o preço padrão do serviço
                   </p>
                 </div>
@@ -242,10 +242,10 @@ const CompleteAppointmentModal = ({ appointment, onComplete, onClose }) => {
         </div>
 
         {/* Footer */}
-        <div className="flex space-x-3 p-6 border-t bg-gray-50">
+        <div className="flex space-x-3 p-6 border-t bg-jet-black-50">
           <button
             onClick={onClose}
-            className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50"
+            className="flex-1 px-4 py-2 border border-jet-black-300 text-jet-black-700 rounded-lg hover:bg-jet-black-50"
           >
             Cancelar
           </button>

@@ -228,8 +228,8 @@ Aguardamos você!`
             <span>Voltar</span>
           </Button>
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">Configurações de Lembretes</h1>
-            <p className="text-gray-600">Configure os lembretes automáticos por profissional</p>
+            <h1 className="text-2xl font-bold text-jet-black-900">Configurações de Lembretes</h1>
+            <p className="text-jet-black-600">Configure os lembretes automáticos por profissional</p>
           </div>
         </div>
       </div>
@@ -237,15 +237,15 @@ Aguardamos você!`
       {/* Professional Selection */}
       <div className="bg-white rounded-lg shadow-sm border p-6">
         <div className="flex items-center space-x-4">
-          <User className="h-5 w-5 text-gray-400" />
+          <User className="h-5 w-5 text-jet-black-400" />
           <div className="flex-1">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-jet-black-700 mb-2">
               Selecionar Profissional
             </label>
             <select
               value={selectedProfessional}
               onChange={(e) => setSelectedProfessional(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 border border-jet-black-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               {professionals.map((professional, index) => (
                 <option key={professional.id || index} value={professional.id || ''}>
@@ -264,7 +264,7 @@ Aguardamos você!`
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center space-x-3">
                 <MessageSquare className="h-6 w-6 text-green-600" />
-                <h3 className="text-lg font-medium text-gray-900">WhatsApp</h3>
+                <h3 className="text-lg font-medium text-jet-black-900">WhatsApp</h3>
               </div>
               <div className="flex items-center space-x-2">
                 <Button
@@ -299,15 +299,15 @@ Aguardamos você!`
                   id="whatsapp-enabled"
                   checked={settings.whatsapp_enabled}
                   onChange={(e) => updateSetting('whatsapp_enabled', e.target.checked)}
-                  className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                  className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-jet-black-300 rounded"
                 />
-                <label htmlFor="whatsapp-enabled" className="ml-2 block text-sm text-gray-900">
+                <label htmlFor="whatsapp-enabled" className="ml-2 block text-sm text-jet-black-900">
                   Habilitar lembretes via WhatsApp
                 </label>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-jet-black-700 mb-1">
                   Enviar lembrete (horas antes do agendamento)
                 </label>
                 <input
@@ -316,7 +316,7 @@ Aguardamos você!`
                   onChange={(e) => updateSetting('whatsapp_hours_before', parseInt(e.target.value) || 24)}
                   min="1"
                   max="168"
-                  className="w-24 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-24 px-3 py-2 border border-jet-black-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
             </div>
@@ -327,7 +327,7 @@ Aguardamos você!`
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center space-x-3">
                 <Mail className="h-6 w-6 text-blue-600" />
-                <h3 className="text-lg font-medium text-gray-900">SMS</h3>
+                <h3 className="text-lg font-medium text-jet-black-900">SMS</h3>
               </div>
               <div className="flex items-center space-x-2">
                 <Button
@@ -362,15 +362,15 @@ Aguardamos você!`
                   id="sms-enabled"
                   checked={settings.sms_enabled}
                   onChange={(e) => updateSetting('sms_enabled', e.target.checked)}
-                  className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                  className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-jet-black-300 rounded"
                 />
-                <label htmlFor="sms-enabled" className="ml-2 block text-sm text-gray-900">
+                <label htmlFor="sms-enabled" className="ml-2 block text-sm text-jet-black-900">
                   Habilitar lembretes via SMS
                 </label>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-jet-black-700 mb-1">
                   Enviar lembrete (horas antes do agendamento)
                 </label>
                 <input
@@ -379,7 +379,7 @@ Aguardamos você!`
                   onChange={(e) => updateSetting('sms_hours_before', parseInt(e.target.value) || 24)}
                   min="1"
                   max="168"
-                  className="w-24 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-24 px-3 py-2 border border-jet-black-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
             </div>
@@ -387,11 +387,11 @@ Aguardamos você!`
 
           {/* Custom Message */}
           <div className="bg-white rounded-lg shadow-sm border p-6">
-            <h3 className="text-lg font-medium text-gray-900 mb-4">Mensagem Personalizada</h3>
+            <h3 className="text-lg font-medium text-jet-black-900 mb-4">Mensagem Personalizada</h3>
 
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-jet-black-700 mb-2">
                   Mensagem do lembrete
                 </label>
                 <textarea
@@ -399,13 +399,13 @@ Aguardamos você!`
                   onChange={(e) => updateSetting('custom_message', e.target.value)}
                   placeholder={defaultMessage}
                   rows={8}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-jet-black-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
 
-              <div className="bg-gray-50 p-4 rounded-md">
-                <h4 className="text-sm font-medium text-gray-700 mb-2">Variáveis disponíveis:</h4>
-                <div className="grid grid-cols-2 gap-2 text-sm text-gray-600">
+              <div className="bg-jet-black-50 p-4 rounded-md">
+                <h4 className="text-sm font-medium text-jet-black-700 mb-2">Variáveis disponíveis:</h4>
+                <div className="grid grid-cols-2 gap-2 text-sm text-jet-black-600">
                   <div><code>{'{client_name}'}</code> - Nome do cliente</div>
                   <div><code>{'{professional_name}'}</code> - Nome do profissional</div>
                   <div><code>{'{service_name}'}</code> - Nome do serviço</div>

@@ -55,11 +55,11 @@ export default function BookingLookup() {
     const colors = {
       scheduled: 'bg-blue-100 text-blue-800',
       confirmed: 'bg-green-100 text-green-800',
-      completed: 'bg-gray-100 text-gray-800',
+      completed: 'bg-jet-black-100 text-jet-black-800',
       cancelled: 'bg-red-100 text-red-800',
       no_show: 'bg-yellow-100 text-yellow-800'
     }
-    return colors[status] || 'bg-gray-100 text-gray-800'
+    return colors[status] || 'bg-jet-black-100 text-jet-black-800'
   }
 
   const getStatusText = (status) => {
@@ -74,25 +74,25 @@ export default function BookingLookup() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-10 px-4">
+    <div className="min-h-screen bg-jet-black-50 py-10 px-4">
       <div className="max-w-lg mx-auto">
         {/* Header */}
         <div className="flex items-center gap-4 mb-8">
           <button
             onClick={() => navigate(`/agendar/${slug}`)}
-            className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+            className="p-2 hover:bg-jet-black-100 rounded-lg transition-colors"
           >
             <ArrowLeft className="w-5 h-5" />
           </button>
           <div>
-            <h1 className="text-xl font-bold text-gray-900">Consultar Agendamento</h1>
-            <p className="text-sm text-gray-500">Digite o código para ver os detalhes</p>
+            <h1 className="text-xl font-bold text-jet-black-900">Consultar Agendamento</h1>
+            <p className="text-sm text-jet-black-500">Digite o código para ver os detalhes</p>
           </div>
         </div>
 
         {/* Formulário de busca */}
         <form onSubmit={handleSearch} className="bg-white rounded-xl shadow-sm border p-6 mb-6">
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-jet-black-700 mb-2">
             Código do Agendamento
           </label>
           <div className="flex gap-2">
@@ -101,7 +101,7 @@ export default function BookingLookup() {
               value={code}
               onChange={(e) => setCode(e.target.value.toUpperCase())}
               placeholder="Ex: AGD-2025-ABC123"
-              className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 font-mono uppercase"
+              className="flex-1 px-4 py-3 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 font-mono uppercase"
             />
             <button
               type="submit"
@@ -131,7 +131,7 @@ export default function BookingLookup() {
           <div className="bg-white rounded-xl shadow-sm border overflow-hidden">
             {/* Status */}
             <div className="p-4 border-b flex items-center justify-between">
-              <span className="text-sm text-gray-500">Status</span>
+              <span className="text-sm text-jet-black-500">Status</span>
               <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(appointment.status)}`}>
                 {getStatusText(appointment.status)}
               </span>
@@ -144,8 +144,8 @@ export default function BookingLookup() {
                   <Calendar className="w-5 h-5 text-blue-600" />
                 </div>
                 <div>
-                  <p className="text-sm text-gray-500">Data</p>
-                  <p className="font-semibold text-gray-900 capitalize">
+                  <p className="text-sm text-jet-black-500">Data</p>
+                  <p className="font-semibold text-jet-black-900 capitalize">
                     {formatDate(appointment.appointment_date)}
                   </p>
                 </div>
@@ -156,8 +156,8 @@ export default function BookingLookup() {
                   <Clock className="w-5 h-5 text-orange-600" />
                 </div>
                 <div>
-                  <p className="text-sm text-gray-500">Horário</p>
-                  <p className="font-semibold text-gray-900">
+                  <p className="text-sm text-jet-black-500">Horário</p>
+                  <p className="font-semibold text-jet-black-900">
                     {appointment.start_time} - {appointment.end_time}
                   </p>
                 </div>
@@ -168,17 +168,17 @@ export default function BookingLookup() {
                   <User className="w-5 h-5 text-purple-600" />
                 </div>
                 <div>
-                  <p className="text-sm text-gray-500">Serviço</p>
-                  <p className="font-semibold text-gray-900">{appointment.service?.name}</p>
-                  <p className="text-sm text-gray-600">com {appointment.professional?.name}</p>
+                  <p className="text-sm text-jet-black-500">Serviço</p>
+                  <p className="font-semibold text-jet-black-900">{appointment.service?.name}</p>
+                  <p className="text-sm text-jet-black-600">com {appointment.professional?.name}</p>
                 </div>
               </div>
             </div>
 
             {/* Valor */}
-            <div className="bg-gray-50 p-4 border-t">
+            <div className="bg-jet-black-50 p-4 border-t">
               <div className="flex items-center justify-between">
-                <span className="text-gray-600">Valor</span>
+                <span className="text-jet-black-600">Valor</span>
                 <span className="text-xl font-bold text-green-600">
                   R$ {parseFloat(appointment.service?.price || 0).toFixed(2)}
                 </span>

@@ -88,8 +88,8 @@ export default function Clients() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Clientes</h1>
-          <p className="text-gray-600">Gerencie sua base de clientes</p>
+          <h1 className="text-2xl font-bold text-jet-black-900">Clientes</h1>
+          <p className="text-jet-black-600">Gerencie sua base de clientes</p>
         </div>
         <button
           onClick={() => navigate('/clients/new')}
@@ -105,13 +105,13 @@ export default function Clients() {
         <div className="flex items-center space-x-4">
           <div className="flex-1">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-jet-black-400 w-4 h-4" />
               <input
                 type="text"
                 placeholder="Buscar clientes por nome, telefone ou email..."
                 value={searchTerm}
                 onChange={handleSearchChange}
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full pl-10 pr-4 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               />
             </div>
           </div>
@@ -122,13 +122,13 @@ export default function Clients() {
       <div className="bg-white rounded-lg shadow-sm border">
         {clients.length === 0 ? (
           <div className="text-center py-12">
-            <div className="text-gray-400 mb-4">
+            <div className="text-jet-black-400 mb-4">
               <Users className="w-16 h-16 mx-auto" />
             </div>
-            <h3 className="text-lg font-medium text-gray-900 mb-2">
+            <h3 className="text-lg font-medium text-jet-black-900 mb-2">
               {searchTerm ? 'Nenhum cliente encontrado' : 'Nenhum cliente cadastrado'}
             </h3>
-            <p className="text-gray-600 mb-6">
+            <p className="text-jet-black-600 mb-6">
               {searchTerm 
                 ? 'Tente ajustar os termos de busca'
                 : 'Comece cadastrando o primeiro cliente do seu negócio'
@@ -145,9 +145,9 @@ export default function Clients() {
             )}
           </div>
         ) : (
-          <div className="divide-y divide-gray-200">
+          <div className="divide-y divide-jet-black-200">
             {clients.map((client) => (
-              <div key={client.id} className="p-6 hover:bg-gray-50">
+              <div key={client.id} className="p-6 hover:bg-jet-black-50">
                 <div className="flex items-center justify-between">
                   <div className="flex-1">
                     <div className="flex items-center space-x-3">
@@ -157,11 +157,11 @@ export default function Clients() {
                         </div>
                       </div>
                       <div>
-                        <h3 className="text-lg font-medium text-gray-900">
+                        <h3 className="text-lg font-medium text-jet-black-900">
                           {client.name}
                         </h3>
                         
-                        <div className="flex items-center space-x-6 mt-2 text-sm text-gray-500">
+                        <div className="flex items-center space-x-6 mt-2 text-sm text-jet-black-500">
                           {client.phone && (
                             <div className="flex items-center">
                               <Phone className="w-4 h-4 mr-1" />
@@ -179,15 +179,15 @@ export default function Clients() {
                         {client.notes && (
                           <div className="mt-2">
                             <div className="flex items-start">
-                              <FileText className="w-4 h-4 mr-1 text-gray-400 mt-0.5" />
-                              <p className="text-sm text-gray-600">{client.notes}</p>
+                              <FileText className="w-4 h-4 mr-1 text-jet-black-400 mt-0.5" />
+                              <p className="text-sm text-jet-black-600">{client.notes}</p>
                             </div>
                           </div>
                         )}
 
                         {/* Stats */}
                         {client.stats && (
-                          <div className="mt-3 flex items-center space-x-6 text-sm text-gray-500">
+                          <div className="mt-3 flex items-center space-x-6 text-sm text-jet-black-500">
                             <div className="flex items-center">
                               <Calendar className="w-4 h-4 mr-1" />
                               {client.stats.total_appointments || 0} agendamentos
@@ -205,7 +205,7 @@ export default function Clients() {
                           </div>
                         )}
 
-                        <div className="mt-2 text-xs text-gray-400">
+                        <div className="mt-2 text-xs text-jet-black-400">
                           Cadastrado em: {new Date(client.created_at).toLocaleDateString('pt-BR')}
                         </div>
                       </div>
@@ -240,7 +240,7 @@ export default function Clients() {
       {pagination.pages > 1 && (
         <div className="bg-white rounded-lg shadow-sm border p-4">
           <div className="flex items-center justify-between">
-            <div className="text-sm text-gray-600">
+            <div className="text-sm text-jet-black-600">
               Página {pagination.page} de {pagination.pages} 
               ({pagination.total} clientes no total)
             </div>
@@ -248,7 +248,7 @@ export default function Clients() {
               <button
                 onClick={() => handlePageChange(pagination.page - 1)}
                 disabled={pagination.page <= 1}
-                className="px-3 py-2 text-sm border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-3 py-2 text-sm border border-jet-black-300 rounded-md hover:bg-jet-black-50 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Anterior
               </button>
@@ -264,7 +264,7 @@ export default function Clients() {
                     className={`px-3 py-2 text-sm border rounded-md ${
                       page === pagination.page
                         ? 'bg-blue-600 text-white border-blue-600'
-                        : 'border-gray-300 hover:bg-gray-50'
+                        : 'border-jet-black-300 hover:bg-jet-black-50'
                     }`}
                   >
                     {page}
@@ -275,7 +275,7 @@ export default function Clients() {
               <button
                 onClick={() => handlePageChange(pagination.page + 1)}
                 disabled={pagination.page >= pagination.pages}
-                className="px-3 py-2 text-sm border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-3 py-2 text-sm border border-jet-black-300 rounded-md hover:bg-jet-black-50 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Próxima
               </button>
@@ -289,20 +289,20 @@ export default function Clients() {
         <div className="bg-white rounded-lg shadow-sm border p-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
             <div>
-              <p className="text-2xl font-bold text-gray-900">{pagination.total || clients.length}</p>
-              <p className="text-sm text-gray-600">Total de Clientes</p>
+              <p className="text-2xl font-bold text-jet-black-900">{pagination.total || clients.length}</p>
+              <p className="text-sm text-jet-black-600">Total de Clientes</p>
             </div>
             <div>
               <p className="text-2xl font-bold text-green-600">
                 {clients.reduce((acc, client) => acc + (client.stats?.completed_appointments || 0), 0)}
               </p>
-              <p className="text-sm text-gray-600">Agendamentos Concluídos</p>
+              <p className="text-sm text-jet-black-600">Agendamentos Concluídos</p>
             </div>
             <div>
               <p className="text-2xl font-bold text-blue-600">
                 {clients.reduce((acc, client) => acc + (client.stats?.total_appointments || 0), 0)}
               </p>
-              <p className="text-sm text-gray-600">Total de Agendamentos</p>
+              <p className="text-sm text-jet-black-600">Total de Agendamentos</p>
             </div>
           </div>
         </div>

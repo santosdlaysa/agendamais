@@ -22,7 +22,7 @@ export default function BookingSummary({
 
   return (
     <div className="space-y-6">
-      <h2 className="text-lg font-semibold text-gray-900">Confirme seu agendamento</h2>
+      <h2 className="text-lg font-semibold text-jet-black-900">Confirme seu agendamento</h2>
 
       <div className="bg-white rounded-xl border overflow-hidden">
         {/* Header do estabelecimento */}
@@ -44,9 +44,9 @@ export default function BookingSummary({
               <Briefcase className="w-5 h-5 text-blue-600" />
             </div>
             <div className="flex-1">
-              <p className="text-sm text-gray-500">Serviço</p>
-              <p className="font-semibold text-gray-900">{service?.name}</p>
-              <p className="text-sm text-gray-600">{service?.duration} minutos</p>
+              <p className="text-sm text-jet-black-500">Serviço</p>
+              <p className="font-semibold text-jet-black-900">{service?.name}</p>
+              <p className="text-sm text-jet-black-600">{service?.duration} minutos</p>
             </div>
             <div className="text-right">
               <p className="text-lg font-bold text-green-600">
@@ -61,8 +61,8 @@ export default function BookingSummary({
               <User className="w-5 h-5 text-purple-600" />
             </div>
             <div>
-              <p className="text-sm text-gray-500">Profissional</p>
-              <p className="font-semibold text-gray-900">
+              <p className="text-sm text-jet-black-500">Profissional</p>
+              <p className="font-semibold text-jet-black-900">
                 {professional?.name || selectedTime?.professional_name || 'Qualquer disponível'}
               </p>
             </div>
@@ -74,11 +74,11 @@ export default function BookingSummary({
               <Calendar className="w-5 h-5 text-orange-600" />
             </div>
             <div>
-              <p className="text-sm text-gray-500">Data e Horário</p>
-              <p className="font-semibold text-gray-900 capitalize">
+              <p className="text-sm text-jet-black-500">Data e Horário</p>
+              <p className="font-semibold text-jet-black-900 capitalize">
                 {formatDate(selectedDate)}
               </p>
-              <p className="text-sm text-gray-600 flex items-center gap-1">
+              <p className="text-sm text-jet-black-600 flex items-center gap-1">
                 <Clock className="w-4 h-4" />
                 {selectedTime?.time} - {selectedTime?.end_time}
               </p>
@@ -91,32 +91,32 @@ export default function BookingSummary({
               <Phone className="w-5 h-5 text-green-600" />
             </div>
             <div>
-              <p className="text-sm text-gray-500">Seus dados</p>
-              <p className="font-semibold text-gray-900">{clientData?.name}</p>
-              <p className="text-sm text-gray-600">{clientData?.phone}</p>
+              <p className="text-sm text-jet-black-500">Seus dados</p>
+              <p className="font-semibold text-jet-black-900">{clientData?.name}</p>
+              <p className="text-sm text-jet-black-600">{clientData?.phone}</p>
               {clientData?.email && (
-                <p className="text-sm text-gray-600">{clientData.email}</p>
+                <p className="text-sm text-jet-black-600">{clientData.email}</p>
               )}
             </div>
           </div>
 
           {clientData?.notes && (
-            <div className="mt-4 p-3 bg-gray-50 rounded-lg">
-              <p className="text-sm text-gray-500">Observações:</p>
-              <p className="text-sm text-gray-700">{clientData.notes}</p>
+            <div className="mt-4 p-3 bg-jet-black-50 rounded-lg">
+              <p className="text-sm text-jet-black-500">Observações:</p>
+              <p className="text-sm text-jet-black-700">{clientData.notes}</p>
             </div>
           )}
         </div>
 
         {/* Footer com valor total */}
-        <div className="bg-gray-50 p-4 border-t">
+        <div className="bg-jet-black-50 p-4 border-t">
           <div className="flex items-center justify-between">
-            <span className="text-gray-600 font-medium">Valor total</span>
+            <span className="text-jet-black-600 font-medium">Valor total</span>
             <span className="text-2xl font-bold text-green-600">
               R$ {parseFloat(service?.price || 0).toFixed(2)}
             </span>
           </div>
-          <p className="text-xs text-gray-500 mt-1">
+          <p className="text-xs text-jet-black-500 mt-1">
             * Pagamento realizado no local
           </p>
         </div>

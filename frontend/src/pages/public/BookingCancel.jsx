@@ -91,7 +91,7 @@ export default function BookingCancel() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-jet-black-50 flex items-center justify-center">
         <Loader2 className="w-12 h-12 text-blue-600 animate-spin" />
       </div>
     )
@@ -100,13 +100,13 @@ export default function BookingCancel() {
   // Tela de sucesso após cancelamento
   if (cancelled) {
     return (
-      <div className="min-h-screen bg-gray-50 py-10 px-4">
+      <div className="min-h-screen bg-jet-black-50 py-10 px-4">
         <div className="max-w-lg mx-auto text-center">
           <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
             <CheckCircle className="w-12 h-12 text-green-600" />
           </div>
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">Agendamento Cancelado</h1>
-          <p className="text-gray-600 mb-8">
+          <h1 className="text-2xl font-bold text-jet-black-900 mb-2">Agendamento Cancelado</h1>
+          <p className="text-jet-black-600 mb-8">
             Seu agendamento foi cancelado com sucesso.
           </p>
           <Link
@@ -123,13 +123,13 @@ export default function BookingCancel() {
   // Tela de erro
   if (error) {
     return (
-      <div className="min-h-screen bg-gray-50 py-10 px-4">
+      <div className="min-h-screen bg-jet-black-50 py-10 px-4">
         <div className="max-w-lg mx-auto text-center">
           <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
             <AlertTriangle className="w-12 h-12 text-red-600" />
           </div>
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">Não foi possível cancelar</h1>
-          <p className="text-gray-600 mb-8">{error}</p>
+          <h1 className="text-2xl font-bold text-jet-black-900 mb-2">Não foi possível cancelar</h1>
+          <p className="text-jet-black-600 mb-8">{error}</p>
           <Link
             to={`/agendar/${slug}`}
             className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors"
@@ -142,44 +142,44 @@ export default function BookingCancel() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-10 px-4">
+    <div className="min-h-screen bg-jet-black-50 py-10 px-4">
       <div className="max-w-lg mx-auto">
         {/* Header */}
         <div className="flex items-center gap-4 mb-8">
           <button
             onClick={() => navigate(`/agendar/${slug}`)}
-            className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+            className="p-2 hover:bg-jet-black-100 rounded-lg transition-colors"
           >
             <ArrowLeft className="w-5 h-5" />
           </button>
           <div>
-            <h1 className="text-xl font-bold text-gray-900">Cancelar Agendamento</h1>
-            <p className="text-sm text-gray-500">Código: {code}</p>
+            <h1 className="text-xl font-bold text-jet-black-900">Cancelar Agendamento</h1>
+            <p className="text-sm text-jet-black-500">Código: {code}</p>
           </div>
         </div>
 
         {/* Detalhes do agendamento */}
         <div className="bg-white rounded-xl shadow-sm border p-6 mb-6">
-          <h2 className="font-semibold text-gray-900 mb-4">Detalhes do agendamento</h2>
+          <h2 className="font-semibold text-jet-black-900 mb-4">Detalhes do agendamento</h2>
 
           <div className="space-y-3">
             <div className="flex items-center gap-3">
-              <Calendar className="w-5 h-5 text-gray-400" />
-              <span className="text-gray-700 capitalize">
+              <Calendar className="w-5 h-5 text-jet-black-400" />
+              <span className="text-jet-black-700 capitalize">
                 {formatDate(appointment?.appointment_date)}
               </span>
             </div>
 
             <div className="flex items-center gap-3">
-              <Clock className="w-5 h-5 text-gray-400" />
-              <span className="text-gray-700">
+              <Clock className="w-5 h-5 text-jet-black-400" />
+              <span className="text-jet-black-700">
                 {appointment?.start_time} - {appointment?.end_time}
               </span>
             </div>
 
             <div className="flex items-center gap-3">
-              <User className="w-5 h-5 text-gray-400" />
-              <span className="text-gray-700">
+              <User className="w-5 h-5 text-jet-black-400" />
+              <span className="text-jet-black-700">
                 {appointment?.service?.name} com {appointment?.professional?.name}
               </span>
             </div>
@@ -202,11 +202,11 @@ export default function BookingCancel() {
 
         {/* Formulário de cancelamento */}
         <form onSubmit={handleCancel} className="bg-white rounded-xl shadow-sm border p-6">
-          <h2 className="font-semibold text-gray-900 mb-4">Confirmar cancelamento</h2>
+          <h2 className="font-semibold text-jet-black-900 mb-4">Confirmar cancelamento</h2>
 
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-jet-black-700 mb-2">
                 Telefone cadastrado *
               </label>
               <input
@@ -216,19 +216,19 @@ export default function BookingCancel() {
                 placeholder="(00) 00000-0000"
                 maxLength={15}
                 className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 ${
-                  phoneError ? 'border-red-500' : 'border-gray-300'
+                  phoneError ? 'border-red-500' : 'border-jet-black-300'
                 }`}
               />
               {phoneError && (
                 <p className="mt-1 text-sm text-red-600">{phoneError}</p>
               )}
-              <p className="mt-1 text-xs text-gray-500">
+              <p className="mt-1 text-xs text-jet-black-500">
                 Digite o mesmo telefone usado no agendamento
               </p>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-jet-black-700 mb-2">
                 Motivo do cancelamento (opcional)
               </label>
               <textarea
@@ -236,7 +236,7 @@ export default function BookingCancel() {
                 onChange={(e) => setReason(e.target.value)}
                 placeholder="Conte-nos o motivo do cancelamento..."
                 rows={3}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 resize-none"
+                className="w-full px-4 py-3 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 resize-none"
               />
             </div>
           </div>
@@ -255,7 +255,7 @@ export default function BookingCancel() {
         <div className="text-center mt-6">
           <button
             onClick={() => navigate(-1)}
-            className="text-gray-600 hover:text-gray-800"
+            className="text-jet-black-600 hover:text-jet-black-800"
           >
             Voltar
           </button>

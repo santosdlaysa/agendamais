@@ -83,12 +83,12 @@ export default function Login() {
   return (
     <div className="min-h-screen flex">
       {/* Left Side - Branding & Benefits */}
-      <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-violet-600 via-indigo-600 to-violet-700 relative overflow-hidden">
+      <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-periwinkle-600 via-space-indigo-600 to-periwinkle-700 relative overflow-hidden">
         {/* Background decorations */}
         <div className="absolute inset-0">
           <div className="absolute top-20 left-20 w-72 h-72 bg-white/10 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-20 right-20 w-96 h-96 bg-indigo-400/20 rounded-full blur-3xl"></div>
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-violet-500/10 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-20 right-20 w-96 h-96 bg-space-indigo-400/20 rounded-full blur-3xl"></div>
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-periwinkle-500/10 rounded-full blur-3xl"></div>
         </div>
 
         {/* Grid pattern */}
@@ -110,7 +110,7 @@ export default function Login() {
               <h1 className="text-4xl xl:text-5xl font-bold text-white leading-tight mb-4">
                 {isLogin ? 'Bem-vindo de volta!' : 'Comece sua jornada'}
               </h1>
-              <p className="text-xl text-violet-100">
+              <p className="text-xl text-periwinkle-100">
                 {isLogin
                   ? 'Entre para acessar sua agenda e gerenciar seus agendamentos.'
                   : 'Crie sua conta e organize seu negócio de forma inteligente.'
@@ -135,7 +135,7 @@ export default function Login() {
           </div>
 
           {/* Footer */}
-          <div className="flex items-center gap-2 text-violet-200 text-sm">
+          <div className="flex items-center gap-2 text-periwinkle-200 text-sm">
             <Shield className="w-4 h-4" />
             <span>Seus dados estão seguros e protegidos</span>
           </div>
@@ -145,7 +145,7 @@ export default function Login() {
       {/* Right Side - Form */}
       <div className="w-full lg:w-1/2 flex flex-col bg-[#FAFAFA]">
         {/* Mobile Header */}
-        <div className="lg:hidden bg-gradient-to-r from-violet-600 to-indigo-600 p-6">
+        <div className="lg:hidden bg-gradient-to-r from-periwinkle-600 to-space-indigo-600 p-6">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 bg-white/20 backdrop-blur rounded-xl flex items-center justify-center">
               <Calendar className="w-5 h-5 text-white" />
@@ -160,7 +160,7 @@ export default function Login() {
             {/* Back Button */}
             <button
               onClick={() => navigate('/')}
-              className="flex items-center gap-2 text-gray-500 hover:text-gray-900 transition-colors mb-8 group"
+              className="flex items-center gap-2 text-jet-black-500 hover:text-jet-black-900 transition-colors mb-8 group"
             >
               <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
               <span className="text-sm font-medium">Voltar ao início</span>
@@ -168,10 +168,10 @@ export default function Login() {
 
             {/* Header */}
             <div className="mb-8">
-              <h2 className="text-3xl font-bold text-gray-900 mb-2">
+              <h2 className="text-3xl font-bold text-jet-black-900 mb-2">
                 {isLogin ? 'Entrar' : 'Criar conta'}
               </h2>
-              <p className="text-gray-600">
+              <p className="text-jet-black-600">
                 {isLogin
                   ? 'Digite seus dados para acessar sua conta'
                   : 'Preencha os dados para começar seu teste grátis'
@@ -184,7 +184,7 @@ export default function Login() {
               {/* Name Field - Only for Register */}
               {!isLogin && (
                 <div className="space-y-2">
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+                  <label htmlFor="name" className="block text-sm font-medium text-jet-black-700">
                     Nome completo
                   </label>
                   <input
@@ -195,14 +195,14 @@ export default function Login() {
                     value={formData.name}
                     onChange={handleChange}
                     placeholder="Digite seu nome"
-                    className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all"
+                    className="w-full px-4 py-3 bg-white border border-jet-black-200 rounded-xl text-jet-black-900 placeholder-jet-black-400 focus:outline-none focus:ring-2 focus:ring-periwinkle-500 focus:border-transparent transition-all"
                   />
                 </div>
               )}
 
               {/* Email Field */}
               <div className="space-y-2">
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                <label htmlFor="email" className="block text-sm font-medium text-jet-black-700">
                   Email
                 </label>
                 <input
@@ -214,13 +214,13 @@ export default function Login() {
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="seu@email.com"
-                  className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all"
+                  className="w-full px-4 py-3 bg-white border border-jet-black-200 rounded-xl text-jet-black-900 placeholder-jet-black-400 focus:outline-none focus:ring-2 focus:ring-periwinkle-500 focus:border-transparent transition-all"
                 />
               </div>
 
               {/* Password Field */}
               <div className="space-y-2">
-                <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                <label htmlFor="password" className="block text-sm font-medium text-jet-black-700">
                   Senha
                 </label>
                 <div className="relative">
@@ -233,12 +233,12 @@ export default function Login() {
                     value={formData.password}
                     onChange={handleChange}
                     placeholder="Digite sua senha"
-                    className="w-full px-4 py-3 pr-12 bg-white border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all"
+                    className="w-full px-4 py-3 pr-12 bg-white border border-jet-black-200 rounded-xl text-jet-black-900 placeholder-jet-black-400 focus:outline-none focus:ring-2 focus:ring-periwinkle-500 focus:border-transparent transition-all"
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-jet-black-400 hover:text-jet-black-600 transition-colors"
                   >
                     {showPassword ? (
                       <EyeOff className="w-5 h-5" />
@@ -254,7 +254,7 @@ export default function Login() {
                 <div className="flex justify-end">
                   <button
                     type="button"
-                    className="text-sm text-violet-600 hover:text-violet-700 font-medium"
+                    className="text-sm text-periwinkle-600 hover:text-periwinkle-700 font-medium"
                   >
                     Esqueceu a senha?
                   </button>
@@ -265,7 +265,7 @@ export default function Login() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full flex items-center justify-center gap-2 px-6 py-3.5 bg-gray-900 hover:bg-gray-800 disabled:bg-gray-400 text-white font-semibold rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-gray-900/20 disabled:cursor-not-allowed group"
+                className="w-full flex items-center justify-center gap-2 px-6 py-3.5 bg-jet-black-900 hover:bg-jet-black-800 disabled:bg-jet-black-400 text-white font-semibold rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-jet-black-900/20 disabled:cursor-not-allowed group"
               >
                 {loading ? (
                   <Loader2 className="w-5 h-5 animate-spin" />
@@ -291,22 +291,22 @@ export default function Login() {
             {/* Divider */}
             <div className="relative my-8">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-200"></div>
+                <div className="w-full border-t border-jet-black-200"></div>
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-4 bg-[#FAFAFA] text-gray-500">ou</span>
+                <span className="px-4 bg-[#FAFAFA] text-jet-black-500">ou</span>
               </div>
             </div>
 
             {/* Toggle Mode */}
             <div className="text-center">
-              <p className="text-gray-600">
+              <p className="text-jet-black-600">
                 {isLogin ? 'Não tem uma conta?' : 'Já tem uma conta?'}
                 {' '}
                 <button
                   type="button"
                   onClick={toggleMode}
-                  className="text-violet-600 hover:text-violet-700 font-semibold"
+                  className="text-periwinkle-600 hover:text-periwinkle-700 font-semibold"
                 >
                   {isLogin ? 'Cadastre-se' : 'Entrar'}
                 </button>
@@ -315,13 +315,13 @@ export default function Login() {
 
             {/* Terms - Only for Register */}
             {!isLogin && (
-              <p className="mt-6 text-center text-xs text-gray-500">
+              <p className="mt-6 text-center text-xs text-jet-black-500">
                 Ao criar sua conta, você concorda com nossos{' '}
-                <button onClick={() => navigate('/termos')} className="text-violet-600 hover:underline">
+                <button onClick={() => navigate('/termos')} className="text-periwinkle-600 hover:underline">
                   Termos de Uso
                 </button>
                 {' '}e{' '}
-                <button onClick={() => navigate('/privacidade')} className="text-violet-600 hover:underline">
+                <button onClick={() => navigate('/privacidade')} className="text-periwinkle-600 hover:underline">
                   Política de Privacidade
                 </button>
               </p>
@@ -330,7 +330,7 @@ export default function Login() {
         </div>
 
         {/* Footer */}
-        <div className="p-6 text-center text-sm text-gray-400">
+        <div className="p-6 text-center text-sm text-jet-black-400">
           © {new Date().getFullYear()} AgendaMais. Todos os direitos reservados.
         </div>
       </div>

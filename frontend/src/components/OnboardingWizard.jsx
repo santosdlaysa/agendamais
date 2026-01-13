@@ -426,7 +426,7 @@ export default function OnboardingWizard() {
   const progressPercentage = Math.round(((currentStep) / (steps.length - 1)) * 100)
 
   return (
-    <div className="fixed inset-0 bg-gradient-to-br from-slate-50 via-white to-blue-50 z-50 overflow-y-auto">
+    <div className="fixed inset-0 bg-jet-black-50 z-50 overflow-y-auto">
       {/* Confetti Animation */}
       {showConfetti && (
         <div className="fixed inset-0 pointer-events-none z-50">
@@ -446,7 +446,7 @@ export default function OnboardingWizard() {
 
       <div className="min-h-screen flex flex-col">
         {/* Header Fixo */}
-        <header className="sticky top-0 bg-white/80 backdrop-blur-md border-b border-gray-100 z-10">
+        <header className="sticky top-0 bg-white/80 backdrop-blur-md border-b border-jet-black-100 z-10">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
@@ -454,14 +454,14 @@ export default function OnboardingWizard() {
                   <Calendar className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <span className="text-xl font-bold text-gray-900">AgendaMais</span>
-                  <p className="text-xs text-gray-500">Configuração Inicial</p>
+                  <span className="text-xl font-bold text-jet-black-900">AgendaMais</span>
+                  <p className="text-xs text-jet-black-500">Configuração Inicial</p>
                 </div>
               </div>
               {currentStep > 0 && currentStep < steps.length - 1 && (
                 <button
                   onClick={handleSkip}
-                  className="text-gray-400 hover:text-gray-600 flex items-center gap-1 text-sm transition-colors"
+                  className="text-jet-black-400 hover:text-jet-black-600 flex items-center gap-1 text-sm transition-colors"
                 >
                   <X className="w-4 h-4" />
                   Pular configuração
@@ -473,17 +473,17 @@ export default function OnboardingWizard() {
 
         {/* Progress Bar */}
         {currentStep > 0 && currentStep < steps.length - 1 && (
-          <div className="bg-white border-b border-gray-100">
+          <div className="bg-white border-b border-jet-black-100">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-sm font-medium text-gray-600">
+                <span className="text-sm font-medium text-jet-black-600">
                   Passo {currentStep} de {steps.length - 2}
                 </span>
                 <span className="text-sm font-medium text-blue-600">
                   {progressPercentage}% completo
                 </span>
               </div>
-              <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+              <div className="h-2 bg-jet-black-100 rounded-full overflow-hidden">
                 <div
                   className="h-full bg-gradient-to-r from-blue-500 to-purple-500 rounded-full transition-all duration-500 ease-out"
                   style={{ width: `${progressPercentage}%` }}
@@ -503,13 +503,13 @@ export default function OnboardingWizard() {
                             ? 'bg-green-500 text-white'
                             : isActive
                             ? 'bg-blue-600 text-white ring-4 ring-blue-100'
-                            : 'bg-gray-200 text-gray-400'
+                            : 'bg-jet-black-200 text-jet-black-400'
                         }`}
                       >
                         {isCompleted ? <Check className="w-4 h-4" /> : idx + 1}
                       </div>
                       <span className={`mt-1 text-xs font-medium hidden sm:block ${
-                        isActive ? 'text-blue-600' : isCompleted ? 'text-green-600' : 'text-gray-400'
+                        isActive ? 'text-blue-600' : isCompleted ? 'text-green-600' : 'text-jet-black-400'
                       }`}>
                         {step.title}
                       </span>
@@ -524,16 +524,16 @@ export default function OnboardingWizard() {
         {/* Content - Full Width */}
         <div className="flex-1 py-8">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="bg-white rounded-2xl shadow-xl shadow-gray-200/50 border border-gray-100 p-6 sm:p-8 lg:p-10 transition-all">
+            <div className="bg-white rounded-2xl shadow-xl shadow-jet-black-200/50 border border-jet-black-100 p-6 sm:p-8 lg:p-10 transition-all">
               {renderStep()}
 
               {/* Navigation Buttons */}
               {currentStep > 0 && currentStep < steps.length - 1 && (
-                <div className="flex items-center justify-between mt-8 pt-6 border-t border-gray-100">
+                <div className="flex items-center justify-between mt-8 pt-6 border-t border-jet-black-100">
                   <button
                     onClick={prevStep}
                     disabled={saving}
-                    className="flex items-center gap-2 px-4 py-2.5 text-gray-500 hover:text-gray-700 hover:bg-gray-50 rounded-lg transition-all disabled:opacity-50"
+                    className="flex items-center gap-2 px-4 py-2.5 text-jet-black-500 hover:text-jet-black-700 hover:bg-jet-black-50 rounded-lg transition-all disabled:opacity-50"
                   >
                     <ArrowLeft className="w-4 h-4" />
                     Voltar
@@ -590,10 +590,10 @@ function WelcomeStep({ onNext, onSkip, selectedType, onSelectType }) {
             <Rocket className="w-8 h-8 text-white" />
           </div>
           <div>
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-2">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-jet-black-900 mb-2">
               Bem-vindo ao AgendaMais!
             </h1>
-            <p className="text-gray-600 text-lg">
+            <p className="text-jet-black-600 text-lg">
               Vamos configurar tudo em menos de 5 minutos. Escolha seu tipo de negócio:
             </p>
           </div>
@@ -602,7 +602,7 @@ function WelcomeStep({ onNext, onSkip, selectedType, onSelectType }) {
         <div className="flex items-center gap-3 flex-shrink-0">
           <button
             onClick={onSkip}
-            className="text-gray-400 hover:text-gray-600 text-sm transition-colors whitespace-nowrap"
+            className="text-jet-black-400 hover:text-jet-black-600 text-sm transition-colors whitespace-nowrap"
           >
             Configurar depois
           </button>
@@ -612,7 +612,7 @@ function WelcomeStep({ onNext, onSkip, selectedType, onSelectType }) {
             className={`px-6 py-3 rounded-xl font-semibold transition-all flex items-center gap-2 whitespace-nowrap ${
               selectedType
                 ? 'bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white shadow-lg shadow-blue-500/30'
-                : 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                : 'bg-jet-black-100 text-jet-black-400 cursor-not-allowed'
             }`}
           >
             Começar
@@ -634,17 +634,17 @@ function WelcomeStep({ onNext, onSkip, selectedType, onSelectType }) {
               className={`p-4 lg:p-5 rounded-xl border-2 transition-all text-left group ${
                 isSelected
                   ? 'border-blue-500 bg-blue-50 shadow-lg shadow-blue-500/20'
-                  : 'border-gray-100 hover:border-blue-200 hover:bg-gray-50'
+                  : 'border-jet-black-100 hover:border-blue-200 hover:bg-jet-black-50'
               }`}
             >
               <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-3 transition-all ${
                 isSelected
                   ? 'bg-blue-500 text-white'
-                  : 'bg-gray-100 text-gray-500 group-hover:bg-blue-100 group-hover:text-blue-600'
+                  : 'bg-jet-black-100 text-jet-black-500 group-hover:bg-blue-100 group-hover:text-blue-600'
               }`}>
                 <Icon className="w-6 h-6" />
               </div>
-              <p className={`font-medium ${isSelected ? 'text-blue-700' : 'text-gray-700'}`}>
+              <p className={`font-medium ${isSelected ? 'text-blue-700' : 'text-jet-black-700'}`}>
                 {type.name}
               </p>
             </button>
@@ -663,8 +663,8 @@ function BusinessStep({ data, onChange, errors, generateSlug, slugAvailable, che
           <Building2 className="w-6 h-6 text-white" />
         </div>
         <div>
-          <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900">Dados da Empresa</h2>
-          <p className="text-gray-500">Informações que seus clientes verão</p>
+          <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-jet-black-900">Dados da Empresa</h2>
+          <p className="text-jet-black-500">Informações que seus clientes verão</p>
         </div>
       </div>
 
@@ -672,7 +672,7 @@ function BusinessStep({ data, onChange, errors, generateSlug, slugAvailable, che
         {/* Coluna Esquerda */}
         <div className="space-y-5">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-jet-black-700 mb-2">
               Nome da Empresa *
             </label>
             <input
@@ -687,7 +687,7 @@ function BusinessStep({ data, onChange, errors, generateSlug, slugAvailable, che
               className={`w-full px-4 py-3 border-2 rounded-xl focus:ring-0 transition-colors ${
                 errors.business_name
                   ? 'border-red-300 focus:border-red-500'
-                  : 'border-gray-200 focus:border-blue-500'
+                  : 'border-jet-black-200 focus:border-blue-500'
               }`}
               placeholder="Ex: Salão da Maria, Barbearia Premium..."
             />
@@ -700,11 +700,11 @@ function BusinessStep({ data, onChange, errors, generateSlug, slugAvailable, che
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-jet-black-700 mb-2">
               Link de Agendamento *
             </label>
             <div className="flex">
-              <span className="inline-flex items-center px-4 rounded-l-xl border-2 border-r-0 border-gray-200 bg-gray-50 text-gray-500 text-sm">
+              <span className="inline-flex items-center px-4 rounded-l-xl border-2 border-r-0 border-jet-black-200 bg-jet-black-50 text-jet-black-500 text-sm">
                 /agendar/
               </span>
               <div className="relative flex-1">
@@ -717,13 +717,13 @@ function BusinessStep({ data, onChange, errors, generateSlug, slugAvailable, che
                       ? 'border-red-300 focus:border-red-500'
                       : slugAvailable === true
                       ? 'border-green-300 focus:border-green-500'
-                      : 'border-gray-200 focus:border-blue-500'
+                      : 'border-jet-black-200 focus:border-blue-500'
                   }`}
                   placeholder="minha-empresa"
                 />
                 <div className="absolute right-3 top-1/2 -translate-y-1/2">
                   {checkingSlug ? (
-                    <Loader2 className="w-5 h-5 text-gray-400 animate-spin" />
+                    <Loader2 className="w-5 h-5 text-jet-black-400 animate-spin" />
                   ) : slugAvailable === true ? (
                     <CheckCircle2 className="w-5 h-5 text-green-500" />
                   ) : slugAvailable === false ? (
@@ -746,27 +746,27 @@ function BusinessStep({ data, onChange, errors, generateSlug, slugAvailable, che
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-jet-black-700 mb-2">
               Telefone / WhatsApp
             </label>
             <input
               type="tel"
               value={data.business_phone}
               onChange={(e) => onChange({ business_phone: e.target.value })}
-              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:ring-0 transition-colors"
+              className="w-full px-4 py-3 border-2 border-jet-black-200 rounded-xl focus:border-blue-500 focus:ring-0 transition-colors"
               placeholder="(00) 00000-0000"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-jet-black-700 mb-2">
               Endereço
             </label>
             <input
               type="text"
               value={data.business_address}
               onChange={(e) => onChange({ business_address: e.target.value })}
-              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:ring-0 transition-colors"
+              className="w-full px-4 py-3 border-2 border-jet-black-200 rounded-xl focus:border-blue-500 focus:ring-0 transition-colors"
               placeholder="Rua, número, bairro"
             />
           </div>
@@ -778,10 +778,10 @@ function BusinessStep({ data, onChange, errors, generateSlug, slugAvailable, che
             <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl p-6 border border-blue-100 h-full">
               <div className="flex items-center gap-2 mb-4">
                 <Globe className="w-5 h-5 text-blue-600" />
-                <span className="font-semibold text-gray-900">Preview do seu link</span>
+                <span className="font-semibold text-jet-black-900">Preview do seu link</span>
               </div>
               <div className="bg-white rounded-xl p-4 border border-blue-100 mb-4">
-                <code className="text-sm text-gray-700 break-all">
+                <code className="text-sm text-jet-black-700 break-all">
                   {getBookingUrl()}
                 </code>
               </div>
@@ -802,15 +802,15 @@ function BusinessStep({ data, onChange, errors, generateSlug, slugAvailable, che
                   <ExternalLink className="w-4 h-4" />
                 </a>
               </div>
-              <p className="text-sm text-gray-500 mt-4">
+              <p className="text-sm text-jet-black-500 mt-4">
                 Este é o link que você vai compartilhar com seus clientes para eles agendarem online.
               </p>
             </div>
           ) : (
-            <div className="bg-gray-50 rounded-2xl p-6 border-2 border-dashed border-gray-200 h-full flex flex-col items-center justify-center text-center">
-              <Globe className="w-12 h-12 text-gray-300 mb-3" />
-              <p className="text-gray-500 font-medium">Preview do Link</p>
-              <p className="text-sm text-gray-400 mt-1">
+            <div className="bg-jet-black-50 rounded-2xl p-6 border-2 border-dashed border-jet-black-200 h-full flex flex-col items-center justify-center text-center">
+              <Globe className="w-12 h-12 text-jet-black-300 mb-3" />
+              <p className="text-jet-black-500 font-medium">Preview do Link</p>
+              <p className="text-sm text-jet-black-400 mt-1">
                 Preencha o nome da empresa para ver como ficará seu link de agendamento
               </p>
             </div>
@@ -832,8 +832,8 @@ function ServicesStep({ services, onAddService, onRemoveService, onUpdateService
             <Scissors className="w-6 h-6 text-white" />
           </div>
           <div>
-            <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900">Seus Serviços</h2>
-            <p className="text-gray-500">Adicione os serviços que você oferece</p>
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-jet-black-900">Seus Serviços</h2>
+            <p className="text-jet-black-500">Adicione os serviços que você oferece</p>
           </div>
         </div>
 
@@ -856,14 +856,14 @@ function ServicesStep({ services, onAddService, onRemoveService, onUpdateService
         {services.map((service, index) => (
           <div
             key={index}
-            className="bg-gray-50 rounded-xl p-5 border border-gray-100 hover:border-gray-200 transition-colors"
+            className="bg-jet-black-50 rounded-xl p-5 border border-jet-black-100 hover:border-jet-black-200 transition-colors"
           >
             <div className="flex items-center justify-between mb-4">
-              <span className="text-sm font-semibold text-gray-600">Serviço {index + 1}</span>
+              <span className="text-sm font-semibold text-jet-black-600">Serviço {index + 1}</span>
               {services.length > 1 && (
                 <button
                   onClick={() => onRemoveService(index)}
-                  className="p-1.5 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+                  className="p-1.5 text-jet-black-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
                 >
                   <Trash2 className="w-4 h-4" />
                 </button>
@@ -874,26 +874,26 @@ function ServicesStep({ services, onAddService, onRemoveService, onUpdateService
                 type="text"
                 value={service.name}
                 onChange={(e) => onUpdateService(index, 'name', e.target.value)}
-                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:ring-0 transition-colors"
+                className="w-full px-4 py-3 border-2 border-jet-black-200 rounded-xl focus:border-blue-500 focus:ring-0 transition-colors"
                 placeholder="Nome do serviço"
               />
               <div className="grid grid-cols-2 gap-3">
                 <select
                   value={service.duration}
                   onChange={(e) => onUpdateService(index, 'duration', parseInt(e.target.value))}
-                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:ring-0 transition-colors bg-white"
+                  className="w-full px-4 py-3 border-2 border-jet-black-200 rounded-xl focus:border-blue-500 focus:ring-0 transition-colors bg-white"
                 >
                   {DURATION_OPTIONS.map(opt => (
                     <option key={opt.value} value={opt.value}>{opt.label}</option>
                   ))}
                 </select>
                 <div className="relative">
-                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">R$</span>
+                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-jet-black-400">R$</span>
                   <input
                     type="number"
                     value={service.price}
                     onChange={(e) => onUpdateService(index, 'price', e.target.value)}
-                    className="w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:ring-0 transition-colors"
+                    className="w-full pl-12 pr-4 py-3 border-2 border-jet-black-200 rounded-xl focus:border-blue-500 focus:ring-0 transition-colors"
                     placeholder="0,00"
                     step="0.01"
                     min="0"
@@ -906,7 +906,7 @@ function ServicesStep({ services, onAddService, onRemoveService, onUpdateService
 
         <button
           onClick={onAddService}
-          className="h-full min-h-[180px] border-2 border-dashed border-gray-200 rounded-xl text-gray-400 hover:border-blue-300 hover:text-blue-600 hover:bg-blue-50/50 transition-all flex flex-col items-center justify-center gap-2"
+          className="h-full min-h-[180px] border-2 border-dashed border-jet-black-200 rounded-xl text-jet-black-400 hover:border-blue-300 hover:text-blue-600 hover:bg-blue-50/50 transition-all flex flex-col items-center justify-center gap-2"
         >
           <Plus className="w-8 h-8" />
           <span className="font-medium">Adicionar Serviço</span>
@@ -927,8 +927,8 @@ function ProfessionalStep({ data, onChange, errors, services, businessType }) {
           <Users className="w-6 h-6 text-white" />
         </div>
         <div>
-          <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900">Primeiro Profissional</h2>
-          <p className="text-gray-500">Pode ser voce ou um membro da equipe</p>
+          <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-jet-black-900">Primeiro Profissional</h2>
+          <p className="text-jet-black-500">Pode ser voce ou um membro da equipe</p>
         </div>
       </div>
 
@@ -936,7 +936,7 @@ function ProfessionalStep({ data, onChange, errors, services, businessType }) {
         {/* Coluna Esquerda - Formulário */}
         <div className="space-y-5">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-jet-black-700 mb-2">
               Nome do Profissional *
             </label>
             <input
@@ -946,7 +946,7 @@ function ProfessionalStep({ data, onChange, errors, services, businessType }) {
               className={`w-full px-4 py-3 border-2 rounded-xl focus:ring-0 transition-colors ${
                 errors.professional_name
                   ? 'border-red-300 focus:border-red-500'
-                  : 'border-gray-200 focus:border-blue-500'
+                  : 'border-jet-black-200 focus:border-blue-500'
               }`}
               placeholder="Ex: Maria Silva, João Santos..."
             />
@@ -959,7 +959,7 @@ function ProfessionalStep({ data, onChange, errors, services, businessType }) {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-jet-black-700 mb-2">
               Funcao/Cargo *
             </label>
             <input
@@ -969,7 +969,7 @@ function ProfessionalStep({ data, onChange, errors, services, businessType }) {
               className={`w-full px-4 py-3 border-2 rounded-xl focus:ring-0 transition-colors ${
                 errors.professional_role
                   ? 'border-red-300 focus:border-red-500'
-                  : 'border-gray-200 focus:border-blue-500'
+                  : 'border-jet-black-200 focus:border-blue-500'
               }`}
               placeholder="Ex: Cabeleireira, Barbeiro, Esteticista..."
             />
@@ -989,7 +989,7 @@ function ProfessionalStep({ data, onChange, errors, services, businessType }) {
                   className={`px-3 py-1.5 text-sm rounded-lg border transition-all ${
                     data.role === role
                       ? 'bg-purple-100 border-purple-300 text-purple-700'
-                      : 'bg-gray-50 border-gray-200 text-gray-600 hover:bg-purple-50 hover:border-purple-200'
+                      : 'bg-jet-black-50 border-jet-black-200 text-jet-black-600 hover:bg-purple-50 hover:border-purple-200'
                   }`}
                 >
                   {role}
@@ -999,27 +999,27 @@ function ProfessionalStep({ data, onChange, errors, services, businessType }) {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Email <span className="text-gray-400">(opcional)</span>
+            <label className="block text-sm font-medium text-jet-black-700 mb-2">
+              Email <span className="text-jet-black-400">(opcional)</span>
             </label>
             <input
               type="email"
               value={data.email}
               onChange={(e) => onChange({ email: e.target.value })}
-              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:ring-0 transition-colors"
+              className="w-full px-4 py-3 border-2 border-jet-black-200 rounded-xl focus:border-blue-500 focus:ring-0 transition-colors"
               placeholder="email@exemplo.com"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Telefone <span className="text-gray-400">(opcional)</span>
+            <label className="block text-sm font-medium text-jet-black-700 mb-2">
+              Telefone <span className="text-jet-black-400">(opcional)</span>
             </label>
             <input
               type="tel"
               value={data.phone}
               onChange={(e) => onChange({ phone: e.target.value })}
-              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:ring-0 transition-colors"
+              className="w-full px-4 py-3 border-2 border-jet-black-200 rounded-xl focus:border-blue-500 focus:ring-0 transition-colors"
               placeholder="(00) 00000-0000"
             />
           </div>
@@ -1029,7 +1029,7 @@ function ProfessionalStep({ data, onChange, errors, services, businessType }) {
         <div className="bg-purple-50 border border-purple-100 rounded-2xl p-6">
           <div className="flex items-center gap-2 mb-4">
             <Star className="w-5 h-5 text-purple-600" />
-            <span className="font-semibold text-gray-900">Serviços associados</span>
+            <span className="font-semibold text-jet-black-900">Serviços associados</span>
           </div>
           <p className="text-sm text-purple-700 mb-4">
             Este profissional poderá atender os seguintes serviços:
@@ -1081,14 +1081,14 @@ function ScheduleStep({ data, onChange }) {
             <Clock className="w-6 h-6 text-white" />
           </div>
           <div>
-            <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900">Horário de Funcionamento</h2>
-            <p className="text-gray-500">Quando você atende seus clientes</p>
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-jet-black-900">Horário de Funcionamento</h2>
+            <p className="text-jet-black-500">Quando você atende seus clientes</p>
           </div>
         </div>
 
         {/* Quick apply */}
         <div className="flex items-center gap-2 flex-wrap">
-          <span className="text-sm text-gray-500">Aplicar:</span>
+          <span className="text-sm text-jet-black-500">Aplicar:</span>
           <button
             onClick={() => applyToAll('09:00', '18:00')}
             className="text-sm bg-amber-50 border border-amber-200 text-amber-700 px-3 py-1.5 rounded-lg hover:bg-amber-100 transition-colors font-medium"
@@ -1116,8 +1116,8 @@ function ScheduleStep({ data, onChange }) {
             key={day}
             className={`flex items-center gap-4 p-4 rounded-xl border-2 transition-all ${
               data[day].enabled
-                ? 'bg-white border-gray-200'
-                : 'bg-gray-50 border-gray-100'
+                ? 'bg-white border-jet-black-200'
+                : 'bg-jet-black-50 border-jet-black-100'
             }`}
           >
             <label className="flex items-center gap-3 cursor-pointer min-w-[130px]">
@@ -1125,9 +1125,9 @@ function ScheduleStep({ data, onChange }) {
                 type="checkbox"
                 checked={data[day].enabled}
                 onChange={() => toggleDay(day)}
-                className="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                className="w-5 h-5 rounded border-jet-black-300 text-blue-600 focus:ring-blue-500"
               />
-              <span className={`font-medium ${data[day].enabled ? 'text-gray-900' : 'text-gray-400'}`}>
+              <span className={`font-medium ${data[day].enabled ? 'text-jet-black-900' : 'text-jet-black-400'}`}>
                 {label}
               </span>
             </label>
@@ -1138,14 +1138,14 @@ function ScheduleStep({ data, onChange }) {
                   type="time"
                   value={data[day].start}
                   onChange={(e) => updateTime(day, 'start', e.target.value)}
-                  className="px-3 py-2 border-2 border-gray-200 rounded-lg focus:ring-0 focus:border-blue-500 transition-colors"
+                  className="px-3 py-2 border-2 border-jet-black-200 rounded-lg focus:ring-0 focus:border-blue-500 transition-colors"
                 />
-                <span className="text-gray-400">às</span>
+                <span className="text-jet-black-400">às</span>
                 <input
                   type="time"
                   value={data[day].end}
                   onChange={(e) => updateTime(day, 'end', e.target.value)}
-                  className="px-3 py-2 border-2 border-gray-200 rounded-lg focus:ring-0 focus:border-blue-500 transition-colors"
+                  className="px-3 py-2 border-2 border-jet-black-200 rounded-lg focus:ring-0 focus:border-blue-500 transition-colors"
                 />
               </div>
             )}
@@ -1166,21 +1166,21 @@ function CompleteStep({ onComplete, businessName, bookingUrl, copyBookingLink, s
             <Check className="w-10 h-10 text-white" />
           </div>
 
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-3">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-jet-black-900 mb-3">
             Tudo pronto!
           </h1>
-          <p className="text-gray-600 text-lg mb-6">
-            <strong className="text-gray-900">{businessName}</strong> está configurado e pronto para receber agendamentos online!
+          <p className="text-jet-black-600 text-lg mb-6">
+            <strong className="text-jet-black-900">{businessName}</strong> está configurado e pronto para receber agendamentos online!
           </p>
 
           {/* Link de Agendamento */}
           <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-5 border border-blue-100 text-left mb-6">
             <div className="flex items-center gap-2 mb-3">
               <Globe className="w-5 h-5 text-blue-600" />
-              <span className="font-semibold text-gray-900">Seu link de agendamento</span>
+              <span className="font-semibold text-jet-black-900">Seu link de agendamento</span>
             </div>
             <div className="flex items-center gap-2">
-              <code className="flex-1 text-sm bg-white px-4 py-3 rounded-xl border border-blue-100 text-gray-700 truncate">
+              <code className="flex-1 text-sm bg-white px-4 py-3 rounded-xl border border-blue-100 text-jet-black-700 truncate">
                 {bookingUrl}
               </code>
               <button

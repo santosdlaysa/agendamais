@@ -151,15 +151,15 @@ export default function ServiceForm() {
         <div className="flex items-center space-x-3">
           <button
             onClick={() => navigate('/services')}
-            className="flex items-center justify-center w-10 h-10 rounded-lg border border-gray-300 hover:bg-gray-50"
+            className="flex items-center justify-center w-10 h-10 rounded-lg border border-jet-black-300 hover:bg-jet-black-50"
           >
             <ArrowLeft className="w-5 h-5" />
           </button>
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">
+            <h1 className="text-2xl font-bold text-jet-black-900">
               {isEditMode ? 'Editar Serviço' : 'Novo Serviço'}
             </h1>
-            <p className="text-gray-600">
+            <p className="text-jet-black-600">
               {isEditMode ? 'Atualize as informações do serviço' : 'Preencha os dados do novo serviço'}
             </p>
           </div>
@@ -171,10 +171,10 @@ export default function ServiceForm() {
         <form onSubmit={handleSubmit} className="p-6 space-y-6">
           {/* Informações Básicas */}
           <div>
-            <h3 className="text-lg font-medium text-gray-900 mb-4">Informações Básicas</h3>
+            <h3 className="text-lg font-medium text-jet-black-900 mb-4">Informações Básicas</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-jet-black-700 mb-2">
                   Nome do Serviço *
                 </label>
                 <input
@@ -183,7 +183,7 @@ export default function ServiceForm() {
                   value={formData.name}
                   onChange={handleInputChange}
                   className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
-                    errors.name ? 'border-red-500' : 'border-gray-300'
+                    errors.name ? 'border-red-500' : 'border-jet-black-300'
                   }`}
                   placeholder="Ex: Corte de cabelo"
                 />
@@ -193,7 +193,7 @@ export default function ServiceForm() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-jet-black-700 mb-2">
                   Preço (R$) *
                 </label>
                 <input
@@ -204,7 +204,7 @@ export default function ServiceForm() {
                   min="0"
                   step="0.01"
                   className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
-                    errors.price ? 'border-red-500' : 'border-gray-300'
+                    errors.price ? 'border-red-500' : 'border-jet-black-300'
                   }`}
                   placeholder="0.00"
                 />
@@ -215,7 +215,7 @@ export default function ServiceForm() {
             </div>
 
             <div className="mt-6">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-jet-black-700 mb-2">
                 Duração (minutos) *
               </label>
               <input
@@ -225,7 +225,7 @@ export default function ServiceForm() {
                 onChange={handleInputChange}
                 min="1"
                 className={`w-full md:w-1/3 px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
-                  errors.duration ? 'border-red-500' : 'border-gray-300'
+                  errors.duration ? 'border-red-500' : 'border-jet-black-300'
                 }`}
                 placeholder="60"
               />
@@ -235,7 +235,7 @@ export default function ServiceForm() {
             </div>
 
             <div className="mt-6">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-jet-black-700 mb-2">
                 Descrição
               </label>
               <textarea
@@ -243,7 +243,7 @@ export default function ServiceForm() {
                 value={formData.description}
                 onChange={handleInputChange}
                 rows={4}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full px-3 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 placeholder="Descreva os detalhes do serviço..."
               />
             </div>
@@ -251,33 +251,33 @@ export default function ServiceForm() {
 
           {/* Profissionais */}
           <div>
-            <h3 className="text-lg font-medium text-gray-900 mb-4">Profissionais</h3>
-            <p className="text-sm text-gray-600 mb-4">
+            <h3 className="text-lg font-medium text-jet-black-900 mb-4">Profissionais</h3>
+            <p className="text-sm text-jet-black-600 mb-4">
               Selecione os profissionais que podem realizar este serviço:
             </p>
             
             {professionals.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {professionals.map((professional) => (
-                  <div key={professional.id} className="flex items-center space-x-3 p-3 border rounded-lg hover:bg-gray-50">
+                  <div key={professional.id} className="flex items-center space-x-3 p-3 border rounded-lg hover:bg-jet-black-50">
                     <input
                       type="checkbox"
                       id={`professional-${professional.id}`}
                       checked={formData.professional_ids.includes(professional.id)}
                       onChange={() => handleProfessionalChange(professional.id)}
-                      className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                      className="h-4 w-4 text-blue-600 border-jet-black-300 rounded focus:ring-blue-500"
                     />
                     <label htmlFor={`professional-${professional.id}`} className="flex-1 cursor-pointer">
-                      <div className="text-sm font-medium text-gray-900">{professional.name}</div>
+                      <div className="text-sm font-medium text-jet-black-900">{professional.name}</div>
                       {professional.specialty && (
-                        <div className="text-xs text-gray-500">{professional.specialty}</div>
+                        <div className="text-xs text-jet-black-500">{professional.specialty}</div>
                       )}
                     </label>
                   </div>
                 ))}
               </div>
             ) : (
-              <p className="text-gray-500 text-center py-8">
+              <p className="text-jet-black-500 text-center py-8">
                 Nenhum profissional cadastrado. 
                 <button
                   type="button"
@@ -292,7 +292,7 @@ export default function ServiceForm() {
 
           {/* Status */}
           <div>
-            <h3 className="text-lg font-medium text-gray-900 mb-4">Status</h3>
+            <h3 className="text-lg font-medium text-jet-black-900 mb-4">Status</h3>
             <div className="flex items-center space-x-3">
               <input
                 type="checkbox"
@@ -300,13 +300,13 @@ export default function ServiceForm() {
                 name="active"
                 checked={formData.active}
                 onChange={handleInputChange}
-                className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                className="h-4 w-4 text-blue-600 border-jet-black-300 rounded focus:ring-blue-500"
               />
-              <label htmlFor="active" className="text-sm font-medium text-gray-700">
+              <label htmlFor="active" className="text-sm font-medium text-jet-black-700">
                 Serviço ativo
               </label>
             </div>
-            <p className="text-xs text-gray-500 mt-1">
+            <p className="text-xs text-jet-black-500 mt-1">
               Serviços inativos não aparecem para agendamento
             </p>
           </div>
@@ -316,7 +316,7 @@ export default function ServiceForm() {
             <button
               type="button"
               onClick={() => navigate('/services')}
-              className="flex items-center px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50"
+              className="flex items-center px-4 py-2 border border-jet-black-300 rounded-lg text-jet-black-700 hover:bg-jet-black-50"
             >
               <X className="w-4 h-4 mr-2" />
               Cancelar

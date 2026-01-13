@@ -25,12 +25,12 @@ export default function BusinessHeader({ business }) {
         )}
 
         <div className="flex-1">
-          <h1 className="text-xl font-bold text-gray-900">{name}</h1>
+          <h1 className="text-xl font-bold text-jet-black-900">{name}</h1>
           {business.description && (
-            <p className="text-gray-600 text-sm mt-1">{business.description}</p>
+            <p className="text-jet-black-600 text-sm mt-1">{business.description}</p>
           )}
 
-          <div className="flex flex-wrap gap-4 mt-3 text-sm text-gray-500">
+          <div className="flex flex-wrap gap-4 mt-3 text-sm text-jet-black-500">
             {address && (
               <div className="flex items-center gap-1">
                 <MapPin className="w-4 h-4" />

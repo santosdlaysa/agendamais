@@ -251,10 +251,10 @@ export default function BookingPage() {
   // Tela de loading inicial
   if (loadingBusiness) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-jet-black-50 flex items-center justify-center">
         <div className="text-center">
           <Loader2 className="w-12 h-12 text-blue-600 animate-spin mx-auto" />
-          <p className="mt-4 text-gray-600">Carregando...</p>
+          <p className="mt-4 text-jet-black-600">Carregando...</p>
         </div>
       </div>
     )
@@ -263,13 +263,13 @@ export default function BookingPage() {
   // Tela de erro
   if (error) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-jet-black-50 flex items-center justify-center p-4">
         <div className="text-center max-w-md">
           <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
             <AlertCircle className="w-8 h-8 text-red-600" />
           </div>
-          <h1 className="text-xl font-bold text-gray-900 mb-2">Ops!</h1>
-          <p className="text-gray-600">{error}</p>
+          <h1 className="text-xl font-bold text-jet-black-900 mb-2">Ops!</h1>
+          <p className="text-jet-black-600">{error}</p>
         </div>
       </div>
     )
@@ -347,7 +347,7 @@ export default function BookingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-jet-black-50">
       {/* Container principal */}
       <div className="max-w-3xl mx-auto px-4 py-6 sm:py-10">
         {/* Header do estabelecimento */}
@@ -370,8 +370,8 @@ export default function BookingPage() {
             disabled={step === 1}
             className={`flex items-center gap-2 px-4 py-3 rounded-lg font-medium transition-colors ${
               step === 1
-                ? 'text-gray-300 cursor-not-allowed'
-                : 'text-gray-600 hover:bg-gray-100'
+                ? 'text-jet-black-300 cursor-not-allowed'
+                : 'text-jet-black-600 hover:bg-jet-black-100'
             }`}
           >
             <ArrowLeft className="w-5 h-5" />
@@ -383,7 +383,7 @@ export default function BookingPage() {
             disabled={isNextDisabled()}
             className={`flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-colors ${
               isNextDisabled()
-                ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                ? 'bg-jet-black-200 text-jet-black-400 cursor-not-allowed'
                 : 'bg-blue-600 text-white hover:bg-blue-700'
             }`}
           >

@@ -119,30 +119,30 @@ export default function SubscriptionPlans() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
+    <div className="min-h-screen bg-jet-black-50 py-12">
       <div className="max-w-7xl mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-12">
           {hasActiveSubscription() && (
             <button
               onClick={() => navigate('/subscription/manage')}
-              className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-4"
+              className="inline-flex items-center gap-2 text-jet-black-600 hover:text-jet-black-900 mb-4"
             >
               <ArrowLeft className="w-4 h-4" />
               Voltar para Minha Assinatura
             </button>
           )}
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
+          <h1 className="text-4xl font-bold text-jet-black-900 mb-4">
             {hasActiveSubscription() ? 'Alterar Plano' : 'Escolha seu Plano'}
           </h1>
-          <p className="text-xl text-gray-600">
+          <p className="text-xl text-jet-black-600">
             {hasActiveSubscription()
               ? 'Selecione o plano que melhor atende suas necessidades'
               : 'Teste gratuito de 3 dias em todos os planos'
             }
           </p>
           {!hasActiveSubscription() && (
-            <p className="text-sm text-gray-500 mt-2">
+            <p className="text-sm text-jet-black-500 mt-2">
               Sem compromisso. Cancele a qualquer momento.
             </p>
           )}
@@ -189,14 +189,14 @@ export default function SubscriptionPlans() {
 
               {/* Plan Header */}
               <div className="text-center mb-8">
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">
+                <h3 className="text-2xl font-bold text-jet-black-900 mb-2">
                   {plan.name}
                 </h3>
                 <div className="flex items-baseline justify-center gap-2 mb-4">
-                  <span className="text-5xl font-bold text-gray-900">
+                  <span className="text-5xl font-bold text-jet-black-900">
                     R$ {plan.price}
                   </span>
-                  <span className="text-gray-600 text-lg">/mês</span>
+                  <span className="text-jet-black-600 text-lg">/mês</span>
                 </div>
                 <p className="text-sm text-green-600 font-medium">
                   3 dias grátis
@@ -210,7 +210,7 @@ export default function SubscriptionPlans() {
                     <div className="flex-shrink-0 w-5 h-5 rounded-full bg-green-100 flex items-center justify-center mt-0.5">
                       <Check className="w-3 h-3 text-green-600" />
                     </div>
-                    <span className="text-gray-700 text-sm leading-tight">
+                    <span className="text-jet-black-700 text-sm leading-tight">
                       {feature}
                     </span>
                   </li>
@@ -226,13 +226,13 @@ export default function SubscriptionPlans() {
                     ? 'bg-green-100 text-green-800 cursor-default'
                     : plan.popular
                     ? 'bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white shadow-lg hover:shadow-xl'
-                    : 'bg-gray-100 hover:bg-gray-200 text-gray-900'
+                    : 'bg-jet-black-100 hover:bg-jet-black-200 text-jet-black-900'
                 } disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2`}
               >
                 {getButtonText(plan.id)}
               </button>
 
-              <p className="text-center text-xs text-gray-500 mt-4">
+              <p className="text-center text-xs text-jet-black-500 mt-4">
                 {plan.id === currentPlan ? 'Você está neste plano' : 'Cancele a qualquer momento'}
               </p>
             </div>
@@ -241,10 +241,10 @@ export default function SubscriptionPlans() {
 
         {/* Additional Info */}
         <div className="mt-16 text-center">
-          <p className="text-gray-600 mb-4">
+          <p className="text-jet-black-600 mb-4">
             Todas as assinaturas incluem:
           </p>
-          <div className="flex flex-wrap justify-center gap-6 text-sm text-gray-700">
+          <div className="flex flex-wrap justify-center gap-6 text-sm text-jet-black-700">
             <div className="flex items-center gap-2">
               <Check className="w-4 h-4 text-green-600" />
               <span>Suporte técnico</span>
@@ -266,7 +266,7 @@ export default function SubscriptionPlans() {
 
         {/* FAQ or Questions */}
         <div className="mt-12 text-center">
-          <p className="text-gray-600">
+          <p className="text-jet-black-600">
             Dúvidas sobre os planos?{' '}
             <a
               href="mailto:suporte@agendamais.site"
