@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useParams, useNavigate, Link } from 'react-router-dom'
-import { Search, ArrowLeft, Loader2, Calendar, Clock, User, AlertCircle } from 'lucide-react'
+import { Search, ArrowLeft, Loader2, Calendar, Clock, User, AlertCircle, Phone, Hash, ChevronRight } from 'lucide-react'
 import toast from 'react-hot-toast'
 import bookingService from '../../services/publicApi'
 
@@ -8,16 +8,18 @@ export default function BookingLookup() {
   const { slug } = useParams()
   const navigate = useNavigate()
 
-  const [code, setCode] = useState('')
+  const [searchValue, setSearchValue] = useState('')
   const [loading, setLoading] = useState(false)
   const [appointment, setAppointment] = useState(null)
+  const [appointments, setAppointments] = useState([])
+  const [searchType, setSearchType] = useState(null)
   const [error, setError] = useState(null)
 
   const handleSearch = async (e) => {
     e.preventDefault()
 
-    if (!code.trim()) {
-      toast.error('Digite o código do agendamento')
+    if (!searchValue.trim()) {
+      toast.error('Digite o código ou telefone')
       return
     }
 
@@ -25,12 +27,21 @@ export default function BookingLookup() {
       setLoading(true)
       setError(null)
       setAppointment(null)
+      setAppointments([])
+      setSearchType(null)
 
-      const data = await bookingService.getAppointment(code.trim().toUpperCase())
-      setAppointment(data.appointment)
+      const data = await bookingService.getAppointment(searchValue.trim())
+
+      if (data.search_type === 'phone') {
+        setAppointments(data.appointments || [])
+        setSearchType('phone')
+      } else {
+        setAppointment(data.appointment)
+        setSearchType('code')
+      }
     } catch (err) {
       if (err.response?.status === 404) {
-        setError('Agendamento não encontrado. Verifique o código e tente novamente.')
+        setError('Nenhum agendamento encontrado. Verifique o código ou telefone e tente novamente.')
       } else {
         setError('Erro ao buscar agendamento. Tente novamente.')
       }
@@ -86,22 +97,22 @@ export default function BookingLookup() {
           </button>
           <div>
             <h1 className="text-xl font-bold text-jet-black-900">Consultar Agendamento</h1>
-            <p className="text-sm text-jet-black-500">Digite o código para ver os detalhes</p>
+            <p className="text-sm text-jet-black-500">Busque pelo código ou telefone</p>
           </div>
         </div>
 
         {/* Formulário de busca */}
         <form onSubmit={handleSearch} className="bg-white rounded-xl shadow-sm border p-6 mb-6">
           <label className="block text-sm font-medium text-jet-black-700 mb-2">
-            Código do Agendamento
+            Código ou Telefone
           </label>
           <div className="flex gap-2">
             <input
               type="text"
-              value={code}
-              onChange={(e) => setCode(e.target.value.toUpperCase())}
-              placeholder="Ex: AGD-2025-ABC123"
-              className="flex-1 px-4 py-3 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-periwinkle-500 focus:border-periwinkle-500 font-mono uppercase"
+              value={searchValue}
+              onChange={(e) => setSearchValue(e.target.value)}
+              placeholder="Ex: AGD-2025-ABC123 ou (11) 99999-8888"
+              className="flex-1 px-4 py-3 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-periwinkle-500 focus:border-periwinkle-500"
             />
             <button
               type="submit"
@@ -116,6 +127,13 @@ export default function BookingLookup() {
               Buscar
             </button>
           </div>
+          <p className="mt-2 text-xs text-jet-black-400 flex items-center gap-2">
+            <Hash className="w-3 h-3" />
+            <span>Código do agendamento</span>
+            <span className="text-jet-black-300">|</span>
+            <Phone className="w-3 h-3" />
+            <span>Telefone cadastrado</span>
+          </p>
         </form>
 
         {/* Erro */}
@@ -126,14 +144,76 @@ export default function BookingLookup() {
           </div>
         )}
 
-        {/* Resultado */}
-        {appointment && (
+        {/* Resultado - Lista de agendamentos (busca por telefone) */}
+        {searchType === 'phone' && appointments.length > 0 && (
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <h2 className="text-lg font-semibold text-jet-black-900">
+                Seus Agendamentos
+              </h2>
+              <span className="text-sm text-jet-black-500">
+                {appointments.length} {appointments.length === 1 ? 'encontrado' : 'encontrados'}
+              </span>
+            </div>
+
+            <div className="space-y-3">
+              {appointments.map((apt) => (
+                <div
+                  key={apt.id}
+                  className="bg-white rounded-xl shadow-sm border overflow-hidden hover:shadow-md transition-shadow cursor-pointer"
+                  onClick={() => {
+                    setAppointment(apt)
+                    setSearchType('code')
+                    setAppointments([])
+                  }}
+                >
+                  <div className="p-4">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="font-mono text-sm text-jet-black-500">{apt.code}</span>
+                      <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${getStatusColor(apt.status)}`}>
+                        {getStatusText(apt.status)}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-4">
+                      <div className="flex items-center gap-2">
+                        <Calendar className="w-4 h-4 text-periwinkle-600" />
+                        <span className="text-sm text-jet-black-700">
+                          {formatDate(apt.appointment_date)}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Clock className="w-4 h-4 text-orange-600" />
+                        <span className="text-sm text-jet-black-700">{apt.start_time}</span>
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-between mt-2">
+                      <p className="text-sm font-medium text-jet-black-900">
+                        {apt.service?.name}
+                      </p>
+                      <ChevronRight className="w-4 h-4 text-jet-black-400" />
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Resultado - Agendamento único (busca por código) */}
+        {searchType === 'code' && appointment && (
           <div className="bg-white rounded-xl shadow-sm border overflow-hidden">
             {/* Status */}
             <div className="p-4 border-b flex items-center justify-between">
               <span className="text-sm text-jet-black-500">Status</span>
               <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(appointment.status)}`}>
                 {getStatusText(appointment.status)}
+              </span>
+            </div>
+
+            {/* Código */}
+            <div className="px-6 pt-4">
+              <span className="font-mono text-sm text-jet-black-500 bg-jet-black-100 px-2 py-1 rounded">
+                {appointment.code}
               </span>
             </div>
 
@@ -189,7 +269,7 @@ export default function BookingLookup() {
             {appointment.status === 'scheduled' && appointment.can_cancel && (
               <div className="p-4 border-t">
                 <Link
-                  to={`/agendar/${slug}/cancelar/${code}`}
+                  to={`/agendar/${slug}/cancelar/${appointment.code}`}
                   className="w-full flex items-center justify-center px-4 py-3 border border-red-300 text-red-600 rounded-lg font-medium hover:bg-red-50 transition-colors"
                 >
                   Cancelar agendamento

@@ -320,34 +320,22 @@ export default function Appointments() {
                             </span>
                           </div>
                           
-                          <div className="flex items-center space-x-6 mt-2 text-sm text-jet-black-500">
-                            <div className="flex items-center">
-                              <Calendar className="w-4 h-4 mr-1" />
-                              {formatDate(appointment.appointment_date)}
+                          {/* Descrição do agendamento com campos selecionados */}
+                          <div className="mt-3 p-3 bg-jet-black-50 rounded-lg text-sm">
+                            <div className="grid grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-1 text-jet-black-600">
+                              <p><span className="font-medium">Serviço:</span> {appointment.service.name}</p>
+                              <p><span className="font-medium">Profissional:</span> {appointment.professional.name}</p>
+                              <p><span className="font-medium">Data:</span> {formatDate(appointment.appointment_date)}</p>
+                              <p><span className="font-medium">Horário:</span> {formatTime(appointment.start_time)} - {formatTime(appointment.end_time)}</p>
+                              <p><span className="font-medium">Duração:</span> {appointment.service.duration} min</p>
+                              <p><span className="font-medium">Valor:</span> R$ {parseFloat(appointment.price).toFixed(2)}</p>
                             </div>
-                            <div className="flex items-center">
-                              <Clock className="w-4 h-4 mr-1" />
-                              {formatTime(appointment.start_time)} - {formatTime(appointment.end_time)}
-                            </div>
-                            <div className="flex items-center">
-                              <UserCheck className="w-4 h-4 mr-1" />
-                              {appointment.professional.name}
-                            </div>
-                            <div className="flex items-center">
-                              <Briefcase className="w-4 h-4 mr-1" />
-                              {appointment.service.name}
-                            </div>
-                            <div className="flex items-center">
-                              <DollarSign className="w-4 h-4 mr-1" />
-                              R$ {parseFloat(appointment.price).toFixed(2)}
-                            </div>
+                            {appointment.notes && (
+                              <p className="mt-2 pt-2 border-t border-jet-black-200">
+                                <span className="font-medium">Observações:</span> {appointment.notes}
+                              </p>
+                            )}
                           </div>
-
-                          {appointment.notes && (
-                            <div className="mt-2 text-sm text-jet-black-600">
-                              <strong>Observações:</strong> {appointment.notes}
-                            </div>
-                          )}
                         </div>
                       </div>
                     </div>

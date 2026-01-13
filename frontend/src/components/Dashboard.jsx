@@ -202,11 +202,11 @@ export default function Dashboard() {
             </div>
             <div className="bg-white/10 backdrop-blur rounded-xl p-4 text-center min-w-[80px]">
               <p className="text-2xl md:text-3xl font-bold">{completionRate}%</p>
-              <p className="text-xs text-periwinkle-200">Taxa</p>
+              <p className="text-xs text-periwinkle-200">Conclusão</p>
             </div>
             <div className="hidden sm:block bg-white/10 backdrop-blur rounded-xl p-4 text-center min-w-[80px]">
-              <p className="text-2xl md:text-3xl font-bold">
-                {(stats.total_revenue / 1000).toFixed(1)}k
+              <p className="text-xl md:text-2xl font-bold">
+                R$ {stats.total_revenue.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               </p>
               <p className="text-xs text-periwinkle-200">Receita</p>
             </div>
@@ -265,8 +265,8 @@ export default function Dashboard() {
           <div className="w-11 h-11 bg-emerald-100 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
             <BarChart3 className="w-5 h-5 text-emerald-600" />
           </div>
-          <p className="text-2xl md:text-3xl font-bold text-jet-black-900">
-            R$ {(stats.total_revenue / 1000).toFixed(1)}k
+          <p className="text-xl md:text-2xl font-bold text-jet-black-900">
+            R$ {stats.total_revenue.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
           </p>
           <p className="text-sm text-jet-black-500">Receita</p>
         </div>
@@ -292,7 +292,7 @@ export default function Dashboard() {
               {recentAppointmentsList.map((appointment) => (
                 <div
                   key={appointment.id}
-                  onClick={() => navigate(`/appointments/${appointment.id}/edit`)}
+                  onClick={() => navigate(`/appointments/${appointment.id}`)}
                   className="flex items-center justify-between px-5 py-4 hover:bg-jet-black-50 cursor-pointer transition-colors"
                 >
                   <div className="flex items-center gap-4">

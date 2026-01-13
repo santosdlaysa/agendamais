@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useAuth } from '../contexts/AuthContext'
-import { useSearchParams } from 'react-router-dom'
-import { Settings as SettingsIcon, Users, Shield, Lock, Loader2, Check, Building2, Link, Copy, ExternalLink, Calendar, Clock, Bell } from 'lucide-react'
+import { useSearchParams, useNavigate } from 'react-router-dom'
+import { Settings as SettingsIcon, Users, Shield, Lock, Loader2, Check, Building2, Link, Copy, ExternalLink, Calendar, Clock, Bell, UserCheck, Mail, Send, CheckCircle, XCircle, AlertCircle } from 'lucide-react'
 import api from '../utils/api'
 import toast from 'react-hot-toast'
 
@@ -24,6 +24,7 @@ const ROLES = [
 
 export default function Settings() {
   const { user } = useAuth()
+  const navigate = useNavigate()
   const [searchParams, setSearchParams] = useSearchParams()
   const tabFromUrl = searchParams.get('tab') || 'business'
   const [activeTab, setActiveTab] = useState(tabFromUrl)
@@ -32,6 +33,13 @@ export default function Settings() {
   const [saving, setSaving] = useState(false)
   const [selectedUser, setSelectedUser] = useState(null)
   const [userPermissions, setUserPermissions] = useState({})
+
+  // Estado para Portal do Profissional
+  const [professionals, setProfessionals] = useState([])
+  const [loadingProfessionals, setLoadingProfessionals] = useState(false)
+  const [inviteEmail, setInviteEmail] = useState('')
+  const [selectedProfessional, setSelectedProfessional] = useState(null)
+  const [sendingInvite, setSendingInvite] = useState(false)
 
   // Atualizar tab quando URL mudar
   useEffect(() => {
@@ -263,6 +271,59 @@ export default function Settings() {
     }
   }
 
+  // Funções do Portal do Profissional
+  const fetchProfessionals = async () => {
+    setLoadingProfessionals(true)
+    try {
+      const response = await api.get('/professionals')
+      setProfessionals(response.data.professionals || response.data || [])
+    } catch (error) {
+      console.error('Erro ao carregar profissionais:', error)
+    } finally {
+      setLoadingProfessionals(false)
+    }
+  }
+
+  const handleSendInvite = async () => {
+    if (!selectedProfessional || !inviteEmail) {
+      toast.error('Selecione um profissional e informe o email')
+      return
+    }
+
+    setSendingInvite(true)
+    try {
+      await api.post(`/professionals/${selectedProfessional.id}/invite`, {
+        email: inviteEmail
+      })
+      toast.success('Convite enviado com sucesso!')
+      setInviteEmail('')
+      setSelectedProfessional(null)
+      fetchProfessionals() // Recarregar lista
+    } catch (error) {
+      console.error('Erro ao enviar convite:', error)
+      toast.error(error.response?.data?.message || 'Erro ao enviar convite')
+    } finally {
+      setSendingInvite(false)
+    }
+  }
+
+  const getProfessionalPortalUrl = () => {
+    const baseUrl = window.location.origin
+    return `${baseUrl}/#/profissional/login`
+  }
+
+  const copyProfessionalPortalLink = () => {
+    navigator.clipboard.writeText(getProfessionalPortalUrl())
+    toast.success('Link copiado!')
+  }
+
+  // Carregar profissionais quando a aba for selecionada
+  useEffect(() => {
+    if (activeTab === 'professional-portal') {
+      fetchProfessionals()
+    }
+  }, [activeTab])
+
   // Se não for admin e tentar acessar abas restritas, redirecionar para empresa
   useEffect(() => {
     if (!isAdmin && (activeTab === 'permissions' || activeTab === 'users')) {
@@ -316,6 +377,19 @@ export default function Settings() {
             <div className="flex items-center gap-2">
               <Calendar className="w-4 h-4" />
               Agendamento Online
+            </div>
+          </button>
+          <button
+            onClick={() => handleTabChange('professional-portal')}
+            className={`pb-3 px-1 font-medium text-sm border-b-2 transition-colors ${
+              activeTab === 'professional-portal'
+                ? 'border-emerald-600 text-emerald-600'
+                : 'border-transparent text-jet-black-500 hover:text-jet-black-700'
+            }`}
+          >
+            <div className="flex items-center gap-2">
+              <UserCheck className="w-4 h-4" />
+              Portal do Profissional
             </div>
           </button>
           {isAdmin && (
@@ -714,6 +788,242 @@ export default function Settings() {
                 </>
               )}
             </button>
+          </div>
+        </div>
+      )}
+
+      {activeTab === 'professional-portal' && (
+        <div className="space-y-6">
+          {/* Link do Portal */}
+          <div className="bg-gradient-to-r from-emerald-600 to-teal-600 rounded-xl p-6 text-white">
+            <div className="flex items-center gap-2 mb-2">
+              <UserCheck className="w-5 h-5" />
+              <h3 className="font-semibold">Portal do Profissional</h3>
+            </div>
+            <p className="text-emerald-100 text-sm mb-4">
+              Compartilhe este link com seus profissionais para que eles acessem suas agendas individuais
+            </p>
+            <div className="flex items-center gap-2">
+              <input
+                type="text"
+                value={getProfessionalPortalUrl()}
+                readOnly
+                className="flex-1 px-4 py-2 bg-white/20 border border-white/30 rounded-lg text-white placeholder-white/50"
+              />
+              <button
+                onClick={copyProfessionalPortalLink}
+                className="px-4 py-2 bg-white text-emerald-600 rounded-lg font-medium hover:bg-emerald-50 transition-colors flex items-center gap-2"
+              >
+                <Copy className="w-4 h-4" />
+                Copiar
+              </button>
+              <a
+                href={getProfessionalPortalUrl()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-4 py-2 bg-white/20 border border-white/30 rounded-lg hover:bg-white/30 transition-colors"
+              >
+                <ExternalLink className="w-4 h-4" />
+              </a>
+            </div>
+          </div>
+
+          {/* Como Funciona */}
+          <div className="bg-white rounded-xl shadow border p-6">
+            <h3 className="font-semibold text-jet-black-900 mb-4 flex items-center gap-2">
+              <AlertCircle className="w-5 h-5 text-emerald-600" />
+              Como Funciona
+            </h3>
+            <div className="grid md:grid-cols-3 gap-4">
+              <div className="p-4 bg-jet-black-50 rounded-lg">
+                <div className="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center mb-3">
+                  <span className="text-emerald-600 font-bold">1</span>
+                </div>
+                <h4 className="font-medium text-jet-black-900 mb-1">Envie o Convite</h4>
+                <p className="text-sm text-jet-black-600">
+                  Selecione um profissional e envie um convite por email
+                </p>
+              </div>
+              <div className="p-4 bg-jet-black-50 rounded-lg">
+                <div className="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center mb-3">
+                  <span className="text-emerald-600 font-bold">2</span>
+                </div>
+                <h4 className="font-medium text-jet-black-900 mb-1">Profissional Cria Senha</h4>
+                <p className="text-sm text-jet-black-600">
+                  O profissional recebe o email e cria sua senha de acesso
+                </p>
+              </div>
+              <div className="p-4 bg-jet-black-50 rounded-lg">
+                <div className="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center mb-3">
+                  <span className="text-emerald-600 font-bold">3</span>
+                </div>
+                <h4 className="font-medium text-jet-black-900 mb-1">Acessa o Portal</h4>
+                <p className="text-sm text-jet-black-600">
+                  Com a senha criada, o profissional acessa sua agenda pessoal
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Enviar Convite */}
+          <div className="bg-white rounded-xl shadow border p-6">
+            <h3 className="font-semibold text-jet-black-900 mb-4 flex items-center gap-2">
+              <Send className="w-5 h-5 text-emerald-600" />
+              Enviar Convite
+            </h3>
+
+            <div className="grid md:grid-cols-2 gap-4 mb-4">
+              <div>
+                <label className="block text-sm font-medium text-jet-black-700 mb-2">
+                  Selecione o Profissional
+                </label>
+                <select
+                  value={selectedProfessional?.id || ''}
+                  onChange={(e) => {
+                    const prof = professionals.find(p => p.id === parseInt(e.target.value))
+                    setSelectedProfessional(prof || null)
+                    if (prof?.email) setInviteEmail(prof.email)
+                  }}
+                  className="w-full px-4 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                >
+                  <option value="">Selecione...</option>
+                  {professionals.map(prof => (
+                    <option key={prof.id} value={prof.id}>
+                      {prof.name} - {prof.role}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-jet-black-700 mb-2">
+                  Email do Profissional
+                </label>
+                <input
+                  type="email"
+                  value={inviteEmail}
+                  onChange={(e) => setInviteEmail(e.target.value)}
+                  placeholder="email@profissional.com"
+                  className="w-full px-4 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                />
+              </div>
+            </div>
+
+            <button
+              onClick={handleSendInvite}
+              disabled={sendingInvite || !selectedProfessional || !inviteEmail}
+              className="px-6 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+            >
+              {sendingInvite ? (
+                <>
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  Enviando...
+                </>
+              ) : (
+                <>
+                  <Mail className="w-4 h-4" />
+                  Enviar Convite
+                </>
+              )}
+            </button>
+          </div>
+
+          {/* Lista de Profissionais */}
+          <div className="bg-white rounded-xl shadow border">
+            <div className="p-4 border-b flex justify-between items-center">
+              <h3 className="font-semibold text-jet-black-900">Status dos Profissionais</h3>
+              <button
+                onClick={fetchProfessionals}
+                disabled={loadingProfessionals}
+                className="text-sm text-emerald-600 hover:text-emerald-700 font-medium"
+              >
+                {loadingProfessionals ? 'Atualizando...' : 'Atualizar'}
+              </button>
+            </div>
+
+            {loadingProfessionals ? (
+              <div className="p-8 text-center">
+                <Loader2 className="w-6 h-6 animate-spin mx-auto text-emerald-600" />
+              </div>
+            ) : professionals.length === 0 ? (
+              <div className="p-8 text-center text-jet-black-500">
+                <UserCheck className="w-12 h-12 mx-auto mb-3 text-jet-black-300" />
+                <p>Nenhum profissional cadastrado</p>
+                <button
+                  onClick={() => navigate('/professionals/new')}
+                  className="mt-3 text-emerald-600 hover:text-emerald-700 font-medium"
+                >
+                  Cadastrar profissional
+                </button>
+              </div>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="w-full">
+                  <thead className="bg-jet-black-50">
+                    <tr>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-jet-black-500 uppercase">Profissional</th>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-jet-black-500 uppercase">Funcao</th>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-jet-black-500 uppercase">Status Portal</th>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-jet-black-500 uppercase">Acoes</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y">
+                    {professionals.map(prof => (
+                      <tr key={prof.id} className="hover:bg-jet-black-50">
+                        <td className="px-4 py-3">
+                          <div className="flex items-center gap-3">
+                            <div
+                              className="w-8 h-8 rounded-full flex items-center justify-center"
+                              style={{ backgroundColor: prof.color || '#10B981' }}
+                            >
+                              <span className="text-white text-sm font-medium">
+                                {prof.name?.charAt(0).toUpperCase()}
+                              </span>
+                            </div>
+                            <div>
+                              <p className="font-medium text-jet-black-900">{prof.name}</p>
+                              <p className="text-sm text-jet-black-500">{prof.email || 'Sem email'}</p>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="px-4 py-3 text-jet-black-600">{prof.role}</td>
+                        <td className="px-4 py-3">
+                          {prof.has_portal_access ? (
+                            <span className="inline-flex items-center gap-1 px-2 py-1 bg-emerald-100 text-emerald-700 text-xs rounded-full">
+                              <CheckCircle className="w-3 h-3" />
+                              Ativo
+                            </span>
+                          ) : prof.invite_pending ? (
+                            <span className="inline-flex items-center gap-1 px-2 py-1 bg-yellow-100 text-yellow-700 text-xs rounded-full">
+                              <Clock className="w-3 h-3" />
+                              Convite Enviado
+                            </span>
+                          ) : (
+                            <span className="inline-flex items-center gap-1 px-2 py-1 bg-jet-black-100 text-jet-black-600 text-xs rounded-full">
+                              <XCircle className="w-3 h-3" />
+                              Sem acesso
+                            </span>
+                          )}
+                        </td>
+                        <td className="px-4 py-3">
+                          {!prof.has_portal_access && (
+                            <button
+                              onClick={() => {
+                                setSelectedProfessional(prof)
+                                setInviteEmail(prof.email || '')
+                              }}
+                              className="text-emerald-600 hover:text-emerald-700 text-sm font-medium"
+                            >
+                              Enviar Convite
+                            </button>
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
           </div>
         </div>
       )}

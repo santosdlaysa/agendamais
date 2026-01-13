@@ -2,6 +2,7 @@ import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { useAuth } from './contexts/AuthContext'
 import { useOnboarding } from './contexts/OnboardingContext'
 import { useSubscription } from './contexts/SubscriptionContext'
+import { useProfessionalAuth } from './contexts/ProfessionalAuthContext'
 import Login from './components/Login'
 import OnboardingWizard from './components/OnboardingWizard'
 import Dashboard from './components/Dashboard'
@@ -14,6 +15,7 @@ import Clients from './components/Clients'
 import ClientForm from './components/ClientForm'
 import Appointments from './components/Appointments'
 import AppointmentForm from './components/AppointmentForm'
+import AppointmentView from './components/AppointmentView'
 import FinancialReport from './components/FinancialReport'
 import Reminders from './components/Reminders'
 import ReminderSettings from './components/ReminderSettings'
@@ -33,22 +35,82 @@ import BookingCancel from './pages/public/BookingCancel'
 import TermsOfService from './pages/public/TermsOfService'
 import PrivacyPolicy from './pages/public/PrivacyPolicy'
 import LGPD from './pages/public/LGPD'
+// Páginas do portal do profissional
+import {
+  ProfessionalLogin,
+  ProfessionalActivate,
+  ProfessionalLayout,
+  ProfessionalDashboard,
+  ProfessionalSchedule,
+  ProfessionalClients,
+  ProfessionalSettings
+} from './pages/professional'
+import ProfessionalForgotPassword from './pages/professional/ProfessionalForgotPassword'
 
 function App() {
   const { isAuthenticated, loading, user } = useAuth()
   const { showOnboarding, loading: onboardingLoading } = useOnboarding()
   const { hasActiveSubscription, loading: subscriptionLoading } = useSubscription()
+  const { isAuthenticated: isProfessionalAuthenticated, loading: professionalLoading } = useProfessionalAuth()
   const location = useLocation()
 
   // Verificar se é uma rota pública de agendamento
   // Verifica tanto o pathname do router quanto a URL real (para redirect de /agendar para /#/agendar)
   const isPublicBookingRoute = location.pathname.startsWith('/agendar')
   const isLandingPage = location.pathname === '/' || location.pathname === ''
+  const isProfessionalRoute = location.pathname.startsWith('/profissional')
 
   // Se acessou /agendar sem hash, redireciona para /#/agendar
   if (window.location.pathname.startsWith('/agendar') && !window.location.hash) {
     window.location.replace('/#' + window.location.pathname + window.location.search)
     return null
+  }
+
+  // Rotas do portal do profissional
+  if (isProfessionalRoute) {
+    // Rotas públicas do profissional (login, ativar, esqueci senha)
+    const isProfessionalPublicRoute =
+      location.pathname === '/profissional/login' ||
+      location.pathname.startsWith('/profissional/ativar') ||
+      location.pathname === '/profissional/esqueci-senha'
+
+    if (professionalLoading) {
+      return (
+        <div className="min-h-screen flex items-center justify-center">
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-emerald-600"></div>
+        </div>
+      )
+    }
+
+    // Se não está autenticado e não é rota pública, redireciona para login
+    if (!isProfessionalAuthenticated && !isProfessionalPublicRoute) {
+      return (
+        <Routes>
+          <Route path="/profissional/*" element={<Navigate to="/profissional/login" replace />} />
+        </Routes>
+      )
+    }
+
+    // Rotas do profissional
+    return (
+      <Routes>
+        {/* Rotas públicas do profissional */}
+        <Route path="/profissional/login" element={<ProfessionalLogin />} />
+        <Route path="/profissional/ativar/:token" element={<ProfessionalActivate />} />
+        <Route path="/profissional/esqueci-senha" element={<ProfessionalForgotPassword />} />
+
+        {/* Rotas protegidas do profissional */}
+        <Route path="/profissional" element={<ProfessionalLayout />}>
+          <Route index element={<Navigate to="/profissional/dashboard" replace />} />
+          <Route path="dashboard" element={<ProfessionalDashboard />} />
+          <Route path="agenda" element={<ProfessionalSchedule />} />
+          <Route path="clientes" element={<ProfessionalClients />} />
+          <Route path="configuracoes" element={<ProfessionalSettings />} />
+        </Route>
+
+        <Route path="/profissional/*" element={<Navigate to="/profissional/dashboard" replace />} />
+      </Routes>
+    )
   }
 
   // Rotas públicas não precisam de loading de autenticação
@@ -142,6 +204,7 @@ function App() {
               
               <Route path="appointments" element={<Appointments />} />
               <Route path="appointments/new" element={<AppointmentForm />} />
+              <Route path="appointments/:id" element={<AppointmentView />} />
               <Route path="appointments/:id/edit" element={<AppointmentForm />} />
               
               <Route path="reports" element={<FinancialReport />} />

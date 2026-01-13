@@ -69,7 +69,28 @@ export default function BookingConfirmation() {
     const endDate = `${appointment.appointment_date.replace(/-/g, '')}T${appointment.end_time.replace(':', '')}00`
 
     const title = encodeURIComponent(`${appointment.service?.name} - ${appointment.business?.name}`)
-    const details = encodeURIComponent(`Agendamento: ${bookingCode}\nProfissional: ${appointment.professional?.name}`)
+
+    // Descrição detalhada com todos os campos selecionados
+    const descriptionLines = [
+      `Código do Agendamento: ${bookingCode}`,
+      '',
+      '--- Detalhes do Agendamento ---',
+      `Serviço: ${appointment.service?.name}`,
+      `Duração: ${appointment.service?.duration || ''} minutos`,
+      `Profissional: ${appointment.professional?.name}`,
+      `Data: ${formatDate(appointment.appointment_date)}`,
+      `Horário: ${appointment.start_time} - ${appointment.end_time}`,
+      `Valor: R$ ${parseFloat(appointment.service?.price || 0).toFixed(2)}`,
+      '',
+      '--- Estabelecimento ---',
+      `Local: ${appointment.business?.name}`,
+      appointment.business?.address ? `Endereço: ${appointment.business.address}` : '',
+      appointment.business?.phone ? `Telefone: ${appointment.business.phone}` : '',
+      '',
+      appointment.notes ? `Observações: ${appointment.notes}` : ''
+    ].filter(line => line !== '').join('\n')
+
+    const details = encodeURIComponent(descriptionLines)
     const location = encodeURIComponent(appointment.business?.address || '')
 
     const url = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${startDate}/${endDate}&details=${details}&location=${location}`

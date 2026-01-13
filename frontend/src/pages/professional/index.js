@@ -1,0 +1,7 @@
+export { default as ProfessionalLogin } from './ProfessionalLogin'
+export { default as ProfessionalActivate } from './ProfessionalActivate'
+export { default as ProfessionalLayout } from './ProfessionalLayout'
+export { default as ProfessionalDashboard } from './ProfessionalDashboard'
+export { default as ProfessionalSchedule } from './ProfessionalSchedule'
+export { default as ProfessionalClients } from './ProfessionalClients'
+export { default as ProfessionalSettings } from './ProfessionalSettings'
