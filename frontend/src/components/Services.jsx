@@ -1,19 +1,21 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { 
-  Plus, 
-  Search, 
-  Edit, 
-  Trash2, 
-  Users, 
-  Clock, 
+import {
+  Plus,
+  Search,
+  Edit,
+  Trash2,
+  Users,
+  Clock,
   DollarSign,
   MoreVertical,
   Eye,
-  EyeOff
+  EyeOff,
+  Sparkles
 } from 'lucide-react'
 import api from '../utils/api'
 import toast from 'react-hot-toast'
+import { getServiceIcon } from './ServiceForm'
 
 export default function Services() {
   const navigate = useNavigate()
@@ -154,10 +156,16 @@ export default function Services() {
           </div>
         ) : (
           <div className="divide-y divide-jet-black-200">
-            {filteredServices.map((service) => (
+            {filteredServices.map((service) => {
+              const ServiceIcon = getServiceIcon(service.icon)
+              return (
               <div key={service.id} className="p-6 hover:bg-jet-black-50">
                 <div className="flex items-center justify-between">
-                  <div className="flex-1">
+                  <div className="flex items-start space-x-4">
+                    <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-periwinkle-100 flex items-center justify-center">
+                      <ServiceIcon className="w-6 h-6 text-periwinkle-600" />
+                    </div>
+                    <div className="flex-1">
                     <div className="flex items-center space-x-3">
                       <h3 className="text-lg font-medium text-jet-black-900">
                         {service.name}
@@ -202,6 +210,7 @@ export default function Services() {
                         </div>
                       </div>
                     )}
+                    </div>
                   </div>
 
                   <div className="flex items-center space-x-2">
@@ -235,7 +244,7 @@ export default function Services() {
                   </div>
                 </div>
               </div>
-            ))}
+            )})}
           </div>
         )}
       </div>

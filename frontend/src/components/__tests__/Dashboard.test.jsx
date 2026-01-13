@@ -23,7 +23,7 @@ describe('Dashboard Component', () => {
       
       const spinner = document.querySelector('.animate-spin')
       expect(spinner).toBeInTheDocument()
-      expect(spinner).toHaveClass('rounded-full', 'h-16', 'w-16', 'border-b-2', 'border-blue-600')
+      expect(spinner).toHaveClass('rounded-full', 'h-16', 'w-16', 'border-b-2', 'border-periwinkle-600')
     })
   })
 

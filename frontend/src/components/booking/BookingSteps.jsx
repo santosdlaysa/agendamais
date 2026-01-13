@@ -19,7 +19,7 @@ export default function BookingSteps({ currentStep }) {
                   currentStep > step.number
                     ? 'bg-green-500 text-white'
                     : currentStep === step.number
-                    ? 'bg-periwinkle-600 text-white ring-4 ring-blue-100'
+                    ? 'bg-periwinkle-600 text-white ring-4 ring-periwinkle-100'
                     : 'bg-jet-black-200 text-jet-black-500'
                 }`}
               >

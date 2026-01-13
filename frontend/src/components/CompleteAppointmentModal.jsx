@@ -121,7 +121,7 @@ const CompleteAppointmentModal = ({ appointment, onComplete, onClose }) => {
                 onClick={() => setPaymentMethod('cartao_credito')}
                 className={`flex items-center justify-center p-3 rounded-lg border-2 transition-colors ${
                   paymentMethod === 'cartao_credito'
-                    ? 'border-periwinkle-500 bg-periwinkle-50 text-blue-700'
+                    ? 'border-periwinkle-500 bg-periwinkle-50 text-periwinkle-700'
                     : 'border-jet-black-300 bg-white text-jet-black-700 hover:border-jet-black-400'
                 }`}
               >

@@ -1,8 +1,82 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { ArrowLeft, Save, X } from 'lucide-react'
+import {
+  ArrowLeft,
+  Save,
+  X,
+  Scissors,
+  Sparkles,
+  Heart,
+  Star,
+  Zap,
+  Droplet,
+  Sun,
+  Moon,
+  Flower2,
+  Gem,
+  Crown,
+  Brush,
+  Palette,
+  Dumbbell,
+  HandMetal,
+  Eye,
+  Smile,
+  Coffee,
+  Leaf,
+  Waves,
+  Wind,
+  Bath,
+  Baby,
+  Dog,
+  Cat,
+  Car,
+  Home,
+  Wrench,
+  Settings,
+  Camera
+} from 'lucide-react'
 import api from '../utils/api'
 import toast from 'react-hot-toast'
+
+// Lista de ícones disponíveis para serviços
+const AVAILABLE_ICONS = [
+  { name: 'scissors', icon: Scissors, label: 'Tesoura' },
+  { name: 'sparkles', icon: Sparkles, label: 'Brilho' },
+  { name: 'heart', icon: Heart, label: 'Coração' },
+  { name: 'star', icon: Star, label: 'Estrela' },
+  { name: 'zap', icon: Zap, label: 'Raio' },
+  { name: 'droplet', icon: Droplet, label: 'Gota' },
+  { name: 'sun', icon: Sun, label: 'Sol' },
+  { name: 'moon', icon: Moon, label: 'Lua' },
+  { name: 'flower', icon: Flower2, label: 'Flor' },
+  { name: 'gem', icon: Gem, label: 'Diamante' },
+  { name: 'crown', icon: Crown, label: 'Coroa' },
+  { name: 'brush', icon: Brush, label: 'Pincel' },
+  { name: 'palette', icon: Palette, label: 'Paleta' },
+  { name: 'dumbbell', icon: Dumbbell, label: 'Haltere' },
+  { name: 'hand', icon: HandMetal, label: 'Mão' },
+  { name: 'eye', icon: Eye, label: 'Olho' },
+  { name: 'smile', icon: Smile, label: 'Sorriso' },
+  { name: 'coffee', icon: Coffee, label: 'Café' },
+  { name: 'leaf', icon: Leaf, label: 'Folha' },
+  { name: 'waves', icon: Waves, label: 'Ondas' },
+  { name: 'wind', icon: Wind, label: 'Vento' },
+  { name: 'bath', icon: Bath, label: 'Banho' },
+  { name: 'baby', icon: Baby, label: 'Bebê' },
+  { name: 'dog', icon: Dog, label: 'Cachorro' },
+  { name: 'cat', icon: Cat, label: 'Gato' },
+  { name: 'car', icon: Car, label: 'Carro' },
+  { name: 'home', icon: Home, label: 'Casa' },
+  { name: 'wrench', icon: Wrench, label: 'Ferramenta' },
+  { name: 'settings', icon: Settings, label: 'Config.' },
+  { name: 'camera', icon: Camera, label: 'Câmera' },
+]
+
+// Função para obter o componente do ícone pelo nome
+export const getServiceIcon = (iconName) => {
+  const found = AVAILABLE_ICONS.find(i => i.name === iconName)
+  return found ? found.icon : Sparkles
+}
 
 export default function ServiceForm() {
   const navigate = useNavigate()
@@ -17,7 +91,8 @@ export default function ServiceForm() {
     price: '',
     duration: '',
     active: true,
-    professional_ids: []
+    professional_ids: [],
+    icon: 'sparkles'
   })
   const [errors, setErrors] = useState({})
 
@@ -49,7 +124,8 @@ export default function ServiceForm() {
         price: service.price || '',
         duration: service.duration || '',
         active: service.active !== false,
-        professional_ids: service.professionals ? service.professionals.map(p => p.id) : []
+        professional_ids: service.professionals ? service.professionals.map(p => p.id) : [],
+        icon: service.icon || 'sparkles'
       })
     } catch (error) {
       toast.error('Erro ao carregar serviço')
@@ -246,6 +322,34 @@ export default function ServiceForm() {
                 className="w-full px-3 py-2 border border-jet-black-300 rounded-lg focus:ring-2 focus:ring-periwinkle-500 focus:border-periwinkle-500"
                 placeholder="Descreva os detalhes do serviço..."
               />
+            </div>
+          </div>
+
+          {/* Ícone */}
+          <div>
+            <h3 className="text-lg font-medium text-jet-black-900 mb-4">Ícone do Serviço</h3>
+            <p className="text-sm text-jet-black-600 mb-4">
+              Escolha um ícone para identificar visualmente o serviço:
+            </p>
+            <div className="grid grid-cols-6 sm:grid-cols-8 md:grid-cols-10 gap-2">
+              {AVAILABLE_ICONS.map((iconItem) => {
+                const IconComponent = iconItem.icon
+                return (
+                  <button
+                    key={iconItem.name}
+                    type="button"
+                    onClick={() => setFormData(prev => ({ ...prev, icon: iconItem.name }))}
+                    className={`flex flex-col items-center justify-center p-3 rounded-lg border-2 transition-all ${
+                      formData.icon === iconItem.name
+                        ? 'border-periwinkle-500 bg-periwinkle-50 text-periwinkle-700'
+                        : 'border-jet-black-200 hover:border-jet-black-300 text-jet-black-600'
+                    }`}
+                    title={iconItem.label}
+                  >
+                    <IconComponent className="w-6 h-6" />
+                  </button>
+                )
+              })}
             </div>
           </div>
 
