@@ -120,7 +120,7 @@ const SEGMENTS = [
 const FAQ = [
   {
     q: 'Posso testar antes de assinar?',
-    a: 'Sim! Oferecemos 7 dias grátis em todos os planos, sem precisar de cartão de crédito.'
+    a: 'Sim! Oferecemos 3 dias grátis em todos os planos.'
   },
   {
     q: 'Como meus clientes agendam?',
@@ -286,17 +286,6 @@ export default function LandingPage() {
 
         <div className="max-w-7xl mx-auto relative">
           <div className="max-w-4xl">
-            {/* Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full shadow-sm border border-gray-100 mb-8">
-              <span className="flex h-2 w-2 relative">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-              </span>
-              <span className="text-sm font-medium text-gray-700">
-                +2.000 negócios já usam AgendaMais
-              </span>
-            </div>
-
             {/* Headline */}
             <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-gray-900 leading-[1.1] mb-6">
               Sua agenda
@@ -347,13 +336,7 @@ export default function LandingPage() {
                 <div className="w-8 h-8 rounded-lg bg-emerald-100 flex items-center justify-center">
                   <Check className="w-4 h-4 text-emerald-600" />
                 </div>
-                <span>7 dias grátis</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-lg bg-violet-100 flex items-center justify-center">
-                  <Shield className="w-4 h-4 text-violet-600" />
-                </div>
-                <span>Sem cartão</span>
+                <span>3 dias grátis</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-8 h-8 rounded-lg bg-amber-100 flex items-center justify-center">
@@ -732,7 +715,7 @@ export default function LandingPage() {
               Escolha seu plano
             </h2>
             <p className="text-xl text-gray-600">
-              7 dias grátis em todos os planos. Cancele quando quiser.
+              3 dias grátis em todos os planos. Cancele quando quiser.
             </p>
           </div>
 
@@ -847,7 +830,7 @@ export default function LandingPage() {
             Pronto para começar?
           </h2>
           <p className="text-xl text-violet-100 mb-10 max-w-2xl mx-auto">
-            Junte-se a milhares de profissionais que já transformaram seu negócio com AgendaMais
+            Transforme a gestão do seu negócio com o AgendaMais
           </p>
           <button
             onClick={handleGetStarted}
@@ -857,7 +840,7 @@ export default function LandingPage() {
             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </button>
           <p className="text-violet-200 mt-6 text-sm">
-            7 dias grátis • Sem cartão de crédito • Cancele quando quiser
+            3 dias grátis • Cancele quando quiser
           </p>
         </div>
       </section>

@@ -137,7 +137,7 @@ export default function PaymentModal() {
             Assinatura Criada!
           </h2>
           <p className="text-gray-600 mb-4">
-            Você tem 7 dias de teste gratuito para aproveitar todos os recursos do plano {planInfo.name}.
+            Você tem 3 dias de teste gratuito para aproveitar todos os recursos do plano {planInfo.name}.
           </p>
           <div className="bg-blue-50 rounded-lg p-4 mb-6">
             <p className="text-sm text-blue-900">
@@ -175,7 +175,7 @@ export default function PaymentModal() {
               <div className="bg-white/10 rounded-lg p-4 mt-6">
                 <p className="text-sm font-medium mb-2">Teste Gratuito</p>
                 <p className="text-sm text-blue-100">
-                  7 dias grátis para experimentar todos os recursos.
+                  3 dias grátis para experimentar todos os recursos.
                   Cancele a qualquer momento.
                 </p>
               </div>
@@ -257,7 +257,7 @@ export default function PaymentModal() {
                   Como funciona:
                 </p>
                 <ol className="list-decimal list-inside space-y-1">
-                  <li>Você inicia seu teste gratuito de 7 dias</li>
+                  <li>Você inicia seu teste gratuito de 3 dias</li>
                   <li>Após o trial, cobramos R$ {planInfo.price}/mês</li>
                   <li>Cancele a qualquer momento sem taxas</li>
                 </ol>

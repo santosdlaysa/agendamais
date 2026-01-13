@@ -282,7 +282,7 @@ export default function Login() {
                 <div className="flex items-center justify-center gap-2 p-3 bg-emerald-50 rounded-xl border border-emerald-100">
                   <Sparkles className="w-4 h-4 text-emerald-600" />
                   <span className="text-sm text-emerald-700 font-medium">
-                    7 dias grátis • Sem cartão de crédito
+                    3 dias grátis • Sem cartão de crédito
                   </span>
                 </div>
               )}

@@ -124,7 +124,7 @@ export default function SubscriptionSuccess() {
           </h1>
 
           <p className="text-gray-600 mb-6">
-            Seu periodo de teste de 7 dias comecou. Agora vamos configurar sua conta!
+            Seu periodo de teste de 3 dias comecou. Agora vamos configurar sua conta!
           </p>
 
           <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">

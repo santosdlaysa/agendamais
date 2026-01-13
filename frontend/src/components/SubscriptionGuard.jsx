@@ -100,7 +100,7 @@ export default function SubscriptionGuard({
           </button>
 
           <p className="text-xs text-gray-500 mt-4">
-            7 dias de teste gratuito • Cancele quando quiser
+            3 dias de teste gratuito • Cancele quando quiser
           </p>
         </div>
       </div>
