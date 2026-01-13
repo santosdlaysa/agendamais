@@ -1,24 +1,31 @@
-import { createContext, useContext, useState, useEffect } from 'react'
+import { createContext, useContext, useState, useEffect, useRef } from 'react'
 import toast from 'react-hot-toast'
 import api from '../utils/api'
+import { useAuth } from './AuthContext'
 
 const SubscriptionContext = createContext()
 
 export function SubscriptionProvider({ children }) {
+  const { isAuthenticated } = useAuth()
   const [subscription, setSubscription] = useState(null)
   const [loading, setLoading] = useState(true)
   const [refreshing, setRefreshing] = useState(false)
   const [plans, setPlans] = useState([])
+  const previousAuthState = useRef(isAuthenticated)
 
-  // Buscar status da assinatura ao carregar (apenas se autenticado)
+  // Buscar status da assinatura quando autenticado
   useEffect(() => {
-    const token = localStorage.getItem('token')
-    if (token) {
+    if (isAuthenticated) {
       fetchSubscriptionStatus(true)
     } else {
+      // Limpar subscription quando deslogar
+      if (previousAuthState.current && !isAuthenticated) {
+        setSubscription(null)
+      }
       setLoading(false)
     }
-  }, [])
+    previousAuthState.current = isAuthenticated
+  }, [isAuthenticated])
 
   const fetchSubscriptionStatus = async (isInitialLoad = false) => {
     try {

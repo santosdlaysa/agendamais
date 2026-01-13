@@ -48,10 +48,9 @@ export default function Login() {
       } else {
         const result = await register(formData.name, formData.email, formData.password)
         if (result.success) {
-          const loginResult = await login(formData.email, formData.password)
-          if (loginResult.success) {
-            navigate('/subscription/plans')
-          }
+          await login(formData.email, formData.password)
+          // Não precisa navegar - o App.jsx redireciona automaticamente
+          // para /subscription/plans quando autenticado sem assinatura
         }
       }
     } finally {
@@ -282,7 +281,7 @@ export default function Login() {
                 <div className="flex items-center justify-center gap-2 p-3 bg-emerald-50 rounded-xl border border-emerald-100">
                   <Sparkles className="w-4 h-4 text-emerald-600" />
                   <span className="text-sm text-emerald-700 font-medium">
-                    3 dias grátis • Sem cartão de crédito
+                    3 dias grátis
                   </span>
                 </div>
               )}
