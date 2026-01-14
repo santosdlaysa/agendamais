@@ -775,22 +775,47 @@ export default function LandingPage() {
               </p>
             </div>
 
-            {[
-              { title: 'Produto', links: ['Recursos', 'Planos', 'FAQ'] },
-              { title: 'Suporte', links: ['suporte@agendamais.site', 'Central de Ajuda'] },
-              { title: 'Legal', links: ['Termos de Uso', 'Privacidade', 'LGPD'] }
-            ].map((col, i) => (
-              <div key={i}>
-                <h4 className="font-semibold text-white mb-4">{col.title}</h4>
-                <ul className="space-y-3">
-                  {col.links.map((link, j) => (
-                    <li key={j}>
-                      <a href="#" className="text-jet-black-400 hover:text-white transition-colors">{link}</a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+            <div>
+              <h4 className="font-semibold text-white mb-4">Produto</h4>
+              <ul className="space-y-3">
+                <li>
+                  <button onClick={() => scrollTo('features')} className="text-jet-black-400 hover:text-white transition-colors">Recursos</button>
+                </li>
+                <li>
+                  <button onClick={() => scrollTo('pricing')} className="text-jet-black-400 hover:text-white transition-colors">Planos</button>
+                </li>
+                <li>
+                  <button onClick={() => scrollTo('faq')} className="text-jet-black-400 hover:text-white transition-colors">FAQ</button>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="font-semibold text-white mb-4">Suporte</h4>
+              <ul className="space-y-3">
+                <li>
+                  <a href="mailto:suporte@agendamais.site" className="text-jet-black-400 hover:text-white transition-colors">suporte@agendamais.site</a>
+                </li>
+                <li>
+                  <a href="mailto:suporte@agendamais.site" className="text-jet-black-400 hover:text-white transition-colors">Central de Ajuda</a>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="font-semibold text-white mb-4">Legal</h4>
+              <ul className="space-y-3">
+                <li>
+                  <button onClick={() => navigate('/termos')} className="text-jet-black-400 hover:text-white transition-colors">Termos de Uso</button>
+                </li>
+                <li>
+                  <button onClick={() => navigate('/privacidade')} className="text-jet-black-400 hover:text-white transition-colors">Privacidade</button>
+                </li>
+                <li>
+                  <button onClick={() => navigate('/lgpd')} className="text-jet-black-400 hover:text-white transition-colors">LGPD</button>
+                </li>
+              </ul>
+            </div>
           </div>
 
           <div className="border-t border-jet-black-800 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">

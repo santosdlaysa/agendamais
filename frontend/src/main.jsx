@@ -7,6 +7,7 @@ import { AuthProvider } from './contexts/AuthContext.jsx'
 import { SubscriptionProvider } from './contexts/SubscriptionContext.jsx'
 import { OnboardingProvider } from './contexts/OnboardingContext.jsx'
 import { ProfessionalAuthProvider } from './contexts/ProfessionalAuthContext.jsx'
+import { SuperAdminProvider } from './contexts/SuperAdminContext.jsx'
 import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -16,7 +17,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <SubscriptionProvider>
           <OnboardingProvider>
             <ProfessionalAuthProvider>
-              <App />
+              <SuperAdminProvider>
+                <App />
+              </SuperAdminProvider>
             </ProfessionalAuthProvider>
           </OnboardingProvider>
           <Toaster
