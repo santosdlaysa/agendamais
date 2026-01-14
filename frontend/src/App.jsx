@@ -3,6 +3,7 @@ import { useAuth } from './contexts/AuthContext'
 import { useOnboarding } from './contexts/OnboardingContext'
 import { useSubscription } from './contexts/SubscriptionContext'
 import { useProfessionalAuth } from './contexts/ProfessionalAuthContext'
+import { useSuperAdmin } from './contexts/SuperAdminContext'
 import Login from './components/Login'
 import OnboardingWizard from './components/OnboardingWizard'
 import Dashboard from './components/Dashboard'
@@ -46,24 +47,85 @@ import {
   ProfessionalSettings
 } from './pages/professional'
 import ProfessionalForgotPassword from './pages/professional/ProfessionalForgotPassword'
+// Páginas do Super Admin
+import {
+  SuperAdminLayout,
+  SuperAdminDashboard,
+  SuperAdminCompanies,
+  SuperAdminCompanyDetail,
+  SuperAdminSubscriptions,
+  SuperAdminAnalytics
+} from './pages/superadmin'
 
 function App() {
   const { isAuthenticated, loading, user } = useAuth()
   const { showOnboarding, loading: onboardingLoading } = useOnboarding()
   const { hasActiveSubscription, loading: subscriptionLoading } = useSubscription()
   const { isAuthenticated: isProfessionalAuthenticated, loading: professionalLoading } = useProfessionalAuth()
+  const { isAuthenticated: isSuperAdminAuthenticated, loading: superAdminLoading } = useSuperAdmin()
   const location = useLocation()
+
+  // Verificar se é uma rota do Super Admin
+  const isSuperAdminRoute = location.pathname.startsWith('/superadmin')
 
   // Verificar se é uma rota pública de agendamento
   // Verifica tanto o pathname do router quanto a URL real (para redirect de /agendar para /#/agendar)
   const isPublicBookingRoute = location.pathname.startsWith('/agendar')
   const isLandingPage = location.pathname === '/' || location.pathname === ''
   const isProfessionalRoute = location.pathname.startsWith('/profissional')
+  const isLegalPage = location.pathname === '/termos' ||
+                      location.pathname === '/privacidade' ||
+                      location.pathname === '/lgpd'
 
   // Se acessou /agendar sem hash, redireciona para /#/agendar
   if (window.location.pathname.startsWith('/agendar') && !window.location.hash) {
     window.location.replace('/#' + window.location.pathname + window.location.search)
     return null
+  }
+
+  // Rotas do Super Admin
+  if (isSuperAdminRoute) {
+    if (superAdminLoading || loading) {
+      return (
+        <div className="min-h-screen flex items-center justify-center">
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-violet-600"></div>
+        </div>
+      )
+    }
+
+    // Se não está autenticado, redireciona para login principal
+    if (!isAuthenticated) {
+      return (
+        <Routes>
+          <Route path="/superadmin/*" element={<Navigate to="/login" replace />} />
+        </Routes>
+      )
+    }
+
+    // Se está autenticado mas não é admin, redireciona para dashboard normal
+    if (!isSuperAdminAuthenticated) {
+      return (
+        <Routes>
+          <Route path="/superadmin/*" element={<Navigate to="/dashboard" replace />} />
+        </Routes>
+      )
+    }
+
+    // Rotas protegidas do Super Admin (apenas para admins)
+    return (
+      <Routes>
+        <Route path="/superadmin" element={<SuperAdminLayout />}>
+          <Route index element={<Navigate to="/superadmin/dashboard" replace />} />
+          <Route path="dashboard" element={<SuperAdminDashboard />} />
+          <Route path="companies" element={<SuperAdminCompanies />} />
+          <Route path="companies/:id" element={<SuperAdminCompanyDetail />} />
+          <Route path="subscriptions" element={<SuperAdminSubscriptions />} />
+          <Route path="analytics" element={<SuperAdminAnalytics />} />
+        </Route>
+
+        <Route path="/superadmin/*" element={<Navigate to="/superadmin/dashboard" replace />} />
+      </Routes>
+    )
   }
 
   // Rotas do portal do profissional
@@ -130,6 +192,17 @@ function App() {
     return (
       <Routes>
         <Route path="/" element={<LandingPage />} />
+      </Routes>
+    )
+  }
+
+  // Páginas legais - sempre acessíveis publicamente
+  if (isLegalPage) {
+    return (
+      <Routes>
+        <Route path="/termos" element={<TermsOfService />} />
+        <Route path="/privacidade" element={<PrivacyPolicy />} />
+        <Route path="/lgpd" element={<LGPD />} />
       </Routes>
     )
   }
