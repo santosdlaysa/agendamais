@@ -35,18 +35,6 @@ export default function Layout({ children }) {
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
 
-  // Colapsar sidebar ao clicar fora (apenas desktop)
-  useEffect(() => {
-    const handleClickOutsideSidebar = (event) => {
-      const isDesktop = window.innerWidth >= 1024
-      if (isDesktop && !sidebarCollapsed && sidebarRef.current && !sidebarRef.current.contains(event.target)) {
-        setSidebarCollapsed(true)
-      }
-    }
-    document.addEventListener('mousedown', handleClickOutsideSidebar)
-    return () => document.removeEventListener('mousedown', handleClickOutsideSidebar)
-  }, [sidebarCollapsed])
-
   // Fechar sidebar mobile quando a rota muda
   useEffect(() => {
     setSidebarOpen(false)
