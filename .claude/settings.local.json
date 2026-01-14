@@ -33,7 +33,8 @@
       "Bash(python -m pip install:*)",
       "Bash(py -m pip install:*)",
       "Bash(find:*)",
-      "Bash(git reset:*)"
+      "Bash(git reset:*)",
+      "Bash(py -c:*)"
     ],
     "deny": [],
     "ask": []
