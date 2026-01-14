@@ -49,48 +49,52 @@ export const bookingService = {
 
   // Buscar disponibilidade
   getAvailability: async (slug, { serviceId, professionalId, date, days = 7 }) => {
-    // Buscar disponibilidade para cada dia
     const availability = {}
     const startDate = new Date(date)
 
+    // Gerar array de datas para buscar
+    const dates = []
     for (let i = 0; i < days; i++) {
       const currentDate = new Date(startDate)
       currentDate.setDate(startDate.getDate() + i)
-      const dateStr = currentDate.toISOString().split('T')[0]
+      dates.push(currentDate.toISOString().split('T')[0])
+    }
 
-      try {
+    // Buscar todas as disponibilidades em PARALELO
+    const results = await Promise.allSettled(
+      dates.map(async (dateStr) => {
         const params = new URLSearchParams({
           service_id: serviceId,
           professional_id: professionalId,
           date: dateStr
         })
         const response = await publicApi.get(`/business/${slug}/availability?${params}`)
-        const data = response.data
+        return { dateStr, data: response.data }
+      })
+    )
 
-        // Transformar formato do backend para o frontend
-        if (data.slots && data.slots.length > 0) {
-          availability[dateStr] = {
-            available: true,
-            slots: data.slots.map(slot => ({
-              time: slot.start_time,
-              end_time: slot.end_time,
-              professional_id: data.professional_id,
-              professional_name: data.professional_name || null
-            }))
-          }
-        } else {
-          availability[dateStr] = {
-            available: false,
-            slots: []
-          }
+    // Processar resultados
+    results.forEach((result, index) => {
+      const dateStr = dates[index]
+
+      if (result.status === 'fulfilled' && result.value.data.slots?.length > 0) {
+        const data = result.value.data
+        availability[dateStr] = {
+          available: true,
+          slots: data.slots.map(slot => ({
+            time: slot.start_time,
+            end_time: slot.end_time,
+            professional_id: data.professional_id,
+            professional_name: data.professional_name || null
+          }))
         }
-      } catch (err) {
+      } else {
         availability[dateStr] = {
           available: false,
           slots: []
         }
       }
-    }
+    })
 
     return { availability }
   },
