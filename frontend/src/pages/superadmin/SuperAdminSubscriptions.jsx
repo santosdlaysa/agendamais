@@ -25,7 +25,7 @@ export default function SuperAdminSubscriptions() {
     page: 1,
     pages: 1,
     total: 0,
-    per_page: 10
+    limit: 10
   })
   const [search, setSearch] = useState('')
   const [filters, setFilters] = useState({
@@ -62,11 +62,10 @@ export default function SuperAdminSubscriptions() {
       setLoading(true)
       const params = {
         page: pagination.page,
-        per_page: pagination.per_page,
+        limit: pagination.limit,
         search: search || undefined,
         status: filters.status || undefined,
-        plan: filters.plan || undefined,
-        expiring_soon: filters.expiring || undefined
+        plan: filters.plan || undefined
       }
 
       const response = await superAdminApi.getSubscriptions(params)
@@ -331,7 +330,7 @@ export default function SuperAdminSubscriptions() {
                       </td>
                       <td className="px-5 py-4">
                         <p className="font-medium text-jet-black-900">
-                          R$ {(sub.mrr || 0).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                          R$ {({ basic: 29, pro: 59, enterprise: 99 }[sub.plan] || 0).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
                         </p>
                       </td>
                       <td className="px-5 py-4 text-jet-black-600">
@@ -352,7 +351,7 @@ export default function SuperAdminSubscriptions() {
                       </td>
                       <td className="px-5 py-4 text-right">
                         <button
-                          onClick={() => navigate(`/superadmin/companies/${sub.company_id}`)}
+                          onClick={() => navigate(`/superadmin/companies/${sub.user_id}`)}
                           className="p-2 hover:bg-jet-black-100 rounded-lg transition-colors"
                           title="Ver empresa"
                         >
@@ -369,8 +368,8 @@ export default function SuperAdminSubscriptions() {
             {pagination.pages > 1 && (
               <div className="px-5 py-4 border-t border-jet-black-100 flex items-center justify-between">
                 <p className="text-sm text-jet-black-600">
-                  Mostrando {((pagination.page - 1) * pagination.per_page) + 1} a{' '}
-                  {Math.min(pagination.page * pagination.per_page, pagination.total)} de{' '}
+                  Mostrando {((pagination.page - 1) * pagination.limit) + 1} a{' '}
+                  {Math.min(pagination.page * pagination.limit, pagination.total)} de{' '}
                   {pagination.total} assinaturas
                 </p>
                 <div className="flex items-center gap-2">

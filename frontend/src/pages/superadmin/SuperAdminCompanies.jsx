@@ -25,7 +25,7 @@ export default function SuperAdminCompanies() {
     page: 1,
     pages: 1,
     total: 0,
-    per_page: 10
+    limit: 10
   })
   const [search, setSearch] = useState('')
   const [filters, setFilters] = useState({
@@ -56,7 +56,7 @@ export default function SuperAdminCompanies() {
       setLoading(true)
       const params = {
         page: pagination.page,
-        per_page: pagination.per_page,
+        limit: pagination.limit,
         search: search || undefined,
         status: filters.status || undefined,
         plan: filters.plan || undefined
@@ -292,8 +292,8 @@ export default function SuperAdminCompanies() {
                         </div>
                       </td>
                       <td className="px-5 py-4">
-                        <p className="text-jet-black-900">{company.owner_name}</p>
-                        <p className="text-sm text-jet-black-500">{company.owner_email}</p>
+                        <p className="text-jet-black-900">{company.name}</p>
+                        <p className="text-sm text-jet-black-500">{company.email}</p>
                       </td>
                       <td className="px-5 py-4">
                         <span className={`text-xs font-medium px-2.5 py-1 rounded-full ${getPlanBadgeColor(company.subscription?.plan)}`}>
@@ -307,11 +307,11 @@ export default function SuperAdminCompanies() {
                       </td>
                       <td className="px-5 py-4">
                         <p className="font-medium text-jet-black-900">
-                          R$ {(company.mrr || 0).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                          R$ {(company.stats?.mrr || 0).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
                         </p>
                       </td>
                       <td className="px-5 py-4 text-jet-black-600">
-                        {new Date(company.created_at).toLocaleDateString('pt-BR')}
+                        {company.created_at ? new Date(company.created_at).toLocaleDateString('pt-BR') : '-'}
                       </td>
                       <td className="px-5 py-4 text-right">
                         <div className="relative">
@@ -376,7 +376,7 @@ export default function SuperAdminCompanies() {
                       </div>
                       <div>
                         <p className="font-medium text-jet-black-900">{company.business_name}</p>
-                        <p className="text-sm text-jet-black-500">{company.owner_email}</p>
+                        <p className="text-sm text-jet-black-500">{company.email}</p>
                       </div>
                     </div>
                     <ChevronRight className="w-5 h-5 text-jet-black-400" />
@@ -389,7 +389,7 @@ export default function SuperAdminCompanies() {
                       {getStatusLabel(company.subscription?.status)}
                     </span>
                     <span className="text-sm text-jet-black-500 ml-auto">
-                      R$ {(company.mrr || 0).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}/mes
+                      R$ {(company.stats?.mrr || 0).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}/mes
                     </span>
                   </div>
                 </div>
@@ -400,8 +400,8 @@ export default function SuperAdminCompanies() {
             {pagination.pages > 1 && (
               <div className="px-5 py-4 border-t border-jet-black-100 flex items-center justify-between">
                 <p className="text-sm text-jet-black-600">
-                  Mostrando {((pagination.page - 1) * pagination.per_page) + 1} a{' '}
-                  {Math.min(pagination.page * pagination.per_page, pagination.total)} de{' '}
+                  Mostrando {((pagination.page - 1) * pagination.limit) + 1} a{' '}
+                  {Math.min(pagination.page * pagination.limit, pagination.total)} de{' '}
                   {pagination.total} empresas
                 </p>
                 <div className="flex items-center gap-2">

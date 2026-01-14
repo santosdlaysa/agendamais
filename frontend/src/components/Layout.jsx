@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react'
 import { useAuth } from '../contexts/AuthContext'
 import { useSubscription } from '../contexts/SubscriptionContext'
 import { NavLink, useLocation } from 'react-router-dom'
-import { Calendar, LogOut, Users, UserCheck, Briefcase, FileText, BarChart3, MessageSquare, CreditCard, ChevronDown, Building2, Shield, Menu, PanelLeftClose, PanelLeft } from 'lucide-react'
+import { Calendar, LogOut, Users, UserCheck, Briefcase, FileText, BarChart3, MessageSquare, CreditCard, ChevronDown, Building2, Shield, Menu, PanelLeftClose, PanelLeft, Crown } from 'lucide-react'
 import api from '../utils/api'
 
 export default function Layout({ children }) {
@@ -205,6 +205,33 @@ export default function Layout({ children }) {
             )}
           </div>
         </div>
+
+        {/* Super Admin - apenas para admins */}
+        {(user?.role === 'admin' || user?.role === 'superadmin') && (
+          <div>
+            {!collapsed && (
+              <p className="px-3 mb-2 text-xs font-semibold text-violet-500 uppercase tracking-wider">
+                Super Admin
+              </p>
+            )}
+            <div className="space-y-1">
+              <NavLink
+                to="/superadmin/dashboard"
+                className={({ isActive }) =>
+                  `flex items-center ${collapsed ? 'justify-center px-2' : 'px-3'} py-2.5 rounded-lg text-sm font-medium transition-colors ${
+                    isActive
+                      ? 'bg-violet-100 text-violet-700'
+                      : 'text-violet-600 hover:bg-violet-50 hover:text-violet-700'
+                  }`
+                }
+                title="Painel Admin"
+              >
+                <Crown className={`h-5 w-5 ${collapsed ? '' : 'mr-3'} flex-shrink-0`} />
+                {!collapsed && 'Painel Admin'}
+              </NavLink>
+            </div>
+          </div>
+        )}
       </nav>
 
       {/* User section at bottom */}
