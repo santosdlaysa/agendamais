@@ -138,7 +138,7 @@ export default function SubscriptionPlans() {
           <p className="text-xl text-jet-black-600">
             {hasActiveSubscription()
               ? 'Selecione o plano que melhor atende suas necessidades'
-              : 'Teste gratuito de 3 dias em todos os planos'
+              : '3 dias grátis nos planos Pro e Enterprise'
             }
           </p>
           {!hasActiveSubscription() && (
@@ -199,7 +199,7 @@ export default function SubscriptionPlans() {
                   <span className="text-jet-black-600 text-lg">/mês</span>
                 </div>
                 <p className="text-sm text-green-600 font-medium">
-                  3 dias grátis
+                  {plan.id === 'basic' ? 'Comece agora' : '3 dias grátis'}
                 </p>
               </div>
 

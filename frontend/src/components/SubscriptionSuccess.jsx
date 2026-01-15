@@ -124,12 +124,12 @@ export default function SubscriptionSuccess() {
           </h1>
 
           <p className="text-jet-black-600 mb-6">
-            Seu periodo de teste de 3 dias comecou. Agora vamos configurar sua conta!
+            Sua assinatura foi ativada com sucesso. Vamos configurar sua conta!
           </p>
 
           <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
             <p className="text-sm text-green-800">
-              Seu plano foi ativado com sucesso. A cobranca sera realizada automaticamente apos o periodo de teste.
+              Seu plano foi ativado com sucesso. Aproveite todos os recursos!
             </p>
           </div>
 

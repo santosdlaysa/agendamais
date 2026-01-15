@@ -120,7 +120,7 @@ const SEGMENTS = [
 const FAQ = [
   {
     q: 'Posso testar antes de assinar?',
-    a: 'Sim! Oferecemos 3 dias grátis em todos os planos.'
+    a: 'Sim! Oferecemos 3 dias grátis nos planos Pro e Enterprise.'
   },
   {
     q: 'Como meus clientes agendam?',
@@ -336,7 +336,7 @@ export default function LandingPage() {
                 <div className="w-8 h-8 rounded-lg bg-emerald-100 flex items-center justify-center">
                   <Check className="w-4 h-4 text-emerald-600" />
                 </div>
-                <span>3 dias grátis</span>
+                <span>A partir de R$29/mês</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-8 h-8 rounded-lg bg-amber-100 flex items-center justify-center">
@@ -629,7 +629,7 @@ export default function LandingPage() {
               Escolha seu plano
             </h2>
             <p className="text-xl text-jet-black-600">
-              3 dias grátis em todos os planos. Cancele quando quiser.
+              3 dias grátis nos planos Pro e Enterprise. Cancele quando quiser.
             </p>
           </div>
 
@@ -754,7 +754,7 @@ export default function LandingPage() {
             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </button>
           <p className="text-periwinkle-200 mt-6 text-sm">
-            3 dias grátis • Cancele quando quiser
+            Comece agora • Cancele quando quiser
           </p>
         </div>
       </section>

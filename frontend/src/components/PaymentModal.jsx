@@ -137,7 +137,9 @@ export default function PaymentModal() {
             Assinatura Criada!
           </h2>
           <p className="text-jet-black-600 mb-4">
-            Você tem 3 dias de teste gratuito para aproveitar todos os recursos do plano {planInfo.name}.
+{hasTrial 
+              ? `Você tem 3 dias de teste gratuito para aproveitar todos os recursos do plano ${planInfo.name}.`
+              : `Sua assinatura do plano ${planInfo.name} foi ativada com sucesso!`}
           </p>
           <div className="bg-periwinkle-50 rounded-lg p-4 mb-6">
             <p className="text-sm text-periwinkle-900">
@@ -172,6 +174,7 @@ export default function PaymentModal() {
                 <p className="text-2xl font-bold">R$ {planInfo.price}/mês</p>
               </div>
 
+              {hasTrial && (
               <div className="bg-white/10 rounded-lg p-4 mt-6">
                 <p className="text-sm font-medium mb-2">Teste Gratuito</p>
                 <p className="text-sm text-periwinkle-100">
@@ -179,6 +182,7 @@ export default function PaymentModal() {
                   Cancele a qualquer momento.
                 </p>
               </div>
+              )}
             </div>
 
             <div className="space-y-2 text-sm text-periwinkle-100">
@@ -257,8 +261,14 @@ export default function PaymentModal() {
                   Como funciona:
                 </p>
                 <ol className="list-decimal list-inside space-y-1">
-                  <li>Você inicia seu teste gratuito de 3 dias</li>
-                  <li>Após o trial, cobramos R$ {planInfo.price}/mês</li>
+                  {hasTrial ? (
+                    <>
+                      <li>Você inicia seu teste gratuito de 3 dias</li>
+                      <li>Após o trial, cobramos R$ {planInfo.price}/mês</li>
+                    </>
+                  ) : (
+                    <li>Sua assinatura de R$ {planInfo.price}/mês é ativada</li>
+                  )}
                   <li>Cancele a qualquer momento sem taxas</li>
                 </ol>
               </div>
