@@ -198,9 +198,11 @@ export default function SubscriptionPlans() {
                   </span>
                   <span className="text-jet-black-600 text-lg">/mês</span>
                 </div>
-                <p className="text-sm text-green-600 font-medium">
-                  {plan.id === 'basic' ? 'Comece agora' : '3 dias grátis'}
-                </p>
+                {plan.id !== 'basic' && (
+                  <p className="text-sm text-green-600 font-medium">
+                    3 dias grátis
+                  </p>
+                )}
               </div>
 
               {/* Features List */}
