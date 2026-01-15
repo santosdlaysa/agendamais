@@ -115,7 +115,7 @@ export default function SubscriptionPlans() {
       return newIndex > currentIndex ? 'Fazer Upgrade' : 'Fazer Downgrade'
     }
 
-    return 'Começar Teste Gratuito'
+    return planId === 'basic' ? 'Escolher Plano' : 'Começar Grátis'
   }
 
   return (
