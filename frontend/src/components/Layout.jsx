@@ -4,6 +4,7 @@ import { useSubscription } from '../contexts/SubscriptionContext'
 import { NavLink, useLocation } from 'react-router-dom'
 import { Calendar, LogOut, Users, UserCheck, Briefcase, FileText, BarChart3, MessageSquare, CreditCard, ChevronDown, Building2, Shield, Menu, PanelLeftClose, PanelLeft, Crown } from 'lucide-react'
 import api from '../utils/api'
+import { NotificationBell } from './notifications'
 
 export default function Layout({ children }) {
   const { user, logout } = useAuth()
@@ -312,6 +313,11 @@ export default function Layout({ children }) {
 
       {/* Main content area */}
       <div className={`flex flex-col min-h-screen transition-all duration-300 ease-in-out ${sidebarCollapsed ? 'lg:pl-16' : 'lg:pl-64'}`}>
+        {/* Desktop header with notifications */}
+        <header className="hidden lg:flex items-center justify-end h-14 px-6 bg-white border-b border-jet-black-100 sticky top-0 z-30">
+          <NotificationBell />
+        </header>
+
         {/* Mobile header */}
         <header className="lg:hidden bg-white shadow-sm border-b sticky top-0 z-30">
           <div className="flex items-center justify-between h-16 px-4">
@@ -329,7 +335,7 @@ export default function Layout({ children }) {
               </span>
             </div>
 
-            <div className="w-10" /> {/* Spacer for centering */}
+            <NotificationBell />
           </div>
         </header>
 

@@ -8,6 +8,7 @@ import { SubscriptionProvider } from './contexts/SubscriptionContext.jsx'
 import { OnboardingProvider } from './contexts/OnboardingContext.jsx'
 import { ProfessionalAuthProvider } from './contexts/ProfessionalAuthContext.jsx'
 import { SuperAdminProvider } from './contexts/SuperAdminContext.jsx'
+import { NotificationProvider } from './contexts/NotificationContext.jsx'
 import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -18,7 +19,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           <OnboardingProvider>
             <ProfessionalAuthProvider>
               <SuperAdminProvider>
-                <App />
+                <NotificationProvider>
+                  <App />
+                </NotificationProvider>
               </SuperAdminProvider>
             </ProfessionalAuthProvider>
           </OnboardingProvider>

@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { 
-  Plus, 
-  Search, 
-  Edit, 
-  Trash2, 
+import {
+  Plus,
+  Search,
+  Edit,
+  Trash2,
   Calendar,
-  Clock, 
+  Clock,
   User,
   UserCheck,
   Briefcase,
@@ -19,6 +19,7 @@ import {
 import api from '../utils/api'
 import toast from 'react-hot-toast'
 import CompleteAppointmentModal from './CompleteAppointmentModal'
+import useNotificationTriggers from '../hooks/useNotificationTriggers'
 
 const STATUS_CONFIG = {
   scheduled: {
@@ -45,6 +46,7 @@ const STATUS_CONFIG = {
 
 export default function Appointments() {
   const navigate = useNavigate()
+  const { notifyAppointmentCompleted, notifyAppointmentCancelled } = useNotificationTriggers()
   const [appointments, setAppointments] = useState([])
   const [loading, setLoading] = useState(true)
   const [filters, setFilters] = useState({
@@ -104,6 +106,20 @@ export default function Appointments() {
         status: newStatus
       })
       toast.success(`Status atualizado para ${STATUS_CONFIG[newStatus].label}`)
+
+      // Disparar notificação de cancelamento
+      if (newStatus === 'cancelled') {
+        const appointment = appointments.find(a => a.id === appointmentId)
+        if (appointment) {
+          notifyAppointmentCancelled({
+            id: appointment.id,
+            client_name: appointment.client?.name,
+            service_name: appointment.service?.name,
+            date: appointment.appointment_date
+          })
+        }
+      }
+
       fetchAppointments()
     } catch (error) {
       toast.error('Erro ao atualizar status do agendamento')
@@ -111,6 +127,16 @@ export default function Appointments() {
   }
 
   const handleCompleteSuccess = () => {
+    // Disparar notificação de conclusão
+    if (selectedAppointment) {
+      notifyAppointmentCompleted({
+        id: selectedAppointment.id,
+        client_name: selectedAppointment.client?.name,
+        service_name: selectedAppointment.service?.name,
+        date: selectedAppointment.appointment_date
+      })
+    }
+
     setShowCompleteModal(false)
     setSelectedAppointment(null)
     fetchAppointments()

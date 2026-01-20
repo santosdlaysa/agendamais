@@ -27,6 +27,7 @@ import SubscriptionStatus from './components/SubscriptionStatus'
 import SubscriptionSuccess from './components/SubscriptionSuccess'
 import SubscriptionCanceled from './components/SubscriptionCanceled'
 import Settings from './components/Settings'
+import NotificationsPage from './pages/NotificationsPage'
 // Páginas públicas de agendamento online
 import LandingPage from './pages/public/LandingPage'
 import BookingPage from './pages/public/BookingPage'
@@ -292,6 +293,8 @@ function App() {
               <Route path="subscription/canceled" element={<SubscriptionCanceled />} />
 
               <Route path="settings" element={<Settings />} />
+
+              <Route path="notifications" element={<NotificationsPage />} />
 
               <Route path="termos" element={<TermsOfService />} />
               <Route path="privacidade" element={<PrivacyPolicy />} />
