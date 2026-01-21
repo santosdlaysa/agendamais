@@ -1,0 +1,15 @@
+# robots.txt para AgendaMais
+# https://agendamais.com.br
+
+User-agent: *
+Allow: /
+Allow: /agendar/
+
+# Bloquear áreas administrativas
+Disallow: /dashboard/
+Disallow: /admin/
+Disallow: /superadmin/
+Disallow: /api/
+
+# Sitemap
+Sitemap: https://agendamais.site/sitemap.xml
