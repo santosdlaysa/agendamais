@@ -17,12 +17,12 @@ export const NOTIFICATION_TYPES = {
 }
 
 export function NotificationProvider({ children }) {
-  const { isAuthenticated: isAdminAuthenticated, loading: isLoading } = useAuth()
+  const { isAuthenticated: isAdminAuthenticated, loading: adminLoading } = useAuth()
   const { isAuthenticated: isProfessionalAuthenticated, loading: professionalLoading } = useProfessionalAuth()
 
   // Usuario esta autenticado se for admin OU profissional
   const isAuthenticated = isAdminAuthenticated || isProfessionalAuthenticated
-  const isLoading = isLoading || professionalLoading
+  const isLoading = adminLoading || professionalLoading
 
   // Estado das notificacoes
   const [notifications, setNotifications] = useState([])
