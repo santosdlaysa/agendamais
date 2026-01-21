@@ -55,7 +55,8 @@ import {
   SuperAdminCompanies,
   SuperAdminCompanyDetail,
   SuperAdminSubscriptions,
-  SuperAdminAnalytics
+  SuperAdminAnalytics,
+  SuperAdminPayments
 } from './pages/superadmin'
 
 function App() {
@@ -122,6 +123,7 @@ function App() {
           <Route path="companies/:id" element={<SuperAdminCompanyDetail />} />
           <Route path="subscriptions" element={<SuperAdminSubscriptions />} />
           <Route path="analytics" element={<SuperAdminAnalytics />} />
+          <Route path="payments" element={<SuperAdminPayments />} />
         </Route>
 
         <Route path="/superadmin/*" element={<Navigate to="/superadmin/dashboard" replace />} />

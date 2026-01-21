@@ -641,7 +641,7 @@ Após criar o agendamento, enviar:
 ## Exemplo de URL Final
 
 ```
-https://agendamais.com.br/agendar/barbearia-do-ze
+https://agendamais.site/agendar/barbearia-do-ze
 ```
 
 O cliente acessa essa URL e pode agendar diretamente, sem criar conta.

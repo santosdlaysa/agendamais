@@ -13,7 +13,8 @@ import {
   PanelLeftClose,
   PanelLeft,
   AlertTriangle,
-  Settings
+  Settings,
+  DollarSign
 } from 'lucide-react'
 
 export default function SuperAdminLayout() {
@@ -117,6 +118,10 @@ export default function SuperAdminLayout() {
             <NavLink to="/superadmin/subscriptions" className={getNavLinkClass(collapsed)} title="Assinaturas">
               <CreditCard className={`h-5 w-5 ${collapsed ? '' : 'mr-3'} flex-shrink-0`} />
               {!collapsed && 'Assinaturas'}
+            </NavLink>
+            <NavLink to="/superadmin/payments" className={getNavLinkClass(collapsed)} title="Faturamento">
+              <DollarSign className={`h-5 w-5 ${collapsed ? '' : 'mr-3'} flex-shrink-0`} />
+              {!collapsed && 'Faturamento'}
             </NavLink>
             <NavLink to="/superadmin/analytics" className={getNavLinkClass(collapsed)} title="Analytics">
               <BarChart3 className={`h-5 w-5 ${collapsed ? '' : 'mr-3'} flex-shrink-0`} />

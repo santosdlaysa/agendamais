@@ -771,7 +771,7 @@ export default function LandingPage() {
                 <span className="text-xl font-bold text-white">AgendaMais</span>
               </div>
               <p className="text-jet-black-400 leading-relaxed">
-                A solução completa para gestão de agendamentos do seu negócio.
+                A solução completa para gestão de agendamentos do seu negócio. Sistema de agendamento online.
               </p>
             </div>
 
