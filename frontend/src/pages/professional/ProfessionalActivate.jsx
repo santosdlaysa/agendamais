@@ -107,7 +107,7 @@ export default function ProfessionalActivate() {
             <Calendar className="w-7 h-7 text-white" />
           </div>
           <div>
-            <span className="text-2xl font-bold text-jet-black-900">AgendaMais</span>
+            <span className="text-2xl font-bold text-jet-black-900">Agendar Mais</span>
             <span className="block text-sm text-jet-black-500">Portal do Profissional</span>
           </div>
         </div>
@@ -228,7 +228,7 @@ export default function ProfessionalActivate() {
 
         {/* Footer */}
         <p className="text-center text-sm text-jet-black-400 mt-6">
-          AgendaMais - Portal do Profissional
+          Agendar Mais - Portal do Profissional
         </p>
       </div>
     </div>

@@ -13,7 +13,8 @@ import {
   PanelLeftClose,
   PanelLeft,
   AlertTriangle,
-  Settings
+  Settings,
+  DollarSign
 } from 'lucide-react'
 
 export default function SuperAdminLayout() {
@@ -71,7 +72,7 @@ export default function SuperAdminLayout() {
           <Shield className="h-8 w-8 text-violet-600 flex-shrink-0" />
           {!collapsed && (
             <div className="ml-3">
-              <h1 className="text-lg font-bold text-jet-black-900">AgendaMais</h1>
+              <h1 className="text-lg font-bold text-jet-black-900">Agendar Mais</h1>
               <span className="text-xs text-violet-600 font-medium">Super Admin</span>
             </div>
           )}
@@ -117,6 +118,10 @@ export default function SuperAdminLayout() {
             <NavLink to="/superadmin/subscriptions" className={getNavLinkClass(collapsed)} title="Assinaturas">
               <CreditCard className={`h-5 w-5 ${collapsed ? '' : 'mr-3'} flex-shrink-0`} />
               {!collapsed && 'Assinaturas'}
+            </NavLink>
+            <NavLink to="/superadmin/payments" className={getNavLinkClass(collapsed)} title="Faturamento">
+              <DollarSign className={`h-5 w-5 ${collapsed ? '' : 'mr-3'} flex-shrink-0`} />
+              {!collapsed && 'Faturamento'}
             </NavLink>
             <NavLink to="/superadmin/analytics" className={getNavLinkClass(collapsed)} title="Analytics">
               <BarChart3 className={`h-5 w-5 ${collapsed ? '' : 'mr-3'} flex-shrink-0`} />
@@ -239,7 +244,7 @@ export default function SuperAdminLayout() {
             <div className="flex items-center">
               <Shield className="h-7 w-7 text-violet-600" />
               <div className="ml-2">
-                <span className="text-lg font-bold text-jet-black-900">AgendaMais</span>
+                <span className="text-lg font-bold text-jet-black-900">Agendar Mais</span>
                 <span className="block text-xs text-violet-600">Super Admin</span>
               </div>
             </div>

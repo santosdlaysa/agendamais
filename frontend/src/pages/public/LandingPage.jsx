@@ -197,7 +197,7 @@ export default function LandingPage() {
                 <div className="absolute -top-1 -right-1 w-3 h-3 bg-emerald-400 rounded-full animate-pulse"></div>
               </div>
               <span className="text-xl font-bold bg-gradient-to-r from-jet-black-900 to-jet-black-600 bg-clip-text text-transparent">
-                AgendaMais
+                Agendar Mais
               </span>
             </div>
 
@@ -455,7 +455,7 @@ export default function LandingPage() {
               <div className="flex-1 flex justify-center">
                 <div className="bg-jet-black-800 rounded-lg px-4 py-1.5 flex items-center gap-2 text-sm text-jet-black-400">
                   <Shield className="w-4 h-4 text-green-500" />
-                  agendamais.site/dashboard
+                  agendarmais.com/dashboard
                 </div>
               </div>
             </div>
@@ -463,7 +463,7 @@ export default function LandingPage() {
             <div className="bg-white rounded-b-2xl border border-t-0 border-jet-black-200 shadow-2xl overflow-hidden">
               <img
                 src="/demo-dashboard.png"
-                alt="Dashboard do AgendaMais"
+                alt="Dashboard do Agendar Mais"
                 className="w-full h-auto"
               />
             </div>
@@ -525,7 +525,7 @@ export default function LandingPage() {
                 Feito para quem<br />trabalha com hora marcada
               </h2>
               <p className="text-xl text-jet-black-600 mb-8">
-                De salões de beleza a consultórios médicos, o AgendaMais se adapta ao seu negócio.
+                De salões de beleza a consultórios médicos, o Agendar Mais se adapta ao seu negócio.
               </p>
 
               <div className="grid grid-cols-2 gap-4">
@@ -726,7 +726,7 @@ export default function LandingPage() {
 
           <p className="text-center mt-8 text-jet-black-600">
             Ainda tem dúvidas?{' '}
-            <a href="mailto:suporte@agendamais.site" className="text-periwinkle-600 font-semibold hover:underline">
+            <a href="mailto:suporte@agendarmais.com" className="text-periwinkle-600 font-semibold hover:underline">
               Fale conosco
             </a>
           </p>
@@ -744,7 +744,7 @@ export default function LandingPage() {
             Pronto para começar?
           </h2>
           <p className="text-xl text-periwinkle-100 mb-10 max-w-2xl mx-auto">
-            Transforme a gestão do seu negócio com o AgendaMais
+            Transforme a gestão do seu negócio com o Agendar Mais
           </p>
           <button
             onClick={handleGetStarted}
@@ -768,10 +768,10 @@ export default function LandingPage() {
                 <div className="w-11 h-11 bg-gradient-to-br from-periwinkle-500 to-space-indigo-600 rounded-2xl flex items-center justify-center">
                   <Calendar className="w-6 h-6 text-white" />
                 </div>
-                <span className="text-xl font-bold text-white">AgendaMais</span>
+                <span className="text-xl font-bold text-white">Agendar Mais</span>
               </div>
               <p className="text-jet-black-400 leading-relaxed">
-                A solução completa para gestão de agendamentos do seu negócio.
+                A solução completa para gestão de agendamentos do seu negócio. Sistema de agendamento online.
               </p>
             </div>
 
@@ -794,10 +794,10 @@ export default function LandingPage() {
               <h4 className="font-semibold text-white mb-4">Suporte</h4>
               <ul className="space-y-3">
                 <li>
-                  <a href="mailto:suporte@agendamais.site" className="text-jet-black-400 hover:text-white transition-colors">suporte@agendamais.site</a>
+                  <a href="mailto:suporte@agendarmais.com" className="text-jet-black-400 hover:text-white transition-colors">suporte@agendarmais.com</a>
                 </li>
                 <li>
-                  <a href="mailto:suporte@agendamais.site" className="text-jet-black-400 hover:text-white transition-colors">Central de Ajuda</a>
+                  <a href="mailto:suporte@agendarmais.com" className="text-jet-black-400 hover:text-white transition-colors">Central de Ajuda</a>
                 </li>
               </ul>
             </div>
@@ -820,7 +820,7 @@ export default function LandingPage() {
 
           <div className="border-t border-jet-black-800 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
             <p className="text-jet-black-400 text-sm">
-              © {new Date().getFullYear()} AgendaMais. Todos os direitos reservados.
+              © {new Date().getFullYear()} Agendar Mais. Todos os direitos reservados.
             </p>
             <div className="flex items-center gap-2 text-jet-black-500 text-sm">
               <span>Feito com</span>

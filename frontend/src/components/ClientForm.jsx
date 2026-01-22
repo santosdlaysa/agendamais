@@ -3,12 +3,14 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { ArrowLeft, Save, X, User } from 'lucide-react'
 import api from '../utils/api'
 import toast from 'react-hot-toast'
+import useNotificationTriggers from '../hooks/useNotificationTriggers'
 
 export default function ClientForm() {
   const navigate = useNavigate()
   const { id } = useParams()
   const isEditMode = !!id
-  
+  const { notifyNewClient } = useNotificationTriggers()
+
   const [loading, setLoading] = useState(false)
   const [formData, setFormData] = useState({
     name: '',
@@ -84,8 +86,16 @@ export default function ClientForm() {
         await api.put(`/clients/${id}`, submitData)
         toast.success('Cliente atualizado com sucesso!')
       } else {
-        await api.post('/clients', submitData)
+        const response = await api.post('/clients', submitData)
         toast.success('Cliente criado com sucesso!')
+
+        // Disparar notificação de novo cliente
+        notifyNewClient({
+          id: response.data?.client?.id,
+          name: formData.name,
+          phone: formData.phone,
+          email: formData.email
+        })
       }
 
       navigate('/clients')

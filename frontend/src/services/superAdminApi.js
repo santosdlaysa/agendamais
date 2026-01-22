@@ -62,6 +62,11 @@ export const superAdminApi = {
   // Activity
   getRecentActivity: (limit = 10) => api.get('/activity/recent', { params: { limit } }),
   getAlerts: () => api.get('/alerts'),
+
+  // Payments
+  getPayments: (params = {}) => api.get('/payments', { params }),
+  getPayment: (id) => api.get(`/payments/${id}`),
+  getPaymentStats: (params = {}) => api.get('/payments/stats', { params }),
 }
 
 export default api

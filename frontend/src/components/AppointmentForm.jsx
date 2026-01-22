@@ -3,12 +3,14 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { ArrowLeft, Save, X, Calendar, Clock, User, UserCheck, Briefcase, AlertTriangle } from 'lucide-react'
 import api from '../utils/api'
 import toast from 'react-hot-toast'
+import useNotificationTriggers from '../hooks/useNotificationTriggers'
 
 export default function AppointmentForm() {
   const navigate = useNavigate()
   const { id } = useParams()
   const isEditMode = !!id
-  
+  const { notifyNewAppointment } = useNotificationTriggers()
+
   const [loading, setLoading] = useState(false)
   const [saving, setSaving] = useState(false)
   const [clients, setClients] = useState([])
@@ -195,10 +197,21 @@ export default function AppointmentForm() {
         await api.put(`/appointments/${id}`, submitData)
         toast.success('Agendamento atualizado com sucesso!')
       } else {
-        await api.post('/appointments', submitData)
+        const response = await api.post('/appointments', submitData)
         toast.success('Agendamento criado com sucesso!')
+
+        // Disparar notificação de novo agendamento
+        const selectedClient = clients.find(c => c.id.toString() === formData.client_id)
+        const selectedServiceData = availableServices.find(s => s.id.toString() === formData.service_id)
+        notifyNewAppointment({
+          id: response.data?.appointment?.id,
+          client_name: selectedClient?.name,
+          service_name: selectedServiceData?.name,
+          date: formData.appointment_date,
+          start_time: formData.start_time
+        })
       }
-      
+
       navigate('/appointments')
     } catch (error) {
       const message = error.response?.data?.message || 'Erro ao salvar agendamento'

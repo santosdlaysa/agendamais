@@ -14,9 +14,11 @@ import {
   Loader2,
   AlertCircle
 } from 'lucide-react'
+import useNotificationTriggers from '../../hooks/useNotificationTriggers'
 
 export default function ProfessionalSchedule() {
   const { professional } = useProfessionalAuth()
+  const { notifyAppointmentCompleted } = useNotificationTriggers()
   const [loading, setLoading] = useState(true)
   const [currentDate, setCurrentDate] = useState(new Date())
   const [viewMode, setViewMode] = useState('week') // 'day' or 'week'
@@ -124,10 +126,24 @@ export default function ProfessionalSchedule() {
   const handleCompleteAppointment = async (appointmentId) => {
     setCompletingId(appointmentId)
     try {
+      // Buscar dados do agendamento antes de completar
+      const appointment = schedule.find(apt => apt.id === appointmentId)
+
       await professionalApi.completeAppointment(appointmentId, {
         notes: 'Concluido via agenda'
       })
       toast.success('Atendimento concluido!')
+
+      // Disparar notificação de conclusão
+      if (appointment) {
+        notifyAppointmentCompleted({
+          id: appointment.id,
+          client_name: appointment.client_name,
+          service_name: appointment.service_name,
+          date: appointment.appointment_date
+        })
+      }
+
       fetchSchedule()
     } catch (error) {
       toast.error('Erro ao concluir atendimento')

@@ -271,7 +271,7 @@ export default function SubscriptionPlans() {
           <p className="text-jet-black-600">
             Dúvidas sobre os planos?{' '}
             <a
-              href="mailto:suporte@agendamais.site"
+              href="mailto:suporte@agendarmais.com"
               className="text-periwinkle-600 hover:text-periwinkle-700 font-medium"
             >
               Entre em contato

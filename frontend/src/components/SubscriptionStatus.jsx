@@ -91,7 +91,7 @@ export default function SubscriptionStatus() {
               Nenhuma assinatura ativa
             </h3>
             <p className="text-yellow-800 mb-4">
-              Assine um plano para acessar todos os recursos do AgendaMais
+              Assine um plano para acessar todos os recursos do Agendar Mais
             </p>
             <button
               onClick={() => navigate('/subscription/plans')}

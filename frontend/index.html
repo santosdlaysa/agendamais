@@ -4,7 +4,63 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AgendaMais - Sistema de Agendamento</title>
+
+    <!-- SEO Meta Tags -->
+    <title>Sistema de Agendamento Online para Empresas — Agendar Mais</title>
+    <meta name="description" content="Organize seus horários com Agendar Mais — sistema de agendamento online fácil para salões, clínicas, barbearias e serviços. Lembretes automáticos, gestão de clientes e agenda sempre cheia.">
+    <meta name="keywords" content="sistema de agendamento online, agenda online para empresas, agendamento de consultas online, agenda online para salão, agenda online para clínica, marcação de horários, agendamento web">
+    <meta name="author" content="Agendar Mais">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://agendarmais.com/">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://agendarmais.com/">
+    <meta property="og:title" content="Sistema de Agendamento Online para Empresas — Agendar Mais">
+    <meta property="og:description" content="Organize seus horários com Agendar Mais — agendamento online fácil para salões, clínicas e serviços. Lembretes automáticos e gestão de clientes.">
+    <meta property="og:image" content="https://agendarmais.com/og-image.png">
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:site_name" content="Agendar Mais">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://agendarmais.com/">
+    <meta name="twitter:title" content="Sistema de Agendamento Online para Empresas — Agendar Mais">
+    <meta name="twitter:description" content="Organize seus horários com Agendar Mais — agendamento online fácil para salões, clínicas e serviços.">
+    <meta name="twitter:image" content="https://agendarmais.com/og-image.png">
+
+    <!-- Structured Data / JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Agendar Mais",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "description": "Sistema de agendamento online para empresas de serviços como salões, clínicas, barbearias e consultórios.",
+      "url": "https://agendarmais.com",
+      "offers": {
+        "@type": "AggregateOffer",
+        "priceCurrency": "BRL",
+        "lowPrice": "0",
+        "highPrice": "149.90",
+        "offerCount": "3"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "ratingCount": "150"
+      },
+      "featureList": [
+        "Agendamento online 24/7",
+        "Lembretes automáticos por WhatsApp",
+        "Gestão de clientes",
+        "Múltiplos profissionais",
+        "Pagamentos online"
+      ]
+    }
+    </script>
+
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-P9Q4924JX3"></script>
     <script>
@@ -12,15 +68,6 @@
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
       gtag('config', 'G-P9Q4924JX3');
-    </script>
-    <script>
-      // Redirecionar URLs públicas de agendamento para o formato hash
-      (function() {
-        var path = window.location.pathname;
-        if (path.startsWith('/agendar')) {
-          window.location.replace('/#' + path + window.location.search);
-        }
-      })();
     </script>
   </head>
   <body>

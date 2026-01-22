@@ -13,6 +13,7 @@ import {
   X,
   UserCheck
 } from 'lucide-react'
+import { NotificationBell } from '../../components/notifications'
 
 export default function ProfessionalLayout() {
   const { professional, logout } = useProfessionalAuth()
@@ -73,12 +74,17 @@ export default function ProfessionalLayout() {
                 </div>
                 <div className="ml-3 hidden sm:block">
                   <h1 className="text-lg font-bold text-jet-black-900">
-                    AgendaMais
+                    Agendar Mais
                   </h1>
                   <p className="text-xs text-emerald-600 font-medium">Portal do Profissional</p>
                 </div>
               </div>
             </div>
+
+            {/* Notifications and User menu */}
+            <div className="flex items-center gap-2">
+              {/* Notification Bell */}
+              <NotificationBell />
 
             {/* User menu */}
             <div className="relative" ref={menuRef}>
@@ -140,6 +146,7 @@ export default function ProfessionalLayout() {
                   </div>
                 </div>
               )}
+            </div>
             </div>
           </div>
         </div>

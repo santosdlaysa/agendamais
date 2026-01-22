@@ -27,6 +27,7 @@ import SubscriptionStatus from './components/SubscriptionStatus'
 import SubscriptionSuccess from './components/SubscriptionSuccess'
 import SubscriptionCanceled from './components/SubscriptionCanceled'
 import Settings from './components/Settings'
+import NotificationsPage from './pages/NotificationsPage'
 // Páginas públicas de agendamento online
 import LandingPage from './pages/public/LandingPage'
 import BookingPage from './pages/public/BookingPage'
@@ -54,8 +55,10 @@ import {
   SuperAdminCompanies,
   SuperAdminCompanyDetail,
   SuperAdminSubscriptions,
-  SuperAdminAnalytics
+  SuperAdminAnalytics,
+  SuperAdminPayments
 } from './pages/superadmin'
+import AdminPayments from './components/AdminPayments'
 
 function App() {
   const { isAuthenticated, loading, user } = useAuth()
@@ -121,6 +124,7 @@ function App() {
           <Route path="companies/:id" element={<SuperAdminCompanyDetail />} />
           <Route path="subscriptions" element={<SuperAdminSubscriptions />} />
           <Route path="analytics" element={<SuperAdminAnalytics />} />
+          <Route path="payments" element={<SuperAdminPayments />} />
         </Route>
 
         <Route path="/superadmin/*" element={<Navigate to="/superadmin/dashboard" replace />} />
@@ -292,6 +296,10 @@ function App() {
               <Route path="subscription/canceled" element={<SubscriptionCanceled />} />
 
               <Route path="settings" element={<Settings />} />
+
+              <Route path="admin/payments" element={<AdminPayments />} />
+
+              <Route path="notifications" element={<NotificationsPage />} />
 
               <Route path="termos" element={<TermsOfService />} />
               <Route path="privacidade" element={<PrivacyPolicy />} />
