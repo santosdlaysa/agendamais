@@ -319,7 +319,7 @@ export default function OnboardingWizard() {
 
   const handleComplete = () => {
     completeOnboarding()
-    toast.success('Configuração concluída! Bem-vindo ao AgendaMais!')
+    toast.success('Configuração concluída! Bem-vindo ao Agendar Mais!')
     navigate('/dashboard')
   }
 
@@ -454,7 +454,7 @@ export default function OnboardingWizard() {
                   <Calendar className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <span className="text-xl font-bold text-jet-black-900">AgendaMais</span>
+                  <span className="text-xl font-bold text-jet-black-900">Agendar Mais</span>
                   <p className="text-xs text-jet-black-500">Configuração Inicial</p>
                 </div>
               </div>
@@ -591,7 +591,7 @@ function WelcomeStep({ onNext, onSkip, selectedType, onSelectType }) {
           </div>
           <div>
             <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-jet-black-900 mb-2">
-              Bem-vindo ao AgendaMais!
+              Bem-vindo ao Agendar Mais!
             </h1>
             <p className="text-jet-black-600 text-lg">
               Vamos configurar tudo em menos de 5 minutos. Escolha seu tipo de negócio:

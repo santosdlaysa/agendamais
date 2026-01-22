@@ -54,7 +54,7 @@ export default function LGPD() {
               <div className="w-8 h-8 bg-gradient-to-br from-periwinkle-500 to-periwinkle-600 rounded-lg flex items-center justify-center">
                 <Calendar className="w-5 h-5 text-white" />
               </div>
-              <span className="text-lg font-bold text-jet-black-900">AgendaMais</span>
+              <span className="text-lg font-bold text-jet-black-900">Agendar Mais</span>
             </div>
           </div>
         </div>
@@ -70,7 +70,7 @@ export default function LGPD() {
             LGPD - Lei Geral de Proteção de Dados
           </h1>
           <p className="text-periwinkle-100 text-lg max-w-2xl mx-auto">
-            Conheça seus direitos e saiba como o AgendaMais protege suas informações pessoais em conformidade com a Lei 13.709/2018.
+            Conheça seus direitos e saiba como o Agendar Mais protege suas informações pessoais em conformidade com a Lei 13.709/2018.
           </p>
         </div>
       </section>
@@ -101,7 +101,7 @@ export default function LGPD() {
                 A Lei Geral de Proteção de Dados (Lei nº 13.709/2018) é a legislação brasileira que regula o tratamento de dados pessoais por pessoas físicas ou jurídicas, com o objetivo de proteger os direitos fundamentais de liberdade e de privacidade.
               </p>
               <p className="text-jet-black-600">
-                O AgendaMais está em conformidade com a LGPD e se compromete a tratar seus dados pessoais de forma transparente, segura e respeitando seus direitos como titular.
+                O Agendar Mais está em conformidade com a LGPD e se compromete a tratar seus dados pessoais de forma transparente, segura e respeitando seus direitos como titular.
               </p>
             </section>
 
@@ -146,7 +146,7 @@ export default function LGPD() {
 
               <div className="bg-periwinkle-50 border border-periwinkle-200 rounded-lg p-4 mt-4">
                 <p className="text-periwinkle-800 text-sm">
-                  <strong>Importante:</strong> Os dados dos clientes finais são de responsabilidade compartilhada entre o AgendaMais (operador) e o estabelecimento (controlador). O estabelecimento deve informar seus clientes sobre o uso da plataforma.
+                  <strong>Importante:</strong> Os dados dos clientes finais são de responsabilidade compartilhada entre o Agendar Mais (operador) e o estabelecimento (controlador). O estabelecimento deve informar seus clientes sobre o uso da plataforma.
                 </p>
               </div>
             </section>
@@ -301,7 +301,7 @@ export default function LGPD() {
       {/* Footer */}
       <footer className="bg-white border-t border-jet-black-200 py-8">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-jet-black-500 text-sm">
-          <p>&copy; {new Date().getFullYear()} AgendaMais. Todos os direitos reservados.</p>
+          <p>&copy; {new Date().getFullYear()} Agendar Mais. Todos os direitos reservados.</p>
         </div>
       </footer>
     </div>

@@ -1,10 +1,10 @@
-# AgendaMais - Documentacao Completa do Sistema
+# Agendar Mais - Documentacao Completa do Sistema
 
 ## Sumario
 
-1. [O que e o AgendaMais](#1-o-que-e-o-agendamais)
-2. [O que o AgendaMais proporciona](#2-o-que-o-agendamais-proporciona)
-3. [Para quem e o AgendaMais](#3-para-quem-e-o-agendamais)
+1. [O que e o Agendar Mais](#1-o-que-e-o-agendamais)
+2. [O que o Agendar Mais proporciona](#2-o-que-o-agendamais-proporciona)
+3. [Para quem e o Agendar Mais](#3-para-quem-e-o-agendamais)
 4. [Arquitetura do Sistema](#4-arquitetura-do-sistema)
 5. [Estrutura do Projeto](#5-estrutura-do-projeto)
 6. [Configuracao e Instalacao](#6-configuracao-e-instalacao)
@@ -19,13 +19,13 @@
 
 ---
 
-## 1. O que e o AgendaMais
+## 1. O que e o Agendar Mais
 
 ### 1.1 Definicao
 
-O **AgendaMais** e uma plataforma SaaS (Software as a Service) completa de gestao de agendamentos desenvolvida para revolucionar a forma como estabelecimentos de servicos gerenciam suas operacoes diarias.
+O **Agendar Mais** e uma plataforma SaaS (Software as a Service) completa de gestao de agendamentos desenvolvida para revolucionar a forma como estabelecimentos de servicos gerenciam suas operacoes diarias.
 
-Mais do que um simples sistema de agenda, o AgendaMais e um **ecosistema inteligente** que centraliza toda a operacao do seu negocio em uma unica plataforma moderna, intuitiva e acessivel de qualquer dispositivo.
+Mais do que um simples sistema de agenda, o Agendar Mais e um **ecosistema inteligente** que centraliza toda a operacao do seu negocio em uma unica plataforma moderna, intuitiva e acessivel de qualquer dispositivo.
 
 ### 1.2 Nossa Missao
 
@@ -33,7 +33,7 @@ Eliminar a dor de cabeca da gestao de agendamentos, permitindo que profissionais
 
 ### 1.3 O Problema que Resolvemos
 
-**Cenario comum antes do AgendaMais:**
+**Cenario comum antes do Agendar Mais:**
 
 - Agenda em papel ou planilhas desorganizadas
 - Horas gastas ao telefone confirmando horarios
@@ -42,7 +42,7 @@ Eliminar a dor de cabeca da gestao de agendamentos, permitindo que profissionais
 - Impossibilidade de receber agendamentos fora do horario comercial
 - Falta de visibilidade sobre o desempenho do negocio
 
-**Com o AgendaMais:**
+**Com o Agendar Mais:**
 
 - Agenda digital centralizada e organizada
 - Confirmacoes automaticas via WhatsApp/SMS
@@ -65,7 +65,7 @@ Eliminar a dor de cabeca da gestao de agendamentos, permitindo que profissionais
 
 ---
 
-## 2. O que o AgendaMais Proporciona
+## 2. O que o Agendar Mais Proporciona
 
 ### 2.1 Funcionalidades Principais
 
@@ -216,11 +216,11 @@ Nossos clientes reportam em media:
 
 ---
 
-## 3. Para Quem e o AgendaMais
+## 3. Para Quem e o Agendar Mais
 
 ### 3.1 Segmentos Atendidos
 
-O AgendaMais foi projetado para atender qualquer negocio que trabalhe com agendamentos:
+O Agendar Mais foi projetado para atender qualquer negocio que trabalhe com agendamentos:
 
 #### Beleza e Estetica
 - Saloes de beleza
@@ -280,7 +280,7 @@ O AgendaMais foi projetado para atender qualquer negocio que trabalhe com agenda
 - Dashboard com metricas
 - Suporte por email
 
-### 3.3 Por que Escolher o AgendaMais
+### 3.3 Por que Escolher o Agendar Mais
 
 1. **Desenvolvido no Brasil, para o Brasil**
    - Integracao nativa com WhatsApp
@@ -1088,7 +1088,7 @@ border-gray-300  /* Bordas */
       |
       v
 +-----------+
-|  Welcome  | "Bem-vindo ao AgendaMais!"
+|  Welcome  | "Bem-vindo ao Agendar Mais!"
 +-----+-----+
       |
       v
@@ -1371,4 +1371,4 @@ const handleSubmit = async (e) => {
 
 **Documentacao gerada em:** Janeiro 2025
 **Versao do Sistema:** 1.0.0
-**Autor:** Equipe AgendaMais
+**Autor:** Equipe Agendar Mais

@@ -62,7 +62,7 @@ export default function SubscriptionGuard({
           {/* Description */}
           <p className="text-jet-black-600 mb-6">
             Para acessar <span className="font-semibold">{featureName}</span>,
-            você precisa ter uma assinatura ativa do AgendaMais.
+            você precisa ter uma assinatura ativa do Agendar Mais.
           </p>
 
           {/* Features */}

@@ -80,7 +80,7 @@ export default function Layout({ children }) {
           <Calendar className="h-8 w-8 text-periwinkle-600 flex-shrink-0" />
           {!collapsed && (
             <h1 className="ml-3 text-lg font-bold text-jet-black-900 truncate">
-              {businessName || 'AgendaMais'}
+              {businessName || 'Agendar Mais'}
             </h1>
           )}
         </div>
@@ -346,7 +346,7 @@ export default function Layout({ children }) {
             <div className="flex items-center">
               <Calendar className="h-7 w-7 text-periwinkle-600" />
               <span className="ml-2 text-lg font-bold text-jet-black-900">
-                {businessName || 'AgendaMais'}
+                {businessName || 'Agendar Mais'}
               </span>
             </div>
 

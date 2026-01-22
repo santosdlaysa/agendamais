@@ -139,7 +139,7 @@ export default function SuperAdminDashboard() {
             <p className="text-violet-200 text-sm mb-1 capitalize">{getFormattedDate()}</p>
             <h1 className="text-2xl md:text-3xl font-bold mb-2">{getGreeting()}, Admin!</h1>
             <p className="text-violet-100">
-              Painel de controle da plataforma AgendaMais
+              Painel de controle da plataforma Agendar Mais
             </p>
           </div>
 

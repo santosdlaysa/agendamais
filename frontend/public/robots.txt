@@ -1,4 +1,4 @@
-# robots.txt para AgendaMais
+# robots.txt para Agendar Mais
 # https://agendamais.com.br
 
 User-agent: *

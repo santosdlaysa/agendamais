@@ -21,7 +21,7 @@ export default function TermsOfService() {
               <div className="w-8 h-8 bg-gradient-to-br from-periwinkle-500 to-periwinkle-600 rounded-lg flex items-center justify-center">
                 <Calendar className="w-5 h-5 text-white" />
               </div>
-              <span className="text-lg font-bold text-jet-black-900">AgendaMais</span>
+              <span className="text-lg font-bold text-jet-black-900">Agendar Mais</span>
             </div>
           </div>
         </div>
@@ -37,17 +37,17 @@ export default function TermsOfService() {
             <section className="mb-8">
               <h2 className="text-xl font-semibold text-jet-black-900 mb-4">1. Aceitação dos Termos</h2>
               <p className="text-jet-black-600 mb-4">
-                Ao acessar e utilizar a plataforma AgendaMais, você concorda em cumprir e estar vinculado aos seguintes termos e condições de uso. Se você não concordar com qualquer parte destes termos, não deverá utilizar nossos serviços.
+                Ao acessar e utilizar a plataforma Agendar Mais, você concorda em cumprir e estar vinculado aos seguintes termos e condições de uso. Se você não concordar com qualquer parte destes termos, não deverá utilizar nossos serviços.
               </p>
               <p className="text-jet-black-600">
-                Estes Termos de Uso constituem um acordo legal entre você ("Usuário") e AgendaMais ("Empresa", "nós" ou "nosso"), regulando o uso de nossa plataforma de agendamento online.
+                Estes Termos de Uso constituem um acordo legal entre você ("Usuário") e Agendar Mais ("Empresa", "nós" ou "nosso"), regulando o uso de nossa plataforma de agendamento online.
               </p>
             </section>
 
             <section className="mb-8">
               <h2 className="text-xl font-semibold text-jet-black-900 mb-4">2. Descrição do Serviço</h2>
               <p className="text-jet-black-600 mb-4">
-                O AgendaMais é uma plataforma de gestão de agendamentos online que permite:
+                O Agendar Mais é uma plataforma de gestão de agendamentos online que permite:
               </p>
               <ul className="list-disc pl-6 text-jet-black-600 space-y-2">
                 <li>Criação e gestão de agendamentos de serviços</li>
@@ -62,7 +62,7 @@ export default function TermsOfService() {
             <section className="mb-8">
               <h2 className="text-xl font-semibold text-jet-black-900 mb-4">3. Cadastro e Conta</h2>
               <p className="text-jet-black-600 mb-4">
-                Para utilizar o AgendaMais, você deve:
+                Para utilizar o Agendar Mais, você deve:
               </p>
               <ul className="list-disc pl-6 text-jet-black-600 space-y-2">
                 <li>Ter pelo menos 18 anos de idade ou capacidade legal</li>
@@ -79,7 +79,7 @@ export default function TermsOfService() {
             <section className="mb-8">
               <h2 className="text-xl font-semibold text-jet-black-900 mb-4">4. Planos e Pagamentos</h2>
               <p className="text-jet-black-600 mb-4">
-                O AgendaMais oferece diferentes planos de assinatura com funcionalidades e limites específicos:
+                O Agendar Mais oferece diferentes planos de assinatura com funcionalidades e limites específicos:
               </p>
               <ul className="list-disc pl-6 text-jet-black-600 space-y-2">
                 <li>Os preços estão sujeitos a alterações com aviso prévio de 30 dias</li>
@@ -93,7 +93,7 @@ export default function TermsOfService() {
             <section className="mb-8">
               <h2 className="text-xl font-semibold text-jet-black-900 mb-4">5. Uso Aceitável</h2>
               <p className="text-jet-black-600 mb-4">
-                Você concorda em não utilizar o AgendaMais para:
+                Você concorda em não utilizar o Agendar Mais para:
               </p>
               <ul className="list-disc pl-6 text-jet-black-600 space-y-2">
                 <li>Atividades ilegais ou que violem leis brasileiras</li>
@@ -109,7 +109,7 @@ export default function TermsOfService() {
             <section className="mb-8">
               <h2 className="text-xl font-semibold text-jet-black-900 mb-4">6. Propriedade Intelectual</h2>
               <p className="text-jet-black-600 mb-4">
-                Todo o conteúdo da plataforma AgendaMais, incluindo mas não limitado a textos, gráficos, logos, ícones, imagens, código-fonte e software, é de propriedade exclusiva da Empresa ou de seus licenciadores e está protegido pelas leis de propriedade intelectual.
+                Todo o conteúdo da plataforma Agendar Mais, incluindo mas não limitado a textos, gráficos, logos, ícones, imagens, código-fonte e software, é de propriedade exclusiva da Empresa ou de seus licenciadores e está protegido pelas leis de propriedade intelectual.
               </p>
               <p className="text-jet-black-600">
                 Os dados e conteúdos inseridos pelo Usuário permanecem de propriedade do Usuário, sendo concedida à Empresa licença limitada para processar tais dados conforme necessário para prestação do serviço.
@@ -119,7 +119,7 @@ export default function TermsOfService() {
             <section className="mb-8">
               <h2 className="text-xl font-semibold text-jet-black-900 mb-4">7. Limitação de Responsabilidade</h2>
               <p className="text-jet-black-600 mb-4">
-                O AgendaMais é fornecido "como está". Não garantimos que o serviço será ininterrupto, seguro ou livre de erros. Nossa responsabilidade total perante você está limitada ao valor pago pelo serviço nos últimos 12 meses.
+                O Agendar Mais é fornecido "como está". Não garantimos que o serviço será ininterrupto, seguro ou livre de erros. Nossa responsabilidade total perante você está limitada ao valor pago pelo serviço nos últimos 12 meses.
               </p>
               <p className="text-jet-black-600">
                 Não nos responsabilizamos por:
@@ -183,7 +183,7 @@ export default function TermsOfService() {
       {/* Footer */}
       <footer className="bg-white border-t border-jet-black-200 py-8">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-jet-black-500 text-sm">
-          <p>&copy; {new Date().getFullYear()} AgendaMais. Todos os direitos reservados.</p>
+          <p>&copy; {new Date().getFullYear()} Agendar Mais. Todos os direitos reservados.</p>
         </div>
       </footer>
     </div>

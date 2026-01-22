@@ -21,7 +21,7 @@ export default function PrivacyPolicy() {
               <div className="w-8 h-8 bg-gradient-to-br from-periwinkle-500 to-periwinkle-600 rounded-lg flex items-center justify-center">
                 <Calendar className="w-5 h-5 text-white" />
               </div>
-              <span className="text-lg font-bold text-jet-black-900">AgendaMais</span>
+              <span className="text-lg font-bold text-jet-black-900">Agendar Mais</span>
             </div>
           </div>
         </div>
@@ -37,7 +37,7 @@ export default function PrivacyPolicy() {
             <section className="mb-8">
               <h2 className="text-xl font-semibold text-jet-black-900 mb-4">1. Introdução</h2>
               <p className="text-jet-black-600 mb-4">
-                A AgendaMais está comprometida em proteger a privacidade dos seus usuários. Esta Política de Privacidade descreve como coletamos, usamos, armazenamos e protegemos suas informações pessoais quando você utiliza nossa plataforma de agendamento online.
+                A Agendar Mais está comprometida em proteger a privacidade dos seus usuários. Esta Política de Privacidade descreve como coletamos, usamos, armazenamos e protegemos suas informações pessoais quando você utiliza nossa plataforma de agendamento online.
               </p>
               <p className="text-jet-black-600">
                 Ao utilizar nossos serviços, você concorda com as práticas descritas nesta política. Recomendamos a leitura atenta deste documento.
@@ -202,7 +202,7 @@ export default function PrivacyPolicy() {
       {/* Footer */}
       <footer className="bg-white border-t border-jet-black-200 py-8">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-jet-black-500 text-sm">
-          <p>&copy; {new Date().getFullYear()} AgendaMais. Todos os direitos reservados.</p>
+          <p>&copy; {new Date().getFullYear()} Agendar Mais. Todos os direitos reservados.</p>
         </div>
       </footer>
     </div>

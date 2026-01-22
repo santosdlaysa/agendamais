@@ -58,6 +58,7 @@ import {
   SuperAdminAnalytics,
   SuperAdminPayments
 } from './pages/superadmin'
+import AdminPayments from './components/AdminPayments'
 
 function App() {
   const { isAuthenticated, loading, user } = useAuth()
@@ -295,6 +296,8 @@ function App() {
               <Route path="subscription/canceled" element={<SubscriptionCanceled />} />
 
               <Route path="settings" element={<Settings />} />
+
+              <Route path="admin/payments" element={<AdminPayments />} />
 
               <Route path="notifications" element={<NotificationsPage />} />
 

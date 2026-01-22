@@ -74,7 +74,7 @@ export default function ProfessionalLayout() {
                 </div>
                 <div className="ml-3 hidden sm:block">
                   <h1 className="text-lg font-bold text-jet-black-900">
-                    AgendaMais
+                    Agendar Mais
                   </h1>
                   <p className="text-xs text-emerald-600 font-medium">Portal do Profissional</p>
                 </div>
