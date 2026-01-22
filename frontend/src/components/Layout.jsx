@@ -2,12 +2,13 @@ import { useState, useRef, useEffect } from 'react'
 import { useAuth } from '../contexts/AuthContext'
 import { useSubscription } from '../contexts/SubscriptionContext'
 import { NavLink, useLocation } from 'react-router-dom'
-import { Calendar, LogOut, Users, UserCheck, Briefcase, FileText, BarChart3, MessageSquare, CreditCard, ChevronDown, Building2, Shield, Menu, PanelLeftClose, PanelLeft, Crown } from 'lucide-react'
+import { Calendar, LogOut, Users, UserCheck, Briefcase, FileText, BarChart3, MessageSquare, CreditCard, ChevronDown, Building2, Shield, Menu, PanelLeftClose, PanelLeft, Crown, DollarSign } from 'lucide-react'
 import api from '../utils/api'
 import { NotificationBell } from './notifications'
+import { Button } from './ui/button'
 
 export default function Layout({ children }) {
-  const { user, logout } = useAuth()
+  const { user, logout, isAdmin } = useAuth()
   const { hasActiveSubscription, isInTrial, getTrialDaysRemaining } = useSubscription()
   const location = useLocation()
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -217,10 +218,24 @@ export default function Layout({ children }) {
               >
                 <Crown className={`h-5 w-5 ${collapsed ? '' : 'mr-3'} flex-shrink-0`} />
                 {!collapsed && 'Painel Admin'}
+            </NavLink>
+            {isAdmin() && (
+              <NavLink
+                to="/admin/payments"
+                className={({ isActive }) =>
+                  `flex items-center px-3 py-2 rounded-md text-sm font-medium ${
+                    isActive
+                      ? 'text-gray-900 bg-gray-100'
+                      : 'text-gray-500 hover:text-gray-900'
+                  }`
+                }
+              >
+                <DollarSign className="h-4 w-4 mr-2" />
+                Faturamento
               </NavLink>
-            </div>
+            )}
           </div>
-        )}
+        </div>)}
       </nav>
 
       {/* User section at bottom */}
