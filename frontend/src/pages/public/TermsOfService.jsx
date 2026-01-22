@@ -172,8 +172,8 @@ export default function TermsOfService() {
                 Para dúvidas sobre estes Termos de Uso, entre em contato conosco:
               </p>
               <ul className="list-none text-jet-black-600 mt-4 space-y-2">
-                <li><strong>Email:</strong> suporte@agendamais.site</li>
-                <li><strong>Site:</strong> agendamais.site</li>
+                <li><strong>Email:</strong> suporte@agendarmais.com</li>
+                <li><strong>Site:</strong> agendarmais.com</li>
               </ul>
             </section>
           </div>

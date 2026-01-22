@@ -214,8 +214,8 @@ export default function LGPD() {
               <ol className="list-decimal pl-6 text-jet-black-600 space-y-3">
                 <li>
                   <strong>Email:</strong> Envie sua solicitação para{' '}
-                  <a href="mailto:lgpd@agendamais.site" className="text-periwinkle-600 hover:underline">
-                    lgpd@agendamais.site
+                  <a href="mailto:lgpd@agendarmais.com" className="text-periwinkle-600 hover:underline">
+                    lgpd@agendarmais.com
                   </a>
                 </li>
                 <li>
@@ -254,7 +254,7 @@ export default function LGPD() {
               <div className="bg-white border border-jet-black-200 rounded-lg p-4 mt-4">
                 <p className="text-jet-black-600">
                   <strong>Contato do DPO:</strong><br />
-                  Email: <a href="mailto:dpo@agendamais.site" className="text-periwinkle-600 hover:underline">dpo@agendamais.site</a>
+                  Email: <a href="mailto:dpo@agendarmais.com" className="text-periwinkle-600 hover:underline">dpo@agendarmais.com</a>
                 </p>
               </div>
             </section>
@@ -289,7 +289,7 @@ export default function LGPD() {
             Nossa equipe está pronta para ajudar com qualquer questão sobre privacidade e proteção de dados.
           </p>
           <a
-            href="mailto:lgpd@agendamais.site"
+            href="mailto:lgpd@agendarmais.com"
             className="inline-flex items-center gap-2 bg-periwinkle-600 hover:bg-periwinkle-700 text-white px-6 py-3 rounded-xl font-medium transition-colors"
           >
             <Shield className="w-5 h-5" />

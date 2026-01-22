@@ -455,7 +455,7 @@ export default function LandingPage() {
               <div className="flex-1 flex justify-center">
                 <div className="bg-jet-black-800 rounded-lg px-4 py-1.5 flex items-center gap-2 text-sm text-jet-black-400">
                   <Shield className="w-4 h-4 text-green-500" />
-                  agendamais.site/dashboard
+                  agendarmais.com/dashboard
                 </div>
               </div>
             </div>
@@ -726,7 +726,7 @@ export default function LandingPage() {
 
           <p className="text-center mt-8 text-jet-black-600">
             Ainda tem dúvidas?{' '}
-            <a href="mailto:suporte@agendamais.site" className="text-periwinkle-600 font-semibold hover:underline">
+            <a href="mailto:suporte@agendarmais.com" className="text-periwinkle-600 font-semibold hover:underline">
               Fale conosco
             </a>
           </p>
@@ -794,10 +794,10 @@ export default function LandingPage() {
               <h4 className="font-semibold text-white mb-4">Suporte</h4>
               <ul className="space-y-3">
                 <li>
-                  <a href="mailto:suporte@agendamais.site" className="text-jet-black-400 hover:text-white transition-colors">suporte@agendamais.site</a>
+                  <a href="mailto:suporte@agendarmais.com" className="text-jet-black-400 hover:text-white transition-colors">suporte@agendarmais.com</a>
                 </li>
                 <li>
-                  <a href="mailto:suporte@agendamais.site" className="text-jet-black-400 hover:text-white transition-colors">Central de Ajuda</a>
+                  <a href="mailto:suporte@agendarmais.com" className="text-jet-black-400 hover:text-white transition-colors">Central de Ajuda</a>
                 </li>
               </ul>
             </div>

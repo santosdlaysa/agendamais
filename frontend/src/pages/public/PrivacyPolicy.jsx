@@ -166,7 +166,7 @@ export default function PrivacyPolicy() {
                 <li><strong>Oposição:</strong> se opor a determinados tratamentos de dados</li>
               </ul>
               <p className="text-jet-black-600 mt-4">
-                Para exercer esses direitos, entre em contato através do email: <a href="mailto:privacidade@agendamais.site" className="text-periwinkle-600 hover:underline">privacidade@agendamais.site</a>
+                Para exercer esses direitos, entre em contato através do email: <a href="mailto:privacidade@agendarmais.com" className="text-periwinkle-600 hover:underline">privacidade@agendarmais.com</a>
               </p>
             </section>
 
@@ -190,9 +190,9 @@ export default function PrivacyPolicy() {
                 Para dúvidas sobre esta Política de Privacidade ou sobre o tratamento dos seus dados:
               </p>
               <ul className="list-none text-jet-black-600 mt-4 space-y-2">
-                <li><strong>Email:</strong> privacidade@agendamais.site</li>
-                <li><strong>Suporte:</strong> suporte@agendamais.site</li>
-                <li><strong>Site:</strong> agendamais.site</li>
+                <li><strong>Email:</strong> privacidade@agendarmais.com</li>
+                <li><strong>Suporte:</strong> suporte@agendarmais.com</li>
+                <li><strong>Site:</strong> agendarmais.com</li>
               </ul>
             </section>
           </div>
