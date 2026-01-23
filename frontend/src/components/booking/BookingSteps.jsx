@@ -5,6 +5,7 @@ const steps = [
   { number: 2, title: 'Profissional' },
   { number: 3, title: 'Data e Hora' },
   { number: 4, title: 'Seus Dados' },
+  { number: 5, title: 'Pagamento' },
 ]
 
 export default function BookingSteps({ currentStep }) {
