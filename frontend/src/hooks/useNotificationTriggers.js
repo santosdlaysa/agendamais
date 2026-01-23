@@ -1,7 +1,8 @@
 import { useCallback } from 'react'
 import { format, parseISO } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
-import { useNotifications, NOTIFICATION_TYPES } from '../contexts/NotificationContext'
+import { useNotifications } from '../contexts/NotificationContext'
+import { NOTIFICATION_TYPES } from '../constants/notificationTypes'
 import { playNotificationSound } from '../utils/notificationHelpers'
 
 /**

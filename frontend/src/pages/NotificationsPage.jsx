@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Bell, Check, CheckCheck, Trash2, Filter, Calendar, User, Clock, Info } from 'lucide-react'
-import { useNotifications, NOTIFICATION_TYPES } from '../contexts/NotificationContext'
+import { useNotifications } from '../contexts/NotificationContext'
+import { NOTIFICATION_TYPES } from '../constants/notificationTypes'
 import { formatNotificationTime, getNotificationColor } from '../utils/notificationHelpers'
 
 const TYPE_CONFIG = {

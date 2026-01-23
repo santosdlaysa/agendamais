@@ -2,19 +2,15 @@ import { createContext, useContext, useState, useEffect, useCallback, useRef } f
 import { useAuth } from './AuthContext'
 import { useProfessionalAuth } from './ProfessionalAuthContext'
 import notificationService from '../services/notificationService'
+import { NOTIFICATION_TYPES } from '../constants/notificationTypes'
 
 const NotificationContext = createContext()
 
 // Intervalo de polling em milissegundos (30 segundos)
 const POLLING_INTERVAL = 30000
 
-// Tipos de notificacao validos
-export const NOTIFICATION_TYPES = {
-  APPOINTMENT: 'appointment',
-  CLIENT: 'client',
-  REMINDER: 'reminder',
-  SYSTEM: 'system'
-}
+// Re-exportar para compatibilidade
+export { NOTIFICATION_TYPES }
 
 export function NotificationProvider({ children }) {
   const { isAuthenticated: isAdminAuthenticated, loading: adminLoading } = useAuth()
