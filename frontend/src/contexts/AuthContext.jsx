@@ -136,10 +136,16 @@ export function AuthProvider({ children }) {
     }
   }
 
+  // Verificar se usuario e admin
+  const isAdmin = () => {
+    return user?.role === 'admin' || user?.role === 'superadmin'
+  }
+
   const value = {
     user,
     loading,
     isAuthenticated: !!user,
+    isAdmin,
     login,
     register,
     logout,
