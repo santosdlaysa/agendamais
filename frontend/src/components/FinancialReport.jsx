@@ -225,7 +225,7 @@ const FinancialReport = () => {
     if (!report) return
     
     const csvData = [
-      ['Relatório Financeiro - AgendaMais'],
+      ['Relatório Financeiro - Agendar Mais'],
       ['Período', `${filters.startDate} a ${filters.endDate}`],
       [''],
       ['RESUMO FINANCEIRO'],

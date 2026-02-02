@@ -127,6 +127,24 @@ export const bookingService = {
   createClient: async (slug, clientData) => {
     const response = await publicApi.post(`/business/${slug}/clients`, clientData)
     return response.data
+  },
+
+  // Criar sessão de checkout do Stripe para pagamento do agendamento
+  createCheckoutSession: async (slug, appointmentId, urls) => {
+    const response = await publicApi.post(`/business/${slug}/appointments/${appointmentId}/create-checkout`, urls)
+    return response.data
+  },
+
+  // Verificar pagamento após retorno do Stripe
+  verifyPayment: async (sessionId) => {
+    const response = await publicApi.post('/verify-payment', { session_id: sessionId })
+    return response.data
+  },
+
+  // Cancelar agendamento pendente de pagamento
+  cancelPendingAppointment: async (slug, appointmentId) => {
+    const response = await publicApi.delete(`/business/${slug}/appointments/${appointmentId}/cancel-pending`)
+    return response.data
   }
 }
 

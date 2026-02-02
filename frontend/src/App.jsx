@@ -34,6 +34,8 @@ import BookingPage from './pages/public/BookingPage'
 import BookingConfirmation from './pages/public/BookingConfirmation'
 import BookingLookup from './pages/public/BookingLookup'
 import BookingCancel from './pages/public/BookingCancel'
+import BookingPaymentSuccess from './pages/public/BookingPaymentSuccess'
+import BookingPaymentCanceled from './pages/public/BookingPaymentCanceled'
 import TermsOfService from './pages/public/TermsOfService'
 import PrivacyPolicy from './pages/public/PrivacyPolicy'
 import LGPD from './pages/public/LGPD'
@@ -58,6 +60,7 @@ import {
   SuperAdminAnalytics,
   SuperAdminPayments
 } from './pages/superadmin'
+import AdminPayments from './components/AdminPayments'
 
 function App() {
   const { isAuthenticated, loading, user } = useAuth()
@@ -176,9 +179,12 @@ function App() {
     return (
       <Routes>
         <Route path="/agendar/:slug" element={<BookingPage />} />
+        <Route path="/agendar/:slug/confirmacao" element={<BookingConfirmation />} />
         <Route path="/agendar/:slug/confirmacao/:code" element={<BookingConfirmation />} />
         <Route path="/agendar/:slug/consultar" element={<BookingLookup />} />
         <Route path="/agendar/:slug/cancelar/:code" element={<BookingCancel />} />
+        <Route path="/agendar/:slug/pagamento/sucesso" element={<BookingPaymentSuccess />} />
+        <Route path="/agendar/:slug/pagamento/cancelado" element={<BookingPaymentCanceled />} />
       </Routes>
     )
   }
@@ -288,6 +294,8 @@ function App() {
               <Route path="subscription/canceled" element={<SubscriptionCanceled />} />
 
               <Route path="settings" element={<Settings />} />
+
+              <Route path="admin/payments" element={<AdminPayments />} />
 
               <Route path="notifications" element={<NotificationsPage />} />
 

@@ -100,7 +100,7 @@ export default function Login() {
             <div className="w-12 h-12 bg-white/20 backdrop-blur rounded-2xl flex items-center justify-center">
               <Calendar className="w-7 h-7 text-white" />
             </div>
-            <span className="text-2xl font-bold text-white">AgendaMais</span>
+            <span className="text-2xl font-bold text-white">Agendar Mais</span>
           </div>
 
           {/* Main Content */}
@@ -149,7 +149,7 @@ export default function Login() {
             <div className="w-10 h-10 bg-white/20 backdrop-blur rounded-xl flex items-center justify-center">
               <Calendar className="w-5 h-5 text-white" />
             </div>
-            <span className="text-xl font-bold text-white">AgendaMais</span>
+            <span className="text-xl font-bold text-white">Agendar Mais</span>
           </div>
         </div>
 
@@ -330,7 +330,7 @@ export default function Login() {
 
         {/* Footer */}
         <div className="p-6 text-center text-sm text-jet-black-400">
-          © {new Date().getFullYear()} AgendaMais. Todos os direitos reservados.
+          © {new Date().getFullYear()} Agendar Mais. Todos os direitos reservados.
         </div>
       </div>
     </div>

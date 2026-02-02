@@ -1,4 +1,4 @@
-# robots.txt para AgendaMais
+# robots.txt para Agendar Mais
 # https://agendamais.com.br
 
 User-agent: *
@@ -12,4 +12,4 @@ Disallow: /superadmin/
 Disallow: /api/
 
 # Sitemap
-Sitemap: https://agendamais.site/sitemap.xml
+Sitemap: https://agendarmais.com/sitemap.xml

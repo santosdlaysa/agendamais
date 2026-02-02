@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
-import { useParams, useLocation, useNavigate, Link } from 'react-router-dom'
+import { useParams, useLocation, useNavigate, useSearchParams, Link } from 'react-router-dom'
 import {
   CheckCircle,
+  XCircle,
   Calendar,
   Clock,
   MapPin,
@@ -9,7 +10,8 @@ import {
   Phone,
   Copy,
   ExternalLink,
-  Loader2
+  Loader2,
+  CreditCard
 } from 'lucide-react'
 import toast from 'react-hot-toast'
 import bookingService from '../../services/publicApi'
@@ -18,9 +20,14 @@ export default function BookingConfirmation() {
   const { slug, code } = useParams()
   const location = useLocation()
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
+
+  // Pegar código da URL (path param ou query param)
+  const codeFromQuery = searchParams.get('code')
+  const paymentStatus = searchParams.get('payment') // 'success' ou 'cancelled'
 
   const [appointment, setAppointment] = useState(location.state?.appointment || null)
-  const [bookingCode, setBookingCode] = useState(location.state?.bookingCode || code)
+  const [bookingCode, setBookingCode] = useState(location.state?.bookingCode || code || codeFromQuery)
   const [loading, setLoading] = useState(!location.state?.appointment)
   const [error, setError] = useState(null)
 
@@ -123,21 +130,64 @@ export default function BookingConfirmation() {
     )
   }
 
+  // Verificar se o pagamento foi cancelado
+  const isPaymentCancelled = paymentStatus === 'cancelled'
+  const isPaymentSuccess = paymentStatus === 'success'
+  const isPendingPayment = appointment?.status === 'pending_payment' || appointment?.payment_status === 'pending'
+
   return (
     <div className="min-h-screen bg-jet-black-50 py-10 px-4">
       <div className="max-w-lg mx-auto">
-        {/* Sucesso Header */}
-        <div className="text-center mb-8">
-          <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <CheckCircle className="w-12 h-12 text-green-600" />
+        {/* Header baseado no status do pagamento */}
+        {isPaymentCancelled ? (
+          <div className="text-center mb-8">
+            <div className="w-20 h-20 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <XCircle className="w-12 h-12 text-orange-600" />
+            </div>
+            <h1 className="text-2xl font-bold text-jet-black-900 mb-2">
+              Pagamento Cancelado
+            </h1>
+            <p className="text-jet-black-600">
+              O pagamento foi cancelado. Seu agendamento ainda não foi confirmado.
+            </p>
           </div>
-          <h1 className="text-2xl font-bold text-jet-black-900 mb-2">
-            Agendamento Confirmado!
-          </h1>
-          <p className="text-jet-black-600">
-            Seu agendamento foi realizado com sucesso.
-          </p>
-        </div>
+        ) : isPaymentSuccess ? (
+          <div className="text-center mb-8">
+            <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <CreditCard className="w-12 h-12 text-green-600" />
+            </div>
+            <h1 className="text-2xl font-bold text-jet-black-900 mb-2">
+              Pagamento Confirmado!
+            </h1>
+            <p className="text-jet-black-600">
+              Seu pagamento foi processado e o agendamento está confirmado.
+            </p>
+          </div>
+        ) : isPendingPayment ? (
+          <div className="text-center mb-8">
+            <div className="w-20 h-20 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Clock className="w-12 h-12 text-yellow-600" />
+            </div>
+            <h1 className="text-2xl font-bold text-jet-black-900 mb-2">
+              Aguardando Pagamento
+            </h1>
+            <p className="text-jet-black-600">
+              Seu agendamento será confirmado após o pagamento.
+            </p>
+          </div>
+        ) : (
+          <div className="text-center mb-8">
+            <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <CheckCircle className="w-12 h-12 text-green-600" />
+            </div>
+            <h1 className="text-2xl font-bold text-jet-black-900 mb-2">
+              Agendamento Confirmado!
+            </h1>
+            <p className="text-jet-black-600">
+              Seu agendamento foi realizado com sucesso.
+            </p>
+          </div>
+        )}
 
         {/* Código do agendamento */}
         <div className="bg-white rounded-xl shadow-sm border p-6 mb-6">

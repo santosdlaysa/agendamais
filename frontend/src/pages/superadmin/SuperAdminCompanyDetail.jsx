@@ -16,7 +16,10 @@ import {
   TrendingUp,
   ExternalLink,
   Edit,
-  RefreshCw
+  RefreshCw,
+  Key,
+  Eye,
+  EyeOff
 } from 'lucide-react'
 import { superAdminApi } from '../../services/superAdminApi'
 import toast from 'react-hot-toast'
@@ -28,8 +31,12 @@ export default function SuperAdminCompanyDetail() {
   const [company, setCompany] = useState(null)
   const [showPlanModal, setShowPlanModal] = useState(false)
   const [showExtendModal, setShowExtendModal] = useState(false)
+  const [showPasswordModal, setShowPasswordModal] = useState(false)
   const [selectedPlan, setSelectedPlan] = useState('')
   const [extendDays, setExtendDays] = useState(30)
+  const [newPassword, setNewPassword] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
+  const [resettingPassword, setResettingPassword] = useState(false)
 
   useEffect(() => {
     fetchCompany()
@@ -92,6 +99,36 @@ export default function SuperAdminCompanyDetail() {
     } catch (error) {
       toast.error('Erro ao estender assinatura')
     }
+  }
+
+  const handleResetPassword = async () => {
+    if (!newPassword || newPassword.length < 6) {
+      toast.error('A senha deve ter pelo menos 6 caracteres')
+      return
+    }
+
+    try {
+      setResettingPassword(true)
+      await superAdminApi.resetPassword(id, newPassword)
+      toast.success('Senha redefinida com sucesso')
+      setShowPasswordModal(false)
+      setNewPassword('')
+      setShowPassword(false)
+    } catch (error) {
+      toast.error(error.response?.data?.message || 'Erro ao redefinir senha')
+    } finally {
+      setResettingPassword(false)
+    }
+  }
+
+  const generateRandomPassword = () => {
+    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789'
+    let password = ''
+    for (let i = 0; i < 10; i++) {
+      password += chars.charAt(Math.floor(Math.random() * chars.length))
+    }
+    setNewPassword(password)
+    setShowPassword(true)
   }
 
   const getPlanBadgeColor = (plan) => {
@@ -400,6 +437,14 @@ export default function SuperAdminCompanyDetail() {
           <div className="bg-white rounded-xl border border-jet-black-100 p-6">
             <h3 className="font-semibold text-jet-black-900 mb-4">Acoes</h3>
             <div className="space-y-2">
+              <button
+                onClick={() => setShowPasswordModal(true)}
+                className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-amber-600 text-white rounded-xl hover:bg-amber-700 transition-colors"
+              >
+                <Key className="w-4 h-4" />
+                Redefinir Senha
+              </button>
+
               {company.subscription?.status === 'suspended' ? (
                 <button
                   onClick={handleActivate}
@@ -497,6 +542,81 @@ export default function SuperAdminCompanyDetail() {
                 className="flex-1 px-4 py-2.5 bg-violet-600 text-white rounded-xl hover:bg-violet-700"
               >
                 Confirmar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Reset Password Modal */}
+      {showPasswordModal && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl max-w-md w-full p-6">
+            <h3 className="text-xl font-bold text-jet-black-900 mb-2">Redefinir Senha</h3>
+            <p className="text-sm text-jet-black-500 mb-4">
+              Redefinir senha do proprietario: <span className="font-medium">{company.owner_email}</span>
+            </p>
+
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-jet-black-700 mb-2">
+                Nova Senha
+              </label>
+              <div className="relative">
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  placeholder="Digite a nova senha"
+                  className="w-full px-4 py-2.5 pr-10 border border-jet-black-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-violet-500"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-jet-black-400 hover:text-jet-black-600"
+                >
+                  {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                </button>
+              </div>
+              <p className="text-xs text-jet-black-400 mt-1">Minimo 6 caracteres</p>
+            </div>
+
+            <button
+              type="button"
+              onClick={generateRandomPassword}
+              className="w-full mb-4 px-4 py-2 text-sm text-violet-600 bg-violet-50 rounded-xl hover:bg-violet-100 transition-colors"
+            >
+              Gerar senha aleatoria
+            </button>
+
+            {newPassword && showPassword && (
+              <div className="mb-4 p-3 bg-amber-50 border border-amber-200 rounded-xl">
+                <p className="text-sm text-amber-800">
+                  <strong>Atenção:</strong> Copie a senha antes de confirmar. Ela não será exibida novamente.
+                </p>
+                <p className="text-sm font-mono mt-2 select-all bg-white px-2 py-1 rounded border">
+                  {newPassword}
+                </p>
+              </div>
+            )}
+
+            <div className="flex gap-3">
+              <button
+                onClick={() => {
+                  setShowPasswordModal(false)
+                  setNewPassword('')
+                  setShowPassword(false)
+                }}
+                className="flex-1 px-4 py-2.5 border border-jet-black-200 rounded-xl text-jet-black-700 hover:bg-jet-black-50"
+                disabled={resettingPassword}
+              >
+                Cancelar
+              </button>
+              <button
+                onClick={handleResetPassword}
+                disabled={resettingPassword || !newPassword}
+                className="flex-1 px-4 py-2.5 bg-amber-600 text-white rounded-xl hover:bg-amber-700 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {resettingPassword ? 'Redefinindo...' : 'Redefinir Senha'}
               </button>
             </div>
           </div>

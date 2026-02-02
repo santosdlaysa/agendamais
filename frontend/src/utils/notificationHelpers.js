@@ -17,7 +17,7 @@ import {
   AlertTriangle,
   Bell
 } from 'lucide-react'
-import { NOTIFICATION_TYPES } from '../contexts/NotificationContext'
+import { NOTIFICATION_TYPES } from '../constants/notificationTypes'
 
 /**
  * Formata o tempo de uma notificacao de forma relativa

@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <!-- Página Principal -->
   <url>
-    <loc>https://agendamais.site/</loc>
+    <loc>https://agendarmais.com/</loc>
     <lastmod>2025-01-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
@@ -10,21 +10,21 @@
 
   <!-- Páginas Legais -->
   <url>
-    <loc>https://agendamais.site/termos</loc>
+    <loc>https://agendarmais.com/termos</loc>
     <lastmod>2025-01-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>
 
   <url>
-    <loc>https://agendamais.site/privacidade</loc>
+    <loc>https://agendarmais.com/privacidade</loc>
     <lastmod>2025-01-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>
 
   <url>
-    <loc>https://agendamais.site/lgpd</loc>
+    <loc>https://agendarmais.com/lgpd</loc>
     <lastmod>2025-01-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
@@ -32,14 +32,14 @@
 
   <!-- Páginas de Autenticação -->
   <url>
-    <loc>https://agendamais.site/login</loc>
+    <loc>https://agendarmais.com/login</loc>
     <lastmod>2025-01-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
 
   <url>
-    <loc>https://agendamais.site/cadastro</loc>
+    <loc>https://agendarmais.com/cadastro</loc>
     <lastmod>2025-01-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>

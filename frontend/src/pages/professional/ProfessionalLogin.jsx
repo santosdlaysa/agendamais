@@ -75,7 +75,7 @@ export default function ProfessionalLogin() {
               <Calendar className="w-7 h-7 text-white" />
             </div>
             <div>
-              <span className="text-2xl font-bold text-white">AgendaMais</span>
+              <span className="text-2xl font-bold text-white">Agendar Mais</span>
               <span className="block text-sm text-emerald-100">Portal do Profissional</span>
             </div>
           </div>
@@ -124,7 +124,7 @@ export default function ProfessionalLogin() {
               <Calendar className="w-5 h-5 text-white" />
             </div>
             <div>
-              <span className="text-xl font-bold text-white">AgendaMais</span>
+              <span className="text-xl font-bold text-white">Agendar Mais</span>
               <span className="block text-xs text-emerald-100">Portal do Profissional</span>
             </div>
           </div>
@@ -260,7 +260,7 @@ export default function ProfessionalLogin() {
 
         {/* Footer */}
         <div className="p-6 text-center text-sm text-jet-black-400">
-          AgendaMais - Portal do Profissional
+          Agendar Mais - Portal do Profissional
         </div>
       </div>
     </div>

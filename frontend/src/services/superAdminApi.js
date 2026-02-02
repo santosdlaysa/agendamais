@@ -43,6 +43,7 @@ export const superAdminApi = {
   suspendCompany: (id, reason) => api.post(`/companies/${id}/suspend`, { reason }),
   activateCompany: (id) => api.post(`/companies/${id}/activate`),
   updateCompany: (id, data) => api.put(`/companies/${id}`, data),
+  resetPassword: (id, newPassword) => api.post(`/companies/${id}/reset-password`, { new_password: newPassword }),
 
   // Subscriptions
   getSubscriptions: (params = {}) => api.get('/subscriptions', { params }),
