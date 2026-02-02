@@ -347,7 +347,7 @@ export default function OnboardingWizard() {
 
   const getBookingUrl = () => {
     const baseUrl = window.location.origin
-    return `${baseUrl}/#/agendar/${onboardingData.business.slug || 'seu-negocio'}`
+    return `${baseUrl}/agendar/${onboardingData.business.slug || 'seu-negocio'}`
   }
 
   const copyBookingLink = () => {

@@ -71,19 +71,12 @@ function App() {
   const isSuperAdminRoute = location.pathname.startsWith('/superadmin')
 
   // Verificar se é uma rota pública de agendamento
-  // Verifica tanto o pathname do router quanto a URL real (para redirect de /agendar para /#/agendar)
   const isPublicBookingRoute = location.pathname.startsWith('/agendar')
   const isLandingPage = location.pathname === '/' || location.pathname === ''
   const isProfessionalRoute = location.pathname.startsWith('/profissional')
   const isLegalPage = location.pathname === '/termos' ||
                       location.pathname === '/privacidade' ||
                       location.pathname === '/lgpd'
-
-  // Se acessou /agendar sem hash, redireciona para /#/agendar
-  if (window.location.pathname.startsWith('/agendar') && !window.location.hash) {
-    window.location.replace('/#' + window.location.pathname + window.location.search)
-    return null
-  }
 
   // Rotas do Super Admin
   if (isSuperAdminRoute) {

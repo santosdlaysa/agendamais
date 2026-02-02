@@ -180,7 +180,7 @@ export default function Settings() {
 
   const getBookingUrl = () => {
     const baseUrl = window.location.origin
-    return `${baseUrl}/#/agendar/${businessData.slug}`
+    return `${baseUrl}/agendar/${businessData.slug}`
   }
 
   const copyBookingLink = () => {

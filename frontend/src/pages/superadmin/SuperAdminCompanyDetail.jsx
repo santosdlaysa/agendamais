@@ -275,7 +275,7 @@ export default function SuperAdminCompanyDetail() {
                 <div>
                   <p className="text-sm text-jet-black-500">Link de Agendamento</p>
                   <a
-                    href={`/#/agendar/${company.slug}`}
+                    href={`/agendar/${company.slug}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="font-medium text-violet-600 hover:text-violet-700"
