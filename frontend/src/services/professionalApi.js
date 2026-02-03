@@ -27,14 +27,14 @@ professionalAxios.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401 && !isRedirecting) {
-      const isProfessionalRoute = window.location.hash.includes('/profissional')
-      const isProfessionalLoginPage = window.location.hash.includes('/profissional/login')
+      const isProfessionalRoute = window.location.pathname.includes('/profissional')
+      const isProfessionalLoginPage = window.location.pathname.includes('/profissional/login')
 
       if (isProfessionalRoute && !isProfessionalLoginPage) {
         isRedirecting = true
         localStorage.removeItem('professional_token')
         localStorage.removeItem('professional')
-        window.location.hash = '#/profissional/login'
+        window.location.href = '/profissional/login'
 
         setTimeout(() => {
           isRedirecting = false

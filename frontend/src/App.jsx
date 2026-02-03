@@ -70,6 +70,13 @@ function App() {
   const { isAuthenticated: isSuperAdminAuthenticated, loading: superAdminLoading } = useSuperAdmin()
   const location = useLocation()
 
+  // Redirecionar URLs antigas com hash (ex: /#/agendar/edbarbearia -> /agendar/edbarbearia)
+  if (window.location.hash && window.location.hash.startsWith('#/')) {
+    const hashPath = window.location.hash.slice(1) // Remove o '#'
+    window.location.replace(hashPath + window.location.search)
+    return null
+  }
+
   // Verificar se é uma rota do Super Admin
   const isSuperAdminRoute = location.pathname.startsWith('/superadmin')
 

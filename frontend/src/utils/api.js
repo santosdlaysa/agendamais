@@ -33,15 +33,14 @@ api.interceptors.response.use(
   (error) => {
     if (error.response?.status === 401 && !isRedirecting) {
       // Verificar se já está na página de login ou em rota pública
-      const isLoginPage = window.location.hash.includes('/login')
-      const isPublicRoute = window.location.hash.includes('/agendar')
+      const isLoginPage = window.location.pathname.includes('/login')
+      const isPublicRoute = window.location.pathname.includes('/agendar')
 
       if (!isLoginPage && !isPublicRoute) {
         isRedirecting = true
         localStorage.removeItem('token')
         localStorage.removeItem('user')
-        // Use hash para funcionar tanto no navegador quanto no Electron
-        window.location.hash = '#/login'
+        window.location.href = '/login'
 
         // Reset flag após redirect
         setTimeout(() => {
