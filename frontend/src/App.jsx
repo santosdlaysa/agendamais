@@ -196,8 +196,15 @@ function App() {
     )
   }
 
-  // Landing page - sempre acessível na rota raiz (página principal do site)
+  // Landing page - se estiver logado, redireciona para o dashboard
   if (isLandingPage) {
+    if (isAuthenticated) {
+      return (
+        <Routes>
+          <Route path="/" element={<Navigate to="/dashboard" replace />} />
+        </Routes>
+      )
+    }
     return (
       <Routes>
         <Route path="/" element={<LandingPage />} />
