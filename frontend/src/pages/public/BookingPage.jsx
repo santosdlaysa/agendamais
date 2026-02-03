@@ -10,7 +10,6 @@ import ProfessionalSelector from '../../components/booking/ProfessionalSelector'
 import DateTimePicker from '../../components/booking/DateTimePicker'
 import BookingClientForm from '../../components/booking/BookingClientForm'
 import BookingSummary from '../../components/booking/BookingSummary'
-import PaymentStep from '../../components/booking/PaymentStep'
 
 export default function BookingPage() {
   const { slug } = useParams()
@@ -48,8 +47,7 @@ export default function BookingPage() {
   const [error, setError] = useState(null)
   const [formErrors, setFormErrors] = useState({})
 
-  // Estado para armazenar o agendamento pendente de pagamento
-  const [pendingAppointment, setPendingAppointment] = useState(null)
+  const totalSteps = 4
 
   // Carregar dados do estabelecimento
   useEffect(() => {
@@ -192,6 +190,8 @@ export default function BookingPage() {
         toast.error('Preencha os campos obrigatórios')
         return
       }
+      handleSubmit()
+      return
     }
 
     setStep(step + 1)
@@ -200,59 +200,6 @@ export default function BookingPage() {
   const handleBack = () => {
     if (step > 1) {
       setStep(step - 1)
-    }
-  }
-
-  const handlePayment = async () => {
-    try {
-      setSubmitting(true)
-
-      const clientPayload = {
-        name: clientData.name.trim(),
-        phone: clientData.phone,
-        email: clientData.email.trim() || null,
-        notes: clientData.notes.trim() || null
-      }
-
-      // Criar/atualizar cliente na base de dados
-      try {
-        await bookingService.createClient(slug, clientPayload)
-      } catch (clientErr) {
-        console.warn('Erro ao salvar cliente:', clientErr)
-      }
-
-      const appointmentData = {
-        service_id: selectedService.id,
-        professional_id: selectedProfessional?.id || selectedTime?.professional_id || professionals[0]?.id,
-        date: selectedDate,
-        start_time: selectedTime.time,
-        client: {
-          name: clientPayload.name,
-          phone: clientPayload.phone,
-          email: clientPayload.email
-        },
-        notes: clientPayload.notes
-      }
-
-      // Criar agendamento - o backend já cria a sessão de checkout se pagamento for obrigatório
-      const result = await bookingService.createAppointment(slug, appointmentData)
-
-      // Se requer pagamento, redirecionar para o Stripe Checkout
-      if (result.requires_payment && result.checkout_url) {
-        window.location.href = result.checkout_url
-        return
-      }
-
-      // Se não requer pagamento, ir para confirmação
-      toast.success('Agendamento realizado com sucesso!')
-      const bookingCode = result.booking_code || result.appointment?.booking_code
-      navigate(`/agendar/${slug}/confirmacao/${bookingCode}`, {
-        state: { appointment: result.appointment, bookingCode }
-      })
-    } catch (err) {
-      const message = err.response?.data?.message || 'Erro ao processar pagamento'
-      toast.error(message)
-      setSubmitting(false)
     }
   }
 
@@ -271,7 +218,6 @@ export default function BookingPage() {
       try {
         await bookingService.createClient(slug, clientPayload)
       } catch (clientErr) {
-        // Não bloqueia o agendamento se falhar ao salvar cliente
         console.warn('Erro ao salvar cliente:', clientErr)
       }
 
@@ -290,6 +236,13 @@ export default function BookingPage() {
 
       const result = await bookingService.createAppointment(slug, data)
 
+      // Se o backend exigir pagamento, redireciona para o Stripe Checkout
+      if (result.requires_payment && result.checkout_url) {
+        window.location.href = result.checkout_url
+        return
+      }
+
+      // Senão, vai direto para confirmação
       toast.success('Agendamento realizado com sucesso!')
       const bookingCode = result.booking_code || result.appointment?.booking_code
       navigate(`/agendar/${slug}/confirmacao/${bookingCode}`, {
@@ -382,15 +335,6 @@ export default function BookingPage() {
             </div>
           </>
         )
-      case 5:
-        return (
-          <PaymentStep
-            service={selectedService}
-            business={business}
-            loading={submitting}
-            onPay={handlePayment}
-          />
-        )
       default:
         return null
     }
@@ -398,7 +342,7 @@ export default function BookingPage() {
 
   const getNextButtonText = () => {
     if (step === 4) {
-      return 'Continuar para Pagamento'
+      return 'Confirmar Agendamento'
     }
     return 'Continuar'
   }
@@ -410,8 +354,7 @@ export default function BookingPage() {
     return false
   }
 
-  // No step 5, esconde os botões de navegação pois o PaymentStep tem seu próprio botão
-  const showNavigationButtons = step < 5
+  const showNavigationButtons = step <= totalSteps
 
   return (
     <div className="min-h-screen bg-jet-black-50">
@@ -422,7 +365,7 @@ export default function BookingPage() {
 
         {/* Steps indicator */}
         <div className="bg-white rounded-xl shadow-sm border p-4 mb-6">
-          <BookingSteps currentStep={step} />
+          <BookingSteps currentStep={step} totalSteps={totalSteps} />
         </div>
 
         {/* Conteúdo do step atual */}
@@ -452,25 +395,14 @@ export default function BookingPage() {
               className={`flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-colors ${
                 isNextDisabled()
                   ? 'bg-jet-black-200 text-jet-black-400 cursor-not-allowed'
-                  : 'bg-periwinkle-600 text-white hover:bg-periwinkle-700'
+                  : step === totalSteps
+                    ? 'bg-green-600 text-white hover:bg-green-700'
+                    : 'bg-periwinkle-600 text-white hover:bg-periwinkle-700'
               }`}
             >
               {submitting && <Loader2 className="w-5 h-5 animate-spin" />}
               {getNextButtonText()}
-              {step < 4 && <ArrowRight className="w-5 h-5" />}
-            </button>
-          </div>
-        )}
-
-        {/* Botão de voltar no step de pagamento */}
-        {step === 5 && (
-          <div className="flex justify-center">
-            <button
-              onClick={handleBack}
-              className="flex items-center gap-2 px-4 py-2 text-jet-black-600 hover:bg-jet-black-100 rounded-lg font-medium transition-colors"
-            >
-              <ArrowLeft className="w-5 h-5" />
-              Voltar para revisar dados
+              {step < totalSteps && <ArrowRight className="w-5 h-5" />}
             </button>
           </div>
         )}

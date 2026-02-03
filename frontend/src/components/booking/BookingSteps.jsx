@@ -1,14 +1,14 @@
 import { Check } from 'lucide-react'
 
-const steps = [
+const allSteps = [
   { number: 1, title: 'Serviço' },
   { number: 2, title: 'Profissional' },
   { number: 3, title: 'Data e Hora' },
-  { number: 4, title: 'Seus Dados' },
-  { number: 5, title: 'Pagamento' },
+  { number: 4, title: 'Confirmação' },
 ]
 
-export default function BookingSteps({ currentStep }) {
+export default function BookingSteps({ currentStep, totalSteps = 4 }) {
+  const steps = allSteps.slice(0, totalSteps)
   return (
     <div className="w-full py-4">
       <div className="flex items-center">

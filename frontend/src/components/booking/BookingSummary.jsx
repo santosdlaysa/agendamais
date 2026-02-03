@@ -117,7 +117,7 @@ export default function BookingSummary({
             </span>
           </div>
           <p className="text-xs text-jet-black-500 mt-1">
-            * Pagamento online obrigatório
+            * O pagamento poderá ser solicitado na confirmação
           </p>
         </div>
       </div>
