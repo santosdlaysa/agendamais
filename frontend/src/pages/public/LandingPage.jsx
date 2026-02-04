@@ -120,7 +120,7 @@ const SEGMENTS = [
 const FAQ = [
   {
     q: 'Posso testar antes de assinar?',
-    a: 'Sim! Oferecemos 3 dias grátis nos planos Pro e Enterprise.'
+    a: 'Sim! Oferecemos 30 dias grátis no plano Starter e 3 dias grátis nos planos Pro e Enterprise.'
   },
   {
     q: 'Como meus clientes agendam?',
@@ -629,7 +629,7 @@ export default function LandingPage() {
               Escolha seu plano
             </h2>
             <p className="text-xl text-jet-black-600">
-              3 dias grátis nos planos Pro e Enterprise. Cancele quando quiser.
+              30 dias grátis no plano Starter • 3 dias grátis nos planos Pro e Enterprise. Cancele quando quiser.
             </p>
           </div>
 

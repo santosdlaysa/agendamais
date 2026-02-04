@@ -11,6 +11,7 @@ const PLANS = [
     name: 'Básico',
     price: 29,
     popular: false,
+    checkoutUrl: 'https://buy.stripe.com/fZu3co4BU9tV7Si0kZ2kw01',
     features: [
       'Até 100 agendamentos/mês',
       'Até 3 profissionais',
@@ -79,6 +80,13 @@ export default function SubscriptionPlans() {
           navigate('/subscription/manage')
         }
       } else {
+        // Verificar se o plano tem link direto de checkout
+        const plan = PLANS.find(p => p.id === planId)
+        if (plan?.checkoutUrl) {
+          window.location.href = plan.checkoutUrl
+          return
+        }
+
         // Criar nova assinatura ou retentar checkout pendente
         const result = await createSubscription(planId)
 
@@ -115,7 +123,7 @@ export default function SubscriptionPlans() {
       return newIndex > currentIndex ? 'Fazer Upgrade' : 'Fazer Downgrade'
     }
 
-    return planId === 'basic' ? 'Escolher Plano' : 'Começar Grátis'
+    return 'Começar Grátis'
   }
 
   return (
@@ -138,7 +146,7 @@ export default function SubscriptionPlans() {
           <p className="text-xl text-jet-black-600">
             {hasActiveSubscription()
               ? 'Selecione o plano que melhor atende suas necessidades'
-              : '3 dias grátis nos planos Pro e Enterprise'
+              : '30 dias grátis no plano Básico • 3 dias grátis nos planos Pro e Enterprise'
             }
           </p>
           {!hasActiveSubscription() && (
@@ -198,11 +206,9 @@ export default function SubscriptionPlans() {
                   </span>
                   <span className="text-jet-black-600 text-lg">/mês</span>
                 </div>
-                {plan.id !== 'basic' && (
-                  <p className="text-sm text-green-600 font-medium">
-                    3 dias grátis
-                  </p>
-                )}
+                <p className="text-sm text-green-600 font-medium">
+                  {plan.id === 'basic' ? '30 dias grátis' : '3 dias grátis'}
+                </p>
               </div>
 
               {/* Features List */}
