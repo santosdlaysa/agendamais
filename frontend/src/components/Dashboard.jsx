@@ -15,12 +15,15 @@ import {
   BarChart3,
   Clock,
   Zap,
-  Plus
+  Plus,
+  Check
 } from 'lucide-react'
 import api, { reminderService } from '../utils/api'
+import { useSubscription } from '../contexts/SubscriptionContext'
 
 export default function Dashboard() {
   const navigate = useNavigate()
+  const { subscription, isInTrial, getTrialDaysRemaining, hasActiveSubscription } = useSubscription()
   const [stats, setStats] = useState({
     total_clients: 0,
     total_professionals: 0,
@@ -222,6 +225,150 @@ export default function Dashboard() {
           Novo Agendamento
         </button>
       </div>
+
+      {/* Trial Banner */}
+      {isInTrial() && (() => {
+        const daysRemaining = getTrialDaysRemaining()
+        const totalTrialDays = subscription?.plan === 'basic' ? 30 : 3
+        const daysUsed = totalTrialDays - daysRemaining
+        const progressPercent = Math.min(100, Math.round((daysUsed / totalTrialDays) * 100))
+        const circumference = 2 * Math.PI * 36
+        const strokeDashoffset = circumference - (((100 - progressPercent) / 100) * circumference)
+
+        return (
+          <div className="bg-white border border-emerald-200 rounded-2xl overflow-hidden">
+            <div className="bg-gradient-to-r from-emerald-500 to-teal-500 px-6 py-3 flex items-center gap-2">
+              <Clock className="w-4 h-4 text-white" />
+              <span className="text-white text-sm font-semibold">Período de teste grátis</span>
+              <span className="ml-auto bg-white/20 text-white text-xs font-bold px-3 py-1 rounded-full">
+                Plano {subscription?.plan?.charAt(0).toUpperCase() + subscription?.plan?.slice(1)}
+              </span>
+            </div>
+
+            <div className="p-6 flex flex-col md:flex-row items-center gap-6">
+              {/* Circular countdown */}
+              <div className="relative flex-shrink-0">
+                <svg className="w-24 h-24 -rotate-90" viewBox="0 0 80 80">
+                  <circle cx="40" cy="40" r="36" fill="none" stroke="#d1fae5" strokeWidth="6" />
+                  <circle
+                    cx="40" cy="40" r="36" fill="none"
+                    stroke="url(#trialGradient)" strokeWidth="6"
+                    strokeLinecap="round"
+                    strokeDasharray={circumference}
+                    strokeDashoffset={strokeDashoffset}
+                    className="transition-all duration-1000"
+                  />
+                  <defs>
+                    <linearGradient id="trialGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stopColor="#10b981" />
+                      <stop offset="100%" stopColor="#14b8a6" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+                <div className="absolute inset-0 flex flex-col items-center justify-center">
+                  <span className="text-2xl font-bold text-emerald-700">{daysRemaining}</span>
+                  <span className="text-[10px] text-emerald-600 font-medium leading-tight">
+                    {daysRemaining === 1 ? 'dia' : 'dias'}
+                  </span>
+                </div>
+              </div>
+
+              {/* Info + progress bar */}
+              <div className="flex-1 w-full">
+                <h3 className="text-lg font-bold text-jet-black-900 mb-1">
+                  {daysRemaining > 7
+                    ? 'Aproveite seu teste grátis!'
+                    : daysRemaining > 1
+                    ? 'Seu teste está acabando'
+                    : 'Último dia de teste!'}
+                </h3>
+                <p className="text-sm text-jet-black-500 mb-4">
+                  {daysRemaining > 0
+                    ? `Você ainda tem ${daysRemaining} dia${daysRemaining !== 1 ? 's' : ''} para explorar todos os recursos sem custo.`
+                    : 'Seu período de teste encerra hoje.'}
+                </p>
+
+                {/* Progress bar */}
+                <div className="mb-2">
+                  <div className="flex justify-between text-xs text-jet-black-500 mb-1.5">
+                    <span>{daysUsed} de {totalTrialDays} dias usados</span>
+                    <span>{daysRemaining} restante{daysRemaining !== 1 ? 's' : ''}</span>
+                  </div>
+                  <div className="h-3 bg-emerald-100 rounded-full overflow-hidden">
+                    <div
+                      className={`h-full rounded-full transition-all duration-1000 ${
+                        daysRemaining <= 3 ? 'bg-gradient-to-r from-amber-400 to-orange-500' : 'bg-gradient-to-r from-emerald-400 to-teal-500'
+                      }`}
+                      style={{ width: `${progressPercent}%` }}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* CTA */}
+              <button
+                onClick={() => navigate('/subscription/manage')}
+                className="flex-shrink-0 inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold rounded-xl transition-all shadow-lg shadow-emerald-200 hover:shadow-emerald-300 hover:-translate-y-0.5"
+              >
+                Ver assinatura
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+        )
+      })()}
+
+      {/* No subscription banner */}
+      {!hasActiveSubscription() && !loading && (
+        <div className="bg-white border border-amber-200 rounded-2xl overflow-hidden">
+          <div className="bg-gradient-to-r from-amber-400 to-orange-400 px-6 py-3 flex items-center gap-2">
+            <Zap className="w-4 h-4 text-white" />
+            <span className="text-white text-sm font-semibold">Oferta especial</span>
+          </div>
+
+          <div className="p-6 flex flex-col md:flex-row items-center gap-6">
+            {/* Visual icon block */}
+            <div className="flex-shrink-0 relative">
+              <div className="w-24 h-24 bg-gradient-to-br from-amber-100 to-orange-100 rounded-2xl flex items-center justify-center">
+                <span className="text-4xl font-black text-amber-600">30</span>
+              </div>
+              <div className="absolute -bottom-2 -right-2 bg-amber-500 text-white text-[10px] font-bold px-2 py-1 rounded-lg shadow">
+                DIAS GRÁTIS
+              </div>
+            </div>
+
+            {/* Content */}
+            <div className="flex-1 text-center md:text-left">
+              <h3 className="text-lg font-bold text-jet-black-900 mb-1">
+                Teste o Agendar Mais sem compromisso
+              </h3>
+              <p className="text-sm text-jet-black-500 mb-3">
+                Assine o plano Básico e ganhe 30 dias grátis para experimentar todos os recursos. Sem cobranças durante o teste, cancele quando quiser.
+              </p>
+              <div className="flex flex-wrap gap-3 justify-center md:justify-start">
+                <span className="inline-flex items-center gap-1.5 text-xs text-jet-black-600 bg-jet-black-50 px-3 py-1.5 rounded-full">
+                  <Check className="w-3.5 h-3.5 text-emerald-500" /> 100 agendamentos/mês
+                </span>
+                <span className="inline-flex items-center gap-1.5 text-xs text-jet-black-600 bg-jet-black-50 px-3 py-1.5 rounded-full">
+                  <Check className="w-3.5 h-3.5 text-emerald-500" /> 3 profissionais
+                </span>
+                <span className="inline-flex items-center gap-1.5 text-xs text-jet-black-600 bg-jet-black-50 px-3 py-1.5 rounded-full">
+                  <Check className="w-3.5 h-3.5 text-emerald-500" /> Lembretes WhatsApp
+                </span>
+              </div>
+            </div>
+
+            {/* CTA */}
+            <button
+              onClick={() => navigate('/subscription/plans')}
+              className="flex-shrink-0 inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-semibold rounded-xl transition-all shadow-lg shadow-amber-200 hover:shadow-amber-300 hover:-translate-y-0.5"
+            >
+              Começar grátis
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Stats Grid */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
