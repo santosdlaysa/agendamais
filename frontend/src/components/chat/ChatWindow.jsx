@@ -23,20 +23,26 @@ export default function ChatWindow({ isOpen, onClose }) {
   const [initialized, setInitialized] = useState(false)
   const initRef = useRef(false)
 
-  // Initialize conversation on first open
+  // Initialize conversation when open and connected
   useEffect(() => {
-    if (isOpen && !initRef.current) {
+    if (isOpen && isConnected && !initRef.current) {
       initRef.current = true
       const init = async () => {
-        const conversation = await createConversation()
-        if (conversation?.id) {
-          await openConversation(conversation.id)
-          setInitialized(true)
+        try {
+          const conversation = await createConversation()
+          if (conversation?.id) {
+            await openConversation(conversation.id)
+            setInitialized(true)
+          } else {
+            initRef.current = false
+          }
+        } catch {
+          initRef.current = false
         }
       }
       init()
     }
-  }, [isOpen, createConversation, openConversation])
+  }, [isOpen, isConnected, createConversation, openConversation])
 
   // Cleanup on unmount
   useEffect(() => {
