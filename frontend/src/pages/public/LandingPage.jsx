@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
+import { motion, useInView } from 'framer-motion'
 import {
   Calendar,
   Users,
@@ -24,7 +25,8 @@ import {
   Zap,
   Globe,
   MousePointer,
-  MessageCircle
+  MessageCircle,
+  Gift
 } from 'lucide-react'
 
 const PLANS = [
@@ -157,6 +159,109 @@ const TESTIMONIALS = [
   }
 ]
 
+const fadeUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] } }
+}
+
+const staggerContainer = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.12 } }
+}
+
+function AnimatedSection({ children, className = '' }) {
+  const ref = useRef(null)
+  const isInView = useInView(ref, { once: true, margin: '-60px' })
+  return (
+    <motion.div
+      ref={ref}
+      initial="hidden"
+      animate={isInView ? 'visible' : 'hidden'}
+      variants={staggerContainer}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  )
+}
+
+function TrialBanner({ onGetStarted }) {
+  const ref = useRef(null)
+  const isInView = useInView(ref, { once: true, margin: '-80px' })
+
+  return (
+    <section ref={ref} className="py-16 px-6 bg-white">
+      <motion.div
+        className="max-w-5xl mx-auto"
+        initial="hidden"
+        animate={isInView ? 'visible' : 'hidden'}
+        variants={staggerContainer}
+      >
+        <motion.div
+          variants={fadeUp}
+          className="relative bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600 rounded-2xl p-6 md:p-8 text-white overflow-hidden"
+        >
+          <div className="absolute top-0 right-0 w-72 h-72 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/3 blur-2xl"></div>
+          <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/4 blur-2xl"></div>
+
+          <div className="relative flex flex-col md:flex-row items-center gap-6 md:gap-8">
+            {/* "30" block with spring animation */}
+            <motion.div
+              className="flex-shrink-0"
+              variants={{
+                hidden: { scale: 0, rotate: -15 },
+                visible: { scale: 1, rotate: 0, transition: { type: 'spring', stiffness: 200, damping: 15, delay: 0.2 } }
+              }}
+            >
+              <div className="w-24 h-24 md:w-28 md:h-28 bg-white/20 backdrop-blur rounded-2xl flex flex-col items-center justify-center border border-white/30">
+                <motion.div
+                  animate={{ y: [0, -5, 0] }}
+                  transition={{ repeat: Infinity, duration: 2.5, ease: 'easeInOut' }}
+                >
+                  <Gift className="w-6 h-6 text-white/80 mb-1" />
+                </motion.div>
+                <span className="text-4xl font-black leading-none">30</span>
+                <span className="text-xs font-bold uppercase tracking-wider">dias grátis</span>
+              </div>
+            </motion.div>
+
+            {/* Text slides in */}
+            <motion.div
+              className="flex-1 text-center md:text-left"
+              variants={{
+                hidden: { opacity: 0, x: -24 },
+                visible: { opacity: 1, x: 0, transition: { duration: 0.5, delay: 0.3 } }
+              }}
+            >
+              <h3 className="text-2xl md:text-3xl font-bold mb-2">
+                Teste grátis por 30 dias!
+              </h3>
+              <p className="text-emerald-100 max-w-lg">
+                Comece pelo plano Starter e experimente todos os recursos sem pagar nada. Sem compromisso, cancele quando quiser.
+              </p>
+            </motion.div>
+
+            {/* Button pops in */}
+            <motion.button
+              onClick={onGetStarted}
+              className="flex-shrink-0 inline-flex items-center gap-2 px-8 py-4 bg-white text-emerald-700 font-bold text-lg rounded-xl shadow-xl"
+              variants={{
+                hidden: { opacity: 0, scale: 0.8 },
+                visible: { opacity: 1, scale: 1, transition: { type: 'spring', stiffness: 250, delay: 0.5 } }
+              }}
+              whileHover={{ scale: 1.06, y: -3, boxShadow: '0 25px 50px -12px rgba(0,0,0,0.25)' }}
+              whileTap={{ scale: 0.96 }}
+            >
+              Começar Grátis
+              <ArrowRight className="w-5 h-5" />
+            </motion.button>
+          </div>
+        </motion.div>
+      </motion.div>
+    </section>
+  )
+}
+
 export default function LandingPage() {
   const navigate = useNavigate()
   const { isAuthenticated } = useAuth()
@@ -285,9 +390,14 @@ export default function LandingPage() {
         <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.02)_1px,transparent_1px)] bg-[size:60px_60px]"></div>
 
         <div className="max-w-7xl mx-auto relative">
-          <div className="max-w-4xl">
+          <motion.div
+            className="max-w-4xl"
+            initial="hidden"
+            animate="visible"
+            variants={staggerContainer}
+          >
             {/* Headline */}
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-jet-black-900 leading-[1.1] mb-6">
+            <motion.h1 variants={fadeUp} className="text-5xl sm:text-6xl lg:text-7xl font-bold text-jet-black-900 leading-[1.1] mb-6">
               Sua agenda
               <br />
               <span className="relative inline-block">
@@ -304,16 +414,16 @@ export default function LandingPage() {
                   </defs>
                 </svg>
               </span>
-            </h1>
+            </motion.h1>
 
             {/* Subheadline */}
-            <p className="text-xl sm:text-2xl text-jet-black-600 leading-relaxed mb-10 max-w-2xl">
+            <motion.p variants={fadeUp} className="text-xl sm:text-2xl text-jet-black-600 leading-relaxed mb-10 max-w-2xl">
               Clientes agendam 24h, você recebe lembretes automáticos e
               <span className="text-jet-black-900 font-medium"> nunca mais perde um horário</span>.
-            </p>
+            </motion.p>
 
             {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 mb-12">
+            <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-4 mb-12">
               <button
                 onClick={handleGetStarted}
                 className="group inline-flex items-center justify-center gap-2 px-8 py-4 bg-jet-black-900 hover:bg-jet-black-800 text-white font-semibold rounded-2xl transition-all duration-300 hover:shadow-xl hover:shadow-jet-black-900/20 hover:-translate-y-1"
@@ -328,10 +438,10 @@ export default function LandingPage() {
                 <MousePointer className="w-5 h-5" />
                 Ver Demonstração
               </button>
-            </div>
+            </motion.div>
 
             {/* Trust Badges */}
-            <div className="flex flex-wrap items-center gap-6 text-sm text-jet-black-500">
+            <motion.div variants={fadeUp} className="flex flex-wrap items-center gap-6 text-sm text-jet-black-500">
               <div className="flex items-center gap-2">
                 <div className="w-8 h-8 rounded-lg bg-emerald-100 flex items-center justify-center">
                   <Check className="w-4 h-4 text-emerald-600" />
@@ -344,8 +454,8 @@ export default function LandingPage() {
                 </div>
                 <span>Setup em 5 min</span>
               </div>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
           {/* Hero Visual - Floating Cards */}
           <div className="hidden xl:block absolute top-20 right-0 w-[500px]">
@@ -481,6 +591,9 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* Banner 30 dias grátis */}
+      <TrialBanner onGetStarted={handleGetStarted} />
+
       {/* Features Section */}
       <section id="features" className="py-24 px-6 bg-white scroll-mt-20">
         <div className="max-w-7xl mx-auto">
@@ -496,20 +609,22 @@ export default function LandingPage() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <AnimatedSection className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {FEATURES.map((feature, i) => (
-              <div
+              <motion.div
                 key={i}
+                variants={fadeUp}
                 className="group relative p-8 bg-jet-black-50 hover:bg-white rounded-3xl border border-transparent hover:border-jet-black-200 hover:shadow-xl transition-all duration-500"
+                whileHover={{ y: -6 }}
               >
                 <div className={`w-14 h-14 bg-gradient-to-br ${feature.color} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
                   <feature.icon className="w-7 h-7 text-white" />
                 </div>
                 <h3 className="text-xl font-bold text-jet-black-900 mb-3">{feature.title}</h3>
                 <p className="text-jet-black-600 leading-relaxed">{feature.description}</p>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </AnimatedSection>
         </div>
       </section>
 
@@ -633,13 +748,17 @@ export default function LandingPage() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          <AnimatedSection className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
             {PLANS.map((plan) => (
-              <div
+              <motion.div
                 key={plan.id}
+                variants={fadeUp}
+                whileHover={{ y: -8 }}
                 className={`relative p-8 rounded-3xl transition-all duration-300 ${
                   plan.popular
                     ? 'bg-jet-black-900 text-white scale-105 shadow-2xl'
+                    : plan.id === 'basic'
+                    ? 'bg-white border-2 border-emerald-300 hover:border-emerald-400 hover:shadow-xl'
                     : 'bg-white border-2 border-jet-black-100 hover:border-periwinkle-200 hover:shadow-xl'
                 }`}
               >
@@ -647,6 +766,15 @@ export default function LandingPage() {
                   <div className="absolute -top-4 left-1/2 -translate-x-1/2">
                     <span className="px-4 py-1.5 bg-gradient-to-r from-periwinkle-500 to-space-indigo-500 text-white text-sm font-bold rounded-full shadow-lg">
                       Mais Popular
+                    </span>
+                  </div>
+                )}
+
+                {plan.id === 'basic' && (
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2">
+                    <span className="px-4 py-1.5 bg-gradient-to-r from-emerald-500 to-teal-500 text-white text-sm font-bold rounded-full shadow-lg flex items-center gap-1.5">
+                      <Gift className="w-3.5 h-3.5" />
+                      30 dias grátis
                     </span>
                   </div>
                 )}
@@ -680,14 +808,16 @@ export default function LandingPage() {
                   className={`w-full py-4 rounded-xl font-semibold transition-all duration-300 ${
                     plan.popular
                       ? 'bg-white text-jet-black-900 hover:bg-jet-black-100'
+                      : plan.id === 'basic'
+                      ? 'bg-gradient-to-r from-emerald-500 to-teal-500 text-white hover:from-emerald-600 hover:to-teal-600 shadow-lg hover:shadow-xl'
                       : 'bg-jet-black-900 text-white hover:bg-jet-black-800'
                   }`}
                 >
-                  Começar Grátis
+                  {plan.id === 'basic' ? 'Testar 30 dias grátis' : 'Escolher Plano'}
                 </button>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </AnimatedSection>
         </div>
       </section>
 

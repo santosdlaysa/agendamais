@@ -16,14 +16,19 @@ import {
   Clock,
   Zap,
   Plus,
-  Check
+  Check,
+  Gift,
+  Shield
 } from 'lucide-react'
 import api, { reminderService } from '../utils/api'
 import { useSubscription } from '../contexts/SubscriptionContext'
+import { useAuth } from '../contexts/AuthContext'
 
 export default function Dashboard() {
   const navigate = useNavigate()
+  const { user } = useAuth()
   const { subscription, isInTrial, getTrialDaysRemaining, hasActiveSubscription } = useSubscription()
+  const isAdminUser = user?.role === 'admin' || user?.role === 'superadmin'
   const [stats, setStats] = useState({
     total_clients: 0,
     total_professionals: 0,
@@ -227,7 +232,7 @@ export default function Dashboard() {
       </div>
 
       {/* Trial Banner */}
-      {isInTrial() && (() => {
+      {!isAdminUser && isInTrial() && (() => {
         const daysRemaining = getTrialDaysRemaining()
         const totalTrialDays = subscription?.plan === 'basic' ? 30 : 3
         const daysUsed = totalTrialDays - daysRemaining
@@ -318,53 +323,50 @@ export default function Dashboard() {
         )
       })()}
 
-      {/* No subscription banner */}
-      {!hasActiveSubscription() && !loading && (
-        <div className="bg-white border border-amber-200 rounded-2xl overflow-hidden">
-          <div className="bg-gradient-to-r from-amber-400 to-orange-400 px-6 py-3 flex items-center gap-2">
-            <Zap className="w-4 h-4 text-white" />
-            <span className="text-white text-sm font-semibold">Oferta especial</span>
-          </div>
+      {/* No subscription - 30 dias grátis banner */}
+      {!isAdminUser && !hasActiveSubscription() && !loading && (
+        <div className="relative bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600 rounded-2xl p-6 md:p-8 text-white overflow-hidden">
+          <div className="absolute top-0 right-0 w-72 h-72 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/3 blur-2xl"></div>
+          <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/4 blur-2xl"></div>
 
-          <div className="p-6 flex flex-col md:flex-row items-center gap-6">
-            {/* Visual icon block */}
-            <div className="flex-shrink-0 relative">
-              <div className="w-24 h-24 bg-gradient-to-br from-amber-100 to-orange-100 rounded-2xl flex items-center justify-center">
-                <span className="text-4xl font-black text-amber-600">30</span>
-              </div>
-              <div className="absolute -bottom-2 -right-2 bg-amber-500 text-white text-[10px] font-bold px-2 py-1 rounded-lg shadow">
-                DIAS GRÁTIS
+          <div className="relative flex flex-col md:flex-row items-center gap-6 md:gap-8">
+            <div className="flex-shrink-0">
+              <div className="relative w-28 h-28 bg-white/20 backdrop-blur rounded-2xl flex flex-col items-center justify-center border border-white/30">
+                <Gift className="w-6 h-6 text-white/80 mb-1" />
+                <span className="text-4xl font-black leading-none">30</span>
+                <span className="text-xs font-bold uppercase tracking-wider">dias grátis</span>
               </div>
             </div>
 
-            {/* Content */}
             <div className="flex-1 text-center md:text-left">
-              <h3 className="text-lg font-bold text-jet-black-900 mb-1">
-                Teste o Agendar Mais sem compromisso
-              </h3>
-              <p className="text-sm text-jet-black-500 mb-3">
-                Assine o plano Básico e ganhe 30 dias grátis para experimentar todos os recursos. Sem cobranças durante o teste, cancele quando quiser.
+              <h2 className="text-2xl md:text-3xl font-bold mb-2">
+                Teste grátis por 30 dias!
+              </h2>
+              <p className="text-emerald-100 mb-4 max-w-lg">
+                Assine o plano Básico e experimente todos os recursos sem pagar nada. Sem compromisso, cancele quando quiser.
               </p>
               <div className="flex flex-wrap gap-3 justify-center md:justify-start">
-                <span className="inline-flex items-center gap-1.5 text-xs text-jet-black-600 bg-jet-black-50 px-3 py-1.5 rounded-full">
-                  <Check className="w-3.5 h-3.5 text-emerald-500" /> 100 agendamentos/mês
-                </span>
-                <span className="inline-flex items-center gap-1.5 text-xs text-jet-black-600 bg-jet-black-50 px-3 py-1.5 rounded-full">
-                  <Check className="w-3.5 h-3.5 text-emerald-500" /> 3 profissionais
-                </span>
-                <span className="inline-flex items-center gap-1.5 text-xs text-jet-black-600 bg-jet-black-50 px-3 py-1.5 rounded-full">
-                  <Check className="w-3.5 h-3.5 text-emerald-500" /> Lembretes WhatsApp
-                </span>
+                <div className="flex items-center gap-2 bg-white/15 backdrop-blur rounded-lg px-3 py-2">
+                  <Shield className="w-4 h-4" />
+                  <span className="text-sm font-medium">Sem cartão necessário</span>
+                </div>
+                <div className="flex items-center gap-2 bg-white/15 backdrop-blur rounded-lg px-3 py-2">
+                  <Clock className="w-4 h-4" />
+                  <span className="text-sm font-medium">Cancele a qualquer momento</span>
+                </div>
+                <div className="flex items-center gap-2 bg-white/15 backdrop-blur rounded-lg px-3 py-2">
+                  <Zap className="w-4 h-4" />
+                  <span className="text-sm font-medium">Acesso imediato</span>
+                </div>
               </div>
             </div>
 
-            {/* CTA */}
             <button
               onClick={() => navigate('/subscription/plans')}
-              className="flex-shrink-0 inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-semibold rounded-xl transition-all shadow-lg shadow-amber-200 hover:shadow-amber-300 hover:-translate-y-0.5"
+              className="flex-shrink-0 inline-flex items-center gap-2 px-8 py-4 bg-white text-emerald-700 font-bold text-lg rounded-xl transition-all shadow-xl hover:shadow-2xl hover:-translate-y-1 hover:bg-emerald-50"
             >
-              Começar grátis
-              <ArrowRight className="w-4 h-4" />
+              Começar Grátis
+              <ArrowRight className="w-5 h-5" />
             </button>
           </div>
         </div>
@@ -585,7 +587,6 @@ export default function Dashboard() {
               <div className="space-y-3">
                 {Object.entries(stats.appointments_by_status).map(([status, count]) => {
                   const percentage = totalStatusCount > 0 ? Math.round((count / totalStatusCount) * 100) : 0
-                  const colorClass = getStatusColor(status)
                   return (
                     <div key={status}>
                       <div className="flex items-center justify-between text-sm mb-1">

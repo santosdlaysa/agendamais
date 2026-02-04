@@ -9,6 +9,7 @@ import { OnboardingProvider } from './contexts/OnboardingContext.jsx'
 import { ProfessionalAuthProvider } from './contexts/ProfessionalAuthContext.jsx'
 import { SuperAdminProvider } from './contexts/SuperAdminContext.jsx'
 import { NotificationProvider } from './contexts/NotificationContext.jsx'
+import { ChatProvider } from './contexts/ChatContext.jsx'
 import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -20,7 +21,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             <ProfessionalAuthProvider>
               <SuperAdminProvider>
                 <NotificationProvider>
-                  <App />
+                  <ChatProvider>
+                    <App />
+                  </ChatProvider>
                 </NotificationProvider>
               </SuperAdminProvider>
             </ProfessionalAuthProvider>

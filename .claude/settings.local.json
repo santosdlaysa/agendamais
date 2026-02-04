@@ -37,7 +37,8 @@
       "Bash(py -c:*)",
       "Bash(tree:*)",
       "Bash(git pull:*)",
-      "Bash(git stash:*)"
+      "Bash(git stash:*)",
+      "Bash(npx vite build:*)"
     ],
     "deny": [],
     "ask": []

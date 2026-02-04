@@ -14,11 +14,14 @@ import {
   PanelLeft,
   AlertTriangle,
   Settings,
-  DollarSign
+  DollarSign,
+  MessageCircle
 } from 'lucide-react'
+import { useChat } from '../../contexts/ChatContext'
 
 export default function SuperAdminLayout() {
   const { superAdmin, logout } = useSuperAdmin()
+  const { unreadCount: chatUnreadCount } = useChat()
   const location = useLocation()
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [sidebarCollapsed, setSidebarCollapsed] = useState(() => {
@@ -103,6 +106,17 @@ export default function SuperAdminLayout() {
             <NavLink to="/superadmin/companies" className={getNavLinkClass(collapsed)} title="Empresas">
               <Building2 className={`h-5 w-5 ${collapsed ? '' : 'mr-3'} flex-shrink-0`} />
               {!collapsed && 'Empresas'}
+            </NavLink>
+            <NavLink to="/superadmin/chat" className={getNavLinkClass(collapsed)} title="Suporte">
+              <div className="relative flex-shrink-0">
+                <MessageCircle className={`h-5 w-5 ${collapsed ? '' : 'mr-3'}`} />
+                {chatUnreadCount > 0 && (
+                  <span className="absolute -top-1.5 -right-1.5 min-w-[16px] h-[16px] px-0.5 flex items-center justify-center bg-red-500 text-white text-[9px] font-bold rounded-full">
+                    {chatUnreadCount > 99 ? '99+' : chatUnreadCount}
+                  </span>
+                )}
+              </div>
+              {!collapsed && 'Suporte'}
             </NavLink>
           </div>
         </div>

@@ -58,7 +58,8 @@ import {
   SuperAdminCompanyDetail,
   SuperAdminSubscriptions,
   SuperAdminAnalytics,
-  SuperAdminPayments
+  SuperAdminPayments,
+  SuperAdminChat
 } from './pages/superadmin'
 import AdminPayments from './components/AdminPayments'
 
@@ -127,6 +128,7 @@ function App() {
           <Route path="subscriptions" element={<SuperAdminSubscriptions />} />
           <Route path="analytics" element={<SuperAdminAnalytics />} />
           <Route path="payments" element={<SuperAdminPayments />} />
+          <Route path="chat" element={<SuperAdminChat />} />
         </Route>
 
         <Route path="/superadmin/*" element={<Navigate to="/superadmin/dashboard" replace />} />
@@ -248,16 +250,27 @@ function App() {
 
   // Usuário autenticado mas sem assinatura - deve escolher um plano primeiro
   // Admins não precisam de assinatura
-  const isAdmin = user?.role === 'admin'
+  const isAdmin = user?.role === 'admin' || user?.role === 'superadmin'
   if (!hasActiveSubscription() && !isAdmin) {
     return (
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/registro" element={<Login />} />
-        <Route path="/subscription/plans" element={<SubscriptionPlans />} />
         <Route path="/subscription/success" element={<SubscriptionSuccess />} />
         <Route path="/subscription/canceled" element={<SubscriptionCanceled />} />
-        <Route path="*" element={<Navigate to="/subscription/plans" replace />} />
+        <Route
+          path="/*"
+          element={
+            <Layout>
+              <Routes>
+                <Route index element={<Dashboard />} />
+                <Route path="dashboard" element={<Dashboard />} />
+                <Route path="subscription/plans" element={<SubscriptionPlans />} />
+                <Route path="*" element={<Navigate to="/dashboard" replace />} />
+              </Routes>
+            </Layout>
+          }
+        />
       </Routes>
     )
   }

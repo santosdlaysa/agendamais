@@ -5,6 +5,7 @@ import { NavLink, useLocation } from 'react-router-dom'
 import { Calendar, LogOut, Users, UserCheck, Briefcase, FileText, BarChart3, MessageSquare, CreditCard, ChevronDown, Building2, Shield, Menu, PanelLeftClose, PanelLeft, Crown, DollarSign } from 'lucide-react'
 import api from '../utils/api'
 import { NotificationBell } from './notifications'
+import { ChatWidget } from './chat'
 import { Button } from './ui/button'
 
 export default function Layout({ children }) {
@@ -150,7 +151,8 @@ export default function Layout({ children }) {
           </div>
         </div>
 
-        {/* Plano */}
+        {/* Plano - hidden for admin/superadmin */}
+        {user?.role !== 'admin' && user?.role !== 'superadmin' && (
         <div>
           {!collapsed && (
             <p className="px-3 mb-2 text-xs font-semibold text-jet-black-400 uppercase tracking-wider">
@@ -168,6 +170,7 @@ export default function Layout({ children }) {
             </NavLink>
           </div>
         </div>
+        )}
 
         {/* Configurações */}
         <div>
@@ -361,6 +364,8 @@ export default function Layout({ children }) {
           </div>
         </main>
       </div>
+
+      <ChatWidget />
     </div>
   )
 }

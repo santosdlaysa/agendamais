@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Check, Loader2, ArrowLeft } from 'lucide-react'
+import { Check, Loader2, ArrowLeft, Gift, Clock, Shield, Zap } from 'lucide-react'
 import { useSubscription } from '../contexts/SubscriptionContext'
 import toast from 'react-hot-toast'
 import api from '../utils/api'
@@ -130,7 +130,7 @@ export default function SubscriptionPlans() {
     <div className="min-h-screen bg-jet-black-50 py-12">
       <div className="max-w-7xl mx-auto px-4">
         {/* Header */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-8">
           {hasActiveSubscription() && (
             <button
               onClick={() => navigate('/subscription/manage')}
@@ -146,14 +146,9 @@ export default function SubscriptionPlans() {
           <p className="text-xl text-jet-black-600">
             {hasActiveSubscription()
               ? 'Selecione o plano que melhor atende suas necessidades'
-              : '30 dias grátis no plano Básico • 3 dias grátis nos planos Pro e Enterprise'
+              : 'Comece grátis e veja os resultados na prática'
             }
           </p>
-          {!hasActiveSubscription() && (
-            <p className="text-sm text-jet-black-500 mt-2">
-              Sem compromisso. Cancele a qualquer momento.
-            </p>
-          )}
 
           {/* Aviso de assinatura pendente */}
           {hasPendingSubscription && (
@@ -168,6 +163,68 @@ export default function SubscriptionPlans() {
           )}
         </div>
 
+        {/* Trial Promo Banner */}
+        {!hasActiveSubscription() && (
+          <div className="max-w-6xl mx-auto mb-10">
+            <div className="relative bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600 rounded-2xl p-6 md:p-8 text-white overflow-hidden">
+              {/* Background decoration */}
+              <div className="absolute top-0 right-0 w-72 h-72 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/3 blur-2xl"></div>
+              <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/4 blur-2xl"></div>
+
+              <div className="relative flex flex-col md:flex-row items-center gap-6 md:gap-8">
+                {/* Visual "30 dias" block */}
+                <div className="flex-shrink-0">
+                  <div className="relative w-28 h-28 bg-white/20 backdrop-blur rounded-2xl flex flex-col items-center justify-center border border-white/30">
+                    <Gift className="w-6 h-6 text-white/80 mb-1" />
+                    <span className="text-4xl font-black leading-none">30</span>
+                    <span className="text-xs font-bold uppercase tracking-wider">dias grátis</span>
+                  </div>
+                </div>
+
+                {/* Text content */}
+                <div className="flex-1 text-center md:text-left">
+                  <h2 className="text-2xl md:text-3xl font-bold mb-2">
+                    Teste grátis por 30 dias!
+                  </h2>
+                  <p className="text-emerald-100 mb-4 max-w-lg">
+                    Assine o plano Básico e experimente todos os recursos sem pagar nada. Sem compromisso, cancele quando quiser.
+                  </p>
+                  <div className="flex flex-wrap gap-4 justify-center md:justify-start">
+                    <div className="flex items-center gap-2 bg-white/15 backdrop-blur rounded-lg px-3 py-2">
+                      <Shield className="w-4 h-4" />
+                      <span className="text-sm font-medium">Sem cartão necessário</span>
+                    </div>
+                    <div className="flex items-center gap-2 bg-white/15 backdrop-blur rounded-lg px-3 py-2">
+                      <Clock className="w-4 h-4" />
+                      <span className="text-sm font-medium">Cancele a qualquer momento</span>
+                    </div>
+                    <div className="flex items-center gap-2 bg-white/15 backdrop-blur rounded-lg px-3 py-2">
+                      <Zap className="w-4 h-4" />
+                      <span className="text-sm font-medium">Acesso imediato</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* CTA */}
+                <button
+                  onClick={() => handleSelectPlan('basic')}
+                  disabled={loading === 'basic'}
+                  className="flex-shrink-0 inline-flex items-center gap-2 px-8 py-4 bg-white text-emerald-700 font-bold text-lg rounded-xl transition-all shadow-xl hover:shadow-2xl hover:-translate-y-1 hover:bg-emerald-50 disabled:opacity-50"
+                >
+                  {loading === 'basic' ? (
+                    <>
+                      <Loader2 className="w-5 h-5 animate-spin" />
+                      Processando...
+                    </>
+                  ) : (
+                    'Começar Grátis'
+                  )}
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Plans Grid */}
         <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {PLANS.map((plan) => (
@@ -175,13 +232,25 @@ export default function SubscriptionPlans() {
               key={plan.id}
               className={`relative bg-white rounded-2xl shadow-lg p-8 transition-all hover:shadow-xl ${
                 plan.popular ? 'ring-2 ring-periwinkle-500 transform scale-105' : ''
-              } ${plan.id === currentPlan ? 'ring-2 ring-green-500' : ''}`}
+              } ${plan.id === currentPlan ? 'ring-2 ring-green-500' : ''} ${
+                plan.id === 'basic' && !currentPlan ? 'ring-2 ring-emerald-400' : ''
+              }`}
             >
               {/* Current Plan Badge */}
               {plan.id === currentPlan && (
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2">
                   <span className="bg-gradient-to-r from-green-500 to-green-600 text-white px-4 py-1 rounded-full text-sm font-medium shadow-lg">
                     Plano Atual
+                  </span>
+                </div>
+              )}
+
+              {/* 30 dias grátis Badge - Basic plan */}
+              {plan.id === 'basic' && !currentPlan && (
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2">
+                  <span className="bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-4 py-1 rounded-full text-sm font-bold shadow-lg flex items-center gap-1.5">
+                    <Gift className="w-3.5 h-3.5" />
+                    30 dias grátis
                   </span>
                 </div>
               )}
@@ -232,6 +301,8 @@ export default function SubscriptionPlans() {
                 className={`w-full py-3 px-6 rounded-lg font-semibold transition-all ${
                   plan.id === currentPlan
                     ? 'bg-green-100 text-green-800 cursor-default'
+                    : plan.id === 'basic' && !currentPlan
+                    ? 'bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white shadow-lg hover:shadow-xl'
                     : plan.popular
                     ? 'bg-gradient-to-r from-periwinkle-500 to-periwinkle-600 hover:from-periwinkle-600 hover:to-periwinkle-700 text-white shadow-lg hover:shadow-xl'
                     : 'bg-jet-black-100 hover:bg-jet-black-200 text-jet-black-900'
