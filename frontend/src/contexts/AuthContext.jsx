@@ -153,7 +153,7 @@ export function AuthProvider({ children }) {
   }
 
   // Iniciar impersonate - acessar como empresa
-  const startImpersonate = async (companyData, impersonateToken) => {
+  const startImpersonate = async (companyData, impersonateToken, userData = null) => {
     // Salvar token e usuário original do superadmin
     const originalToken = localStorage.getItem('token')
     const originalUser = localStorage.getItem('user')
@@ -169,14 +169,20 @@ export function AuthProvider({ children }) {
     setIsImpersonating(true)
     setImpersonatedCompany(companyData)
 
-    // Buscar dados do usuário da empresa
-    try {
-      const response = await api.get('/auth/me')
-      const userData = response.data.user
+    // Se dados do usuário foram passados, usar diretamente
+    if (userData) {
       localStorage.setItem('user', JSON.stringify(userData))
       setUser(userData)
-    } catch (error) {
-      console.error('Erro ao obter dados da empresa:', error)
+    } else {
+      // Buscar dados do usuário da empresa
+      try {
+        const response = await api.get('/auth/me')
+        const fetchedUser = response.data.user
+        localStorage.setItem('user', JSON.stringify(fetchedUser))
+        setUser(fetchedUser)
+      } catch (error) {
+        console.error('Erro ao obter dados da empresa:', error)
+      }
     }
 
     toast.success(`Acessando como: ${companyData.business_name}`)

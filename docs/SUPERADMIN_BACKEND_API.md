@@ -464,9 +464,9 @@ def activate_company(id):
     })
 ```
 
-### 4.5 POST `/api/superadmin/companies/{id}/impersonate`
+### 4.5 POST `/api/superadmin/users/{id}/impersonate`
 
-**Descrição:** Gera um token temporário para o Super Admin acessar o sistema como se fosse a empresa (impersonate). Permite visualizar o dashboard, agendamentos, clientes, etc. da perspectiva da empresa.
+**Descrição:** Gera um token temporário para o Super Admin acessar o sistema como se fosse o usuário/empresa (impersonate). Permite visualizar o dashboard, agendamentos, clientes, etc. da perspectiva da empresa.
 
 **Headers:**
 ```
@@ -476,16 +476,21 @@ Authorization: Bearer {admin_token}
 **Response (200 OK):**
 ```json
 {
-    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...",
-    "message": "Token de impersonate gerado com sucesso",
-    "expires_in": 3600
+    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...",
+    "user": {
+        "id": 123,
+        "name": "Nome do Usuário",
+        "email": "usuario@email.com",
+        "business_name": "Nome da Empresa",
+        "role": "user"
+    }
 }
 ```
 
 **Response (404 Not Found):**
 ```json
 {
-    "message": "Empresa não encontrada"
+    "message": "Usuário não encontrado"
 }
 ```
 
@@ -496,41 +501,10 @@ Authorization: Bearer {admin_token}
 }
 ```
 
-**Implementação Flask:**
-```python
-@superadmin_bp.route('/companies/<int:id>/impersonate', methods=['POST'])
-@superadmin_required()
-def impersonate_company(id):
-    # Buscar a empresa/usuário
-    company = User.query.get_or_404(id)
-
-    # Gerar um token JWT temporário para o usuário da empresa
-    # Este token deve ter uma expiração curta (ex: 1 hora)
-    access_token = create_access_token(
-        identity=company.id,
-        additional_claims={
-            'type': 'impersonate',
-            'impersonated_by': get_jwt_identity(),  # ID do admin
-            'company_id': company.id
-        },
-        expires_delta=timedelta(hours=1)
-    )
-
-    # Logar a ação de impersonate
-    log_admin_action('impersonate_company', id, f'Admin acessou como empresa: {company.business_name}')
-
-    return jsonify({
-        'access_token': access_token,
-        'message': 'Token de impersonate gerado com sucesso',
-        'expires_in': 3600
-    })
-```
-
 **Notas de Segurança:**
 - O token de impersonate deve ter expiração curta (1 hora recomendado)
 - Todas as ações de impersonate devem ser logadas para auditoria
 - O token deve incluir uma claim indicando que é um impersonate para diferenciar de logins normais
-- Considere adicionar uma claim `impersonated_by` para rastrear qual admin fez o impersonate
 
 ---
 
@@ -1223,7 +1197,7 @@ backend/
 | GET | `/api/superadmin/companies/{id}` | Detalhes da empresa |
 | POST | `/api/superadmin/companies/{id}/suspend` | Suspender empresa |
 | POST | `/api/superadmin/companies/{id}/activate` | Ativar empresa |
-| POST | `/api/superadmin/companies/{id}/impersonate` | Acessar como empresa |
+| POST | `/api/superadmin/users/{id}/impersonate` | Acessar como empresa |
 | GET | `/api/superadmin/subscriptions` | Listar assinaturas |
 | PUT | `/api/superadmin/subscriptions/{id}/plan` | Alterar plano |
 | POST | `/api/superadmin/subscriptions/{id}/extend` | Estender período |

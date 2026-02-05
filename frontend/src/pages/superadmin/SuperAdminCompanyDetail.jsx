@@ -128,15 +128,19 @@ export default function SuperAdminCompanyDetail() {
   const handleImpersonate = async () => {
     try {
       setImpersonating(true)
-      const response = await superAdminApi.impersonateCompany(id)
-      const { access_token } = response.data
+      const response = await superAdminApi.impersonateUser(id)
+      const { token, user: impersonatedUser } = response.data
 
-      // Iniciar modo impersonate
-      await startImpersonate({
-        id: company.id,
-        business_name: company.business_name,
-        slug: company.slug
-      }, access_token)
+      // Iniciar modo impersonate com dados do usuário
+      await startImpersonate(
+        {
+          id: company.id,
+          business_name: company.business_name || impersonatedUser?.business_name,
+          slug: company.slug
+        },
+        token,
+        impersonatedUser
+      )
 
       // Redirecionar para o dashboard da empresa
       navigate('/dashboard')
