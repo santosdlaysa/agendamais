@@ -68,6 +68,9 @@ export const superAdminApi = {
   getPayments: (params = {}) => api.get('/payments', { params }),
   getPayment: (id) => api.get(`/payments/${id}`),
   getPaymentStats: (params = {}) => api.get('/payments/stats', { params }),
+
+  // Impersonate - Acessar como empresa
+  impersonateCompany: (companyId) => api.post(`/companies/${companyId}/impersonate`),
 }
 
 export default api

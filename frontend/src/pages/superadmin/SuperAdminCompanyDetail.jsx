@@ -19,14 +19,17 @@ import {
   RefreshCw,
   Key,
   Eye,
-  EyeOff
+  EyeOff,
+  LogIn
 } from 'lucide-react'
 import { superAdminApi } from '../../services/superAdminApi'
+import { useAuth } from '../../contexts/AuthContext'
 import toast from 'react-hot-toast'
 
 export default function SuperAdminCompanyDetail() {
   const { id } = useParams()
   const navigate = useNavigate()
+  const { startImpersonate } = useAuth()
   const [loading, setLoading] = useState(true)
   const [company, setCompany] = useState(null)
   const [showPlanModal, setShowPlanModal] = useState(false)
@@ -37,6 +40,7 @@ export default function SuperAdminCompanyDetail() {
   const [newPassword, setNewPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
   const [resettingPassword, setResettingPassword] = useState(false)
+  const [impersonating, setImpersonating] = useState(false)
 
   useEffect(() => {
     fetchCompany()
@@ -118,6 +122,28 @@ export default function SuperAdminCompanyDetail() {
       toast.error(error.response?.data?.message || 'Erro ao redefinir senha')
     } finally {
       setResettingPassword(false)
+    }
+  }
+
+  const handleImpersonate = async () => {
+    try {
+      setImpersonating(true)
+      const response = await superAdminApi.impersonateCompany(id)
+      const { access_token } = response.data
+
+      // Iniciar modo impersonate
+      await startImpersonate({
+        id: company.id,
+        business_name: company.business_name,
+        slug: company.slug
+      }, access_token)
+
+      // Redirecionar para o dashboard da empresa
+      navigate('/dashboard')
+    } catch (error) {
+      toast.error(error.response?.data?.message || 'Erro ao acessar como empresa')
+    } finally {
+      setImpersonating(false)
     }
   }
 
@@ -437,6 +463,15 @@ export default function SuperAdminCompanyDetail() {
           <div className="bg-white rounded-xl border border-jet-black-100 p-6">
             <h3 className="font-semibold text-jet-black-900 mb-4">Acoes</h3>
             <div className="space-y-2">
+              <button
+                onClick={handleImpersonate}
+                disabled={impersonating}
+                className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-violet-600 text-white rounded-xl hover:bg-violet-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <LogIn className="w-4 h-4" />
+                {impersonating ? 'Acessando...' : 'Acessar como Empresa'}
+              </button>
+
               <button
                 onClick={() => setShowPasswordModal(true)}
                 className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-amber-600 text-white rounded-xl hover:bg-amber-700 transition-colors"

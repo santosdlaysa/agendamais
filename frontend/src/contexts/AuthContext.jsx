@@ -7,12 +7,23 @@ const AuthContext = createContext()
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [isImpersonating, setIsImpersonating] = useState(false)
+  const [impersonatedCompany, setImpersonatedCompany] = useState(null)
 
   // Verificar se há token salvo ao carregar a aplicação
   useEffect(() => {
     const token = localStorage.getItem('token')
     const savedUser = localStorage.getItem('user')
-    
+
+    // Verificar se está em modo impersonate
+    const impersonateToken = localStorage.getItem('impersonate_token')
+    const impersonateCompany = localStorage.getItem('impersonate_company')
+
+    if (impersonateToken && impersonateCompany) {
+      setIsImpersonating(true)
+      setImpersonatedCompany(JSON.parse(impersonateCompany))
+    }
+
     if (token && savedUser) {
       try {
         setUser(JSON.parse(savedUser))
@@ -22,7 +33,7 @@ export function AuthProvider({ children }) {
         localStorage.removeItem('user')
       }
     }
-    
+
     setLoading(false)
   }, [])
 
@@ -141,16 +152,74 @@ export function AuthProvider({ children }) {
     return user?.role === 'admin' || user?.role === 'superadmin'
   }
 
+  // Iniciar impersonate - acessar como empresa
+  const startImpersonate = async (companyData, impersonateToken) => {
+    // Salvar token e usuário original do superadmin
+    const originalToken = localStorage.getItem('token')
+    const originalUser = localStorage.getItem('user')
+
+    localStorage.setItem('original_token', originalToken)
+    localStorage.setItem('original_user', originalUser)
+
+    // Definir novo token da empresa
+    localStorage.setItem('token', impersonateToken)
+    localStorage.setItem('impersonate_token', impersonateToken)
+    localStorage.setItem('impersonate_company', JSON.stringify(companyData))
+
+    setIsImpersonating(true)
+    setImpersonatedCompany(companyData)
+
+    // Buscar dados do usuário da empresa
+    try {
+      const response = await api.get('/auth/me')
+      const userData = response.data.user
+      localStorage.setItem('user', JSON.stringify(userData))
+      setUser(userData)
+    } catch (error) {
+      console.error('Erro ao obter dados da empresa:', error)
+    }
+
+    toast.success(`Acessando como: ${companyData.business_name}`)
+  }
+
+  // Parar impersonate - voltar ao superadmin
+  const stopImpersonate = () => {
+    // Restaurar token e usuário original
+    const originalToken = localStorage.getItem('original_token')
+    const originalUser = localStorage.getItem('original_user')
+
+    if (originalToken && originalUser) {
+      localStorage.setItem('token', originalToken)
+      localStorage.setItem('user', originalUser)
+      setUser(JSON.parse(originalUser))
+    }
+
+    // Limpar dados de impersonate
+    localStorage.removeItem('original_token')
+    localStorage.removeItem('original_user')
+    localStorage.removeItem('impersonate_token')
+    localStorage.removeItem('impersonate_company')
+
+    setIsImpersonating(false)
+    setImpersonatedCompany(null)
+
+    toast.success('Voltou ao painel Super Admin')
+  }
+
   const value = {
     user,
     loading,
     isAuthenticated: !!user,
     isAdmin,
+    isImpersonating,
+    impersonatedCompany,
     login,
     register,
     logout,
     getCurrentUser,
-    changePassword
+    changePassword,
+    startImpersonate,
+    stopImpersonate
   }
 
   return (

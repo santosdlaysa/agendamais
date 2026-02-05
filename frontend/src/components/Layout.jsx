@@ -2,14 +2,14 @@ import { useState, useRef, useEffect } from 'react'
 import { useAuth } from '../contexts/AuthContext'
 import { useSubscription } from '../contexts/SubscriptionContext'
 import { NavLink, useLocation } from 'react-router-dom'
-import { Calendar, LogOut, Users, UserCheck, Briefcase, FileText, BarChart3, MessageSquare, CreditCard, ChevronDown, Building2, Shield, Menu, PanelLeftClose, PanelLeft, Crown, DollarSign } from 'lucide-react'
+import { Calendar, LogOut, Users, UserCheck, Briefcase, FileText, BarChart3, MessageSquare, CreditCard, ChevronDown, Building2, Shield, Menu, PanelLeftClose, PanelLeft, Crown, DollarSign, X, Eye } from 'lucide-react'
 import api from '../utils/api'
 import { NotificationBell } from './notifications'
 import { ChatWidget } from './chat'
 import { Button } from './ui/button'
 
 export default function Layout({ children }) {
-  const { user, logout, isAdmin } = useAuth()
+  const { user, logout, isAdmin, isImpersonating, impersonatedCompany, stopImpersonate } = useAuth()
   const { hasActiveSubscription, isInTrial, getTrialDaysRemaining } = useSubscription()
   const location = useLocation()
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -302,6 +302,27 @@ export default function Layout({ children }) {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* Banner de Impersonate */}
+      {isImpersonating && impersonatedCompany && (
+        <div className="fixed top-0 left-0 right-0 z-[100] bg-violet-600 text-white">
+          <div className="max-w-7xl mx-auto px-4 py-2 flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <Eye className="w-5 h-5" />
+              <span className="text-sm font-medium">
+                Visualizando como: <strong>{impersonatedCompany.business_name}</strong>
+              </span>
+            </div>
+            <button
+              onClick={stopImpersonate}
+              className="flex items-center gap-2 px-3 py-1.5 bg-white/20 hover:bg-white/30 rounded-lg text-sm font-medium transition-colors"
+            >
+              <X className="w-4 h-4" />
+              Voltar ao Super Admin
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Mobile sidebar overlay */}
       {sidebarOpen && (
         <div
@@ -312,9 +333,9 @@ export default function Layout({ children }) {
 
       {/* Sidebar - Mobile (drawer) */}
       <aside
-        className={`fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-xl transform transition-transform duration-300 ease-in-out lg:hidden ${
+        className={`fixed left-0 z-50 w-64 bg-white shadow-xl transform transition-transform duration-300 ease-in-out lg:hidden ${
           sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-        }`}
+        } ${isImpersonating ? 'top-10 h-[calc(100vh-40px)]' : 'inset-y-0'}`}
       >
         <SidebarContent collapsed={false} />
       </aside>
@@ -322,22 +343,22 @@ export default function Layout({ children }) {
       {/* Sidebar - Desktop (fixed) */}
       <aside
         ref={sidebarRef}
-        className={`hidden lg:flex lg:flex-col lg:fixed lg:inset-y-0 bg-white border-r border-jet-black-200 transition-all duration-300 ease-in-out ${
+        className={`hidden lg:flex lg:flex-col lg:fixed lg:left-0 bg-white border-r border-jet-black-200 transition-all duration-300 ease-in-out ${
           sidebarCollapsed ? 'lg:w-16' : 'lg:w-64'
-        }`}
+        } ${isImpersonating ? 'top-10 h-[calc(100vh-40px)]' : 'inset-y-0'}`}
       >
         <SidebarContent collapsed={sidebarCollapsed} />
       </aside>
 
       {/* Main content area */}
-      <div className={`flex flex-col min-h-screen transition-all duration-300 ease-in-out ${sidebarCollapsed ? 'lg:pl-16' : 'lg:pl-64'}`}>
+      <div className={`flex flex-col min-h-screen transition-all duration-300 ease-in-out ${sidebarCollapsed ? 'lg:pl-16' : 'lg:pl-64'} ${isImpersonating ? 'pt-10' : ''}`}>
         {/* Desktop header with notifications */}
-        <header className="hidden lg:flex items-center justify-end h-14 px-6 bg-white border-b border-jet-black-100 sticky top-0 z-30">
+        <header className={`hidden lg:flex items-center justify-end h-14 px-6 bg-white border-b border-jet-black-100 sticky z-30 ${isImpersonating ? 'top-10' : 'top-0'}`}>
           <NotificationBell />
         </header>
 
         {/* Mobile header */}
-        <header className="lg:hidden bg-white shadow-sm border-b sticky top-0 z-30">
+        <header className={`lg:hidden bg-white shadow-sm border-b sticky z-30 ${isImpersonating ? 'top-10' : 'top-0'}`}>
           <div className="flex items-center justify-between h-16 px-4">
             <button
               onClick={() => setSidebarOpen(true)}
