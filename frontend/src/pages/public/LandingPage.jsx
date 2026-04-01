@@ -26,7 +26,13 @@ import {
   Globe,
   MousePointer,
   MessageCircle,
-  Gift
+  Gift,
+  AlertTriangle,
+  PhoneOff,
+  CalendarX,
+  TrendingDown,
+  DollarSign,
+  UserX
 } from 'lucide-react'
 import InteractiveDemo from '../../components/InteractiveDemo'
 
@@ -537,6 +543,106 @@ export default function LandingPage() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Pain Points Section */}
+      <section className="py-24 px-6 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <AnimatedSection>
+            <motion.div variants={fadeUp} className="text-center mb-16">
+              <span className="inline-block px-4 py-1.5 bg-red-50 text-red-600 rounded-full text-sm font-semibold mb-4">
+                Isso acontece com você?
+              </span>
+              <h2 className="text-4xl sm:text-5xl font-bold text-jet-black-900 mb-4">
+                Você está perdendo dinheiro<br className="hidden sm:block" /> todos os dias
+              </h2>
+              <p className="text-xl text-jet-black-600 max-w-2xl mx-auto">
+                Se você se identificou com pelo menos um desses problemas, o Agendar Mais foi feito para você.
+              </p>
+            </motion.div>
+          </AnimatedSection>
+
+          <AnimatedSection className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[
+              {
+                icon: UserX,
+                title: 'Cliente marca e não aparece',
+                description: 'Você reservou o horário, preparou tudo, e a cadeira ficou vazia. Sem lembrete, sem compromisso. Prejuízo puro.',
+                color: 'bg-red-100',
+                iconColor: 'text-red-600',
+                borderHover: 'hover:border-red-200'
+              },
+              {
+                icon: PhoneOff,
+                title: 'WhatsApp virou sua agenda',
+                description: '"Tem horário amanhã?", "Pode remarcar?", "Qual o preço?" — Você passa o dia respondendo em vez de atender.',
+                color: 'bg-orange-100',
+                iconColor: 'text-orange-600',
+                borderHover: 'hover:border-orange-200'
+              },
+              {
+                icon: CalendarX,
+                title: 'Agenda bagunçada',
+                description: 'Horários duplicados, anotações perdidas, clientes esquecidos. Caderno e planilha não dão conta de um negócio que cresce.',
+                color: 'bg-amber-100',
+                iconColor: 'text-amber-600',
+                borderHover: 'hover:border-amber-200'
+              },
+              {
+                icon: AlertTriangle,
+                title: 'Perde clientes por não responder a tempo',
+                description: 'O cliente mandou mensagem às 22h. Você viu de manhã. Ele já marcou com o concorrente.',
+                color: 'bg-yellow-100',
+                iconColor: 'text-yellow-600',
+                borderHover: 'hover:border-yellow-200'
+              },
+              {
+                icon: TrendingDown,
+                title: 'Não sabe quanto está faturando',
+                description: 'Sem controle, sem números, sem visão clara do que funciona e o que está dando prejuízo no seu negócio.',
+                color: 'bg-rose-100',
+                iconColor: 'text-rose-600',
+                borderHover: 'hover:border-rose-200'
+              },
+              {
+                icon: DollarSign,
+                title: 'Horários vagos que podiam ser dinheiro',
+                description: 'Trabalha muito, mas a agenda tem buracos. Cada horário vazio é dinheiro que você deixa na mesa.',
+                color: 'bg-pink-100',
+                iconColor: 'text-pink-600',
+                borderHover: 'hover:border-pink-200'
+              }
+            ].map((pain, i) => (
+              <motion.div
+                key={i}
+                variants={fadeUp}
+                className={`group relative p-8 bg-jet-black-50/50 rounded-3xl border border-transparent ${pain.borderHover} hover:bg-white hover:shadow-xl transition-all duration-500`}
+                whileHover={{ y: -6 }}
+              >
+                <div className={`w-14 h-14 ${pain.color} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
+                  <pain.icon className={`w-7 h-7 ${pain.iconColor}`} />
+                </div>
+                <h3 className="text-xl font-bold text-jet-black-900 mb-3">{pain.title}</h3>
+                <p className="text-jet-black-600 leading-relaxed">{pain.description}</p>
+              </motion.div>
+            ))}
+          </AnimatedSection>
+
+          <AnimatedSection className="mt-12">
+            <motion.div variants={fadeUp} className="text-center">
+              <p className="text-lg text-jet-black-600 mb-6">
+                Se você se identificou, a boa notícia é: <span className="font-semibold text-jet-black-900">tem solução.</span>
+              </p>
+              <button
+                onClick={handleGetStarted}
+                className="group inline-flex items-center gap-2 px-8 py-4 bg-jet-black-900 hover:bg-jet-black-800 text-white font-semibold rounded-2xl transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
+              >
+                Resolver isso agora — Testar Grátis
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </button>
+            </motion.div>
+          </AnimatedSection>
         </div>
       </section>
 
