@@ -28,6 +28,7 @@ import {
   MessageCircle,
   Gift
 } from 'lucide-react'
+import InteractiveDemo from '../../components/InteractiveDemo'
 
 const PLANS = [
   {
@@ -570,13 +571,7 @@ export default function LandingPage() {
               </div>
             </div>
 
-            <div className="bg-white rounded-b-2xl border border-t-0 border-jet-black-200 shadow-2xl overflow-hidden">
-              <img
-                src="/demo-dashboard.png"
-                alt="Dashboard do Agendar Mais"
-                className="w-full h-auto"
-              />
-            </div>
+            <InteractiveDemo />
           </div>
 
           <div className="text-center mt-12">
@@ -901,7 +896,7 @@ export default function LandingPage() {
                 <span className="text-xl font-bold text-white">Agendar Mais</span>
               </div>
               <p className="text-jet-black-400 leading-relaxed">
-                A solução completa para gestão de agendamentos do seu negócio. Sistema de agendamento online.
+                Pare de perder clientes e organizar tudo no WhatsApp. Tenha sua agenda automática funcionando 24h.
               </p>
             </div>
 
